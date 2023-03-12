@@ -1,0 +1,29 @@
+﻿using OxLibrary.Controls;
+using PlayStationGames.ConsoleEngine.Data;
+using PlayStationGames.ConsoleEngine.Data.Fields;
+using OxXMLEngine.ControlFactory.Controls;
+using OxXMLEngine.Data;
+using PlayStationGames.GameEngine.Data;
+using PlayStationGames.GameEngine.Data.Fields;
+using OxLibrary;
+
+namespace PlayStationGames.GameEngine.ControlFactory.Controls
+{
+    public class InstallationsControl : ListItemsControl<ListDAO<Installation>, Installation, InstallationEditor, GameField, Game> 
+    {
+        protected override void InitButtons()
+        {
+            base.InitButtons();
+            PrepareViewButton(
+                CreateButton(OxIcons.eye),
+                ViewConsoleHandler,
+                true);
+        }
+
+        private void ViewConsoleHandler(object? sender, EventArgs e) => 
+            DataManager.ViewItem<ConsoleField, PSConsole>(ConsoleField.Id, SelectedItem.ConsoleId);
+
+        protected override string GetText() => 
+            "Installations";
+    }
+}

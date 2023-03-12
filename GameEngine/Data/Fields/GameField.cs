@@ -1,0 +1,73 @@
+﻿namespace PlayStationGames.GameEngine.Data.Fields
+{
+    public enum GameField
+    {
+        Id,
+        Name,
+        Licensed,
+        Region,
+        Language,
+        Code,
+        Image,
+        Edition,
+        Series,
+        CriticScore,
+        Source,
+        PlatformFamily,
+        Platform,
+        Format,
+        EarnedPlatinum,
+        EarnedGold,
+        EarnedSilver,
+        EarnedBronze,
+        EarnedFromDLC,
+        EarnedNet,
+        AvailablePlatinum,
+        AvailableGold,
+        AvailableSilver,
+        AvailableBronze,
+        AvailableFromDLC,
+        AvailableNet,
+        Developer,
+        Publisher,
+        Year,
+        Pegi,
+        ReleasePlatforms,
+        Difficult,
+        CompleteTime,
+        Genre,
+        ScreenView,
+        Dlcs,
+        Links,
+        Installations,
+        RelatedGames,
+        GameModes,
+        EmulatorType,
+        EmulatorROMs,
+        TrophysetAccess,
+        Verified,
+        Favorite,
+        TrophysetTODO,
+
+        //calced fields
+        Progress,
+
+        FullGenre,
+        FullPlatinum,
+        FullGold,
+        FullSilver,
+        FullBronze,
+        FullFromDLC,
+        FullNet,
+        Status,
+        EarnedPoints,
+        EarnedPointsOld,
+
+        //Links
+        StrategeLink,
+        PSNProfilesLink,
+
+        //system
+        Field,
+    };
+}

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="ConsoleEngine\ControlFactory\Controls\Folder\FolderEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ConsoleEngine\ControlFactory\Controls\Folder\FoldersControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ConsoleEngine\ControlFactory\Controls\Storage\StorageEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ConsoleEngine\ControlFactory\Controls\Storage\StoragesControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ConsoleEngine\Editor\ConsoleEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ConsoleEngine\Editor\InstallationPlaceSelector.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ConsoleEngine\View\ConsoleCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ConsoleEngine\View\ConsoleFullInfoCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\DLC\DLCEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\DLC\DLCListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\GameMode\GameModeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\GameMode\GameModesControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationsControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkButtonList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinksListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\RelatedGame\RelatedGameEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\RelatedGame\RelatedGamesControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\ReleasePlatforms\ReleasePlatformListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\Editor\GameEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GameEngine\Summary\GamesSummary.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\View\GameCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\View\GameFullInfoCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
