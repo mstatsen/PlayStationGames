@@ -10,8 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OxLibrary\OxLibrary.csproj" />
-    <ProjectReference Include="..\..\OxXMLEngine\OxXMLEngine.csproj" />
+    <ProjectReference Include="..\OxXMLEngine\OxXMLEngine.csproj" />
   </ItemGroup>
 
   <ItemGroup>
