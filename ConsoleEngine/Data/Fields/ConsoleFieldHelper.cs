@@ -1,5 +1,7 @@
 ﻿using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Data.Filter;
+using OxXMLEngine.Data.Types;
+using PlayStationGames.ConsoleEngine.Data.Types;
 
 namespace PlayStationGames.ConsoleEngine.Data.Fields
 {
@@ -302,5 +304,14 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             field == ConsoleField.Icon 
                 ? string.Empty 
                 : base.ColumnCaption(field);
+
+        public override ITypeHelper? GetHelper(ConsoleField field) => 
+            field switch
+            {
+                ConsoleField.Generation => TypeHelper.Helper<ConsoleGenerationHelper>(),
+                ConsoleField.Model => TypeHelper.Helper<ConsoleModelHelper>(),
+                ConsoleField.Firmware => TypeHelper.Helper<FirmwareTypeHelper>(),
+                _ => null
+            };
     }
 }

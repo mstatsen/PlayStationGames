@@ -4,6 +4,9 @@ using OxXMLEngine.ControlFactory.Context;
 using OxXMLEngine.ControlFactory.Filter;
 using OxXMLEngine.ControlFactory.Initializers;
 using OxXMLEngine.Data;
+using OxXMLEngine.Data.Fields;
+using OxXMLEngine.Data.Filter;
+using OxXMLEngine.Data.Types;
 using OxXMLEngine.Grid;
 using OxXMLEngine.View;
 using PlayStationGames.Engine.ControlFactory.Initializers;
@@ -103,8 +106,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
                 ControlScope.Editor =>
                     new CustomControlAccessor<GameField, Game, LinksListControl, ListDAO<Link>>(context).Init(),
                 ControlScope.BatchUpdate or
-                ControlScope.QuickFilter or
-                ControlScope.QuickFilterExport =>
+                ControlScope.QuickFilter =>
                     new ButtonEditAccessor<GameField, Game, ListDAO<Link>, Link, LinksListControl>(context).Init(),
                 ControlScope.FullInfoView =>
                     new LinkButtonListAccessor(context, ButtonListDirection.Horizontal),
@@ -121,8 +123,11 @@ namespace PlayStationGames.GameEngine.ControlFactory
 
                 if ((context.IsQuickFilter) &&
                     (accessorContext.Field == GameField.Year))
+                {
+                    object? variant = BuilderVariant(context.Builder);
                     return new ExtractInitializer<GameField, Game>(accessorContext.Field, true,
-                        context.Scope == ControlScope.QuickFilterExport);
+                        variant != null && variant.Equals(QuickFilterVariant.Export));
+                }
             }
 
             if (context.Name == "LinkName")

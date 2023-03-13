@@ -93,7 +93,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void SelectGame()
         {
-            if (DataManager.SelectItem<GameField, Game>(out Game? newSelected, this, SelectedGame, Filter))
+            if (DataManager.SelectItem<GameField, Game>(out Game? newSelected, MainPanel, SelectedGame, Filter))
                 SelectedGame = newSelected;
         }
 

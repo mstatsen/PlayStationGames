@@ -1,5 +1,7 @@
 ﻿using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Data.Filter;
+using OxXMLEngine.Data.Types;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Fields
 {
@@ -1036,6 +1038,24 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     FieldType.Custom,
                 _ => 
                     FieldType.String,
+            };
+
+        public override ITypeHelper? GetHelper(GameField field) =>
+            field switch
+            {
+                GameField.Region => TypeHelper.Helper<GameRegionHelper>(),
+                GameField.Language => TypeHelper.Helper<GameLanguageHelper>(),
+                GameField.Source => TypeHelper.Helper<SourceHelper>(),
+                GameField.PlatformFamily => TypeHelper.Helper<PlatformFamilyHelper>(),
+                GameField.Platform => TypeHelper.Helper<PlatformTypeHelper>(),
+                GameField.Format => TypeHelper.Helper<GameFormatHelper>(),
+                GameField.Pegi => TypeHelper.Helper<PegiHelper>(),
+                GameField.Difficult => TypeHelper.Helper<DifficultRankHelper>(),
+                GameField.CompleteTime => TypeHelper.Helper<CompleteTimeHelper>(),
+                GameField.ScreenView => TypeHelper.Helper<ScreenViewHelper>(),
+                GameField.TrophysetAccess => TypeHelper.Helper<TrophysetAccessibilityHelper>(),
+                GameField.Status => TypeHelper.Helper<StatusHelper>(),
+                _ => null
             };
     }
 }
