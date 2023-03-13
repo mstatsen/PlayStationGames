@@ -14,7 +14,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         private Trophy? TrophyByType(TrophyType type) => 
-            Find((t) => t.Type == type);
+            Find(t => t.Type == type);
 
         private int GetTrophyCount(TrophyType type)
         {

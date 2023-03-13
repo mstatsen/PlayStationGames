@@ -12,7 +12,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         public bool Contains(PlatformType platformType) =>
-            Contains((p) => p.Type.Equals(platformType));
+            Contains(p => p.Type.Equals(platformType));
 
         public Platforms() : base() { }
         public Platforms(PlatformType platformType) : this() =>

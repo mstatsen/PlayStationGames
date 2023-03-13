@@ -20,6 +20,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Initializers
 
         public override bool AvailableValue(PlayMode value) =>
             ExistingModes == null
-            || !ExistingModes.Contains((l) => l.PlayMode == value);
+            || !ExistingModes.Contains(l => l.PlayMode == value);
     }
 }

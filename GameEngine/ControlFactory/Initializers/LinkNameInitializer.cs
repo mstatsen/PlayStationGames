@@ -15,7 +15,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             if (ComboBox!.Items.IndexOf(linkName) < 0
                 && (ExistingLinks == null ||
-                        !ExistingLinks.Contains((l) => l.Name == linkName)))
+                        !ExistingLinks.Contains(l => l.Name == linkName)))
                 ComboBox!.Items.Add(linkName);
         }
 

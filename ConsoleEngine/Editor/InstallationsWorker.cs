@@ -33,7 +33,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             if (uninstallAvailable)
             {
-                currentItem.Installations.RemoveAll((i) => i.ConsoleId == Console.Id);
+                currentItem.Installations.RemoveAll(i => i.ConsoleId == Console.Id);
                 return DialogResult.Continue;
             }
 
@@ -120,12 +120,12 @@ namespace PlayStationGames.ConsoleEngine.Editor
             if (Console == null)
                 return null;
 
-            Guid? storageId = item.Installations.Find((i) => i.ConsoleId == Console.Id)?.StorageId;
+            Guid? storageId = item.Installations.Find(i => i.ConsoleId == Console.Id)?.StorageId;
 
             if (storageId == null)
                 return null;
 
-            return Console.Storages.Find((s) => s.Id == storageId)?.Name;
+            return Console.Storages.Find(s => s.Id == storageId)?.Name;
         }
 
         private object? GameFolderGetter(Game item)
@@ -133,7 +133,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             if (Console == null)
                 return null;
 
-            return item.Installations.Find((i) => i.ConsoleId == Console.Id)?.Folder;
+            return item.Installations.Find(i => i.ConsoleId == Console.Id)?.Folder;
         }
 
         private void CompleteSelectHandler(object? sender, EventArgs e) => 
@@ -173,7 +173,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             if (console != null)
                 foreach (Game game in DataManager.FullItemsList<GameField, Game>())
-                    if (game.Installations.Contains((i) => i.ConsoleId == console.Id))
+                    if (game.Installations.Contains(i => i.ConsoleId == console.Id))
                     {
                         Game tempGame = new();
                         tempGame.CopyFrom(game);
@@ -203,9 +203,9 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 if (game == null)
                     continue;
 
-                game.Installations.RemoveAll((i) => i.ConsoleId == Console.Id);
+                game.Installations.RemoveAll(i => i.ConsoleId == Console.Id);
 
-                Installation? newInstallation = installedGame.Installations.Find((i) => i.ConsoleId == Console.Id);
+                Installation? newInstallation = installedGame.Installations.Find(i => i.ConsoleId == Console.Id);
 
                 if (newInstallation != null)
                     game.Installations.Add(newInstallation);
@@ -218,8 +218,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 return;
 
             foreach (Game game in DataManager.FullItemsList<GameField, Game>())
-                if (!installedGames.Contains((g) => g.Id == game.Id))
-                    game.Installations.Remove((i) => i.ConsoleId == Console.Id);
+                if (!installedGames.Contains(g => g.Id == game.Id))
+                    game.Installations.Remove(i => i.ConsoleId == Console.Id);
         }
     }
 }

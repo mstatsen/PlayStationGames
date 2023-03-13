@@ -161,6 +161,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             Link("PSNProfiles");
 
         private object? Link(string Name) =>
-            Dao.Links.Find((l) => l.Name.Equals(Name));
+            Dao.Links.Find(l => l.Name.Equals(Name));
     }
 }

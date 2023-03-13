@@ -908,7 +908,7 @@ namespace PlayStationGames.GameEngine.Data
         {
             foreach (RelatedGame relGame in game.RelatedGames)
                 if (relGame.SameTrophyset
-                    && list.Contains((g) => g.Id == relGame.GameId))
+                    && list.Contains(g => g.Id == relGame.GameId))
                     return false;
 
             return true;

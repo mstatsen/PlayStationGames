@@ -6,7 +6,7 @@ namespace PlayStationGames.ConsoleEngine.Data
     public class Storages : ListDAO<Storage>
     {
         public Storage? GetById(Guid id) =>
-            Find((s) => s.Id == id);
+            Find(s => s.Id == id);
 
         public string StorageName(Guid id)
         {

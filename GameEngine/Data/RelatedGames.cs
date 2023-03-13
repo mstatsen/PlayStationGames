@@ -5,7 +5,7 @@ namespace PlayStationGames.GameEngine.Data
     public class RelatedGames : ListDAO<RelatedGame>
     {
         public RelatedGame? GetById(Guid? id) =>
-            List.Find((rg) => rg.GameId.Equals(id));
+            List.Find(rg => rg.GameId.Equals(id));
 
         public bool Remove(Guid? id)
         {
