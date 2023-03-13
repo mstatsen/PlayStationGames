@@ -260,7 +260,7 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 )
                 .AddChild(
                     new Category<GameField, Game>("Difficult not filled")
-                        .AddFilterEquals(GameField.Difficult, DifficultRank.Unknown)
+                        .AddFilterEquals(GameField.Difficult, Difficult.Unknown)
                 )
                 .AddChild(
                     new Category<GameField, Game>("Genre not filled")

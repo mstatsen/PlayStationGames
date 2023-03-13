@@ -1,6 +1,6 @@
 ﻿namespace PlayStationGames.GameEngine.Data.Types
 {
-    public enum DifficultRank
+    public enum Difficult
     {
         One = 1,
         Two = 2,

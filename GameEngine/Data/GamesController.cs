@@ -31,7 +31,7 @@ namespace PlayStationGames.GameEngine.Data
         {
             TypeHelper.Register<CompleteTimeHelper>();
             TypeHelper.Register<DefaulterScopeHelper>();
-            TypeHelper.Register<DifficultRankHelper>();
+            TypeHelper.Register<DifficultHelper>();
             TypeHelper.Register<GameFieldHelper>();
             TypeHelper.Register<GameFieldGroupHelper>();
             TypeHelper.Register<GameFormatHelper>();

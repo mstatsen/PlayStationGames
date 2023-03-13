@@ -30,7 +30,7 @@ namespace PlayStationGames.GameEngine.Data
         private string roms = string.Empty;
         private string genre = string.Empty;
         private ScreenView screenView = default;
-        private DifficultRank difficult;
+        private Difficult difficult;
         private CompleteTime completeTime;
         private TrophysetAccessibility trophysetAccessibility;
         private string developer = string.Empty;
@@ -99,7 +99,7 @@ namespace PlayStationGames.GameEngine.Data
             set => screenView = ModifyField(screenView, value);
         }
 
-        public DifficultRank Difficult
+        public Difficult Difficult
         {
             get => difficult;
             set => difficult = ModifyField(difficult, value);
@@ -332,7 +332,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Pegi => 
                     TypeHelper.Value<Pegi>(value),
                 GameField.Difficult => 
-                    TypeHelper.Value<DifficultRank>(value),
+                    TypeHelper.Value<Difficult>(value),
                 GameField.CompleteTime => 
                     TypeHelper.Value<CompleteTime>(value),
                 GameField.ScreenView => 
@@ -457,7 +457,7 @@ namespace PlayStationGames.GameEngine.Data
                     Licensed = BoolValue(value);
                     break;
                 case GameField.Difficult:
-                    Difficult = TypeHelper.Value<DifficultRank>(value);
+                    Difficult = TypeHelper.Value<Difficult>(value);
                     break;
                 case GameField.CompleteTime:
                     CompleteTime = TypeHelper.Value<CompleteTime>(value);
@@ -669,7 +669,7 @@ namespace PlayStationGames.GameEngine.Data
             EmulatorType = string.Empty;
             Genre = string.Empty;
             ScreenView = TypeHelper.DefaultValue<ScreenView>();
-            Difficult = TypeHelper.DefaultValue<DifficultRank>();
+            Difficult = TypeHelper.DefaultValue<Difficult>();
             CompleteTime = TypeHelper.DefaultValue<CompleteTime>();
             trophysetAccessibility = TypeHelper.EmptyValue<TrophysetAccessibility>();
             Developer = string.Empty;
@@ -774,7 +774,7 @@ namespace PlayStationGames.GameEngine.Data
             ROMs = XmlHelper.Value(element, XmlConsts.ROMs);
             ScreenView = XmlHelper.Value<ScreenView>(element, XmlConsts.Screen);
             Genre = XmlHelper.Value(element, XmlConsts.Genre);
-            Difficult = XmlHelper.Value<DifficultRank>(element, XmlConsts.Difficult);
+            Difficult = XmlHelper.Value<Difficult>(element, XmlConsts.Difficult);
             CompleteTime = XmlHelper.Value<CompleteTime>(element, XmlConsts.CompleteTime);
             trophysetAccessibility = XmlHelper.Value<TrophysetAccessibility>(element, XmlConsts.TrophysetAccess);
             Developer = XmlHelper.Value(element, XmlConsts.Developer);
@@ -891,7 +891,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Pegi => 
                     TypeHelper.Parse<Pegi>(value),
                 GameField.Difficult => 
-                    TypeHelper.Parse<DifficultRank>(value),
+                    TypeHelper.Parse<Difficult>(value),
                 GameField.CompleteTime => 
                     TypeHelper.Parse<CompleteTime>(value),
                 GameField.ScreenView => 

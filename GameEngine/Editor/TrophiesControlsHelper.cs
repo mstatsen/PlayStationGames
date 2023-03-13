@@ -75,7 +75,7 @@ namespace PlayStationGames.GameEngine.Editor
                     controlBuilder[field].Value = 0;
 
             if (!controlBuilder[GameField.Difficult].Enabled)
-                controlBuilder[GameField.Difficult].Value = DifficultRank.Unknown;
+                controlBuilder[GameField.Difficult].Value = Difficult.Unknown;
 
             if (!controlBuilder[GameField.CompleteTime].Enabled)
                 controlBuilder[GameField.CompleteTime].Value = CompleteTime.ctUnknown;

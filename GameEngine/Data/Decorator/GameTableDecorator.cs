@@ -135,7 +135,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             TypeHelper.ShortName(Dao.PlatformType);
 
         private object? Difficult() =>
-            Dao.Difficult == TypeHelper.EmptyValue<DifficultRank>()
+            Dao.Difficult == TypeHelper.EmptyValue<Difficult>()
                 ? string.Empty
                 : TypeHelper.FullName(Dao.Difficult);
 

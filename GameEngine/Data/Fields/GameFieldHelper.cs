@@ -1050,7 +1050,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Platform => TypeHelper.Helper<PlatformTypeHelper>(),
                 GameField.Format => TypeHelper.Helper<GameFormatHelper>(),
                 GameField.Pegi => TypeHelper.Helper<PegiHelper>(),
-                GameField.Difficult => TypeHelper.Helper<DifficultRankHelper>(),
+                GameField.Difficult => TypeHelper.Helper<DifficultHelper>(),
                 GameField.CompleteTime => TypeHelper.Helper<CompleteTimeHelper>(),
                 GameField.ScreenView => TypeHelper.Helper<ScreenViewHelper>(),
                 GameField.TrophysetAccess => TypeHelper.Helper<TrophysetAccessibilityHelper>(),

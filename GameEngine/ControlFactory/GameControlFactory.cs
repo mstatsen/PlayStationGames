@@ -47,7 +47,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     case GameField.CompleteTime:
                         return CreateEnumAccessor<CompleteTime>(context);
                     case GameField.Difficult:
-                        return CreateEnumAccessor<DifficultRank>(context);
+                        return CreateEnumAccessor<Difficult>(context);
                     case GameField.Status:
                         return CreateEnumAccessor<Status>(context);
                     case GameField.TrophysetAccess:
