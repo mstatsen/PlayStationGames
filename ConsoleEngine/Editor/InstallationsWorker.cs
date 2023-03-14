@@ -21,12 +21,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private PSConsole? Console;
 
-        private DialogResult CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private bool CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
         {
             if (Console == null)
-                return DialogResult.Cancel;
+                return false;
 
-            bool uninstallAvailable = OxMessage.ShowConfirm(
+            bool uninstallAvailable = !needShowUninstallMessage 
+                || OxMessage.ShowConfirm(
                 $"Are you sure to want uninstall {(selectedList.Count > 1 ? "selected games" : currentItem.FullTitle())}?"
             ) == DialogResult.Yes;
 
@@ -34,48 +35,42 @@ namespace PlayStationGames.ConsoleEngine.Editor
             if (uninstallAvailable)
             {
                 currentItem.Installations.RemoveAll(i => i.ConsoleId == Console.Id);
-                return DialogResult.Continue;
+                return true;
             }
 
-            return DialogResult.Cancel;
+            return false;
         }
 
         private readonly InstallationPlaceSelector placeSelector = new();
         private bool ApplyPlacementForAll = false;
+        private bool needShowUninstallMessage = true;
 
-        private DialogResult CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private bool CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
         {
             if (Console == null)
-                return DialogResult.Cancel;
+                return false;
 
-            DialogResult result;
-
-            if (ApplyPlacementForAll)
-                result = DialogResult.Continue;
-            else
+            if (!ApplyPlacementForAll)
             {
                 placeSelector.GamesCount = selectedList.Count;
                 placeSelector.Game = currentItem;
-                result = placeSelector.ShowAsDialog();
-                ApplyPlacementForAll = result == DialogResult.Continue;
+                DialogResult result = placeSelector.ShowAsDialog();
+                if (result == OxDialogButtonsHelper.Result(OxDialogButton.Cancel))
+                    return false;
+                    
+                ApplyPlacementForAll = result == OxDialogButtonsHelper.Result(OxDialogButton.ApplyForAll);
             }
 
-            switch (result)
-            {
-                case DialogResult.OK:
-                case DialogResult.Continue:
-                    currentItem.Installations.Add(
-                        new Installation()
-                        {
-                            ConsoleId = Console.Id,
-                            StorageId = placeSelector.SelectedStorageId,
-                            Folder = placeSelector.SelectedFolderName
-                        }
-                    );
-                    break;
-            }
+            currentItem.Installations.Add(
+                new Installation()
+                {
+                    ConsoleId = Console.Id,
+                    StorageId = placeSelector.SelectedStorageId,
+                    Folder = placeSelector.SelectedFolderName
+                }
+            );
 
-            return result;
+            return true;
         }
 
         public void Show()
@@ -136,8 +131,11 @@ namespace PlayStationGames.ConsoleEngine.Editor
             return item.Installations.Find(i => i.ConsoleId == Console.Id)?.Folder;
         }
 
-        private void CompleteSelectHandler(object? sender, EventArgs e) => 
+        private void CompleteSelectHandler(object? sender, EventArgs e)
+        {
             ApplyPlacementForAll = false;
+            needShowUninstallMessage = true;
+        }
 
         private readonly RootListDAO<GameField, Game> installedGames = new();
 
