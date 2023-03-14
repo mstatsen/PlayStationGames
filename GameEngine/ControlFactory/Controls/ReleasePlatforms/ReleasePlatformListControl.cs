@@ -25,7 +25,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         protected override void GrabList(Platforms list)
         {
-            foreach (KeyValuePair<PlatformType, OxCheckBox> item in CheckBoxes)
+            foreach (var item in CheckBoxes)
                 if (item.Value.Checked)
                     list.Add(item.Key);
         }

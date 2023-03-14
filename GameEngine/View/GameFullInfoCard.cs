@@ -40,7 +40,7 @@ namespace PlayStationGames.GameEngine.View
 
                 bool firstLayout = true;
 
-                foreach (KeyValuePair<GameField, GameField> item in trophiesFieldsMap)
+                foreach (var item in trophiesFieldsMap)
                     if (DAO.IntValue(Item?[item.Key]) > 0)
                     { 
                         result.Add(

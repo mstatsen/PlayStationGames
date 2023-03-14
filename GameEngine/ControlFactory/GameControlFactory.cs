@@ -144,7 +144,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
             usage switch
             {
                 GridUsage.SelectItem or 
-                GridUsage.ChooseItems => 
+                GridUsage.ChooseItems =>
                     new GameSelectorGridPainter(),
                 _ => 
                     new GamesGridPainter(columns),

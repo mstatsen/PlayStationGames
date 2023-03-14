@@ -58,7 +58,7 @@ namespace PlayStationGames.GameEngine.View
                     [GameField.AvailableNet] = GameField.FullNet,
                 };
 
-                foreach (KeyValuePair<GameField, GameField> item in trophiesFieldsMap)
+                foreach (var item in trophiesFieldsMap)
                     if (DAO.IntValue(Item[item.Key]) > 0)
                         trophiesLayouts.Add(
                             Layouter.AddFromTemplate(item.Value, -8)

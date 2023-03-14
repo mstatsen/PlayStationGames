@@ -42,7 +42,7 @@ namespace PlayStationGames.GameEngine.Editor
 
             controlBuilder[GameField.EarnedPlatinum].Enabled = controlBuilder[GameField.AvailablePlatinum].BoolValue;
 
-            foreach (KeyValuePair<GameField, GameField> item in DislbledIfOtherZero)
+            foreach (var item in DislbledIfOtherZero)
                 controlBuilder[item.Key].Enabled
                     = controlBuilder[item.Value].IntValue > 0;
 

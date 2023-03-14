@@ -104,7 +104,7 @@ namespace PlayStationGames.GameEngine.Summary
         {
             PSNLevelCalculator levelCalculator = new(DataManager.FullItemsList<GameField, Game>());
 
-            foreach (KeyValuePair<LevelValueType, OxLabel> item in LevelValues)
+            foreach (var item in LevelValues)
                 item.Value.Text = levelCalculator.Value(item.Key);
         }
 
