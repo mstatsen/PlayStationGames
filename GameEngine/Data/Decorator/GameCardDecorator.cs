@@ -13,16 +13,11 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             return field switch
             {
-                GameField.Image => 
-                    Image(),
-                GameField.Platform => 
-                    PlatformType(),
-                GameField.Progress => 
-                    CalcedProgress(),
-                GameField.Installations => 
-                    CalcedInstallation(),
-                GameField.Dlcs => 
-                    Dlcs(),
+                GameField.Image => Image(),
+                GameField.Platform => PlatformType(),
+                GameField.Progress => CalcedProgress(),
+                GameField.Installations => CalcedInstallation(),
+                GameField.Dlcs => Dlcs(),
                 _ => base.Value(field),
             };
         }

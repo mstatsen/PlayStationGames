@@ -236,48 +236,30 @@ namespace PlayStationGames.GameEngine.Data
             }
 
             if (y is Game yGame)
-            {
                 return field switch
                 {
-                    GameField.Platform => 
-                        platformType.CompareTo(yGame.PlatformType),
-                    GameField.Format => 
-                        format.CompareTo(yGame.Format),
-                    GameField.TrophysetAccess => 
-                        TrophysetAccessibility.CompareTo(yGame.TrophysetAccessibility),
-                    GameField.Source => 
-                        sourceType.CompareTo(yGame.SourceType),
-                    GameField.Pegi => 
-                        Pegi.CompareTo(yGame.Pegi),
-                    GameField.ReleasePlatforms => 
-                        ReleasePlatforms.CompareTo(yGame.ReleasePlatforms),
-                    GameField.Difficult => 
-                        Difficult.CompareTo(yGame.Difficult),
-                    GameField.CompleteTime => 
-                        CompleteTime.CompareTo(yGame.CompleteTime),
-                    GameField.ScreenView => 
-                        ScreenView.CompareTo(yGame.ScreenView),
-                    GameField.GameModes => 
-                        GameModes.CompareTo(yGame.GameModes),
-                    GameField.Dlcs => 
-                        Dlcs.CompareTo(yGame.Dlcs),
-                    GameField.Links => 
-                        Links.CompareTo(yGame.Links),
-                    GameField.Installations => 
-                        Links.CompareTo(yGame.Links),
-                    GameField.RelatedGames => 
-                        RelatedGames.CompareTo(yGame.RelatedGames),
-                    GameField.Status => 
-                        new GameCalculations(this).GetGameStatus().CompareTo(new GameCalculations(yGame).GetGameStatus()),
-                    GameField.Progress => 
-                        new GameCalculations(this).GetGameProgress().CompareTo(new GameCalculations(yGame).GetGameProgress()),
-                    GameField.EarnedPoints => 
-                        new GameCalculations(this).GetEarnedPoints().CompareTo(new GameCalculations(yGame).GetEarnedPoints()),
-                    GameField.EarnedPointsOld => 
-                    new GameCalculations(this).GetEarnedOldPoints().CompareTo(new GameCalculations(yGame)),
+                    GameField.Platform => platformType.CompareTo(yGame.PlatformType),
+                    GameField.Format => format.CompareTo(yGame.Format),
+                    GameField.TrophysetAccess => TrophysetAccessibility.CompareTo(yGame.TrophysetAccessibility),
+                    GameField.Source => sourceType.CompareTo(yGame.SourceType),
+                    GameField.Pegi => Pegi.CompareTo(yGame.Pegi),
+                    GameField.ReleasePlatforms => ReleasePlatforms.CompareTo(yGame.ReleasePlatforms),
+                    GameField.Difficult => Difficult.CompareTo(yGame.Difficult),
+                    GameField.CompleteTime => CompleteTime.CompareTo(yGame.CompleteTime),
+                    GameField.ScreenView => ScreenView.CompareTo(yGame.ScreenView),
+                    GameField.Region => GameRegion.CompareTo(yGame.GameRegion),
+                    GameField.Language => GameLanguage.CompareTo(yGame.GameLanguage),
+                    GameField.GameModes => GameModes.CompareTo(yGame.GameModes),
+                    GameField.Dlcs => Dlcs.CompareTo(yGame.Dlcs),
+                    GameField.Links => Links.CompareTo(yGame.Links),
+                    GameField.Installations => Links.CompareTo(yGame.Links),
+                    GameField.RelatedGames => RelatedGames.CompareTo(yGame.RelatedGames),
+                    GameField.Status => new GameCalculations(this).GetGameStatus().CompareTo(new GameCalculations(yGame).GetGameStatus()),
+                    GameField.Progress => new GameCalculations(this).GetGameProgress().CompareTo(new GameCalculations(yGame).GetGameProgress()),
+                    GameField.EarnedPoints => new GameCalculations(this).GetEarnedPoints().CompareTo(new GameCalculations(yGame).GetEarnedPoints()),
+                    GameField.EarnedPointsOld => new GameCalculations(this).GetEarnedOldPoints().CompareTo(new GameCalculations(yGame)),
                     _ => 0,
                 };
-            }
 
             return base.CompareField(field, y);
         }
@@ -878,31 +860,21 @@ namespace PlayStationGames.GameEngine.Data
         public override object ParseCaldedValue(GameField field, string value) => 
             field switch
             {
-                GameField.AvailablePlatinum or 
+                GameField.AvailablePlatinum or
                 GameField.EarnedPlatinum or 
                 GameField.Year or 
                 GameField.Progress => 
                     int.Parse(value),
-                GameField.Region =>
-                    TypeHelper.Parse<GameRegion>(value),
-                GameField.Language =>
-                    TypeHelper.Parse<GameLanguage>(value),
-                GameField.Platform => 
-                    TypeHelper.Parse<PlatformType>(value),
-                GameField.Format => 
-                    TypeHelper.Parse<GameFormat>(value),
-                GameField.Source => 
-                    TypeHelper.Parse<Source>(value),
-                GameField.Pegi => 
-                    TypeHelper.Parse<Pegi>(value),
-                GameField.Difficult => 
-                    TypeHelper.Parse<Difficult>(value),
-                GameField.CompleteTime => 
-                    TypeHelper.Parse<CompleteTime>(value),
-                GameField.ScreenView => 
-                    TypeHelper.Parse<ScreenView>(value),
-                GameField.Status => 
-                    TypeHelper.Parse<Status>(value),
+                GameField.Region => TypeHelper.Parse<GameRegion>(value),
+                GameField.Language => TypeHelper.Parse<GameLanguage>(value),
+                GameField.Platform => TypeHelper.Parse<PlatformType>(value),
+                GameField.Format => TypeHelper.Parse<GameFormat>(value),
+                GameField.Source => TypeHelper.Parse<Source>(value),
+                GameField.Pegi => TypeHelper.Parse<Pegi>(value),
+                GameField.Difficult => TypeHelper.Parse<Difficult>(value),
+                GameField.CompleteTime => TypeHelper.Parse<CompleteTime>(value),
+                GameField.ScreenView => TypeHelper.Parse<ScreenView>(value),
+                GameField.Status => TypeHelper.Parse<Status>(value),
                 _ => value,
             };
 
