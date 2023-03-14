@@ -1,14 +1,18 @@
 ﻿using OxLibrary;
+using OxLibrary.Controls;
 using OxXMLEngine.ControlFactory;
+using OxXMLEngine.Data;
 using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.Editor;
+using PlayStationGames.ConsoleEngine.Data;
+using PlayStationGames.ConsoleEngine.Data.Fields;
+using PlayStationGames.ConsoleEngine.Data.Types;
+using PlayStationGames.GameEngine.ControlFactory.Controls;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.ControlFactory.Controls;
 using PlayStationGames.GameEngine.Data.Types;
-using OxLibrary.Controls;
 
 namespace PlayStationGames.GameEngine.Editor
 {
@@ -114,7 +118,7 @@ namespace PlayStationGames.GameEngine.Editor
             switch (field)
             {
                 case GameField.Platform:
-                    if (byUser) 
+                    if (byUser)
                         SyncFormatWithPlatform();
                     break;
                 case GameField.Licensed:
@@ -158,11 +162,12 @@ namespace PlayStationGames.GameEngine.Editor
             Editor.Groups[GameFieldGroup.Installations].Visible =
                 sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
 
+            Editor.Groups[GameFieldGroup.DLC].Visible = Builder.Value<bool>(GameField.Licensed);
+
             bool isEmulator = Builder.Value<GameFormat>(GameField.Format) == GameFormat.Emulator;
             Editor.Groups[GameFieldGroup.Emulator].Visible = isEmulator;
             Editor.Groups[GameFieldGroup.Genre].Visible = !isEmulator;
             Editor.Groups[GameFieldGroup.RelatedGames].Visible = !isEmulator;
-            Editor.Groups[GameFieldGroup.DLC].Visible = !isEmulator;
             Editor.Groups[GameFieldGroup.ReleaseBase].Visible = !isEmulator;
 
             Builder.SetVisible(GameField.Edition, !isEmulator);
@@ -237,6 +242,7 @@ namespace PlayStationGames.GameEngine.Editor
                 )
             );
 
+
         protected readonly TrophiesControlsHelper trophiesControlsHelper;
 
         protected override List<List<GameField>> LabelGroups => new()
@@ -292,11 +298,13 @@ namespace PlayStationGames.GameEngine.Editor
 
             List<GameFieldGroup> invisibleGroups = new();
 
+            if (!Builder.Value<bool>(GameField.Licensed))
+                invisibleGroups.Add(GameFieldGroup.DLC);
+
             if (Builder.Value<GameFormat>(GameField.Format) == GameFormat.Emulator)
             {
                 invisibleGroups.Add(GameFieldGroup.Genre);
                 invisibleGroups.Add(GameFieldGroup.RelatedGames);
-                invisibleGroups.Add(GameFieldGroup.DLC);
                 invisibleGroups.Add(GameFieldGroup.ReleaseBase);
                 invisibleGroups.Add(GameFieldGroup.ReleasePlatforms);
                 Builder[GameField.Edition].Clear();
@@ -310,6 +318,7 @@ namespace PlayStationGames.GameEngine.Editor
 
             if (!sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source)))
                 invisibleGroups.Add(GameFieldGroup.Installations);
+            else SyncInstallationsWithPlatform();
 
             GameFieldGroupHelper helper = TypeHelper.Helper<GameFieldGroupHelper>();
 
@@ -318,6 +327,20 @@ namespace PlayStationGames.GameEngine.Editor
                     Builder[field].Clear();
 
             Item[GameField.RelatedGames] = Builder.Value<RelatedGames>(GameField.RelatedGames);
+        }
+
+        private void SyncInstallationsWithPlatform()
+        {
+            ListDAO<Installation>? installations = (ListDAO<Installation>?) Builder.Value(GameField.Installations);
+
+            if (installations == null)
+                return;
+
+            RootListDAO<ConsoleField, PSConsole> availableConsoles = 
+                DataManager.FullItemsList<ConsoleField, PSConsole>().FilteredList(Game.AvailableConsoleFilter(Builder));
+
+            installations.RemoveAll(i => !availableConsoles.Contains(c => c.Id == i.ConsoleId));
+            Builder[GameField.Installations].Value = installations;
         }
 
         protected override void AfterGrabControls()

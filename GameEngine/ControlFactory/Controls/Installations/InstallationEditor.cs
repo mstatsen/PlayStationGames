@@ -178,25 +178,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void RenewConsoleControl()
         {
-            bool licensed = Context.Builder.Value<bool>(GameField.Licensed);
-            Filter<ConsoleField, PSConsole> filter = new();
-
-            foreach (ConsoleGeneration generation in
-                TypeHelper.Helper<PlatformTypeHelper>().Generations(
-                    Context.Builder.Value<PlatformType>(GameField.Platform),
-                    Context.Builder.Value<Source>(GameField.Source),
-                    licensed)
-                )
-                filter.AddFilter(ConsoleField.Generation, generation, FilterConcat.OR);
-
-            if (!licensed)
-                filter.AddFilter(ConsoleField.Firmware, FirmwareType.Custom, FilterConcat.AND);
-
             IFilteredInitializer<ConsoleField, PSConsole>? consoleInitializer =
                 (IFilteredInitializer<ConsoleField, PSConsole>?)consoleControl.Context.Initializer;
 
             if (consoleInitializer != null)
-                consoleInitializer.Filter = filter;
+                consoleInitializer.Filter = Game.AvailableConsoleFilter(Context.Builder);
 
             consoleControl.RenewControl(true);
         }

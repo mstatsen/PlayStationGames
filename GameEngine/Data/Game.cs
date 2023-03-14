@@ -1,7 +1,12 @@
 ﻿using System.Xml;
+using OxXMLEngine.ControlFactory;
 using OxXMLEngine.Data;
+using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.XML;
+using PlayStationGames.ConsoleEngine.Data;
+using PlayStationGames.ConsoleEngine.Data.Fields;
+using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Decorator;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
@@ -912,6 +917,26 @@ namespace PlayStationGames.GameEngine.Data
                     return false;
 
             return true;
+        }
+
+        public static IMatcher<PSConsole> AvailableConsoleFilter(ControlBuilder<GameField, Game> gameControlBuilder)
+        {
+            Filter<ConsoleField, PSConsole> filter = new();
+
+            bool licensed = gameControlBuilder.Value<bool>(GameField.Licensed);
+
+            foreach (ConsoleGeneration generation in
+                TypeHelper.Helper<PlatformTypeHelper>().Generations(
+                    gameControlBuilder.Value<PlatformType>(GameField.Platform),
+                    gameControlBuilder.Value<Source>(GameField.Source),
+                    licensed)
+                )
+                filter.AddFilter(ConsoleField.Generation, generation, FilterConcat.OR);
+
+            if (!licensed)
+                filter.AddFilter(ConsoleField.Firmware, FirmwareType.Custom, FilterConcat.AND);
+
+            return filter;
         }
     }
 }
