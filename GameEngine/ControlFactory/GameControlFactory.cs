@@ -20,82 +20,52 @@ namespace PlayStationGames.GameEngine.ControlFactory
 {
     public class GameControlFactory : ControlFactory<GameField, Game>
     {
-        protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<GameField, Game> context)
-        {
-            if (context is FieldContext<GameField, Game> accessorContext)
-                switch (accessorContext.Field)
+        protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<GameField, Game> context) => 
+            context switch
+            {
+                FieldContext<GameField, Game> accessorContext =>
+                accessorContext.Field switch
                 {
-                    case GameField.PlatformFamily:
-                        return CreateEnumAccessor<PlatformFamily>(context);
-                    case GameField.Platform:
-                        return CreateEnumAccessor<PlatformType>(context);
-                    case GameField.ScreenView:
-                        return CreateEnumAccessor<ScreenView>(context);
-                    case GameField.Format:
-                        return CreateEnumAccessor<GameFormat>(context);
-                    case GameField.Source:
-                        return CreateEnumAccessor<Source>(context);
-                    case GameField.Region:
-                        return CreateEnumAccessor<GameRegion>(context);
-                    case GameField.Language:
-                        return CreateEnumAccessor<GameLanguage>(context);
-                    case GameField.Pegi:
-                        return CreateEnumAccessor<Pegi>(context);
-                    case GameField.CompleteTime:
-                        return CreateEnumAccessor<CompleteTime>(context);
-                    case GameField.Difficult:
-                        return CreateEnumAccessor<Difficult>(context);
-                    case GameField.Status:
-                        return CreateEnumAccessor<Status>(context);
-                    case GameField.TrophysetAccess:
-                        return CreateEnumAccessor<TrophysetAccessibility>(context);
-                    case GameField.Year:
-                        return new YearAccessor<GameField, Game>(context);
-                    case GameField.GameModes:
-                        return CreateListAccessor<GameMode, ListDAO<GameMode>, GameModesControl>(context, ControlScope.Editor);
-                    case GameField.Dlcs:
-                        return CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor);
-                    case GameField.Installations:
-                        return CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor);
-                    case GameField.Links:
-                        return NewLinkAccessor(context);
-                    case GameField.RelatedGames:
-                        return CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context);
-                    case GameField.ReleasePlatforms:
-                        return CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context);
-                    case GameField.Id:
-                        return CreateLabelAccessor(context);
-                    case GameField.StrategeLink:
-                    case GameField.PSNProfilesLink:
-                        return NewLinkButtonAccessor(context);
-                }
-            else
-                if (context.Name == "Link")
-                    return NewLinkButtonAccessor(context);
-
-            return base.CreateOtherAccessor(context);
-        }
+                    GameField.PlatformFamily => CreateEnumAccessor<PlatformFamily>(context),
+                    GameField.Platform => CreateEnumAccessor<PlatformType>(context),
+                    GameField.ScreenView => CreateEnumAccessor<ScreenView>(context),
+                    GameField.Format => CreateEnumAccessor<GameFormat>(context),
+                    GameField.Source => CreateEnumAccessor<Source>(context),
+                    GameField.Region => CreateEnumAccessor<GameRegion>(context),
+                    GameField.Language => CreateEnumAccessor<GameLanguage>(context),
+                    GameField.Pegi => CreateEnumAccessor<Pegi>(context),
+                    GameField.CompleteTime => CreateEnumAccessor<CompleteTime>(context),
+                    GameField.Difficult => CreateEnumAccessor<Difficult>(context),
+                    GameField.Status => CreateEnumAccessor<Status>(context),
+                    GameField.TrophysetAccess => CreateEnumAccessor<TrophysetAccessibility>(context),
+                    GameField.Year => new YearAccessor<GameField, Game>(context),
+                    GameField.GameModes => CreateListAccessor<GameMode, ListDAO<GameMode>, GameModesControl>(context, ControlScope.Editor),
+                    GameField.Dlcs => CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
+                    GameField.Installations => CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),
+                    GameField.Links => NewLinkAccessor(context),
+                    GameField.RelatedGames => CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context),
+                    GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
+                    GameField.Id => CreateLabelAccessor(context),
+                    GameField.StrategeLink or GameField.PSNProfilesLink => NewLinkButtonAccessor(context),
+                    _ => base.CreateOtherAccessor(context),
+                },
+                _ => context.Name == "Link" ? NewLinkButtonAccessor(context) : base.CreateOtherAccessor(context)
+            };
 
         private static IControlAccessor NewLinkButtonAccessor(IBuilderContext<GameField, Game> context) =>
             new LinkButtonAccessor<GameField, Game>(context);
 
-        protected override IControlAccessor CreateViewAccessor(IBuilderContext<GameField, Game> context)
-        {
-            if (context is FieldContext<GameField, Game> accessorContext)
-                switch (accessorContext.Field)
-                {
-                    case GameField.Links:
-                        return NewLinkAccessor(context);
-                    case GameField.StrategeLink:
-                    case GameField.PSNProfilesLink:
-                        return NewLinkButtonAccessor(context);
-                }
-            else
-                if (context.Name == "Link")
-                    return NewLinkButtonAccessor(context);
-
-            return base.CreateViewAccessor(context);
-        }
+        protected override IControlAccessor CreateViewAccessor(IBuilderContext<GameField, Game> context) => 
+            context is FieldContext<GameField, Game> accessorContext
+                ? accessorContext.Field switch
+                    {
+                        GameField.Links => NewLinkAccessor(context),
+                        GameField.StrategeLink or GameField.PSNProfilesLink => NewLinkButtonAccessor(context),
+                        _ => base.CreateViewAccessor(context),
+                    }
+                : context.Name == "Link" 
+                    ? NewLinkButtonAccessor(context) 
+                    : base.CreateViewAccessor(context);
 
         private static IControlAccessor NewLinkAccessor(IBuilderContext<GameField, Game> context) => 
             context.Scope switch
@@ -118,7 +88,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
                 if (accessorContext.Field == GameField.CriticScore)
                     return new NumericInitializer(-1, 100);
 
-                if ((context.IsQuickFilter) &&
+                if (context.IsQuickFilter &&
                     (accessorContext.Field == GameField.Year))
                 {
                     object? variant = BuilderVariant(context.Builder);

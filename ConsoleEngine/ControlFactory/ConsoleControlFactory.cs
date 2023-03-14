@@ -16,36 +16,26 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
 {
     public class ConsoleControlFactory : ControlFactory<ConsoleField, PSConsole>
     {
-        protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<ConsoleField, PSConsole> context)
-        {
-            if (context is FieldContext<ConsoleField, PSConsole> accessorContext)
-                switch (accessorContext.Field)
+        protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<ConsoleField, PSConsole> context) => 
+            context is FieldContext<ConsoleField, PSConsole> accessorContext
+                ? accessorContext.Field switch
                 {
-                    case ConsoleField.Generation:
-                        return CreateEnumAccessor<ConsoleGeneration>(context);
-                    case ConsoleField.Model:
-                        return CreateEnumAccessor<ConsoleModel>(context);
-                    case ConsoleField.Firmware:
-                        return CreateEnumAccessor<FirmwareType>(context);
-                    case ConsoleField.Storages:
-                        return CreateListAccessor<Storage, Storages, StoragesControl>(context);
-                    case ConsoleField.Folders:
-                        return CreateListAccessor<Folder, Folders, FoldersControl>(context);
+                    ConsoleField.Generation => CreateEnumAccessor<ConsoleGeneration>(context),
+                    ConsoleField.Model => CreateEnumAccessor<ConsoleModel>(context),
+                    ConsoleField.Firmware => CreateEnumAccessor<FirmwareType>(context),
+                    ConsoleField.Storages => CreateListAccessor<Storage, Storages, StoragesControl>(context),
+                    ConsoleField.Folders => CreateListAccessor<Folder, Folders, FoldersControl>(context),
+                    _ => base.CreateOtherAccessor(context),
                 }
+                : base.CreateOtherAccessor(context);
 
-            return base.CreateOtherAccessor(context);
-        }
-
-        protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context)
-        {
-            if (context.Name == "StorageSelector")
-                return new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Storages, true);
-
-            if (context.Name == "FolderSelector")
-                return new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Folders, true);
-
-            return base.Initializer(context);
-        }
+        protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context) => 
+            context.Name switch
+            {
+                "StorageSelector" => new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Storages, true),
+                "FolderSelector" => new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Folders, true),
+                _ => base.Initializer(context),
+            };
 
         public override IItemView<ConsoleField, PSConsole> CreateInfoCard() =>
             new ConsoleFullInfoCard();
