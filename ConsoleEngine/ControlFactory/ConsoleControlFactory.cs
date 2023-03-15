@@ -37,7 +37,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                 _ => base.Initializer(context),
             };
 
-        public override IItemView<ConsoleField, PSConsole> CreateInfoCard() =>
+        public override IItemInfo<ConsoleField, PSConsole> CreateInfoCard() =>
             new ConsoleFullInfoCard();
 
         public override GridPainter<ConsoleField, PSConsole> CreateGridPainter(

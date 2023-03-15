@@ -55,6 +55,8 @@ namespace PlayStationGames
             toolBar.AddButton(OxToolbarAction.Save).Enabled = false;
             toolBar.AddButton(OxToolbarAction.Settings, true, DockStyle.Right);
             toolBar.SendToBack();
+            toolBar.Borders.TopOx = OxSize.None;
+            toolBar.Paddings.TopOx = OxSize.Medium;
 
             foreach (OxPane face in DataManager.Faces)
                 face.BaseColor = MainPanel.BaseColor;

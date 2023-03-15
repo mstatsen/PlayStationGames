@@ -103,7 +103,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
             return base.Initializer(context);
         }
 
-        public override IItemView<GameField, Game> CreateInfoCard() =>
+        public override IItemInfo<GameField, Game> CreateInfoCard() =>
             new GameFullInfoCard();
 
         public override GridPainter<GameField, Game> CreateGridPainter(
