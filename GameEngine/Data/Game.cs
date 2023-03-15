@@ -886,7 +886,7 @@ namespace PlayStationGames.GameEngine.Data
             return true;
         }
 
-        public static IMatcher<PSConsole> AvailableConsoleFilter(ControlBuilder<GameField, Game> gameControlBuilder)
+        public static IMatcher<ConsoleField> AvailableConsoleFilter(ControlBuilder<GameField, Game> gameControlBuilder)
         {
             Filter<ConsoleField, PSConsole> filter = new();
 

@@ -139,7 +139,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private readonly RootListDAO<GameField, Game> installedGames = new();
 
-        private static IMatcher<Game> SuilableGamesFilter
+        private static IMatcher<GameField> SuilableGamesFilter
         {
             get
             {
