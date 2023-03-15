@@ -1053,7 +1053,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Difficult => TypeHelper.Helper<DifficultHelper>(),
                 GameField.CompleteTime => TypeHelper.Helper<CompleteTimeHelper>(),
                 GameField.ScreenView => TypeHelper.Helper<ScreenViewHelper>(),
-                GameField.TrophysetAccess => TypeHelper.Helper<TrophysetAccessibilityHelper>(),
+                GameField.TrophysetAccess => TypeHelper.Helper<TrophysetAccessHelper>(),
                 GameField.Status => TypeHelper.Helper<StatusHelper>(),
                 _ => null
             };

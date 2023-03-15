@@ -45,7 +45,7 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<PlayModeHelper>();
             TypeHelper.Register<ScreenViewHelper>();
             TypeHelper.Register<SourceHelper>();
-            TypeHelper.Register<TrophysetAccessibilityHelper>();
+            TypeHelper.Register<TrophysetAccessHelper>();
             TypeHelper.Register<TrophyTypeHelper>();
             TypeHelper.Register<GameRegionHelper>();
             TypeHelper.Register<GameLanguageHelper>();

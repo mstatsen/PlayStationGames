@@ -1,9 +1,7 @@
-﻿using PlayStationGames.ConsoleEngine.Data.Types;
-using OxXMLEngine;
+﻿using OxXMLEngine;
 using OxXMLEngine.Data.Types;
+using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
-using System.Collections.Generic;
-using System.Drawing;
 
 namespace PlayStationGames.GameEngine.Data.Types
 {

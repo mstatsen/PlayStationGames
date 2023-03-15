@@ -1,6 +1,6 @@
 ﻿namespace PlayStationGames.GameEngine.Data.Types
 {
-    public enum TrophysetAccessibility
+    public enum TrophysetAccess
     { 
         Ordinary,
         NeverGet,

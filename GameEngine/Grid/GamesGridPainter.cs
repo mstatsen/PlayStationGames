@@ -35,7 +35,7 @@ namespace PlayStationGames.GameEngine.Grid
                 case GameField.FullBronze:
                 case GameField.FullFromDLC:
                 case GameField.FullNet:
-                    if (item.TrophysetAccessibility == TrophysetAccessibility.NeverGet)
+                    if (item.TrophysetAccess == TrophysetAccess.NeverGet)
                         style.ForeColor = Color.Red;
                     break;
                 case GameField.Pegi:

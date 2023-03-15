@@ -174,7 +174,7 @@ namespace PlayStationGames.GameEngine.Editor
             Builder.SetVisible(GameField.Series, !isEmulator);
             Builder.SetVisible(GameField.EmulatorType, isEmulator);
 
-            bool withoutTrophyset = Builder.Value<TrophysetAccessibility>(GameField.TrophysetAccess) == TrophysetAccessibility.NoSet;
+            bool withoutTrophyset = Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) == TrophysetAccess.NoSet;
 
             Builder.SetVisible(GameField.AvailableBronze, !withoutTrophyset);
             Builder.SetVisible(GameField.AvailableSilver, !withoutTrophyset);
@@ -292,7 +292,7 @@ namespace PlayStationGames.GameEngine.Editor
 
             if (!CalcedTrophiesVisible)
             {
-                Builder[GameField.TrophysetAccess].Value = TrophysetAccessibility.NoSet;
+                Builder[GameField.TrophysetAccess].Value = TrophysetAccess.NoSet;
                 trophiesControlsHelper.CalcTrophiesControls();
             }
 

@@ -113,7 +113,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             DecoratorHelper.ListToString(list, "<br>", noWrapItems);
 
         private object TrophysetAccessibility() =>
-            DecoratorHelper.NoWrap(TypeHelper.Name(Dao.TrophysetAccessibility));
+            DecoratorHelper.NoWrap(TypeHelper.Name(Dao.TrophysetAccess));
 
         private object ScreenView() =>
             DecoratorHelper.NoWrap(TypeHelper.Name(Dao.ScreenView));

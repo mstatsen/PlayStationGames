@@ -225,7 +225,7 @@ namespace PlayStationGames.GameEngine.Data.Filter
 
             Category<GameField, Game> result = new Category<GameField, Game>("Bad trophyset")
                 .AddFilterEquals(GameField.TrophysetAccess,
-                    TrophysetAccessibility.NoSet,
+                    TrophysetAccess.NoSet,
                     FilterConcat.AND);
 
             foreach (GameField field in trophyFields)
@@ -233,7 +233,7 @@ namespace PlayStationGames.GameEngine.Data.Filter
 
             Category<GameField, Game> badTrophyset2 = new Category<GameField, Game>()
                 .AddFilterEquals(GameField.TrophysetAccess,
-                    TrophysetAccessibility.Ordinary,
+                    TrophysetAccess.Ordinary,
                     FilterConcat.AND);
 
             foreach (GameField field in trophyFields)
@@ -286,7 +286,7 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 .AddChild(
                     new Category<GameField, Game>("Some Link Lost")
                         .AddFilterNotEquals(GameField.TrophysetAccess,
-                            TrophysetAccessibility.NoSet,
+                            TrophysetAccess.NoSet,
                             FilterConcat.AND)
                         .AddFilterBlank(GameField.StrategeLink)
                         .AddFilterBlank(GameField.PSNProfilesLink)

@@ -1,5 +1,4 @@
 ﻿using OxXMLEngine.Data;
-using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.XML;
 using PlayStationGames.ConsoleEngine.Data.Fields;

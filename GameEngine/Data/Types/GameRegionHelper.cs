@@ -3,8 +3,7 @@ using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.Data.Types
 {
-    public class GameRegionHelper
-        : FieldAccordingHelper<GameField, GameRegion>
+    public class GameRegionHelper : FieldAccordingHelper<GameField, GameRegion>
     {
         public override GameRegion EmptyValue() => 
             GameRegion.Europe;

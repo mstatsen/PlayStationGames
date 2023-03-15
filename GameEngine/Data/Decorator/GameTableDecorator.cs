@@ -75,7 +75,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             Dao.GameModes.ToString();
 
         private object? TrophysetAccesibility() =>
-            TypeHelper.Name(Dao.TrophysetAccessibility);
+            TypeHelper.Name(Dao.TrophysetAccess);
 
         private object ReleasePlatforms() =>
             Dao.ReleasePlatforms.ToString();
@@ -140,7 +140,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 : TypeHelper.FullName(Dao.Difficult);
 
         private object CalcedProgress() =>
-            Dao.TrophysetAccessibility == TrophysetAccessibility.NoSet
+            Dao.TrophysetAccess == TrophysetAccess.NoSet
                 ? string.Empty
                 : $"{new GameCalculations(Dao).GetGameProgress()}%";
 

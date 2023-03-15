@@ -28,10 +28,10 @@ namespace PlayStationGames.GameEngine.Editor
 
         public void CalcTrophiesControls()
         {
-            TrophysetAccessibility? trophiesAvailableValue = 
-                (TrophysetAccessibility?)controlBuilder.Value(GameField.TrophysetAccess);
+            TrophysetAccess? trophiesAvailableValue = 
+                (TrophysetAccess?)controlBuilder.Value(GameField.TrophysetAccess);
             bool trophiesAvailable = trophiesAvailableValue != null 
-                && !trophiesAvailableValue.Equals(TrophysetAccessibility.NoSet);
+                && !trophiesAvailableValue.Equals(TrophysetAccess.NoSet);
 
             if (!trophiesAvailable)
                 controlBuilder[GameField.AvailablePlatinum].Value = false;

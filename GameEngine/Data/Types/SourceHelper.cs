@@ -68,6 +68,9 @@ namespace PlayStationGames.GameEngine.Data.Types
         public override Source EmptyValue() => 
             Source.Other;
 
+        public override Source DefaultValue() =>
+            Source.PSN;
+
         public override List<Source> DependedList(GameField field, object value)
         {
             switch (field)
