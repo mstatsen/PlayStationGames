@@ -14,12 +14,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             base.InitButtons();
             PrepareViewButton(
                 CreateButton(OxIcons.eye),
-                ViewRelatedGameHandler, 
+                (s, e) => DataManager.ViewItem<GameField, Game>(GameField.Id, SelectedItem.GameId), 
                 true);
         }
-
-        private void ViewRelatedGameHandler(object? sender, EventArgs e) =>
-            DataManager.ViewItem<GameField, Game>(GameField.Id, SelectedItem.GameId);
 
         protected override string GetText() => "Related Games";
     }

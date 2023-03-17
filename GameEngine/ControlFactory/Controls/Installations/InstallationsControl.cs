@@ -16,12 +16,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             base.InitButtons();
             PrepareViewButton(
                 CreateButton(OxIcons.eye),
-                ViewConsoleHandler,
+                (s, e) => DataManager.ViewItem<ConsoleField, PSConsole>(ConsoleField.Id, SelectedItem.ConsoleId),
                 true);
         }
-
-        private void ViewConsoleHandler(object? sender, EventArgs e) => 
-            DataManager.ViewItem<ConsoleField, PSConsole>(ConsoleField.Id, SelectedItem.ConsoleId);
 
         protected override string GetText() => 
             "Installations";

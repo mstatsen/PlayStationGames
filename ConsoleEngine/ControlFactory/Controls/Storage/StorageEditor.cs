@@ -44,11 +44,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             PrepareControl(freeSizeControl, "Free size", lastBottom, false);
             CreateLabel("Gb", sizeControl, true);
             CreateLabel("Gb", freeSizeControl, true);
-            placementControl.ValueChangeHandler += OnChangePlacement;
+            placementControl.ValueChangeHandler += (s, e) => SyncNameAndPlacenent();
         }
-
-        private void OnChangePlacement(object? sender, EventArgs e) =>
-            SyncNameAndPlacenent();
 
         private void SyncNameAndPlacenent()
         {

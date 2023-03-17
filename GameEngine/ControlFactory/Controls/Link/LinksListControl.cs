@@ -13,11 +13,17 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void InitButtons()
         {
             base.InitButtons();
-            PrepareViewButton(CreateButton(OxIcons.go), GoUrlHandler, true);
+            PrepareViewButton(
+                CreateButton(OxIcons.go),
+                (s, e) => Process.Start(
+                    new ProcessStartInfo
+                    {
+                        FileName = SelectedItem.Url,
+                        UseShellExecute = true
+                    }
+                ), 
+                true);
         }
-
-        private void GoUrlHandler(object? sender, EventArgs e) => 
-            Process.Start(SelectedItem.Url);
 
         protected override string GetText() => "Links";
     }

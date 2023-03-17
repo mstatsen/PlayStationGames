@@ -88,7 +88,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 Font = new Font(Styles.FontFamily, Styles.DefaultFontSize, FontStyle.Bold)
             };
             GameSelectButton.SetContentSize(100, 28);
-            GameSelectButton.Click += GameSelectButtonClickHandler;
+            GameSelectButton.Click += (s, e) => SelectGame();
         }
 
         private void SelectGame()
@@ -96,10 +96,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             if (DataManager.SelectItem<GameField, Game>(out Game? newSelected, MainPanel, SelectedGame, Filter))
                 SelectedGame = newSelected;
         }
-
-        private void GameSelectButtonClickHandler(object? sender, EventArgs e) =>
-            SelectGame();
-
 
         private void SetGameControlValue()
         {

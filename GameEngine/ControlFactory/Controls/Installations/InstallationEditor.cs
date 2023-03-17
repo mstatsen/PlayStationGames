@@ -34,7 +34,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             consoleControl = (ExtractAccessor<ConsoleField, PSConsole>)ConsoleBuilder[ConsoleField.Console];
             storageControl = ConsoleBuilder.Accessor("StorageSelector", FieldType.Extract);
             folderControl = ConsoleBuilder.Accessor("FolderSelector", FieldType.Extract);
-            consoleControl.ValueChangeHandler += OnConsoleChange;
+            consoleControl.ValueChangeHandler += (s, e) => SetConsoleValueInControl();
 
             int lastBottom = PrepareControl(consoleControl);
             lastBottom = PrepareControl(storageControl, lastBottom);
@@ -45,9 +45,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             storageLabel = CreateLabel("Storage", storageControl);
             folderLabel = CreateLabel("Folder", folderControl);
         }
-
-        private void OnConsoleChange(object? sender, EventArgs e) =>
-            SetConsoleValueInControl();
 
         private void SetConsoleValueInControl()
         {

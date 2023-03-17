@@ -20,17 +20,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void SetHandlers()
         {
             base.SetHandlers();
-            Click += GoUrlHandler;
+            Click += (s, e) => Process.Start(
+                    new ProcessStartInfo
+                    {
+                        FileName = Url,
+                        UseShellExecute = true
+                    }
+                );
         }
-
-        private void GoUrlHandler(object? sender, EventArgs e) =>
-            Process.Start(
-                new ProcessStartInfo 
-                { 
-                    FileName = Url, 
-                    UseShellExecute = true 
-                }
-            );
 
         protected override void PrepareColors()
         {
