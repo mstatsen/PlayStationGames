@@ -18,6 +18,9 @@
         NWiiU, 
         NWii, 
         N3DS,
+        NGB,
+        NGBC,
+        NGBA,
         iOS, 
         Android,
         Other

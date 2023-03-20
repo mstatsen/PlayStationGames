@@ -36,7 +36,10 @@ namespace PlayStationGames.GameEngine.Data.Types
             PlatformType.NSwitch or 
             PlatformType.NWiiU or 
             PlatformType.NWii or 
-            PlatformType.N3DS => 
+            PlatformType.N3DS or
+            PlatformType.NGB or
+            PlatformType.NGBC or
+            PlatformType.NGBA =>
                 PlatformFamily.Nintendo,
             PlatformType.iOS or 
             PlatformType.Android => 
@@ -64,6 +67,9 @@ namespace PlayStationGames.GameEngine.Data.Types
                 PlatformType.NWiiU => "Wii U",
                 PlatformType.NWii => "Wii",
                 PlatformType.N3DS => "3ds",
+                PlatformType.NGB => "GameBoy",
+                PlatformType.NGBC => "GameBoy Color",
+                PlatformType.NGBA => "GameBoy Advanced",
                 PlatformType.iOS => "iOS",
                 PlatformType.Android => "Android",
                 _ => "Unknown",
@@ -88,6 +94,9 @@ namespace PlayStationGames.GameEngine.Data.Types
                 PlatformType.NWiiU => "WiiU",
                 PlatformType.NWii => "Wii",
                 PlatformType.N3DS => "3ds",
+                PlatformType.NGB => "GB",
+                PlatformType.NGBC => "GBC",
+                PlatformType.NGBA => "GBA",
                 PlatformType.iOS => "iOS",
                 PlatformType.Android => "Android",
                 _ => Consts.Short_Unknown,
