@@ -140,14 +140,14 @@ namespace PlayStationGames.GameEngine.View
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = StockPanel;
-            Layouter.Template.Left = 74;
+            Layouter.Template.Left = 92;
 
             return new ControlLayouts<GameField>()
                 {
                     Layouter.AddFromTemplate(GameField.Edition),
                     Layouter.AddFromTemplate(GameField.Dlcs, -10),
-                    //TODO: layouts.AddFromTemplate(GameField.Installation, -10),
-                    Layouter.AddFromTemplate(GameField.RelatedGames, -2)
+                    Layouter.AddFromTemplate(GameField.Installations, 12),
+                    Layouter.AddFromTemplate(GameField.RelatedGames, 12)
                 };
         }
 
@@ -216,10 +216,10 @@ namespace PlayStationGames.GameEngine.View
             PreparePanel(BasePanel, string.Empty);
         }
 
-        private readonly OxPanel BasePanel = new(new Size(200, 206));
-        private readonly OxPanel StockPanel = new(new Size(200, 120));
+        private readonly OxPanel BasePanel = new(new Size(200, 216));
+        private readonly OxPanel StockPanel = new(new Size(200, 160));
         private readonly OxPanel TrophiesPanel = new(new Size(200, 156));
-        private readonly OxPanel ReleasePanel = new(new Size(200, 100));
+        private readonly OxPanel ReleasePanel = new(new Size(200, 140));
         private readonly OxPanel LinksPanel = new(new Size(200, 36));
 
         public GameFullInfoCard() : base() { }
