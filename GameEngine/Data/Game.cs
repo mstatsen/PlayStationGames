@@ -77,126 +77,126 @@ namespace PlayStationGames.GameEngine.Data
         public Guid Id
         {
             get => id;
-            set => id = GuidValue(ModifyField(id, value));
+            set => id = GuidValue(ModifyValue(GameField.Id, id, value));
         }
 
         public string EmulatorType
         {
             get => emulatorType;
-            set => emulatorType = StringValue(ModifyField(emulatorType, value));
+            set => emulatorType = StringValue(ModifyValue(GameField.EmulatorType, emulatorType, value));
         }
 
         public string ROMs
         {
             get => roms;
-            set => roms = StringValue(ModifyField(roms, value));
+            set => roms = StringValue(ModifyValue(GameField.EmulatorROMs, roms, value));
         }
 
         public string Genre
         {
             get => genre;
-            set => genre = StringValue(ModifyField(genre, value));
+            set => genre = StringValue(ModifyValue(GameField.Genre, genre, value));
         }
 
         public ScreenView ScreenView
         {
             get => screenView;
-            set => screenView = ModifyField(screenView, value);
+            set => screenView = ModifyValue(GameField.ScreenView, screenView, value);
         }
 
         public Difficult Difficult
         {
             get => difficult;
-            set => difficult = ModifyField(difficult, value);
+            set => difficult = ModifyValue(GameField.Difficult, difficult, value);
         }
         public CompleteTime CompleteTime
         {
             get => completeTime;
-            set => completeTime = ModifyField(completeTime, value);
+            set => completeTime = ModifyValue(GameField.CompleteTime, completeTime, value);
         }
 
         public TrophysetAccess TrophysetAccess
         {
             get => trophysetAccess;
-            set => trophysetAccess = ModifyField(trophysetAccess, value);
+            set => trophysetAccess = ModifyValue(GameField.TrophysetAccess, trophysetAccess, value);
         }
 
         public string Developer
         {
             get => developer;
-            set => developer = StringValue(ModifyField(developer, value));
+            set => developer = StringValue(ModifyValue(GameField.Developer, developer, value));
         }
 
         public string Publisher
         {
             get => publisher;
-            set => publisher = StringValue(ModifyField(publisher, value));
+            set => publisher = StringValue(ModifyValue(GameField.Publisher, publisher, value));
         }
 
         public int Year
         {
             get => year;
-            set => year = ModifyField(year, value);
+            set => year = ModifyValue(GameField.Year, year, value);
         }
 
         public Pegi Pegi
         {
             get => pegi;
-            set => pegi = ModifyField(pegi, value);
+            set => pegi = ModifyValue(GameField.Pegi, pegi, value);
         }
 
         public int CriticScore
         {
             get => criticScore;
-            set => criticScore = ModifyField(criticScore, value);
+            set => criticScore = ModifyValue(GameField.CriticScore, criticScore, value);
         }
 
         public string Name
         {
             get => name;
-            set => name = StringValue(ModifyField(name, value));
+            set => name = StringValue(ModifyValue(GameField.Name, name, value));
         }
 
         public Bitmap? Image
         {
             get => image;
-            set => image = ModifyField(image, value);
+            set => image = ModifyValue(GameField.Image, image, value);
         }
 
         public string Edition
         {
             get => edition;
-            set => edition = StringValue(ModifyField(edition, value));
+            set => edition = StringValue(ModifyValue(GameField.Edition, edition, value));
         }
 
         public string Series
         {
             get => series;
-            set => series = StringValue(ModifyField(series, value));
+            set => series = StringValue(ModifyValue(GameField.Series, series, value));
         }
 
         public bool Verified
         {
             get => verified;
-            set => verified = BoolValue(ModifyField(verified, value));
+            set => verified = BoolValue(ModifyValue(GameField.Verified, verified, value));
         }
 
         public bool Licensed
         {
             get => licensed;
-            set => licensed = BoolValue(ModifyField(licensed, value));
+            set => licensed = BoolValue(ModifyValue(GameField.Licensed, licensed, value));
         }
 
         public bool Favorite
         {
             get => favorite;
-            set => favorite = BoolValue(ModifyField(favorite, value));
+            set => favorite = BoolValue(ModifyValue(GameField.Favorite, favorite, value));
         }
 
         public bool TrophysetTODO
         {
             get => trophysetTODO;
-            set => trophysetTODO = BoolValue(ModifyField(trophysetTODO, value));
+            set => trophysetTODO = BoolValue(ModifyValue(GameField.TrophysetTODO, trophysetTODO, value));
         }
 
         public override int CompareField(GameField field, IFieldMapping<GameField> y)
@@ -267,37 +267,37 @@ namespace PlayStationGames.GameEngine.Data
         public PlatformType PlatformType
         {
             get => platformType;
-            set => platformType = ModifyField(platformType, value);
+            set => platformType = ModifyValue(GameField.Platform, platformType, value);
         }
 
         public GameFormat Format
         {
             get => format;
-            set => format = ModifyField(format, value);
+            set => format = ModifyValue(GameField.Format, format, value);
         }
 
         public Source SourceType
         {
             get => sourceType;
-            set => sourceType = ModifyField(sourceType, value);
+            set => sourceType = ModifyValue(GameField.Source, sourceType, value);
         }
 
         public GameRegion GameRegion
         {
             get => region;
-            set => region = ModifyField(region, value);
+            set => region = ModifyValue(GameField.Region, region, value);
         }
 
         public GameLanguage GameLanguage
         {
             get => language;
-            set => language = ModifyField(language, value);
+            set => language = ModifyValue(GameField.Language, language, value);
         }
 
         public string Code
         {
             get => code;
-            set => code = StringValue(ModifyField(code, value));
+            set => code = StringValue(ModifyValue(GameField.Code, code, value));
         }
 
         public Game() : base() =>
@@ -680,14 +680,14 @@ namespace PlayStationGames.GameEngine.Data
         public override void Init()
         {
             GenerateGuid();
-            AddMember(GameModes);
-            AddMember(Dlcs);
-            AddMember(Installations);
-            AddMember(Links);
-            AddMember(RelatedGames);
-            AddMember(AvailableTrophies);
-            AddMember(EarnedTrophies);
-            AddMember(ReleasePlatforms);
+            AddMember(GameField.GameModes, GameModes);
+            AddMember(GameField.Dlcs, Dlcs);
+            AddMember(GameField.Installations, Installations);
+            AddMember(GameField.Links, Links);
+            AddMember(GameField.RelatedGames, RelatedGames);
+            AddMember(AvailableTrophies); //TODO: 
+            AddMember(EarnedTrophies); //TODO:
+            AddMember(GameField.ReleasePlatforms, ReleasePlatforms);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)

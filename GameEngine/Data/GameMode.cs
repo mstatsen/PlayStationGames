@@ -19,7 +19,7 @@ namespace PlayStationGames.GameEngine.Data
         public PlayMode PlayMode
         {
             get => playMode;
-            set => playMode = ModifyField(playMode, value);
+            set => playMode = ModifyValue(playMode, value);
         }
 
         public override void Clear() =>

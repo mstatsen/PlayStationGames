@@ -14,13 +14,13 @@ namespace PlayStationGames.GameEngine.Grid
     {
         public GamesGridPainter(GridFieldColumns<GameField> columnsDictionary) : base(columnsDictionary) { }
 
-        public override DataGridViewCellStyle GetCellStyle(Game item, GameField field, bool selected = false)
+        public override DataGridViewCellStyle GetCellStyle(Game? item, GameField field, bool selected = false)
         {
             DataGridViewCellStyle style = new()
             {
-                BackColor = TypeHelper.BackColor(item.SourceType),
+                BackColor = TypeHelper.BackColor(item?.SourceType),
                 SelectionBackColor = Color.Transparent,
-                ForeColor = TypeHelper.FontColor(new GameCalculations(item).GetGameStatus())
+                ForeColor = TypeHelper.FontColor(item != null ? new GameCalculations(item).GetGameStatus() : null) 
             };
 
             FontStyle fontStyle = FontStyle.Regular;
@@ -35,19 +35,22 @@ namespace PlayStationGames.GameEngine.Grid
                 case GameField.FullBronze:
                 case GameField.FullFromDLC:
                 case GameField.FullNet:
-                    if (item.TrophysetAccess == TrophysetAccess.NeverGet)
+                    if (item != null && item.TrophysetAccess == TrophysetAccess.NeverGet)
                         style.ForeColor = Color.Red;
                     break;
                 case GameField.Pegi:
                     fontStyle |= FontStyle.Bold;
                     style.ForeColor = new OxColorHelper(
-                        TypeHelper.FontColor(item.Pegi)
+                        TypeHelper.FontColor(item?.Pegi)
                     ).Darker(2);
                     fontSize -= 1;
                     break;
                 case GameField.CriticScore:
                     style.ForeColor = Color.Black;
-                    style.BackColor = CriticScoreBackColor(item.CriticScore);
+
+                    if (item != null)
+                        style.BackColor = CriticScoreBackColor(item.CriticScore);
+
                     break;
             }
 

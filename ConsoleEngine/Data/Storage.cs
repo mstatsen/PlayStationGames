@@ -13,31 +13,31 @@ namespace PlayStationGames.ConsoleEngine.Data
         public Guid Id
         {
             get => id;
-            set => id = ModifyField(id, value);
+            set => id = ModifyValue(id, value);
         }
 
         public StoragePlacement Placement
         {
             get => placement;
-            set => placement = ModifyField(placement, value);
+            set => placement = ModifyValue(placement, value);
         }
 
         public string Size
         {
             get => size;
-            set => size = StringValue(ModifyField(size, value));
+            set => size = StringValue(ModifyValue(size, value));
         }
 
         public string FreeSize
         {
             get => freeSize;
-            set => freeSize = StringValue(ModifyField(freeSize, value));
+            set => freeSize = StringValue(ModifyValue(freeSize, value));
         }
 
         public string Name
         {
             get => name;
-            set => name = StringValue(ModifyField(name, value));
+            set => name = StringValue(ModifyValue(name, value));
         }
 
         public int GameCount =>

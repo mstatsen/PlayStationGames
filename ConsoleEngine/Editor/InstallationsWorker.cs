@@ -31,6 +31,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 $"Are you sure to want uninstall {(selectedList.Count > 1 ? "selected games" : currentItem.FullTitle())}?"
             ) == DialogResult.Yes;
 
+            needShowUninstallMessage = false;
+
 
             if (uninstallAvailable)
             {
@@ -215,7 +217,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
             if (Console == null)
                 return;
 
-            foreach (Game game in DataManager.FullItemsList<GameField, Game>())
+            foreach (Game game in DataManager.FullItemsList<GameField, Game>()
+                    .FindAll(g => g.Installations.Contains(i => i.ConsoleId == Console.Id)))
                 if (!installedGames.Contains(g => g.Id == game.Id))
                     game.Installations.Remove(i => i.ConsoleId == Console.Id);
         }

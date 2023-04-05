@@ -14,13 +14,13 @@ namespace PlayStationGames.GameEngine.Data
         public TrophyType Type
         {
             get => type;
-            set => type = ModifyField(type, value);
+            set => type = ModifyValue(type, value);
         }
 
         public int Count
         {
             get => count;
-            set => count = ModifyField(count, value);
+            set => count = ModifyValue(count, value);
         }
 
         public override void Clear()

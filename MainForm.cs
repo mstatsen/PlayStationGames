@@ -1,19 +1,19 @@
-﻿using PlayStationGames.ConsoleEngine.Data;
+﻿using OxLibrary;
+using OxLibrary.Controls;
+using OxLibrary.Dialogs;
+using OxLibrary.Panels;
 using OxXMLEngine;
 using OxXMLEngine.Data;
-using PlayStationGames.GameEngine.Data;
 using OxXMLEngine.Settings;
-using OxLibrary.Controls;
-using OxLibrary.Panels;
-using OxLibrary.Dialogs;
-using OxLibrary;
+using PlayStationGames.ConsoleEngine.Data;
+using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames
 {
     public partial class MainForm : OxForm, IDataReceiver
     {
-        public void DataModifiedHandler(DAO dao, bool Modified) =>
-            toolBar.Actions[OxToolbarAction.Save].Enabled |= Modified;
+        public void DataModifiedHandler(DAO dao, DAOModifyEventArgs e) =>
+            toolBar.Actions[OxToolbarAction.Save].Enabled |= e.Modified;
 
         public override Bitmap FormIcon =>
             Resources.PS.ToBitmap();

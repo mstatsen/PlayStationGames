@@ -169,7 +169,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
 
         public override ConsoleField UniqueField => ConsoleField.Id;
 
-        public override List<ConsoleField> GetFields(FieldsVariant variant, FieldsFilling filling)
+        public override List<ConsoleField> GetFieldsInternal(FieldsVariant variant, FieldsFilling filling)
         {
             List<ConsoleField> result = new();
 
@@ -182,9 +182,6 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             result.AddRange(fields);
             return result;
         }
-
-        public override List<ConsoleField> FullList(FieldsVariant variant) =>
-            GetFields(variant, FieldsFilling.Full);
 
         protected override List<ConsoleField> GetCalcedFields() => new();
 

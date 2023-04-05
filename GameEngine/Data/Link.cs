@@ -13,13 +13,13 @@ namespace PlayStationGames.GameEngine.Data
         public string Name
         {
             get => name;
-            set => name = StringValue(ModifyField(name, value));
+            set => name = StringValue(ModifyValue(name, value));
         }
 
         public string Url
         {
             get => url;
-            set => url = StringValue(ModifyField(url, value));
+            set => url = StringValue(ModifyValue(url, value));
         }
 
         public override void Clear()

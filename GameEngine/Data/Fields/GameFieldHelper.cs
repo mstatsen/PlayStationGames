@@ -141,80 +141,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Publisher
                 }
             },
-            [FieldsVariant.Html] = new GameFieldsFillingDictionary()
-            {
-                [FieldsFilling.Full] = new List<GameField>
-                {
-                    GameField.Image,
-                    GameField.Name,
-                    GameField.Licensed,
-                    GameField.Platform,
-                    GameField.Source,
-                    GameField.Format,
-                    GameField.Status,
-                    GameField.Edition,
-                    GameField.Dlcs,
-                    GameField.Series,
-                    GameField.CriticScore,
-                    GameField.FullGenre,
-                    GameField.GameModes,
-                    GameField.Pegi,
-                    GameField.Year,
-                    GameField.Developer,
-                    GameField.Publisher,
-                    GameField.ReleasePlatforms,
-                    GameField.Difficult,
-                    GameField.CompleteTime,
-                    GameField.TrophysetAccess,
-                    GameField.Progress,
-                    GameField.FullPlatinum,
-                    GameField.FullGold,
-                    GameField.FullSilver,
-                    GameField.FullBronze,
-                    GameField.FullFromDLC,
-                    GameField.FullNet,
-                    GameField.EarnedPoints,
-                    GameField.RelatedGames,
-                    GameField.Links,
-                    GameField.Verified,
-                    GameField.Favorite,
-                    GameField.TrophysetTODO,
-                    GameField.EmulatorType,
-                    GameField.EmulatorROMs,
-                    GameField.Region,
-                    GameField.Language,
-                    GameField.Code
-                },
-                [FieldsFilling.Default] = new List<GameField>
-                {
-                    GameField.Image,
-                    GameField.Name,
-                    GameField.Licensed,
-                    GameField.Region,
-                    GameField.Platform,
-                    GameField.Source,
-                    GameField.Status,
-                    GameField.Edition,
-                    GameField.Dlcs,
-                    GameField.CriticScore,
-                    GameField.FullGenre,
-                    GameField.GameModes,
-                    GameField.Year,
-                    GameField.Difficult,
-                    GameField.CompleteTime,
-                    GameField.TrophysetAccess,
-                    GameField.Progress,
-                    GameField.FullPlatinum,
-                    GameField.FullGold,
-                    GameField.FullSilver,
-                    GameField.FullBronze,
-                    GameField.FullFromDLC,
-                    GameField.FullNet,
-                    GameField.RelatedGames,
-                    GameField.Links,
-                    GameField.Code
-                }
-            },
             [FieldsVariant.Inline] = new GameFieldsFillingDictionary()
             {
                 [FieldsFilling.Full] = new List<GameField>
@@ -480,7 +406,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             }
         };
 
-        public override List<GameField> GetFields(FieldsVariant variant, FieldsFilling filling)
+        public override List<GameField> GetFieldsInternal(FieldsVariant variant, FieldsFilling filling)
         {
             List<GameField> result = new();
 
@@ -493,9 +419,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             result.AddRange(fields);
             return result;
         }
-
-        public override List<GameField> FullList(FieldsVariant variant) =>
-            GetFields(variant, FieldsFilling.Full);
 
         protected override List<GameField> GetMandatoryFields() => new()
         {

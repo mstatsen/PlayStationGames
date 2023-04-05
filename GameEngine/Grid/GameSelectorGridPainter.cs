@@ -14,7 +14,7 @@ namespace PlayStationGames.GameEngine.Grid
         public GameSelectorGridPainter() : base(new GridFieldColumns<GameField>())
         { }
 
-        public override DataGridViewCellStyle GetCellStyle(Game item, GameField field, bool selected = false)
+        public override DataGridViewCellStyle GetCellStyle(Game? item, GameField field, bool selected = false)
         {
             DataGridViewCellStyle style = new()
             {
@@ -30,9 +30,11 @@ namespace PlayStationGames.GameEngine.Grid
                 fontStyle |= FontStyle.Bold;
 
             style.Font = new Font(Styles.FontFamily, fontSize, fontStyle);
-            style.BackColor = TypeHelper.BackColor(item.SourceType);
+            style.BackColor = TypeHelper.BackColor(item?.SourceType);
             style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
-            style.ForeColor = TypeHelper.FontColor(new GameCalculations(item).GetGameStatus());
+
+            if (item != null)
+                style.ForeColor = TypeHelper.FontColor(new GameCalculations(item).GetGameStatus());
 
             style.SelectionForeColor = style.ForeColor;
             return style;

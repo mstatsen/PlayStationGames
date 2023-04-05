@@ -9,7 +9,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         public string Name
         {
             get => name;
-            set => name = StringValue(ModifyField(name, value));
+            set => name = StringValue(ModifyValue(name, value));
         }
 
         public override void Clear() => 

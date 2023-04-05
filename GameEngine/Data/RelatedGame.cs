@@ -21,13 +21,13 @@ namespace PlayStationGames.GameEngine.Data
         public Guid GameId
         {
             get => gameId;
-            set => gameId = ModifyField(gameId, value);
+            set => gameId = ModifyValue(gameId, value);
         }
 
         public bool SameTrophyset
         {
             get => sameTrophyset;
-            set => sameTrophyset = ModifyField(sameTrophyset, value);
+            set => sameTrophyset = ModifyValue(sameTrophyset, value);
         }
 
         protected override void LoadData(XmlElement element)

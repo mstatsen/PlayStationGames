@@ -12,11 +12,11 @@ namespace PlayStationGames.ConsoleEngine.Grid
         public ConsolesGridPainter(GridFieldColumns<ConsoleField> columnsDictionary) : base(columnsDictionary)
         { }
 
-        public override DataGridViewCellStyle GetCellStyle(PSConsole console, ConsoleField field, bool selected = false)
+        public override DataGridViewCellStyle GetCellStyle(PSConsole? console, ConsoleField field, bool selected = false)
         {
             DataGridViewCellStyle style = new()
             {
-                BackColor = TypeHelper.BackColor(console.Firmware),
+                BackColor = TypeHelper.BackColor(console?.Firmware),
                 ForeColor = EngineStyles.DefaultGridFontColor
             };
 

@@ -16,7 +16,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         public Guid Id
         {
             get => id;
-            set => id = GuidValue(ModifyField(id, value));
+            set => id = GuidValue(ModifyValue(ConsoleField.Id, id, value));
         }
 
         public Bitmap Icon => 
@@ -25,24 +25,24 @@ namespace PlayStationGames.ConsoleEngine.Data
         public string Name
         {
             get => name;
-            set => name = StringValue(ModifyField(name, value));
+            set => name = StringValue(ModifyValue(ConsoleField.Name, name, value));
         }
         public ConsoleGeneration Generation
         {
             get => generation;
-            set => generation = ModifyField(generation, value);
+            set => generation = ModifyValue(ConsoleField.Generation, generation, value);
         }
 
         public ConsoleModel Model
         {
             get => model;
-            set => model = ModifyField(model, value);
+            set => model = ModifyValue(ConsoleField.Model, model, value);
         }
 
         public FirmwareType Firmware
         {
             get => firmware;
-            set => firmware = ModifyField(firmware, value);
+            set => firmware = ModifyValue(ConsoleField.Firmware, firmware, value);
         }
 
         public Folders Folders => folders;
@@ -61,8 +61,8 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override void Init()
         {
             GenerateGuid();
-            AddMember(Storages);
-            AddMember(Folders);
+            AddMember(ConsoleField.Storages, Storages);
+            AddMember(ConsoleField.Folders, Folders);
         }
 
         private void GenerateGuid() =>

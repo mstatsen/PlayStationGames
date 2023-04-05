@@ -13,7 +13,7 @@ namespace PlayStationGames.GameEngine.Data
         public PlatformType Type
         {
             get => type;
-            set => type = ModifyField(type, value);
+            set => type = ModifyValue(type, value);
         }
 
         public override void Clear() => 

@@ -15,19 +15,19 @@ namespace PlayStationGames.GameEngine.Data
         public Guid ConsoleId
         {
             get => consoleId;
-            set => consoleId = ModifyField(consoleId, value);
+            set => consoleId = ModifyValue(consoleId, value);
         }
 
         public Guid StorageId
         {
             get => storageId;
-            set => storageId = ModifyField(storageId, value);
+            set => storageId = ModifyValue(storageId, value);
         }
 
         public string Folder
         {
             get => folder;
-            set => folder = StringValue(ModifyField(folder, value));
+            set => folder = StringValue(ModifyValue(folder, value));
         }
 
         public override void Clear()
