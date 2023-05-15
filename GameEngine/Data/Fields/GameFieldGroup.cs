@@ -14,7 +14,7 @@
         Link,
         ReleaseBase,
         ReleasePlatforms,
-        Flags,
+        Tags,
         System
     }
 }

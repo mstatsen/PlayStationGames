@@ -27,8 +27,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Id => "Game ID:",
                 GameField.Name => "Name",
                 GameField.Licensed => "Licensed",
-                GameField.Favorite => "Favorite",
-                GameField.TrophysetTODO => "Trophyset complete queue",
+                GameField.Tags => "Tags",
                 GameField.Image => "Image",
                 GameField.Edition => "Edition",
                 GameField.Series => "Series",
@@ -130,8 +129,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Series,
                     GameField.Source,
                     GameField.TrophysetAccess,
-                    GameField.Favorite,
-                    GameField.TrophysetTODO,
+                    GameField.Tags,
                     GameField.Region,
                     GameField.Language
                 },
@@ -174,8 +172,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.FullNet,
                     GameField.EarnedPoints,
                     GameField.Verified,
-                    GameField.Favorite,
-                    GameField.TrophysetTODO,
+                    GameField.Tags,
                     GameField.Code
                 },
                 [FieldsFilling.Default] = new List<GameField>
@@ -261,8 +258,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.CompleteTime,
                     GameField.TrophysetAccess,
                     GameField.Progress,
-                    GameField.Favorite,
-                    GameField.TrophysetTODO
+                    GameField.Tags
                 },
                 [FieldsFilling.Default] = new List<GameField>
                 {
@@ -332,9 +328,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.StrategeLink,
                     GameField.PSNProfilesLink,
                     GameField.Verified,
-                    GameField.Favorite,
-                    GameField.TrophysetTODO
-
+                    GameField.Tags
                 },
                 [FieldsFilling.Default] = new List<GameField>
                 {
@@ -396,8 +390,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.TrophysetAccess,
                     GameField.Verified,
                     GameField.Licensed,
-                    GameField.Favorite,
-                    GameField.TrophysetTODO,
+                    GameField.Tags,
                     GameField.EmulatorType,
                     GameField.EmulatorROMs,
                     GameField.Region,
@@ -446,8 +439,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.ScreenView,
             GameField.TrophysetAccess,
             GameField.Verified,
-            GameField.Favorite,
-            GameField.TrophysetTODO,
+            GameField.Tags,
             GameField.Region,
             GameField.Language
         };
@@ -520,8 +512,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.RelatedGames,
             GameField.Verified,
             GameField.PlatformFamily,
-            GameField.Favorite,
-            GameField.TrophysetTODO,
+            GameField.Tags,
             GameField.EmulatorType,
             GameField.EmulatorROMs
         };
@@ -570,8 +561,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Links,
             GameField.RelatedGames,
             GameField.Verified,
-            GameField.Favorite,
-            GameField.TrophysetTODO,
+            GameField.Tags,
             GameField.EmulatorType,
             GameField.EmulatorROMs
         };
@@ -624,8 +614,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Links,
             GameField.RelatedGames,
             GameField.Verified,
-            GameField.Favorite,
-            GameField.TrophysetTODO,
+            GameField.Tags,
             GameField.Region,
             GameField.Language,
             GameField.Code
@@ -697,8 +686,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             [GameField.Id] = FilterOperations.EnumOperations,
             [GameField.Licensed] = FilterOperations.EnumOperations,
-            [GameField.Favorite] = FilterOperations.EnumOperations,
-            [GameField.TrophysetTODO] = FilterOperations.EnumOperations,
+            [GameField.Tags] = FilterOperations.EnumOperations,
             [GameField.Name] = FilterOperations.StringOperations,
             [GameField.Image] = FilterOperations.UnaryOperations,
             [GameField.Edition] = FilterOperations.StringOperations,
@@ -909,7 +897,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Publisher or 
                 GameField.Genre or 
                 GameField.FullGenre or 
-                GameField.EmulatorType => 
+                GameField.EmulatorType =>
                     FieldType.Extract,
                 GameField.PlatformFamily or 
                 GameField.Platform or 
@@ -927,9 +915,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.EarnedPlatinum or 
                 GameField.AvailablePlatinum or 
                 GameField.Verified or 
-                GameField.Licensed or 
-                GameField.Favorite or 
-                GameField.TrophysetTODO => 
+                GameField.Licensed => 
                     FieldType.Boolean,
                 GameField.EarnedGold or 
                 GameField.EarnedSilver or 
@@ -953,7 +939,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Links or 
                 GameField.Installations or 
                 GameField.RelatedGames or 
-                GameField.ReleasePlatforms => 
+                GameField.ReleasePlatforms or
+                GameField.Tags => 
                     FieldType.List,
                 GameField.Year or 
                 GameField.StrategeLink or 

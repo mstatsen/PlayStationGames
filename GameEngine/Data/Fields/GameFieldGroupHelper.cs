@@ -18,7 +18,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.Genre,
                 GameFieldGroup.Trophyset,
 
-                GameFieldGroup.Flags,
+                GameFieldGroup.Tags,
                 GameFieldGroup.Link,
                 GameFieldGroup.Installations,
                 GameFieldGroup.GameMode,
@@ -41,7 +41,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.ReleaseBase => "Release",
                 GameFieldGroup.ReleasePlatforms => "Platforms",
                 GameFieldGroup.System => "System",
-                GameFieldGroup.Flags => "Flags",
+                GameFieldGroup.Tags => "Tags",
                 GameFieldGroup.Emulator => "ROMs",
                 _ => string.Empty,
             };
@@ -86,9 +86,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameFieldGroup.Link,
                 GameField.RelatedGames => 
                     GameFieldGroup.RelatedGames,
-                GameField.Favorite or 
-                GameField.TrophysetTODO => 
-                    GameFieldGroup.Flags,
+                GameField.Tags => 
+                    GameFieldGroup.Tags,
                 GameField.Field or 
                 GameField.Verified => 
                     GameFieldGroup.System,
@@ -117,7 +116,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.GameMode or
                 GameFieldGroup.Link or 
                 GameFieldGroup.Installations or 
-                GameFieldGroup.Flags => 
+                GameFieldGroup.Tags => 
                     294,
                 GameFieldGroup.ReleaseBase => 
                     200,
@@ -143,7 +142,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 GameFieldGroup.Emulator =>
                     200,
-                GameFieldGroup.Flags =>
+                GameFieldGroup.Tags =>
                     69,
                 _ =>
                     84,

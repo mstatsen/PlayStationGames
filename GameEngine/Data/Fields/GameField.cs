@@ -46,8 +46,7 @@
         EmulatorROMs,
         TrophysetAccess,
         Verified,
-        Favorite,
-        TrophysetTODO,
+        Tags,
 
         //calced fields
         Progress,

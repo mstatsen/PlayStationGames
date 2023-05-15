@@ -33,8 +33,6 @@ namespace PlayStationGames.GameEngine.Data
         private string code = string.Empty;
         private bool verified = false;
         private bool licensed = true;
-        private bool favorite = false;
-        private bool trophysetTODO = false;
         private string emulatorType = string.Empty;
         private string roms = string.Empty;
         private string genre = string.Empty;
@@ -45,6 +43,7 @@ namespace PlayStationGames.GameEngine.Data
         private int criticScore;
         public readonly ListDAO<Installation> Installations = new();
         public readonly ListDAO<DLC> Dlcs = new();
+        public readonly ListDAO<Tag> Tags = new();
         public readonly ListDAO<Link> Links = new();
         public readonly RelatedGames RelatedGames = new();
 
@@ -187,18 +186,6 @@ namespace PlayStationGames.GameEngine.Data
             set => licensed = BoolValue(ModifyValue(GameField.Licensed, licensed, value));
         }
 
-        public bool Favorite
-        {
-            get => favorite;
-            set => favorite = BoolValue(ModifyValue(GameField.Favorite, favorite, value));
-        }
-
-        public bool TrophysetTODO
-        {
-            get => trophysetTODO;
-            set => trophysetTODO = BoolValue(ModifyValue(GameField.TrophysetTODO, trophysetTODO, value));
-        }
-
         public override int CompareField(GameField field, IFieldMapping<GameField> y)
         {
             switch (field)
@@ -215,8 +202,6 @@ namespace PlayStationGames.GameEngine.Data
                     return StringValue(this[field]).CompareTo(StringValue(y[field]));
                 case GameField.Verified:
                 case GameField.Licensed:
-                case GameField.Favorite:
-                case GameField.TrophysetTODO:
                     return BoolValue(this[field]).CompareTo(BoolValue(y[field]));
                 case GameField.EarnedPlatinum:
                 case GameField.AvailablePlatinum:
@@ -251,6 +236,7 @@ namespace PlayStationGames.GameEngine.Data
                     GameField.Language => GameLanguage.CompareTo(yGame.GameLanguage),
                     GameField.GameModes => GameModes.CompareTo(yGame.GameModes),
                     GameField.Dlcs => Dlcs.CompareTo(yGame.Dlcs),
+                    GameField.Tags => Tags.CompareTo(yGame.Tags),
                     GameField.Links => Links.CompareTo(yGame.Links),
                     GameField.Installations => Links.CompareTo(yGame.Links),
                     GameField.RelatedGames => RelatedGames.CompareTo(yGame.RelatedGames),
@@ -428,12 +414,6 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Verified:
                     Verified = BoolValue(value);
                     break;
-                case GameField.Favorite:
-                    Favorite = BoolValue(value);
-                    break;
-                case GameField.TrophysetTODO:
-                    TrophysetTODO = BoolValue(value);
-                    break;
                 case GameField.Licensed:
                     Licensed = BoolValue(value);
                     break;
@@ -454,6 +434,9 @@ namespace PlayStationGames.GameEngine.Data
                     break;
                 case GameField.Dlcs:
                     Dlcs.CopyFrom((DAO?)value);
+                    break;
+                case GameField.Tags:
+                    Tags.CopyFrom((DAO?)value);
                     break;
                 case GameField.Links:
                     Links.CopyFrom((DAO?)value);
@@ -612,8 +595,6 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.ReleasePlatforms => ReleasePlatforms,
                 GameField.Verified => Verified,
                 GameField.Licensed => Licensed,
-                GameField.Favorite => Favorite,
-                GameField.TrophysetTODO => TrophysetTODO,
                 GameField.Installations => Installations,
                 GameField.Difficult => Difficult,
                 GameField.CompleteTime => CompleteTime,
@@ -621,6 +602,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.ScreenView => ScreenView,
                 GameField.GameModes => GameModes,
                 GameField.Dlcs => Dlcs,
+                GameField.Tags => Tags,
                 GameField.Links => Links,
                 GameField.RelatedGames => RelatedGames,
                 GameField.EmulatorType => EmulatorType,
@@ -642,8 +624,6 @@ namespace PlayStationGames.GameEngine.Data
             Series = string.Empty;
             Verified = false;
             Licensed = true;
-            Favorite = false;
-            TrophysetTODO = false;
             ROMs = string.Empty;
             EmulatorType = string.Empty;
             Genre = string.Empty;
@@ -668,6 +648,7 @@ namespace PlayStationGames.GameEngine.Data
             GameModes.Clear();
             Installations.Clear();
             Dlcs.Clear();
+            Tags.Clear();
             Links.Clear();
             RelatedGames.Clear();
             AvailableTrophies.Clear();
@@ -682,6 +663,7 @@ namespace PlayStationGames.GameEngine.Data
             GenerateGuid();
             AddMember(GameField.GameModes, GameModes);
             AddMember(GameField.Dlcs, Dlcs);
+            AddMember(GameField.Tags, Tags);
             AddMember(GameField.Installations, Installations);
             AddMember(GameField.Links, Links);
             AddMember(GameField.RelatedGames, RelatedGames);
@@ -712,8 +694,6 @@ namespace PlayStationGames.GameEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.Format, Format);
             XmlHelper.AppendElement(element, XmlConsts.Verified, Verified);
             XmlHelper.AppendElement(element, XmlConsts.Licensed, Licensed);
-            XmlHelper.AppendElement(element, XmlConsts.Favorite, Favorite);
-            XmlHelper.AppendElement(element, XmlConsts.TrophysetTODO, TrophysetTODO);
             XmlHelper.AppendElement(element, XmlConsts.EmulatorType, EmulatorType, true);
             XmlHelper.AppendElement(element, XmlConsts.ROMs, ROMs, true);
             XmlHelper.AppendElement(element, XmlConsts.Screen, ScreenView);
@@ -746,8 +726,6 @@ namespace PlayStationGames.GameEngine.Data
             Licensed = (XmlHelper.Value(element, XmlConsts.Licensed) == string.Empty) 
                 || XmlHelper.ValueBool(element, XmlConsts.Licensed);
 
-            Favorite = XmlHelper.ValueBool(element, XmlConsts.Favorite);
-            TrophysetTODO = XmlHelper.ValueBool(element, XmlConsts.TrophysetTODO);
             SourceType = XmlHelper.Value<Source>(element, XmlConsts.Source);
             GameRegion = XmlHelper.Value<GameRegion>(element, XmlConsts.Region);
             GameLanguage = XmlHelper.Value<GameLanguage>(element, XmlConsts.Language);
@@ -817,8 +795,6 @@ namespace PlayStationGames.GameEngine.Data
                     && PlatformType.Equals(otherGame.PlatformType)
                     && Format.Equals(otherGame.Format)
                     && Licensed.Equals(otherGame.Licensed)
-                    && Favorite.Equals(otherGame.Favorite)
-                    && TrophysetTODO.Equals(otherGame.TrophysetTODO)
                     && Verified.Equals(otherGame.Verified)
                     && SourceType.Equals(otherGame.SourceType)
                     && EmulatorType.Equals(otherGame.EmulatorType) 
@@ -830,6 +806,7 @@ namespace PlayStationGames.GameEngine.Data
                     && Difficult.Equals(otherGame.Difficult)
                     && CompleteTime.Equals(otherGame.CompleteTime)
                     && Dlcs.Equals(otherGame.Dlcs)
+                    && Tags.Equals(otherGame.Tags)
                     && Links.Equals(otherGame.Links)
                     && RelatedGames.Equals(otherGame.RelatedGames))
                     && EarnedTrophies.Equals(otherGame.EarnedTrophies)

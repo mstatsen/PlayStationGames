@@ -41,6 +41,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     GameField.Year => new YearAccessor<GameField, Game>(context),
                     GameField.GameModes => CreateListAccessor<GameMode, ListDAO<GameMode>, GameModesControl>(context, ControlScope.Editor),
                     GameField.Dlcs => CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
+                    GameField.Tags => CreateListAccessor<Tag, ListDAO<Tag>, TagListControl>(context, ControlScope.Editor),
                     GameField.Installations => CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),
                     GameField.Links => NewLinkAccessor(context),
                     GameField.RelatedGames => CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context),
@@ -99,6 +100,9 @@ namespace PlayStationGames.GameEngine.ControlFactory
 
             if (context.Name == "LinkName")
                 return new LinkNameInitializer(null);
+            else
+            if (context.Name == "TagName")
+                return new TagNameInitializer(null);
 
             return base.Initializer(context);
         }

@@ -7,7 +7,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
 {
     internal class GameHtmlDecorator : GameDecorator
     {
-        public GameHtmlDecorator(Game game) : base(game) { }
+        public GameHtmlDecorator(Game dao) : base(dao) { }
 
         public override object? Value(GameField field) => 
             field switch
@@ -153,7 +153,8 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Difficult or 
                 GameField.CompleteTime or 
                 GameField.ScreenView or 
-                GameField.Links or 
+                GameField.Links or
+                GameField.Tags or
                 GameField.TrophysetAccess or 
                 GameField.Progress or 
                 GameField.FullPlatinum or 

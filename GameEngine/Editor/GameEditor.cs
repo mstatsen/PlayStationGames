@@ -34,7 +34,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Link or 
                 GameFieldGroup.GameMode or 
-                GameFieldGroup.Flags => 
+                GameFieldGroup.Tags => 
                     PanelRight,
                 GameFieldGroup.Genre or 
                 GameFieldGroup.Trophyset => 

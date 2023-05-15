@@ -29,8 +29,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.ReleasePlatforms,
                 GameField.Verified,
                 GameField.Licensed,
-                GameField.Favorite,
-                GameField.TrophysetTODO
+                GameField.Tags
             };
 
         protected override List<GameField> AutoSizeFields() =>
@@ -39,9 +38,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.AvailablePlatinum,
                 GameField.EarnedPlatinum,
                 GameField.Verified,
-                GameField.Licensed,
-                GameField.Favorite,
-                GameField.TrophysetTODO
+                GameField.Licensed
             };
 
         protected override List<GameField> FillDockFields() =>
@@ -49,6 +46,7 @@ namespace PlayStationGames.GameEngine.Editor
             {
                 GameField.RelatedGames,
                 GameField.Dlcs,
+                GameField.Tags,
                 GameField.Links,
                 GameField.Installations,
                 GameField.GameModes,
@@ -81,7 +79,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Publisher,
                 GameField.Year,
                 GameField.Pegi,
-                GameField.TrophysetTODO,
                 GameField.Region
             };
 
@@ -107,8 +104,6 @@ namespace PlayStationGames.GameEngine.Editor
                     GroupFrames[GameFieldGroup.Base].BaseColor,
                 GameField.Verified or
                 GameField.Licensed or
-                GameField.Favorite or
-                GameField.TrophysetTODO or
                 GameField.AvailablePlatinum or
                 GameField.EarnedPlatinum or
                 GameField.ReleasePlatforms =>
@@ -140,9 +135,7 @@ namespace PlayStationGames.GameEngine.Editor
             field switch
             {
                 GameField.Image or 
-                GameField.Verified or 
-                GameField.Favorite or 
-                GameField.TrophysetTODO => 
+                GameField.Verified => 
                     8,
                 GameField.Licensed => 
                     200,
@@ -198,9 +191,7 @@ namespace PlayStationGames.GameEngine.Editor
             field == GameField.Image
                 ? 110
                 : field == GameField.Verified ||
-                    field == GameField.Licensed ||
-                    field == GameField.Favorite ||
-                    field == GameField.TrophysetTODO
+                    field == GameField.Licensed
                     ? 20
                     : base.Height(field);
 
@@ -264,8 +255,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Difficult =>
                     20,
                 GameField.Image or
-                GameField.Source or 
-                GameField.TrophysetTODO => 
+                GameField.Source => 
                     8,
                 GameField.Edition => 
                     4,
