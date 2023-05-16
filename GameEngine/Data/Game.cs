@@ -291,6 +291,59 @@ namespace PlayStationGames.GameEngine.Data
 
         private static object? PrepareValueToSet(GameField field, object? value)
         {
+            switch (field)
+            {
+                case GameField.Dlcs:
+                    if (value is DLC dlc)
+                        return new ListDAO<DLC>()
+                        {
+                            dlc
+                        };
+                    break;
+                case GameField.Links:
+                    if (value is Link link)
+                        return new ListDAO<Link>()
+                        {
+                            link
+                        };
+                    break;
+                case GameField.Installations:
+                    if (value is Installation installation)
+                        return new ListDAO<Installation>()
+                        {
+                            installation
+                        };
+                    break;
+                case GameField.RelatedGames:
+                    if (value is RelatedGame relatedGame)
+                        return new RelatedGames()
+                        {
+                            relatedGame
+                        };
+                    break;
+                case GameField.GameModes:
+                    if (value is GameMode gameMode)
+                        return new ListDAO<GameMode>()
+                        {
+                            gameMode
+                        };
+                    break;
+                case GameField.Tags:
+                    if (value is Tag tag)
+                        return new ListDAO<Tag>()
+                        {
+                            tag
+                        };
+                    break;
+                case GameField.ReleasePlatforms:
+                    if (value is Platform platform)
+                        return new Platforms()
+                        {
+                            platform
+                        };
+                    break;
+            }
+
             ITypeHelper? helper = TypeHelper.FieldHelper<GameField>().GetHelper(field);
 
             if (helper != null)

@@ -131,7 +131,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.TrophysetAccess,
                     GameField.Tags,
                     GameField.Region,
-                    GameField.Language
+                    GameField.Language,
+                    GameField.Tags
                 },
                 [FieldsFilling.Default] = new List<GameField>
                 {
@@ -672,7 +673,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.RelatedGames or
                 GameField.FullGenre or
                 GameField.EmulatorType or
-                GameField.EmulatorROMs => 
+                GameField.EmulatorROMs or
+                GameField.Tags => 
                     FilterOperation.Contains,
                 GameField.Image or
                 GameField.StrategeLink or
@@ -686,7 +688,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             [GameField.Id] = FilterOperations.EnumOperations,
             [GameField.Licensed] = FilterOperations.EnumOperations,
-            [GameField.Tags] = FilterOperations.EnumOperations,
+            [GameField.Tags] = FilterOperations.ObjectOperations,
             [GameField.Name] = FilterOperations.StringOperations,
             [GameField.Image] = FilterOperations.UnaryOperations,
             [GameField.Edition] = FilterOperations.StringOperations,
