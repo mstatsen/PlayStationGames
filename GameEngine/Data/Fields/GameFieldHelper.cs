@@ -129,15 +129,13 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Series,
                     GameField.Source,
                     GameField.TrophysetAccess,
-                    GameField.Tags,
                     GameField.Region,
                     GameField.Language,
                     GameField.Tags
                 },
                 [FieldsFilling.Default] = new List<GameField>
                 {
-                    GameField.Developer,
-                    GameField.Publisher
+                    GameField.Tags
                 }
             },
             [FieldsVariant.Inline] = new GameFieldsFillingDictionary()
