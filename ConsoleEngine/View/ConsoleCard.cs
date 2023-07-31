@@ -12,7 +12,7 @@ namespace PlayStationGames.ConsoleEngine.View
     public class ConsoleCard : ItemCard<ConsoleField, PSConsole, ConsoleFieldGroup>
     {
         protected override int CardWidth => 350;
-        protected override int CardHeight => 240;
+        protected override int CardHeight => 260;
 
         public ConsoleCard(ItemViewMode viewMode) : base(viewMode) { }
 
@@ -58,8 +58,11 @@ namespace PlayStationGames.ConsoleEngine.View
             Layouter.Template.Top = Layouter[ConsoleField.Icon]!.Bottom + 12;
             bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Storages))
                 .Visible = generationHelper.StorageSupport(Item.Generation);
+            bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Games, 16))
+                .Visible = generationHelper.StorageSupport(Item.Generation);
             bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Folders, 16))
                 .Visible = generationHelper.FolderSupport(Item.Generation);
+            
         }
 
         protected override void AlignControls()

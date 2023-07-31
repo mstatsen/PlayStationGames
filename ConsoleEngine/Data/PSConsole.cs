@@ -135,6 +135,8 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ConsoleField.Firmware => Firmware,
                 ConsoleField.Storages => Storages,
                 ConsoleField.Folders => Folders,
+                ConsoleField.Games => 
+                    DataManager.DecoratorFactory<ConsoleField, PSConsole>().Decorator(OxXMLEngine.Data.Decorator.DecoratorType.Table, this),
                 ConsoleField.Icon => TypeHelper.Helper<ConsoleGenerationHelper>().Icon(Generation),
                 _ => null,
             };

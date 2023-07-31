@@ -18,11 +18,22 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
                 ConsoleField.Icon => OxImageBoxer.BoxingImage(Dao.Icon, new Size(70, 40)),
                 ConsoleField.Storages => StoragesCount(),
                 ConsoleField.Folders => FoldersCount(),
+                ConsoleField.Games => GamesCount(),
                 _ => base.Value(field),
             };
         }
 
         private readonly ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
+
+        private object? GamesCount()
+        {
+            int result = 0;
+
+            foreach (Storage storage in Dao.Storages)
+                result += storage.GameCount;
+
+            return result;
+        }
 
         private object? FoldersCount() => 
             generationHelper.FolderSupport(Dao.Generation) 
