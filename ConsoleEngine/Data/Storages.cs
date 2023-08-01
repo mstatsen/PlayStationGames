@@ -1,5 +1,4 @@
 ﻿using OxXMLEngine.Data;
-using System;
 
 namespace PlayStationGames.ConsoleEngine.Data
 {
@@ -15,6 +14,16 @@ namespace PlayStationGames.ConsoleEngine.Data
             return storage == null
                 ? "[LOST STORAGE]"
                 : storage.Name;
+        }
+
+        public int GamesCount()
+        {
+            int result = 0;
+
+            foreach (var storage in this)
+                result += storage.GameCount;
+
+            return result;
         }
     }
 }

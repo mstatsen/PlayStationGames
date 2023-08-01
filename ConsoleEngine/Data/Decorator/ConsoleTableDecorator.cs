@@ -27,12 +27,10 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
 
         private object? GamesCount()
         {
-            int result = 0;
-
-            foreach (Storage storage in Dao.Storages)
-                result += storage.GameCount;
-
-            return result;
+            int result = Dao.Storages.GamesCount();
+            return result == 0
+                ? string.Empty
+                : result;
         }
 
         private object? FoldersCount() => 
