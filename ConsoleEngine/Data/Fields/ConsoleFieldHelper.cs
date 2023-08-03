@@ -48,8 +48,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Model,
                 ConsoleField.Firmware,
                 ConsoleField.Storages,
-                ConsoleField.Folders,
-                ConsoleField.Games
+                ConsoleField.Folders
             };
 
         private static readonly ConsoleFieldsVariantDictionary fieldDictionary = 
