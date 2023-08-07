@@ -24,10 +24,9 @@ namespace PlayStationGames.ConsoleEngine.Editor
         {
             return group switch
             {
-                ConsoleFieldGroup.Base or 
-                ConsoleFieldGroup.Summary => 
+                ConsoleFieldGroup.Base or
+                ConsoleFieldGroup.Storages => 
                     PanelLeft,
-                ConsoleFieldGroup.Storages or 
                 ConsoleFieldGroup.Folders => 
                     PanelRight,
                 _ => null,
@@ -39,7 +38,10 @@ namespace PlayStationGames.ConsoleEngine.Editor
             MinimumSize = new Size(0, 0);
             MaximumSize = new Size(0, 0);
             PanelLeft.Width = CalcedWidth(PanelLeft);
-            MainPanel.SetContentSize(PanelLeft.Width + (PanelRight.Visible ? 300 : 0), 500);
+            MainPanel.SetContentSize(
+                PanelLeft.Width + (PanelRight.Visible ? 300 : 0),
+                Groups[ConsoleFieldGroup.Storages].Visible ? 434 : 200
+            );
         }
 
         protected override void SetPaddings()
@@ -52,18 +54,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
         protected override void SetFrameMargin(ConsoleFieldGroup group, OxFrame frame)
         {
             base.SetFrameMargin(group, frame);
-            frame.Margins.RightOx = OxSize.Extra;
-            frame.Margins.LeftOx = 
-                group == ConsoleFieldGroup.Folders || 
-                group == ConsoleFieldGroup.Storages 
-                    ? OxSize.None 
-                    : OxSize.Extra;
-            frame.Margins.BottomOx = 
-                group == ConsoleFieldGroup.Base
+            frame.Margins.SetSize(OxSize.Extra);
+            frame.Margins.LeftOx =
+                group == ConsoleFieldGroup.Folders
                     ? OxSize.None 
                     : OxSize.Extra;
             frame.Margins.TopOx =
-                group == ConsoleFieldGroup.Folders
+                group == ConsoleFieldGroup.Storages
                     ? OxSize.None
                     : OxSize.Extra;
         }

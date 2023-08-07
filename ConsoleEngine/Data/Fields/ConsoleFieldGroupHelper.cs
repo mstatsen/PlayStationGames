@@ -10,17 +10,15 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         public override List<ConsoleFieldGroup> EditedList() =>
             new()
             {
-                ConsoleFieldGroup.Storages,
                 ConsoleFieldGroup.Folders,
                 ConsoleFieldGroup.Base,
-                ConsoleFieldGroup.Summary
+                ConsoleFieldGroup.Storages
             };
 
         public override string GetName(ConsoleFieldGroup value) => 
             value switch
             {
                 ConsoleFieldGroup.Base => "Console",
-                ConsoleFieldGroup.Summary => "Summary",
                 ConsoleFieldGroup.Storages => "Storages",
                 ConsoleFieldGroup.Folders => "Folders",
                 _ => string.Empty,
@@ -39,7 +37,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         public override int DefaultGroupHeight(ConsoleFieldGroup group) => 
             group switch
             {
-                ConsoleFieldGroup.Folders => 300,
+                ConsoleFieldGroup.Folders => 280,
                 _ => 140,
             };
 
@@ -49,10 +47,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             group switch
             {
                 ConsoleFieldGroup.Base or 
-                ConsoleFieldGroup.Storages => 
-                    DockStyle.Fill,
-                ConsoleFieldGroup.Summary or 
                 ConsoleFieldGroup.Folders => 
+                    DockStyle.Fill,
+                ConsoleFieldGroup.Storages => 
                     DockStyle.Bottom,
                 _ => 
                     base.GroupDock(group),
