@@ -3,6 +3,8 @@ using OxXMLEngine.Data.Types;
 using OxXMLEngine.XML;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
+using PlayStationGames.GameEngine.Data;
+using PlayStationGames.GameEngine.Data.Fields;
 using System.Xml;
 
 namespace PlayStationGames.ConsoleEngine.Data
@@ -95,6 +97,15 @@ namespace PlayStationGames.ConsoleEngine.Data
         private readonly Storages storages = new ();
         private readonly Folders folders = new ();
         private FirmwareType firmware;
+
+        public List<Game> Games() =>
+            DataManager.FullItemsList<GameField, Game>().List.FindAll(
+                (g) => g.Installations.Contains(
+                    (i) => i.ConsoleId == Id
+                )
+            );
+
+        public int GamesCount => Storages.GamesCount();
 
         protected override void SetFieldValue(ConsoleField field, object? value)
         {

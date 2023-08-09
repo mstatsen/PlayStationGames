@@ -2,6 +2,7 @@
 using OxXMLEngine.Data.Decorator;
 using OxXMLEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames.ConsoleEngine.Data.Decorator
 {
@@ -14,11 +15,23 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
             {
                 ConsoleField.Name => 
                     DecoratorHelper.NoWrap(Dao.Name),
+                ConsoleField.Games =>
+                    Games(),
                 ConsoleField.Icon => 
                     Icon(),
                 _ => 
                     base.Value(field),
             };
+
+        private string Games()
+        {
+            List<string?> gamesStringList = new();
+
+            foreach (Game game in Dao.Games())
+                gamesStringList.Add(game.ToString());
+
+            return DecoratorHelper.ListToString(gamesStringList, ", ");
+        }
 
         public override string Attributes(ConsoleField field)
         {

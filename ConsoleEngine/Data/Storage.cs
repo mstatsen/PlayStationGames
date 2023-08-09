@@ -40,12 +40,15 @@ namespace PlayStationGames.ConsoleEngine.Data
             set => name = StringValue(ModifyValue(name, value));
         }
 
-        public int GameCount =>
+        public List<Game> Games =>
             DataManager.FullItemsList<GameField, Game>().List.FindAll(
                 (g) => g.Installations.Contains(
                     (i) => i.StorageId == Id
                 )
-            ).Count;
+            );
+
+        public int GameCount =>
+            Games.Count;
 
         public override void Clear()
         {
