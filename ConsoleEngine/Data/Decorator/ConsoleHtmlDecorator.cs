@@ -1,6 +1,5 @@
 ﻿using OxLibrary;
 using OxXMLEngine.Data.Decorator;
-using OxXMLEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 
