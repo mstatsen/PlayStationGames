@@ -66,8 +66,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
 
                     if (firmware == FirmwareType.Custom)
                     {
-                        result.Add(PlatformType.PSP, Source.Torrent, false);
-                        result.Add(PlatformType.PSOne, Source.Torrent, false);
+                        result.Add(PlatformType.PSVita, Source.PKGj, false);
+                        result.Add(PlatformType.PSP, Source.PKGj, false);
+                        result.Add(PlatformType.PSOne, Source.PKGj, false);
                     }
                     break;
                 case ConsoleGeneration.PS3:

@@ -1,5 +1,7 @@
-﻿using OxXMLEngine.Data.Types;
+﻿using OxLibrary.Dialogs;
+using OxXMLEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
+using System.Collections.Generic;
 
 namespace PlayStationGames.GameEngine.Data.Types
 {
@@ -12,6 +14,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                 Source.PSPlus => "PSPlus",
                 Source.PlayAtHome => "PlayAtHome",
                 Source.Torrent => "Torrent",
+                Source.PKGj => "PKGj",
                 Source.Physical => "Physical",
                 Source.Lost => "Lost",
                 _ => "Other",
@@ -24,6 +27,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                 Source.PSPlus => "+",
                 Source.PlayAtHome => "P",
                 Source.Torrent => "T",
+                Source.PKGj => "V",
                 Source.Physical => "O",
                 Source.Lost => "-",
                 _ => "?",
@@ -36,6 +40,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                 Source.PSPlus => Color.FromArgb(255, 240, 224),
                 Source.PlayAtHome => Color.FromArgb(240, 255, 255),
                 Source.Torrent => Color.FromArgb(250, 240, 255),
+                Source.PKGj => Color.FromArgb(245, 235, 250),
                 Source.Physical => Color.FromArgb(255, 250, 210),
                 Source.Lost => Color.FromArgb(246, 246, 246),
                 _ => Color.White,
@@ -50,17 +55,31 @@ namespace PlayStationGames.GameEngine.Data.Types
                 result.Add(Source.PSN);
                 result.Add(Source.PSPlus);
                 result.Add(Source.PlayAtHome);
-                result.Add(Source.Physical);
-                result.Add(Source.Lost);
-                result.Add(Source.Other);
             }
             else
             {
                 result.Add(Source.Torrent);
-                result.Add(Source.Physical);
-                result.Add(Source.Lost);
-                result.Add(Source.Other);
+                result.Add(Source.PKGj);
+                
             }
+
+            result.Add(Source.Physical);
+            result.Add(Source.Lost);
+            result.Add(Source.Other);
+            return result;
+        }
+
+        public List<Source> ByPlatform(PlatformType platform)
+        {
+            List<Source> result = new();
+
+            if (result.Count == 0)
+                foreach (Source item in Enum.GetValues(typeof(Source)))
+                    result.Add(item);
+
+            if (platform == PlatformType.PSVita)
+                result.Remove(Source.Torrent);
+            else result.Remove(Source.PKGj);
 
             return result;
         }
@@ -78,6 +97,11 @@ namespace PlayStationGames.GameEngine.Data.Types
                 case GameField.Licensed:
                     if (value is bool licensed)
                         return ByLicense(licensed);
+
+                    break;
+                case GameField.Platform:
+                    if (value is PlatformType platform)
+                        return ByPlatform(platform);
 
                     break;
             }
@@ -99,8 +123,9 @@ namespace PlayStationGames.GameEngine.Data.Types
             {
                 Source.PSN or 
                 Source.PSPlus or 
-                Source.PlayAtHome or 
-                Source.Torrent => true,
+                Source.PlayAtHome or
+                Source.Torrent or
+                Source.PKGj => true,
                 _ => false,
             };
 

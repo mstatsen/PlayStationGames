@@ -6,6 +6,7 @@
         PSPlus,
         PlayAtHome,
         Torrent,
+        PKGj,
         Physical,
         Lost,
         Other

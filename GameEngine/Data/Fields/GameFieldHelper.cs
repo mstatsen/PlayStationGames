@@ -803,7 +803,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 GameField.Source => new List<GameField>()
                         {
-                            GameField.Licensed
+                            GameField.Licensed,
+                            GameField.Platform
                         },
                 GameField.Platform => new List<GameField>()
                         {
