@@ -4,6 +4,7 @@ using OxXMLEngine.ControlFactory;
 using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.Editor;
+using PlayStationGames.ConsoleEngine.ControlFactory.Controls;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -77,6 +78,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             else installationsButton.Visible = false;
 
             installationsWorker.Renew(Item);
+            Builder.Control<AccessoriesControl>(ConsoleField.Accessories).ParentItem = Item;
         }
 
         private void InstallationsClickHandler(object? sender, EventArgs e)

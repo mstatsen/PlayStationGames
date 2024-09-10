@@ -4,6 +4,8 @@
     {
         Joystick, 
         Camera,
-        Earphones
+        Earphones,
+        Connector,
+        Other
     }
 }

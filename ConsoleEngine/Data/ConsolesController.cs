@@ -45,6 +45,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             TypeHelper.Register<StoragePlacementHelper>();
             TypeHelper.Register<FirmwareTypeHelper>();
             TypeHelper.Register<AccessoryTypeHelper>();
+            TypeHelper.Register<JoystickTypeHelper>();
         }
 
         protected override ControlFactory<ConsoleField, PSConsole> CreateControlFactory() =>

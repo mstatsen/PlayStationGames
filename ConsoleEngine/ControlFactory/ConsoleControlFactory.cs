@@ -11,6 +11,7 @@ using OxXMLEngine.Grid;
 using OxXMLEngine.View;
 
 using OxXMLEngine.ControlFactory.Initializers;
+using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory
 {
@@ -28,13 +29,20 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                     ConsoleField.Accessories => CreateListAccessor<Accessory, Accessories, AccessoriesControl>(context),
                     _ => base.CreateOtherAccessor(context),
                 }
-                : base.CreateOtherAccessor(context);
+                : 
+            context.Name == "AccessoryType"
+                ? CreateEnumAccessor<AccessoryType>(context)
+                : context.Name == "JoystickType"
+                    ? CreateEnumAccessor<JoystickType>(context)
+                    : base.CreateOtherAccessor(context);
 
         protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context) => 
             context.Name switch
             {
                 "StorageSelector" => new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Storages, true),
                 "FolderSelector" => new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Folders, true),
+                "AccessoryType" => new AccessoryTypeInitializer((PSConsole)context.AdditionalContext!),
+                "JoystickType" => new JoystickTypeInitializer((PSConsole)context.AdditionalContext!),
                 _ => base.Initializer(context),
             };
 

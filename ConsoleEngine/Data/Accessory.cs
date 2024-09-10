@@ -2,8 +2,6 @@
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.XML;
 using PlayStationGames.ConsoleEngine.Data.Types;
-using PlayStationGames.GameEngine.Data;
-using PlayStationGames.GameEngine.Data.Fields;
 using System.Xml;
 
 namespace PlayStationGames.ConsoleEngine.Data
@@ -22,10 +20,16 @@ namespace PlayStationGames.ConsoleEngine.Data
             set => type = ModifyValue(type, value);
         }
 
-        public Color Color
+        public JoystickType JoystickType
+        {
+            get => joystickType;
+            set => joystickType = ModifyValue(joystickType, value);
+        }
+
+        public string Color
         {
             get => color;
-            set => color = ModifyValue(color, value);
+            set => color = StringValue(ModifyValue(color, value));
         }
 
         public string Description
@@ -44,7 +48,8 @@ namespace PlayStationGames.ConsoleEngine.Data
         {
             Id = Guid.Empty;
             type = TypeHelper.DefaultValue<AccessoryType>();
-            color = default;
+            JoystickType = TypeHelper.DefaultValue<JoystickType>();
+            color = "Black";
             description = string.Empty;
             count = 1;
         }
@@ -57,35 +62,47 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         protected override void LoadData(XmlElement element)
         {
-            /*
             id = XmlHelper.ValueGuid(element, XmlConsts.Id);
             if (id == Guid.Empty)
                 GenerateGuid();
 
-            placement = XmlHelper.Value<StoragePlacement>(element, XmlConsts.Placement);
-            size = XmlHelper.Value(element, XmlConsts.Size);
-            freeSize = XmlHelper.Value(element, XmlConsts.FreeSize);
-            name = XmlHelper.Value(element, XmlConsts.Name);
-            */
+            type = XmlHelper.Value<AccessoryType>(element, XmlConsts.Type);
+            joystickType = XmlHelper.Value<JoystickType>(element, XmlConsts.JoystickType);
+            color = XmlHelper.Value(element, XmlConsts.Color);
+            count = XmlHelper.ValueInt(element, XmlConsts.Count);
+            description = XmlHelper.Value(element, XmlConsts.Description);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
-            /*
+           
             XmlHelper.AppendElement(element, XmlConsts.Id, id);
-            XmlHelper.AppendElement(element, XmlConsts.Placement, placement);
-            XmlHelper.AppendElement(element, XmlConsts.Size, size);
-            XmlHelper.AppendElement(element, XmlConsts.FreeSize, freeSize);
-            XmlHelper.AppendElement(element, XmlConsts.Name, name);
-            */
+            XmlHelper.AppendElement(element, XmlConsts.Type, type);
+
+            if (type == AccessoryType.Joystick)
+            {
+                XmlHelper.AppendElement(element, XmlConsts.JoystickType, joystickType);
+
+                if (TypeHelper.Helper<JoystickTypeHelper>().IsColored(joystickType))
+                    XmlHelper.AppendElement(element, XmlConsts.Color, color);
+            }
+
+            XmlHelper.AppendElement(element, XmlConsts.Count, count);
+            XmlHelper.AppendElement(element, XmlConsts.Description, description);
         }
 
-        public override string ToString() =>
-            $"{Count} {Type} (Color Gb)";
+        public override string ToString()
+        {
+            string countStr = Count > 1 ? Count.ToString() + " " : "";
+            string typeStr = JoystickType == JoystickType.Other ? " " + TypeHelper.FullName(Type) : "";
+            string joystickTypeName = Type == AccessoryType.Joystick ? TypeHelper.FullName(JoystickType) : "";
+            return $"{countStr}{Color} {joystickTypeName}{typeStr}";
+        }
 
         private Guid id = Guid.Empty;
         private AccessoryType type = default!;
-        private Color color = default!;
+        private JoystickType joystickType = default!;
+        private string color = "Black";
         private string description = string.Empty;
         private int count = 1;
     }
