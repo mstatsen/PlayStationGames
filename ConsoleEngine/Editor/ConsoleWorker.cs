@@ -70,7 +70,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 installationsButton.Left = 8;
                 installationsButton.SetContentSize(
                     installationsButton.Parent.Width - installationsButton.Left * 2 - 2,
-                    32);
+                    40);
                 installationsButton.Click -= InstallationsClickHandler;
                 installationsButton.Click += InstallationsClickHandler;
             }

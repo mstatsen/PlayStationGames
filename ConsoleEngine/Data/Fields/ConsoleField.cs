@@ -11,6 +11,7 @@
         Icon,
         Storages,
         Folders,
+        Accessories,
         Games,
         Field
     }

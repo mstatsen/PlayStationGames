@@ -49,6 +49,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public Folders Folders => folders;
         public Storages Storages => storages;
+        public Accessories Accessories => accessories;
 
         public override void Clear()
         {
@@ -58,6 +59,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             model = TypeHelper.DefaultValue<ConsoleModel>();
             storages.Clear();
             folders.Clear();
+            accessories.Clear();
         }
 
         public override void Init()
@@ -65,6 +67,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             GenerateGuid();
             AddMember(ConsoleField.Storages, Storages);
             AddMember(ConsoleField.Folders, Folders);
+            AddMember(ConsoleField.Accessories, Accessories);
         }
 
         private void GenerateGuid() =>
@@ -96,6 +99,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         private ConsoleModel model = default!;
         private readonly Storages storages = new ();
         private readonly Folders folders = new ();
+        private readonly Accessories accessories = new();
         private FirmwareType firmware;
 
         public List<Game> Games() =>
@@ -132,6 +136,9 @@ namespace PlayStationGames.ConsoleEngine.Data
                 case ConsoleField.Folders:
                     Folders.CopyFrom((DAO?)value);
                     break;
+                case ConsoleField.Accessories:
+                    Accessories.CopyFrom((DAO?)value);
+                    break;
             }
         }
 
@@ -146,6 +153,7 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ConsoleField.Firmware => Firmware,
                 ConsoleField.Storages => Storages,
                 ConsoleField.Folders => Folders,
+                ConsoleField.Accessories => Accessories,
                 ConsoleField.Games => 
                     DataManager.DecoratorFactory<ConsoleField, PSConsole>().Decorator(OxXMLEngine.Data.Decorator.DecoratorType.Table, this),
                 ConsoleField.Icon => TypeHelper.Helper<ConsoleGenerationHelper>().Icon(Generation),
@@ -208,6 +216,7 @@ namespace PlayStationGames.ConsoleEngine.Data
                     ConsoleField.Firmware => firmware.CompareTo(yConsole.Firmware),
                     ConsoleField.Storages => storages.CompareTo(yConsole.Storages),
                     ConsoleField.Folders => folders.CompareTo(yConsole.Folders),
+                    ConsoleField.Accessories => folders.CompareTo(yConsole.Accessories),
                     _ => 0,
                 };
 

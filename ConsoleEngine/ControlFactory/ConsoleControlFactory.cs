@@ -25,6 +25,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                     ConsoleField.Firmware => CreateEnumAccessor<FirmwareType>(context),
                     ConsoleField.Storages => CreateListAccessor<Storage, Storages, StoragesControl>(context),
                     ConsoleField.Folders => CreateListAccessor<Folder, Folders, FoldersControl>(context),
+                    ConsoleField.Accessories => CreateListAccessor<Accessory, Accessories, AccessoriesControl>(context),
                     _ => base.CreateOtherAccessor(context),
                 }
                 : base.CreateOtherAccessor(context);

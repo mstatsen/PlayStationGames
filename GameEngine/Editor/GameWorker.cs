@@ -8,7 +8,6 @@ using OxXMLEngine.Data.Types;
 using OxXMLEngine.Editor;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
-using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.ControlFactory.Controls;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
@@ -94,6 +93,8 @@ namespace PlayStationGames.GameEngine.Editor
         {
             if (Item == null)
                 return;
+
+            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = Item;
 
             Filter<GameField, Game> relatedGameFilter = new();
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);

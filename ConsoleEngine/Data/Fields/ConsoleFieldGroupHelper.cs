@@ -11,6 +11,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             new()
             {
                 ConsoleFieldGroup.Folders,
+                ConsoleFieldGroup.Accessories,
                 ConsoleFieldGroup.Base,
                 ConsoleFieldGroup.Storages
             };
@@ -19,6 +20,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             value switch
             {
                 ConsoleFieldGroup.Base => "Console",
+                ConsoleFieldGroup.Accessories => "Accessories",
                 ConsoleFieldGroup.Storages => "Storages",
                 ConsoleFieldGroup.Folders => "Folders",
                 _ => string.Empty,
@@ -29,6 +31,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             {
                 ConsoleField.Storages => ConsoleFieldGroup.Storages,
                 ConsoleField.Folders => ConsoleFieldGroup.Folders,
+                ConsoleField.Accessories => ConsoleFieldGroup.Accessories,
                 _ => ConsoleFieldGroup.Base,
             };
 
@@ -38,6 +41,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             group switch
             {
                 ConsoleFieldGroup.Folders => 280,
+                ConsoleFieldGroup.Accessories => 200,
                 _ => 140,
             };
 
@@ -49,7 +53,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleFieldGroup.Base or 
                 ConsoleFieldGroup.Folders => 
                     DockStyle.Fill,
-                ConsoleFieldGroup.Storages => 
+                ConsoleFieldGroup.Storages or
+                ConsoleFieldGroup.Accessories => 
                     DockStyle.Bottom,
                 _ => 
                     base.GroupDock(group),

@@ -3,7 +3,6 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 using OxXMLEngine.ControlFactory;
 using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Editor;
-using OxLibrary.Controls;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
@@ -17,14 +16,16 @@ namespace PlayStationGames.ConsoleEngine.Editor
             new()
             {
                 ConsoleField.Folders,
-                ConsoleField.Storages
+                ConsoleField.Storages,
+                ConsoleField.Accessories
             };
 
         protected override List<ConsoleField> FillDockFields() => 
             new()
             {
                 ConsoleField.Folders,
-                ConsoleField.Storages
+                ConsoleField.Storages,
+                ConsoleField.Accessories
             };
 
         protected override List<ConsoleField> OffsettingFields() =>

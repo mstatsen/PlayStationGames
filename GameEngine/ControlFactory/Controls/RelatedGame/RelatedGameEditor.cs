@@ -5,7 +5,6 @@ using OxXMLEngine.ControlFactory.Accessors;
 using OxXMLEngine.ControlFactory.Controls;
 using OxXMLEngine.Data;
 using OxXMLEngine.Data.Fields;
-using OxXMLEngine.Grid;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 
@@ -19,15 +18,17 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private OxButton? GameSelectButton;
 
         private Game? selectedGame;
-        public Game? SelectedGame 
-        { 
+        public Game? SelectedGame
+        {
             get => selectedGame;
             set
             {
                 selectedGame = value;
                 SetGameControlValue();
 
-                if (selectedGame == null)
+                FirstSet = selectedGame == null;
+
+                if (FirstSet)
                 {
                     SelectGame();
 
@@ -35,6 +36,23 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                         DialogResult = DialogResult.Cancel;
                 }
             }
+        }
+
+        private bool firstSet = true; 
+        private bool FirstSet 
+        { 
+            get => firstSet; 
+            set 
+            { 
+                firstSet = value;
+
+                if (GameSelectButton != null)
+                    GameSelectButton.Visible = firstSet;
+
+
+                if (GameControl != null)
+                    GameControl.Width = MainPanel.ContentContainer.Width - GameControl.Left - (firstSet ? 116 : 8);
+            } 
         }
         protected override string Title => "Related Game";
 
@@ -93,7 +111,15 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void SelectGame()
         {
-            if (DataManager.SelectItem<GameField, Game>(out Game? newSelected, MainPanel, SelectedGame, Filter))
+            if (SelectedGame != null || ParentItem == null)
+                return;
+
+            Game initialGame = new()
+            {
+                Name = ParentItem.OriginalName
+            };
+
+            if (DataManager.SelectItem(out Game? newSelected, MainPanel, initialGame, Filter))
                 SelectedGame = newSelected;
         }
 

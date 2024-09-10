@@ -4,6 +4,7 @@
     {
         Storages,
         Base,
+        Accessories,
         Folders
     }
 }

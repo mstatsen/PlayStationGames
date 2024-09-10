@@ -27,7 +27,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleFieldGroup.Base or
                 ConsoleFieldGroup.Storages => 
                     PanelLeft,
-                ConsoleFieldGroup.Folders => 
+                ConsoleFieldGroup.Folders or
+                ConsoleFieldGroup.Accessories => 
                     PanelRight,
                 _ => null,
             };
@@ -42,6 +43,10 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 PanelLeft.Width + (PanelRight.Visible ? 300 : 0),
                 Groups[ConsoleFieldGroup.Storages].Visible ? 434 : 200
             );
+
+            if (Groups[ConsoleFieldGroup.Storages].Visible)
+                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Bottom;
+            else Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Fill;
         }
 
         protected override void SetPaddings()
@@ -49,6 +54,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             base.SetPaddings();
             Groups[ConsoleFieldGroup.Storages].Paddings.RightOx = OxSize.Medium;
             Groups[ConsoleFieldGroup.Folders].Paddings.RightOx = OxSize.Medium;
+            Groups[ConsoleFieldGroup.Accessories].Paddings.RightOx = OxSize.Medium;
         }
 
         protected override void SetFrameMargin(ConsoleFieldGroup group, OxFrame frame)
@@ -56,11 +62,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
             base.SetFrameMargin(group, frame);
             frame.Margins.SetSize(OxSize.Extra);
             frame.Margins.LeftOx =
-                group == ConsoleFieldGroup.Folders
+                group == ConsoleFieldGroup.Folders || 
+                group == ConsoleFieldGroup.Accessories
                     ? OxSize.None 
                     : OxSize.Extra;
             frame.Margins.TopOx =
-                group == ConsoleFieldGroup.Storages
+                group == ConsoleFieldGroup.Storages || 
+                group == ConsoleFieldGroup.Accessories   
                     ? OxSize.None
                     : OxSize.Extra;
         }

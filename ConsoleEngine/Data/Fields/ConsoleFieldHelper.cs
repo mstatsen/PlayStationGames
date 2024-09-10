@@ -19,6 +19,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Model => "Model",
                 ConsoleField.Storages => "Storages",
                 ConsoleField.Folders => "Folders",
+                ConsoleField.Accessories => "Accessories",
                 ConsoleField.Games => "Games",
                 ConsoleField.Firmware => "Firmware",
                 ConsoleField.Console => "Console",
@@ -48,7 +49,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Model,
                 ConsoleField.Firmware,
                 ConsoleField.Storages,
-                ConsoleField.Folders
+                ConsoleField.Folders,
+                ConsoleField.Accessories
             };
 
         private static readonly ConsoleFieldsVariantDictionary fieldDictionary = 
@@ -65,6 +67,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                         ConsoleField.Firmware,
                         ConsoleField.Storages,
                         ConsoleField.Folders,
+                        ConsoleField.Accessories,
                         ConsoleField.Games
                     },
                     [FieldsFilling.Default] = new List<ConsoleField>
@@ -161,6 +164,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                         ConsoleField.Firmware,
                         ConsoleField.Storages,
                         ConsoleField.Folders,
+                        ConsoleField.Accessories
                     }
                 }
             };
@@ -210,6 +214,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Firmware,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
+                ConsoleField.Accessories,
                 ConsoleField.Games
             };
 
@@ -223,6 +228,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Firmware,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
+                ConsoleField.Accessories,
                 ConsoleField.Games
             };
 
@@ -232,6 +238,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Name or
                 ConsoleField.Storages or
                 ConsoleField.Folders or
+                ConsoleField.Accessories or
                 ConsoleField.Games =>
                     FilterOperation.Contains,
                 _ =>
@@ -274,6 +281,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                     90,
                 ConsoleField.Storages or
                 ConsoleField.Folders or
+                ConsoleField.Accessories or
                 ConsoleField.Games =>
                     75,
                 _ => base.ColumnWidth(field)
@@ -296,6 +304,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                     FieldType.Enum,
                 ConsoleField.Storages or 
                 ConsoleField.Folders or
+                ConsoleField.Accessories or
                 ConsoleField.Games =>
                     FieldType.List,
                 ConsoleField.Icon =>

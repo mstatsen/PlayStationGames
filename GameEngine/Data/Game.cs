@@ -156,6 +156,11 @@ namespace PlayStationGames.GameEngine.Data
             set => name = StringValue(ModifyValue(GameField.Name, name, value));
         }
 
+        public string OriginalName
+        {
+            get => name.Replace(" (Copy)", "");
+        }
+
         public Bitmap? Image
         {
             get => image;
