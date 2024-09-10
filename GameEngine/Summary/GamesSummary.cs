@@ -94,11 +94,8 @@ namespace PlayStationGames.GameEngine.Summary
 
         public void ClearAccessors() { }
 
-        public void CalcPanelSize()
-        {
-            if (Header != null)
-                Header.SetContentSize(SummaryConsts.CardWidth, SummaryConsts.CardHeaderHeight);
-        }
+        public void CalcPanelSize() => 
+            Header?.SetContentSize(SummaryConsts.CardWidth, SummaryConsts.CardHeaderHeight);
 
         public void FillAccessors()
         {

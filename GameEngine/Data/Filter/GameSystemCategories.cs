@@ -77,12 +77,12 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 parentCategory.AddChild(groupCategory);
 
                 if (modes.Count == 1)
-                    groupCategory.AddFilter(GameField.GameModes, new ListDAO<GameMode> { new GameMode(modes[0])});
+                    groupCategory.AddFilter(GameField.GameModes, new ListDAO<GameMode> { new(modes[0])});
                 else
                     foreach (PlayMode mode in modes)
                         groupCategory.AddChild(
                             new Category<GameField, Game>(playModeHelper.ShortName(mode))
-                                .AddFilter(GameField.GameModes, new ListDAO<GameMode> { new GameMode(mode)})
+                                .AddFilter(GameField.GameModes, new ListDAO<GameMode> { new(mode) })
                         );
             }
             modesCategory.AddChild(multiplayerCategory);
@@ -311,10 +311,7 @@ namespace PlayStationGames.GameEngine.Data.Filter
         public static Category<GameField, Game> GetCategory(string name)
         {
             Category<GameField, Game>? result = FindCategory(Root, name);
-
-            if (result == null)
-                result = Root;
-
+            result ??= Root;
             return result;
         }
     }

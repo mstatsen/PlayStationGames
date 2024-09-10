@@ -37,12 +37,8 @@ namespace PlayStationGames.GameEngine.Editor
         protected override void BeforeGenerateLayouts()
         {
             base.BeforeGenerateLayouts();
-
-            if (earnedTrophiesLabel == null)
-                earnedTrophiesLabel = CreateTrophiesLabel("Earned", 76);
-
-            if (availableTrophiesLabel == null)
-                availableTrophiesLabel = CreateTrophiesLabel("Available", 148);
+            earnedTrophiesLabel ??= CreateTrophiesLabel("Earned", 76);
+            availableTrophiesLabel ??= CreateTrophiesLabel("Available", 148);
         }
 
         private OxLabel CreateTrophiesLabel(string text, int left) =>
@@ -344,11 +340,8 @@ namespace PlayStationGames.GameEngine.Editor
             Builder[GameField.Installations].Value = installations;
         }
 
-        protected override void AfterGrabControls()
-        {
-            if (Item != null)
-                Item.ReleasePlatforms.Add(Item.PlatformType);
-        }
+        protected override void AfterGrabControls() => 
+            Item?.ReleasePlatforms.Add(Item.PlatformType);
 
         protected override EditorLayoutsGenerator<GameField, Game, GameFieldGroup> CreateLayoutsGenerator(
             FieldGroupFrames<GameField, GameFieldGroup> frames, ControlLayouter<GameField, Game> layouter

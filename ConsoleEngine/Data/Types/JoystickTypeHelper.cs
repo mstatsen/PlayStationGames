@@ -54,32 +54,31 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             if (type == JoystickType.Other)
                 return true;
 
-            switch (generation)
+            return generation switch
             {
-                case ConsoleGeneration.PS5:
-                    return type == JoystickType.Dualshock5 || 
-                        type == JoystickType.DS5Replica || 
-                        type == JoystickType.MoveController || 
-                        type == JoystickType.NavigationController;
-                case ConsoleGeneration.PS4:
-                    return type == JoystickType.Dualshock4 || 
-                        type == JoystickType.DS4Replica || 
-                        type == JoystickType.MoveController || 
-                        type == JoystickType.NavigationController;
-                case ConsoleGeneration.PS3:
-                    return type == JoystickType.Dualshock3 || 
-                        type == JoystickType.DS3Replica || 
-                        type == JoystickType.MoveController || 
-                        type == JoystickType.NavigationController;
-                case ConsoleGeneration.PS2:
-                    return type == JoystickType.Dualshock2 || 
-                        type == JoystickType.DS2Replica;
-                case ConsoleGeneration.PS1:
-                    return type == JoystickType.Dualshock || 
-                        type == JoystickType.DSReplica;
-            }
-
-            return false;
+                ConsoleGeneration.PS5 => 
+                    type == JoystickType.Dualshock5 ||
+                    type == JoystickType.DS5Replica ||
+                    type == JoystickType.MoveController ||
+                    type == JoystickType.NavigationController,
+                ConsoleGeneration.PS4 => 
+                    type == JoystickType.Dualshock4 ||
+                    type == JoystickType.DS4Replica ||
+                    type == JoystickType.MoveController ||
+                    type == JoystickType.NavigationController,
+                ConsoleGeneration.PS3 => 
+                    type == JoystickType.Dualshock3 ||
+                    type == JoystickType.DS3Replica ||
+                    type == JoystickType.MoveController ||
+                    type == JoystickType.NavigationController,
+                ConsoleGeneration.PS2 => 
+                    type == JoystickType.Dualshock2 ||
+                    type == JoystickType.DS2Replica,
+                ConsoleGeneration.PS1 => 
+                    type == JoystickType.Dualshock ||
+                    type == JoystickType.DSReplica,
+                _ => false,
+            };
         }
     }
 }
