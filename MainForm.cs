@@ -21,18 +21,10 @@ namespace PlayStationGames
 
         public MainForm()
         {
-            InitializeDataManager();
-            DataManager.Load();
             InitializeComponent();
-
-            loadingPanel = new OxLoadingPanel()
-            {
-                Parent = MainPanel,
-                UseParentColor = false
-            };
-            loadingPanel.Margins.SetSize(OxSize.None);
-            loadingPanel.Borders.SetSize(OxSize.None);
-
+            Size screenSize = Screen.GetWorkingArea(this).Size;
+            Left = (screenSize.Width - 1600) / 2;
+            Top = (screenSize.Height - 800) / 2;
             mainTabControl = new OxTabControl
             {
                 Dock = DockStyle.Fill,
@@ -58,14 +50,14 @@ namespace PlayStationGames
             toolBar.SendToBack();
             toolBar.Borders.TopOx = OxSize.None;
             toolBar.Paddings.TopOx = OxSize.Medium;
-
-            foreach (OxPane face in DataManager.Faces)
-                face.BaseColor = MainPanel.BaseColor;
-
-            Size screenSize = Screen.GetWorkingArea(this).Size;
-            SetContentSize(
-                Math.Min(1600, screenSize.Width),
-                Math.Min(800, screenSize.Height));
+            loadingPanel = new OxLoadingPanel()
+            {
+                Parent = MainPanel,
+                UseParentColor = false
+            };
+            loadingPanel.Margins.SetSize(OxSize.None);
+            loadingPanel.Borders.SetSize(OxSize.None);
+            loadingPanel.StartLoading();
         }
 
         private bool CheckModifiedAndSave()
@@ -102,6 +94,22 @@ namespace PlayStationGames
             try
             {
                 Update();
+                InitializeDataManager();
+                DataManager.Load();
+
+                foreach (OxPane face in DataManager.Faces)
+                    face.BaseColor = MainPanel.BaseColor;
+
+                Size screenSize = Screen.GetWorkingArea(this).Size;
+                SetContentSize(
+                    Math.Min(1600, screenSize.Width),
+                    Math.Min(800, screenSize.Height));
+
+                Left = (screenSize.Width - Width) / 2;
+                Top = (screenSize.Height - Height) / 2;
+
+                PlaceComponents();
+                Update();
                 DataManager.SetModifiedHandler(DataModifiedHandler);
                 DataReceivers.FillData();
             }
@@ -124,8 +132,7 @@ namespace PlayStationGames
 
         private void MainFormLoad(object? sender, EventArgs e)
         {
-            loadingPanel.StartLoading();
-            PlaceComponents();
+            
         }
 
         public override Size WantedMinimumSize => new(1240, 720);
@@ -190,8 +197,8 @@ namespace PlayStationGames
         public void SaveSettings() => 
             SettingsManager.Settings<GeneralSettings>().MainFormState = WindowState;
 
-        private readonly OxLoadingPanel loadingPanel;
-        private readonly OxTabControl mainTabControl;
-        private readonly OxToolBar toolBar;
+        private OxLoadingPanel loadingPanel;
+        private OxTabControl mainTabControl;
+        private OxToolBar toolBar;
     }
 }
