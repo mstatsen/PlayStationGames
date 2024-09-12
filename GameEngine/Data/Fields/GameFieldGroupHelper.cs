@@ -147,5 +147,18 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 _ =>
                     84,
             };
+
+        public List<GameFieldGroup> VerifiedGroups =
+            new()
+            {
+                GameFieldGroup.Base,
+                GameFieldGroup.DLC,
+                GameFieldGroup.GameMode,
+                GameFieldGroup.Genre,
+                GameFieldGroup.Link,
+                GameFieldGroup.ReleaseBase,
+                GameFieldGroup.Trophyset,
+                GameFieldGroup.Emulator
+            };
     }
 }

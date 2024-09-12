@@ -195,11 +195,12 @@ namespace PlayStationGames.GameEngine.Editor
                 availableTrophiesLabel.Visible = !withoutTrophyset;
 
             bool verified = Builder.Value<bool>(GameField.Verified);
-            GameFieldGroupHelper helper = TypeHelper.Helper<GameFieldGroupHelper>();
+            GameFieldGroupHelper groupHelper = TypeHelper.Helper<GameFieldGroupHelper>();
+            List<GameField> unverifiedFields = TypeHelper.Helper<GameFieldHelper>().UnverifiedFields();
 
-            foreach (GameFieldGroup group in verifiedGroups)
-                foreach (GameField field in helper.Fields(group))
-                    Builder[field].ReadOnly = verified;
+            foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
+                foreach (GameField field in groupHelper.Fields(group))
+                    Builder[field].ReadOnly = verified && !unverifiedFields.Contains(field);
         }
 
         private bool CalcedTrophiesVisible =>
@@ -207,19 +208,6 @@ namespace PlayStationGames.GameEngine.Editor
             && TypeHelper.Helper<GameFormatHelper>().AvailableTrophies(Builder.Value<GameFormat>(GameField.Format))
             && TypeHelper.Helper<PlatformTypeHelper>().IsPSNPlatform(Builder.Value<PlatformType>(GameField.Platform));
         
-        private readonly List<GameFieldGroup> verifiedGroups =
-            new()
-            {
-                GameFieldGroup.Base,
-                GameFieldGroup.DLC,
-                GameFieldGroup.GameMode,
-                GameFieldGroup.Genre,
-                GameFieldGroup.Link,
-                GameFieldGroup.ReleaseBase,
-                GameFieldGroup.Trophyset,
-                GameFieldGroup.Emulator
-            };
-
         private void FillFormCaptionFromControls() => 
             FillFormCaption(
                 new Game

@@ -967,5 +967,20 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Status => TypeHelper.Helper<StatusHelper>(),
                 _ => null
             };
+
+        public List<GameField> UnverifiedFields()
+            => new()
+            {
+                GameField.EarnedBronze,
+                GameField.EarnedFromDLC,
+                GameField.EarnedGold,
+                GameField.EarnedNet,
+                GameField.EarnedPlatinum,
+                GameField.EarnedSilver,
+                GameField.Installations,
+                GameField.Links,
+                GameField.RelatedGames,
+                GameField.Tags
+            };
     }
 }
