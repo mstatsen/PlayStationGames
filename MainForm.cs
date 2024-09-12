@@ -181,7 +181,7 @@ namespace PlayStationGames
 
         public void FillData() { }
 
-        public void ApplySettings() => 
+        public void ApplySettings(bool firstLoad) => 
             WindowState = SettingsManager.Settings<GeneralSettings>().MainFormState;
 
         public void SaveSettings() => 

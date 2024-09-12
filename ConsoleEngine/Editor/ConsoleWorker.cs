@@ -45,7 +45,11 @@ namespace PlayStationGames.ConsoleEngine.Editor
         }
 
         private void FillFormCaptionFromControls() =>
-            FillFormCaption(Item);
+            FillFormCaption(
+                new PSConsole() 
+                { 
+                    Name = Builder[ConsoleField.Name].StringValue
+                });
 
         protected override EditorLayoutsGenerator<ConsoleField, PSConsole, ConsoleFieldGroup> 
             CreateLayoutsGenerator(FieldGroupFrames<ConsoleField, ConsoleFieldGroup> frames, 

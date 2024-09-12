@@ -231,5 +231,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override bool IsCalcedField(ConsoleField field) =>
             fieldHelper.CalcedFields.Contains(field);
+
+        public override string FullTitle() => Name;
     }
 }

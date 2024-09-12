@@ -1,5 +1,6 @@
 ﻿using OxLibrary;
 using OxXMLEngine.Data.Decorator;
+using OxXMLEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 
@@ -18,6 +19,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
                     Games(),
                 ConsoleField.Icon => 
                     Icon(),
+                ConsoleField.Model =>
+                    TypeHelper.Name(Dao.Model),
                 _ => 
                     base.Value(field),
             };

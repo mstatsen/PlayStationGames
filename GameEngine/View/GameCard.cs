@@ -190,6 +190,8 @@ namespace PlayStationGames.GameEngine.View
             baseLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, -6));
             baseLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -12));
             Layouter[GameField.CompleteTime]!.CaptionVariant = ControlCaptionVariant.None;
+            Layouter[GameField.Difficult]!.Visible = Item!.Licensed;
+            Layouter[GameField.CompleteTime]!.Visible = Item!.Licensed;
             Layouter[GameField.Source]!.CaptionVariant = ControlCaptionVariant.None;
             Layouter[GameField.Source]!.FontStyle = FontStyle.Regular;
             //TODO: layouts[GameField.Installation].CaptionVariant = ControlCaptionVariant.None;

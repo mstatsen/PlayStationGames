@@ -255,12 +255,12 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Difficult =>
                     20,
                 GameField.Image or
-                GameField.Source => 
+                GameField.Platform => 
                     8,
                 GameField.Edition => 
                     4,
                 GameField.Region or
-                GameField.Platform or 
+                GameField.Source or
                 GameField.Format or 
                 GameField.CriticScore or 
                 GameField.Series or 

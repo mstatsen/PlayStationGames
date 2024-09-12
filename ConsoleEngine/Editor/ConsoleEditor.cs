@@ -44,9 +44,11 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 Groups[ConsoleFieldGroup.Storages].Visible ? 434 : 200
             );
 
-            if (Groups[ConsoleFieldGroup.Storages].Visible)
+            if (Groups[ConsoleFieldGroup.Folders].Visible)
                 Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Bottom;
             else Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Fill;
+
+            SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
         }
 
         protected override void SetPaddings()
@@ -66,11 +68,17 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 group == ConsoleFieldGroup.Accessories
                     ? OxSize.None 
                     : OxSize.Extra;
-            frame.Margins.TopOx =
-                group == ConsoleFieldGroup.Storages || 
-                group == ConsoleFieldGroup.Accessories   
-                    ? OxSize.None
-                    : OxSize.Extra;
+
+            switch (group)
+            {
+                case ConsoleFieldGroup.Storages:
+                case ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Accessories].Dock == DockStyle.Bottom:
+                    frame.Margins.TopOx = OxSize.None;
+                    break;
+                default:
+                    frame.Margins.TopOx = OxSize.Extra;
+                    break;
+            }
         }
     }
 }

@@ -40,8 +40,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         public override int DefaultGroupHeight(ConsoleFieldGroup group) => 
             group switch
             {
-                ConsoleFieldGroup.Folders => 280,
-                ConsoleFieldGroup.Accessories => 200,
+                ConsoleFieldGroup.Accessories => 198,
                 _ => 140,
             };
 

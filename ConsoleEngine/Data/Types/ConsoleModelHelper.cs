@@ -76,6 +76,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                     "Unknown"
             };
 
+        public override string GetXmlValue(ConsoleModel value) => 
+            value.ToString();
+
         public override ConsoleModel EmptyValue() =>
             ConsoleModel.Unknown;
 

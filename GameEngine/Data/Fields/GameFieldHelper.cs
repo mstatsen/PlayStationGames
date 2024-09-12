@@ -473,8 +473,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Name,
             GameField.Image,
             GameField.Licensed,
-            GameField.Source,
             GameField.Platform,
+            GameField.Source,
             GameField.Format,
             GameField.Region,
             GameField.Code,
@@ -808,8 +808,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                         },
                 GameField.Platform => new List<GameField>()
                         {
-                            GameField.PlatformFamily,
-                            GameField.Source
+                            GameField.PlatformFamily
                         },
                 GameField.Format => new List<GameField>()
                         {

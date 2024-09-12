@@ -69,7 +69,12 @@ namespace PlayStationGames.ConsoleEngine.Data
             type = XmlHelper.Value<AccessoryType>(element, XmlConsts.Type);
             joystickType = XmlHelper.Value<JoystickType>(element, XmlConsts.JoystickType);
             color = XmlHelper.Value(element, XmlConsts.Color);
+
             count = XmlHelper.ValueInt(element, XmlConsts.Count);
+
+            if (count == 0)
+                count = 1;
+
             description = XmlHelper.Value(element, XmlConsts.Description);
         }
 
@@ -87,16 +92,21 @@ namespace PlayStationGames.ConsoleEngine.Data
                     XmlHelper.AppendElement(element, XmlConsts.Color, color);
             }
 
-            XmlHelper.AppendElement(element, XmlConsts.Count, count);
-            XmlHelper.AppendElement(element, XmlConsts.Description, description);
+            if (count > 1)
+                XmlHelper.AppendElement(element, XmlConsts.Count, count);
+
+            if (description != string.Empty)
+                XmlHelper.AppendElement(element, XmlConsts.Description, description);
         }
 
         public override string ToString()
         {
-            string countStr = Count > 1 ? Count.ToString() + " " : "";
-            string typeStr = JoystickType == JoystickType.Other ? " " + TypeHelper.FullName(Type) : "";
-            string joystickTypeName = Type == AccessoryType.Joystick ? TypeHelper.FullName(JoystickType) : "";
-            return $"{countStr}{Color} {joystickTypeName}{typeStr}";
+            string countStr = Count > 1 ? Count.ToString() + " " : string.Empty;
+            string joystickTypeName = Type == AccessoryType.Joystick ? TypeHelper.FullName(JoystickType) + " ": string.Empty;
+            string typeStr = JoystickType == JoystickType.Other ? TypeHelper.FullName(Type) : string.Empty;
+            string colorStr = Color != string.Empty ? Color + " " : string.Empty;
+            string descriptionStr = description != string.Empty ? " " : string.Empty + description; 
+            return $"{countStr}{colorStr}{joystickTypeName}{typeStr}{descriptionStr}";
         }
 
         private Guid id = Guid.Empty;
