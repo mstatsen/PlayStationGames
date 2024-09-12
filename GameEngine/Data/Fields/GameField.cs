@@ -5,6 +5,7 @@
         Id,
         Name,
         Licensed,
+        Owner,
         Region,
         Language,
         Code,

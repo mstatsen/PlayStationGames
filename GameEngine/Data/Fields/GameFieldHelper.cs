@@ -26,6 +26,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 GameField.Id => "Game ID:",
                 GameField.Name => "Name",
+                GameField.Owner => "Owner",
                 GameField.Licensed => "Licensed",
                 GameField.Tags => "Tags",
                 GameField.Image => "Image",
@@ -113,6 +114,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 [FieldsFilling.Full] = new List<GameField>
                 {
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.CompleteTime,
                     GameField.CriticScore,
@@ -142,6 +144,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 [FieldsFilling.Full] = new List<GameField>
                 {
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.Platform,
                     GameField.Source,
@@ -184,6 +187,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 [FieldsFilling.Full] = new List<GameField>
                 {
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.Source,
                     GameField.Status,
@@ -201,6 +205,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 },
                 [FieldsFilling.Default] = new List<GameField>
                 {
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.Source,
                     GameField.Status,
@@ -237,6 +242,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 [FieldsFilling.Full] = new List<GameField>
                 {
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.Platform,
                     GameField.Source,
@@ -294,6 +300,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Image,
                     GameField.Name,
                     GameField.Platform,
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.Region,
                     GameField.Language,
@@ -334,6 +341,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Image,
                     GameField.Name,
                     GameField.Platform,
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.Region,
                     GameField.Language,
@@ -388,6 +396,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.AvailableNet,
                     GameField.TrophysetAccess,
                     GameField.Verified,
+                    GameField.Owner,
                     GameField.Licensed,
                     GameField.Tags,
                     GameField.EmulatorType,
@@ -423,6 +432,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         protected override List<GameField> GetGroupByFields() => new()
         {
             GameField.Platform,
+            GameField.Owner,
             GameField.Licensed,
             GameField.Format,
             GameField.Status,
@@ -472,6 +482,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             GameField.Name,
             GameField.Image,
+            GameField.Owner,
             GameField.Licensed,
             GameField.Platform,
             GameField.Source,
@@ -526,6 +537,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Image,
             GameField.Edition,
             GameField.Series,
+            GameField.Owner,
             GameField.Licensed,
             GameField.CriticScore,
             GameField.PlatformFamily,
@@ -573,6 +585,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Series,
             GameField.CriticScore,
             GameField.Platform,
+            GameField.Owner,
             GameField.Licensed,
             GameField.Status,
             GameField.Format,
@@ -685,6 +698,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         protected override FieldFilterOperations<GameField> GetAvailableFilterOperations() => new()
         {
             [GameField.Id] = FilterOperations.EnumOperations,
+            [GameField.Owner] = FilterOperations.StringOperations,
             [GameField.Licensed] = FilterOperations.EnumOperations,
             [GameField.Tags] = FilterOperations.ObjectOperations,
             [GameField.Name] = FilterOperations.StringOperations,
@@ -897,7 +911,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Publisher or 
                 GameField.Genre or 
                 GameField.FullGenre or 
-                GameField.EmulatorType =>
+                GameField.EmulatorType or
+                GameField.Owner =>
                     FieldType.Extract,
                 GameField.PlatformFamily or 
                 GameField.Platform or 

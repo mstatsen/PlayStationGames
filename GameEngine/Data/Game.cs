@@ -21,6 +21,7 @@ namespace PlayStationGames.GameEngine.Data
         private string name = string.Empty;
         private string edition = string.Empty;
         private string series = string.Empty;
+        private Guid owner = Guid.Empty;
         private PlatformType platformType;
         private GameFormat format;
         private Source sourceType;
@@ -191,12 +192,19 @@ namespace PlayStationGames.GameEngine.Data
             set => licensed = BoolValue(ModifyValue(GameField.Licensed, licensed, value));
         }
 
+        public Guid Owner
+        {
+            get => owner;
+            set => owner = GuidValue(ModifyValue(GameField.Owner, owner, value));
+        }
+
         public override int CompareField(GameField field, IFieldMapping<GameField> y)
         {
             switch (field)
             {
                 case GameField.Id:
                 case GameField.Name:
+                case GameField.Owner:
                 case GameField.Edition:
                 case GameField.Series:
                 case GameField.Developer:
@@ -475,6 +483,9 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Licensed:
                     Licensed = BoolValue(value);
                     break;
+                case GameField.Owner:
+                    Owner = GuidValue(value);
+                    break;
                 case GameField.Difficult:
                     Difficult = TypeHelper.Value<Difficult>(value);
                     break;
@@ -548,7 +559,8 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         private static bool AvailableTrophyset(Game game) =>
-            game.Licensed 
+            game.Owner != Guid.Empty
+            && game.Licensed 
             && TypeHelper.Helper<GameFormatHelper>().AvailableTrophies(game.Format)
             && TypeHelper.Helper<PlatformTypeHelper>().IsPSNPlatform(game.PlatformType);
 
@@ -652,6 +664,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.CriticScore => CriticScore,
                 GameField.ReleasePlatforms => ReleasePlatforms,
                 GameField.Verified => Verified,
+                GameField.Owner => Owner,
                 GameField.Licensed => Licensed,
                 GameField.Installations => Installations,
                 GameField.Difficult => Difficult,
@@ -682,6 +695,7 @@ namespace PlayStationGames.GameEngine.Data
             Series = string.Empty;
             Verified = false;
             Licensed = true;
+            Owner = Guid.Empty;
             ROMs = string.Empty;
             EmulatorType = string.Empty;
             Genre = string.Empty;
@@ -742,6 +756,9 @@ namespace PlayStationGames.GameEngine.Data
             }
             else XmlHelper.AppendElement(element, XmlConsts.Image, imageBase64);
 
+            if (Owner != Guid.Empty)
+                XmlHelper.AppendElement(element, XmlConsts.Owner, Owner);
+
             XmlHelper.AppendElement(element, XmlConsts.Edition, Edition, true);
             XmlHelper.AppendElement(element, XmlConsts.Series, Series, true);
             XmlHelper.AppendElement(element, XmlConsts.Source, SourceType);
@@ -783,6 +800,8 @@ namespace PlayStationGames.GameEngine.Data
 
             Licensed = (XmlHelper.Value(element, XmlConsts.Licensed) == string.Empty) 
                 || XmlHelper.ValueBool(element, XmlConsts.Licensed);
+
+            owner = XmlHelper.ValueGuid(element, XmlConsts.Owner);
 
             SourceType = XmlHelper.Value<Source>(element, XmlConsts.Source);
             GameRegion = XmlHelper.Value<GameRegion>(element, XmlConsts.Region);
@@ -853,6 +872,7 @@ namespace PlayStationGames.GameEngine.Data
                     && PlatformType.Equals(otherGame.PlatformType)
                     && Format.Equals(otherGame.Format)
                     && Licensed.Equals(otherGame.Licensed)
+                    && Owner.Equals(otherGame.Owner)
                     && Verified.Equals(otherGame.Verified)
                     && SourceType.Equals(otherGame.SourceType)
                     && EmulatorType.Equals(otherGame.EmulatorType) 
