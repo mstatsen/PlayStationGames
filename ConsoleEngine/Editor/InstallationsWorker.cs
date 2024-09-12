@@ -86,7 +86,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             ItemsChooserParams<GameField, Game> chooserParams = new(
                 availableGames, installedGames)
             {
-                Title = "Installations",
+                Title = "Installed Games",
                 AvailableTitle = "Available Games",
                 SelectedTitle = "Installed Games",
                 SelectedGridFields = new List<GameField>()

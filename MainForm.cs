@@ -7,6 +7,7 @@ using OxXMLEngine.Data;
 using OxXMLEngine.Settings;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.GameEngine.Data;
+using PlayStationGames.AccountEngine.Data;
 
 namespace PlayStationGames
 {
@@ -67,10 +68,8 @@ namespace PlayStationGames
                 Math.Min(800, screenSize.Height));
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        private bool CheckModifiedAndSave()
         {
-            base.OnFormClosing(e);
-
             if (DataManager.Modified)
             {
                 DialogResult userConfirm = OxMessage.ShowWarning(
@@ -79,20 +78,23 @@ namespace PlayStationGames
 
                 switch (userConfirm)
                 {
+                    case DialogResult.Cancel:
+                        return false;
                     case DialogResult.Yes:
                         Save();
-                        break;
-                    case DialogResult.Cancel:
-                        e.Cancel = true;
                         break;
                 }
             }
 
-            if (!e.Cancel)
-            {
-                DataReceivers.SaveSettings();
-                DataManager.SaveSystemData();
-            }
+            return true;
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            e.Cancel = !CheckModifiedAndSave();
+            DataReceivers.SaveSettings();
+            DataManager.SaveSystemData();
         }
 
         private void MainFormShow(object? sender, EventArgs e)
@@ -175,6 +177,7 @@ namespace PlayStationGames
 
         private static void InitializeDataManager()
         {
+            AccountsController.Init();
             ConsolesController.Init();
             GamesController.Init();
         }

@@ -14,6 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AccountEngine\Editor\AccountEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AccountEngine\View\AccountCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="AccountEngine\View\AccountFullInfoCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Accessories\AccessoryEditor.cs">
       <SubType>Form</SubType>
     </Compile>
