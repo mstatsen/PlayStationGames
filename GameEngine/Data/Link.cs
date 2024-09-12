@@ -81,13 +81,13 @@ namespace PlayStationGames.GameEngine.Data
 
             if (Type == LinkType.Stratege)
                 return -1;
-            else
+            
             if (otherLink.Type == LinkType.Stratege)
                 return 1;
-            else
+            
             if (Type == LinkType.PSNProfiles)
                 return -1;
-            else
+            
             if (otherLink.Type == LinkType.PSNProfiles)
                 return 1;
 
