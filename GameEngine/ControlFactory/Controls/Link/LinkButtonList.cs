@@ -73,6 +73,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         public void Clear()
         {
+            foreach (LinkButton button in Buttons)
+                button.Parent = null;
+
             Buttons.Clear();
             RecalcButtonsSize();
         }
