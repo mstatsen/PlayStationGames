@@ -56,27 +56,27 @@ namespace PlayStationGames.AccountEngine.Editor
             consolesButton.Top = 12;
             consolesButton.Left = 12;
             consolesButton.SetContentSize(buttonWidth, 40);
-            consolesButton.Click -= consoleButtonClickHandler;
-            consolesButton.Click += consoleButtonClickHandler;
+            consolesButton.Click -= ConsoleButtonClickHandler;
+            consolesButton.Click += ConsoleButtonClickHandler;
 
             gamesButton.Parent = Editor.Groups[AccountFieldGroup.Property];
             gamesButton.Top = 12;
             gamesButton.Left = Editor.Groups[AccountFieldGroup.Property].Width / 2 - 2;
             gamesButton.SetContentSize(buttonWidth, 40);
-            gamesButton.Click -= gamesButtonClickHandler;
-            gamesButton.Click += gamesButtonClickHandler;
+            gamesButton.Click -= GamesButtonClickHandler;
+            gamesButton.Click += GamesButtonClickHandler;
 
             Editor.Groups[AccountFieldGroup.Property].Height = gamesButton.Bottom;
             Editor.Groups.SetGroupsSize();
             Editor.InvalidateSize();
         }
 
-        private void gamesButtonClickHandler(object? sender, EventArgs e)
+        private void GamesButtonClickHandler(object? sender, EventArgs e)
         {
             OxMessage.ShowInfo("Games selector under construction");
         }
 
-        private void consoleButtonClickHandler(object? sender, EventArgs e)
+        private void ConsoleButtonClickHandler(object? sender, EventArgs e)
         {
             OxMessage.ShowInfo("Consoles selector under construction");
         }

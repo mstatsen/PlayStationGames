@@ -1,10 +1,6 @@
 ﻿using OxLibrary.Panels;
-using PlayStationGames.ConsoleEngine.Data.Fields;
-using PlayStationGames.ConsoleEngine.Data.Types;
 using OxXMLEngine.ControlFactory;
-using OxXMLEngine.Data.Types;
 using OxXMLEngine.View;
-using OxLibrary.Controls;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
 
@@ -34,10 +30,6 @@ namespace PlayStationGames.AccountEngine.View
                 loginLayout
             };
         }
-
-        private readonly ConsoleGenerationHelper generationHelper = 
-            TypeHelper.Helper<ConsoleGenerationHelper>();
-
 
         protected override void PrepareLayouts()
         {
