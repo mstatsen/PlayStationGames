@@ -84,89 +84,11 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                         ConsoleField.Generation
                     }
                 },
-                [FieldsVariant.Category] = new ConsoleFieldsFillingDictionary()
-                {
-                    [FieldsFilling.Full] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation,
-                        ConsoleField.Model,
-                        ConsoleField.Firmware
-                    },
-                    [FieldsFilling.Default] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation,
-                        ConsoleField.Model,
-                        ConsoleField.Firmware
-                    },
-                    [FieldsFilling.Min] = new List<ConsoleField>
-                    {
-                    }
-                },
-                [FieldsVariant.QuickFilter] = new ConsoleFieldsFillingDictionary()
-                {
-                    [FieldsFilling.Full] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation,
-                        ConsoleField.Model,
-                        ConsoleField.Firmware
-                    },
-                    [FieldsFilling.Default] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation,
-                        ConsoleField.Model,
-                        ConsoleField.Firmware
-                    },
-                    [FieldsFilling.Min] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation
-                    }
-                },
-                [FieldsVariant.QuickFilterText] = new ConsoleFieldsFillingDictionary()
-                {
-                    [FieldsFilling.Full] = new List<ConsoleField>
-                    {
-                        ConsoleField.Name
-                    },
-                    [FieldsFilling.Default] = new List<ConsoleField>
-                    {
-                        ConsoleField.Name
-                    },
-                    [FieldsFilling.Min] = new List<ConsoleField>
-                    {
-                        ConsoleField.Name
-                    }
-                },
-                [FieldsVariant.Summary] = new ConsoleFieldsFillingDictionary()
-                {
-                    [FieldsFilling.Full] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation,
-                        ConsoleField.Model,
-                        ConsoleField.Firmware
-                    },
-                    [FieldsFilling.Default] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation,
-                        ConsoleField.Model
-                    },
-                    [FieldsFilling.Min] = new List<ConsoleField>
-                    {
-                        ConsoleField.Generation
-                    }
-                },
+                [FieldsVariant.Category] = new ConsoleFieldsFillingDictionary(),
+                [FieldsVariant.QuickFilter] = new ConsoleFieldsFillingDictionary(),
+                [FieldsVariant.QuickFilterText] = new ConsoleFieldsFillingDictionary(),
+                [FieldsVariant.Summary] = new ConsoleFieldsFillingDictionary(),
                 [FieldsVariant.BatchUpdate] = new ConsoleFieldsFillingDictionary()
-                {
-                    [FieldsFilling.Full] = new List<ConsoleField>
-                    {
-                        ConsoleField.Name,
-                        ConsoleField.Generation,
-                        ConsoleField.Model,
-                        ConsoleField.Firmware,
-                        ConsoleField.Storages,
-                        ConsoleField.Folders,
-                        ConsoleField.Accessories
-                    }
-                }
             };
 
         public override ConsoleField FieldMetaData => ConsoleField.Field;

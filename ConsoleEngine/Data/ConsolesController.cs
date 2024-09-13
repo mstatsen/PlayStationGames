@@ -56,5 +56,10 @@ namespace PlayStationGames.ConsoleEngine.Data
             {
                 new FieldSorting<ConsoleField, PSConsole>(ConsoleField.Name, SortOrder.Ascending)
             };
+
+        public override bool AvailableBatchUpdate => false;
+        public override bool AvailableSummary => false;
+        public override bool AvailableCategories => false;
+        public override bool AvailableQuickFilter => false;
     }
 }

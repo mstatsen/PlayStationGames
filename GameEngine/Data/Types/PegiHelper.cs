@@ -1,4 +1,5 @@
-﻿using OxXMLEngine;
+﻿using OxLibrary;
+using OxXMLEngine;
 using OxXMLEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Types
@@ -19,8 +20,7 @@ namespace PlayStationGames.GameEngine.Data.Types
         public override string GetShortName(Pegi value) =>
             ((int)value).ToString();
 
-        public override Color GetBaseColor(Pegi value) => 
-            throw new System.NotImplementedException();
+        public override Color GetBaseColor(Pegi value) => Styles.CardColor;
 
         public override Color GetFontColor(Pegi value) => 
             value switch

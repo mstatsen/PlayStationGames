@@ -21,10 +21,13 @@ namespace PlayStationGames
 
         public MainForm()
         {
+            DataReceivers.Register(this);
             InitializeComponent();
             Size screenSize = Screen.GetWorkingArea(this).Size;
-            Left = (screenSize.Width - 1600) / 2;
-            Top = (screenSize.Height - 800) / 2;
+            SetContentSize(700, 480);
+            Left = (screenSize.Width - 700) / 2;
+            Top = (screenSize.Height - 480) / 2;
+            
             mainTabControl = new OxTabControl
             {
                 Dock = DockStyle.Fill,
@@ -191,14 +194,25 @@ namespace PlayStationGames
 
         public void FillData() { }
 
-        public void ApplySettings(bool firstLoad) => 
+        public void ApplySettings(bool firstLoad)
+        {
             WindowState = SettingsManager.Settings<GeneralSettings>().MainFormState;
+            IDataController? controller = DataManager.Controller(SettingsManager.Settings<GeneralSettings>().CurrentController);
 
-        public void SaveSettings() => 
+            if (controller == null)
+                mainTabControl.ActivateFirstPage();
+            else
+                mainTabControl.ActivePage = controller.Face;
+        }
+
+        public void SaveSettings()
+        {
             SettingsManager.Settings<GeneralSettings>().MainFormState = WindowState;
+            SettingsManager.Settings<GeneralSettings>().CurrentController = DataManager.Controller(mainTabControl.ActivePage!).GetType().Name;
+        }
 
-        private OxLoadingPanel loadingPanel;
-        private OxTabControl mainTabControl;
-        private OxToolBar toolBar;
+        private readonly OxLoadingPanel loadingPanel;
+        private readonly OxTabControl mainTabControl;
+        private readonly OxToolBar toolBar;
     }
 }

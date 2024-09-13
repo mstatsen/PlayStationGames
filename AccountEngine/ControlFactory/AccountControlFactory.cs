@@ -1,10 +1,9 @@
 ﻿using OxXMLEngine.ControlFactory;
 using OxXMLEngine.ControlFactory.Accessors;
 using OxXMLEngine.ControlFactory.Context;
+using OxXMLEngine.ControlFactory.Initializers;
 using OxXMLEngine.Grid;
 using OxXMLEngine.View;
-
-using OxXMLEngine.ControlFactory.Initializers;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Grid;
@@ -33,9 +32,6 @@ namespace PlayStationGames.AccountEngine.ControlFactory
 
         public override GridPainter<AccountField, Account> CreateGridPainter(
             GridFieldColumns<AccountField> columns, GridUsage usage) => new AccountGridPainter(columns);
-
-        public override IItemCard<AccountField, Account> CreateCard(ItemViewMode viewMode) => 
-            new AccountCard(viewMode);
 
         protected override ItemColorer<AccountField, Account> CreateItemColorer() =>
             new AccountColorer();

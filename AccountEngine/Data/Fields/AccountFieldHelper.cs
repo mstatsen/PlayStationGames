@@ -14,6 +14,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         public override string GetName(AccountField value) =>
             value switch
             {
+                AccountField.Account => "Account",
                 AccountField.Id => "Id",
                 AccountField.Avatar => "Avatar",
                 AccountField.Name => "Name",
@@ -29,17 +30,10 @@ namespace PlayStationGames.AccountEngine.Data.Fields
 
         private readonly AccountFieldsVariantDictionary fieldDictionary = new()
         {
-            [FieldsVariant.Category] = new AccountFieldsFillingDictionary()
-            {
-                [FieldsFilling.Full] = new List<AccountField>
-                {
-                    AccountField.Country,
-                },
-                [FieldsFilling.Default] = new List<AccountField>
-                {
-                    AccountField.Country
-                }
-            },
+            [FieldsVariant.QuickFilter] = new AccountFieldsFillingDictionary(),
+            [FieldsVariant.QuickFilterText] = new AccountFieldsFillingDictionary(),
+            [FieldsVariant.Category] = new AccountFieldsFillingDictionary(),
+            [FieldsVariant.Summary] = new AccountFieldsFillingDictionary(),
             [FieldsVariant.Inline] = new AccountFieldsFillingDictionary()
             {
                 [FieldsFilling.Full] = new List<AccountField>
@@ -54,31 +48,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 {
                     AccountField.Login,
                     AccountField.Country
-                }
-            },
-            [FieldsVariant.QuickFilter] = new AccountFieldsFillingDictionary()
-            {
-                [FieldsFilling.Full] = new List<AccountField>
-                {
-                    AccountField.Country,
-                    AccountField.Login
-                },
-                [FieldsFilling.Default] = new List<AccountField>
-                {
-                    AccountField.Country
-                }
-            },
-            [FieldsVariant.QuickFilterText] = new AccountFieldsFillingDictionary()
-            {
-                [FieldsFilling.Full] = new List<AccountField>
-                {
-                    AccountField.Name,
-                    AccountField.Login
-                },
-                [FieldsFilling.Default] = new List<AccountField>
-                {
-                    AccountField.Name,
-                    AccountField.Login
                 }
             },
             [FieldsVariant.Table] = new AccountFieldsFillingDictionary()
@@ -130,22 +99,11 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.Name
         };
 
-        protected override List<AccountField> GetGroupByFields() => new()
-        {
-            AccountField.Country
-        };
+        protected override List<AccountField> GetGroupByFields() => new() { };
 
-        protected override List<AccountField> GetCalcedFields() => new()
-        {
-        };
+        protected override List<AccountField> GetCalcedFields() => new() { };
 
-        protected override List<AccountField> GetIconFields() => new()
-        {
-            AccountField.Avatar,
-            AccountField.Name,
-            AccountField.Login,
-            AccountField.Country
-        };
+        protected override List<AccountField> GetIconFields() => new() { };
 
         protected override List<AccountField> GetEditingFields() => new()
         {
@@ -174,18 +132,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.StrategeLink
         };
 
-        protected override List<AccountField> GetCardFields() => new()
-        {
-            AccountField.Avatar,
-            AccountField.Name,
-            AccountField.Country,
-            AccountField.Consoles,
-            AccountField.Games,
-            AccountField.Login,
-            AccountField.Password,
-            AccountField.PSNProfilesLink,
-            AccountField.StrategeLink
-        };
+        protected override List<AccountField> GetCardFields() => new() { };
 
         protected override FilterOperation GetDefaultFilterOperation(AccountField field) =>
             field switch
@@ -219,10 +166,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             [AccountField.StrategeLink] = FilterOperations.UnaryOperations
         };
 
-        protected override List<AccountField> GetSelectQuickFilterFields() => new()
-        {
-            AccountField.Country
-        };
+        protected override List<AccountField> GetSelectQuickFilterFields() => new(){ };
 
         public override AccountField FieldMetaData => AccountField.Field;
 
@@ -254,6 +198,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         public override FieldType GetFieldType(AccountField field) =>
             field switch
             {
+                AccountField.Account =>
+                    FieldType.Extract,
                 AccountField.Id => 
                     FieldType.Guid,
                 AccountField.Avatar => 
@@ -269,9 +215,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     FieldType.String,
             };
 
-        public override ITypeHelper? GetHelper(AccountField field)
-        {
-            return null;
-        }
+        public override ITypeHelper? GetHelper(AccountField field) => null;
     }
 }

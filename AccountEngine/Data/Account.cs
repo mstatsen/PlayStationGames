@@ -178,6 +178,7 @@ namespace PlayStationGames.AccountEngine.Data
         protected override object? GetFieldValue(AccountField field) =>
             field switch
             {
+                AccountField.Account => this,
                 AccountField.Avatar => Avatar,
                 AccountField.Id => Id,
                 AccountField.Name => Name,

@@ -139,7 +139,8 @@ namespace PlayStationGames.GameEngine.Editor
 
             return field switch
             {
-                GameField.Licensed or 
+                GameField.Licensed or
+                GameField.Owner or
                 GameField.Platform or 
                 GameField.Format or
                 GameField.TrophysetAccess or

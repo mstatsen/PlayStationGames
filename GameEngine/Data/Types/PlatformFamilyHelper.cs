@@ -21,5 +21,4 @@ namespace PlayStationGames.GameEngine.Data.Types
                 _ => "Other",
             };
     }
-
 }

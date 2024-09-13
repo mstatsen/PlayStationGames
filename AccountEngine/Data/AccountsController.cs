@@ -43,5 +43,10 @@ namespace PlayStationGames.AccountEngine.Data
 
         public override bool AvailableSummary => false;
         public override bool AvailableCategories => false;
+        public override bool AvailableQuickFilter => false;
+        public override bool AvailableCards => false;
+        public override bool AvailableIcons => false;
+        public override bool AvailableBatchUpdate => false;
+        public override bool AvailableCopyItems => false;
     }
 }

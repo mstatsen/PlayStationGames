@@ -1,6 +1,5 @@
 ﻿using OxXMLEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
-using System.Collections.Generic;
 
 namespace PlayStationGames.GameEngine.Data.Types
 {

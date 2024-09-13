@@ -1,9 +1,8 @@
 ﻿using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.ConsoleEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {
-    internal class AccountFullInfoDecorator : AccountCardDecorator
+    internal class AccountFullInfoDecorator : AccountTableDecorator
     {
         public AccountFullInfoDecorator(Account dao) : base(dao) { }
 

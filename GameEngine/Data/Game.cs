@@ -251,7 +251,7 @@ namespace PlayStationGames.GameEngine.Data
                     GameField.Dlcs => Dlcs.CompareTo(yGame.Dlcs),
                     GameField.Tags => Tags.CompareTo(yGame.Tags),
                     GameField.Links => Links.CompareTo(yGame.Links),
-                    GameField.Installations => Links.CompareTo(yGame.Links),
+                    GameField.Installations => Installations.CompareTo(yGame.Installations),
                     GameField.RelatedGames => RelatedGames.CompareTo(yGame.RelatedGames),
                     GameField.Status => new GameCalculations(this).GetGameStatus().CompareTo(new GameCalculations(yGame).GetGameStatus()),
                     GameField.Progress => new GameCalculations(this).GetGameProgress().CompareTo(new GameCalculations(yGame).GetGameProgress()),
@@ -739,8 +739,8 @@ namespace PlayStationGames.GameEngine.Data
             AddMember(GameField.Installations, Installations);
             AddMember(GameField.Links, Links);
             AddMember(GameField.RelatedGames, RelatedGames);
-            AddMember(AvailableTrophies); //TODO: 
-            AddMember(EarnedTrophies); //TODO:
+            AddMember(AvailableTrophies);
+            AddMember(EarnedTrophies);
             AddMember(GameField.ReleasePlatforms, ReleasePlatforms);
         }
 
@@ -802,7 +802,6 @@ namespace PlayStationGames.GameEngine.Data
                 || XmlHelper.ValueBool(element, XmlConsts.Licensed);
 
             owner = XmlHelper.ValueGuid(element, XmlConsts.Owner);
-
             SourceType = XmlHelper.Value<Source>(element, XmlConsts.Source);
             GameRegion = XmlHelper.Value<GameRegion>(element, XmlConsts.Region);
             GameLanguage = XmlHelper.Value<GameLanguage>(element, XmlConsts.Language);

@@ -7,6 +7,8 @@ using OxXMLEngine.Data;
 using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Grid;
 using OxXMLEngine.View;
+using PlayStationGames.ConsoleEngine.Data.Fields;
+using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.GameEngine.ControlFactory.Accessors;
 using PlayStationGames.GameEngine.ControlFactory.Controls;
 using PlayStationGames.GameEngine.ControlFactory.Filter;
@@ -15,6 +17,8 @@ using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.Grid;
 using PlayStationGames.GameEngine.View;
+using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.AccountEngine.Data;
 
 namespace PlayStationGames.GameEngine.ControlFactory
 {
@@ -48,10 +52,18 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
                     GameField.Id => CreateLabelAccessor(context),
                     GameField.StrategeLink or GameField.PSNProfilesLink => NewLinkButtonAccessor(context),
+                    GameField.Owner => CreateOwnerAccessor(context),
                     _ => base.CreateOtherAccessor(context),
                 },
                 _ => context.Name == "Link" ? NewLinkButtonAccessor(context) : base.CreateOtherAccessor(context)
             };
+
+        private IControlAccessor CreateOwnerAccessor(IBuilderContext<GameField, Game> context)
+        {
+            ControlBuilder<AccountField, Account> accountBuilder =
+                DataManager.Builder<AccountField, Account>(ControlScope.Editor);
+            return (ExtractAccessor<AccountField, Account>)accountBuilder[AccountField.Account];
+        }
 
         private static IControlAccessor NewLinkButtonAccessor(IBuilderContext<GameField, Game> context) =>
             new LinkButtonAccessor<GameField, Game>(context);

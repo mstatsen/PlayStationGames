@@ -115,7 +115,8 @@ namespace PlayStationGames.GameEngine.Editor
         protected override int Top(GameField field) => 
             field switch
             {
-                GameField.Licensed =>
+                GameField.Licensed or
+                GameField.Owner =>
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
                     (Parent(field).Height - Height(field)) / 2,
@@ -139,6 +140,8 @@ namespace PlayStationGames.GameEngine.Editor
                     8,
                 GameField.Licensed => 
                     200,
+                GameField.Owner =>
+                    300,
                 GameField.Source or 
                 GameField.Platform or 
                 GameField.Format => 
@@ -202,8 +205,10 @@ namespace PlayStationGames.GameEngine.Editor
                     200,
                 GameField.Source or 
                 GameField.Platform or 
-                GameField.Format => 
+                GameField.Format =>
                     140,
+                GameField.Owner =>
+                    70,
                 GameField.ScreenView => 
                     112,
                 GameField.Name or 

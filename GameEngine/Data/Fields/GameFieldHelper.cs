@@ -911,8 +911,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Publisher or 
                 GameField.Genre or 
                 GameField.FullGenre or 
-                GameField.EmulatorType or
-                GameField.Owner =>
+                GameField.EmulatorType =>
                     FieldType.Extract,
                 GameField.PlatformFamily or 
                 GameField.Platform or 
@@ -959,7 +958,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     FieldType.List,
                 GameField.Year or 
                 GameField.StrategeLink or 
-                GameField.PSNProfilesLink => 
+                GameField.PSNProfilesLink or
+                GameField.Owner => 
                     FieldType.Custom,
                 _ => 
                     FieldType.String,

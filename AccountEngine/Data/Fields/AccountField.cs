@@ -2,6 +2,7 @@
 {
     public enum AccountField
     {
+        Account,
         Id,
         Avatar,
         Name,
