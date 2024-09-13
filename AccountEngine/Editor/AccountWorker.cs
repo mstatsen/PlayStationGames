@@ -6,6 +6,7 @@ using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Editor;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -115,5 +116,12 @@ namespace PlayStationGames.AccountEngine.Editor
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
             Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
         };
+
+        protected override FieldGroupFrames<AccountField, AccountFieldGroup> GetFieldGroupFrames() =>
+            new()
+                {
+                    Editor.Groups,
+                    { AccountFieldGroup.System, Editor.MainPanel.Footer }
+                };
     }
 }

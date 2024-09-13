@@ -1,6 +1,7 @@
 ﻿using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Data.Types;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Fields
 {
@@ -25,6 +26,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Games => "Games",
                 AccountField.StrategeLink => "Stratege",
                 AccountField.PSNProfilesLink => "PSNProfiles",
+                AccountField.DefaultAccount => "Default Account",
                 _ => string.Empty,
             };
 
@@ -42,7 +44,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountField.Password,
                     AccountField.Country,
                     AccountField.StrategeLink,
-                    AccountField.PSNProfilesLink
+                    AccountField.PSNProfilesLink,
+                    AccountField.DefaultAccount
                 },
                 [FieldsFilling.Default] = new List<AccountField>
                 {
@@ -61,7 +64,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountField.PSNProfilesLink,
                     AccountField.StrategeLink,
                     AccountField.Consoles,
-                    AccountField.Games
+                    AccountField.Games,
+                    AccountField.DefaultAccount
                 },
                 [FieldsFilling.Default] = new List<AccountField>
                 {
@@ -70,7 +74,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountField.Login,
                     AccountField.Country,
                     AccountField.PSNProfilesLink,
-                    AccountField.StrategeLink
+                    AccountField.StrategeLink,
+                    AccountField.DefaultAccount
                 },
                 [FieldsFilling.Min] = new List<AccountField>
                 {
@@ -113,7 +118,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.Login,
             AccountField.Password,
             AccountField.PSNProfilesLink,
-            AccountField.StrategeLink
+            AccountField.StrategeLink,
+            AccountField.DefaultAccount
         };
 
         protected override List<AccountField> GetEditedFieldsExtended() => 
@@ -129,7 +135,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.Login,
             AccountField.Password,
             AccountField.PSNProfilesLink,
-            AccountField.StrategeLink
+            AccountField.StrategeLink,
+            AccountField.DefaultAccount
         };
 
         protected override List<AccountField> GetCardFields() => new() { };
@@ -163,7 +170,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             [AccountField.Name] = FilterOperations.StringOperations,
             [AccountField.Password] = FilterOperations.UnaryOperations,
             [AccountField.PSNProfilesLink] = FilterOperations.UnaryOperations,
-            [AccountField.StrategeLink] = FilterOperations.UnaryOperations
+            [AccountField.StrategeLink] = FilterOperations.UnaryOperations,
+            [AccountField.DefaultAccount] = FilterOperations.BoolOperations
         };
 
         protected override List<AccountField> GetSelectQuickFilterFields() => new(){ };
@@ -186,7 +194,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Login => 
                     200,
                 AccountField.Avatar or 
-                AccountField.Country => 
+                AccountField.Country or 
+                AccountField.DefaultAccount => 
                     70,
                 AccountField.Games or
                 AccountField.Consoles =>
@@ -211,8 +220,17 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Consoles or
                 AccountField.Games => 
                     FieldType.List,
+                AccountField.DefaultAccount =>
+                    FieldType.Boolean,
                 _ =>
                     FieldType.String,
+            };
+
+        public override string ColumnCaption(AccountField field) =>
+            field switch
+            {
+                AccountField.Avatar => "",
+                _ => base.ColumnCaption(field)
             };
 
         public override ITypeHelper? GetHelper(AccountField field) => null;

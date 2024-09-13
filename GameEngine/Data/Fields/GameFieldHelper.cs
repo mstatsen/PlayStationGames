@@ -1,4 +1,6 @@
-﻿using OxXMLEngine.Data.Fields;
+﻿using OxXMLEngine.ControlFactory;
+using OxXMLEngine.ControlFactory.Context;
+using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Types;
@@ -26,7 +28,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 GameField.Id => "Game ID:",
                 GameField.Name => "Name",
-                GameField.Owner => "Owner",
+                GameField.Owner => "PSN Profile",
                 GameField.Licensed => "Licensed",
                 GameField.Tags => "Tags",
                 GameField.Image => "Image",
@@ -425,6 +427,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             GameField.Image,
             GameField.Name,
+            GameField.Licensed,
+            GameField.Owner,
             GameField.Platform,
             GameField.Source
         };
@@ -482,8 +486,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             GameField.Name,
             GameField.Image,
-            GameField.Owner,
             GameField.Licensed,
+            GameField.Owner,
             GameField.Platform,
             GameField.Source,
             GameField.Format,
@@ -901,6 +905,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override FieldType GetFieldType(GameField field) => 
             field switch
             {
+                GameField.Name or
                 GameField.EmulatorROMs => 
                     FieldType.Memo,
                 GameField.Image => 
@@ -997,5 +1002,12 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.RelatedGames,
                 GameField.Tags
             };
+
+        public override void FillAdditionalContext(GameField field, IAccessorContext context)
+        {
+            if (context.Scope == ControlScope.Editor && 
+                field == GameField.Name)
+                context.AdditionalContext = true;
+        }
     }
 }

@@ -25,6 +25,12 @@ namespace PlayStationGames.GameEngine.Editor
                 TypeHelper.BackColor(Builder.Value<Source>(GameField.Source))
             ).Darker(7);
 
+        protected override void AfterColorizeControls()
+        {
+            base.AfterColorizeControls();
+            ((OxPictureContainer)Layouter.PlacedControl(GameField.Image)!.Control).BaseColor = new OxColorHelper(Editor.MainPanel.BaseColor).Lighter();
+        }
+
         protected override void BeforeFillControls()
         {
             base.BeforeFillControls();
@@ -78,11 +84,15 @@ namespace PlayStationGames.GameEngine.Editor
         {
             base.AfterAlignLabels();
             trophiesControlsHelper.AlignLabels();
-            PlacedControl<GameField>? licensedControl = Layouter.PlacedControl(GameField.Licensed);
-            PlacedControl<GameField>? sourceControl = Layouter.PlacedControl(GameField.Source);
 
-            if (licensedControl != null && sourceControl != null)
-                licensedControl.Control.Left = sourceControl.LabelLeft - 1;
+            Control licenseCheckBox = Layouter.PlacedControl(GameField.Licensed)!.Control;
+            Control nameControl = Layouter.PlacedControl(GameField.Name)!.Control;
+            licenseCheckBox.Left =
+                (Layouter.PlacedControl(GameField.Source)!.Control.Right +
+                 nameControl.Right -
+                 licenseCheckBox.Width) / 2;
+            licenseCheckBox.Top = nameControl.Top + (nameControl.Height - licenseCheckBox.Height) / 2;
+            ((OxPictureContainer)Layouter.PlacedControl(GameField.Image)!.Control).HiddenBorder = true;
         }
 
         private void SetRelatedGamesFilter()
@@ -213,7 +223,7 @@ namespace PlayStationGames.GameEngine.Editor
             FillFormCaption(
                 new Game
                 {
-                    Name = Builder[GameField.Name].StringValue,
+                    Name = Builder[GameField.Name].SingleStringValue,
                     PlatformType = TypeHelper.Value<PlatformType>(Builder.Value(GameField.Platform)),
                     SourceType = TypeHelper.Value<Source>(Builder.Value(GameField.Source)),
                     GameRegion = TypeHelper.Value<GameRegion>(Builder.Value(GameField.Region))
@@ -234,6 +244,7 @@ namespace PlayStationGames.GameEngine.Editor
         protected override List<List<GameField>> LabelGroups => new()
         {
             new List<GameField> {
+                GameField.Owner,
                 GameField.Source,
                 GameField.Platform,
                 GameField.Format

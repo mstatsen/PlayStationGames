@@ -3,6 +3,7 @@ using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Editor;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -12,12 +13,19 @@ namespace PlayStationGames.AccountEngine.Editor
         public AccountEditorLayoutsGenerator(FieldGroupFrames<AccountField, AccountFieldGroup> groupFrames,
             ControlLayouter<AccountField, Account> layouter) : base(groupFrames, layouter) { }
 
-        protected override List<AccountField> ControlsWithoutLabel() => 
+        protected override List<AccountField> ControlsWithoutLabel() =>
             new()
             {
                 AccountField.Consoles,
                 AccountField.Games,
-                AccountField.Avatar
+                AccountField.Avatar,
+                AccountField.DefaultAccount
+            };
+
+        protected override List<AccountField> AutoSizeFields() =>
+            new()
+            {
+                AccountField.DefaultAccount   
             };
 
         protected override List<AccountField> OffsettingFields() =>
@@ -28,10 +36,17 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.StrategeLink
             };
 
-        protected override int Top(AccountField field) => 8;
+        protected override int Top(AccountField field) =>
+            field switch
+            {
+                AccountField.DefaultAccount =>
+                    (Parent(field).Height - Height(field)) / 2,
+                _ => 8
+            };
 
         protected override int Left(AccountField field) =>
-            field == AccountField.Avatar
+            field is AccountField.Avatar or 
+                AccountField.DefaultAccount
             ? 8
             : field is AccountField.PSNProfilesLink or 
                 AccountField.StrategeLink
@@ -63,6 +78,7 @@ namespace PlayStationGames.AccountEngine.Editor
             {
                 AccountField.Avatar =>
                     GroupFrames[AccountFieldGroup.Base].BaseColor,
+                AccountField.DefaultAccount => Color.Transparent,
                 _ =>
                     Color.FromArgb(250, 250, 250),
             };
@@ -70,6 +86,22 @@ namespace PlayStationGames.AccountEngine.Editor
         protected override int Height(AccountField field) =>
             field == AccountField.Avatar
                 ? 80
-                : base.Height(field);
+                : field == AccountField.DefaultAccount 
+                    ? 20
+                    : base.Height(field);
+
+        protected override AnchorStyles Anchors(AccountField field)
+        {
+            AnchorStyles anchors = base.Anchors(field);
+
+            switch (field)
+            {
+                case AccountField.DefaultAccount:
+                    anchors |= AnchorStyles.Bottom;
+                    break;
+            }
+
+            return anchors;
+        }
     }
 }

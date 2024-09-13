@@ -23,6 +23,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountFieldGroup.Links => "Links",
                 AccountFieldGroup.Auth => "Auth",
                 AccountFieldGroup.Property => "Property",
+                AccountFieldGroup.System => "System",
                 _ => string.Empty,
             };
 
@@ -35,6 +36,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Login or
                 AccountField.Password =>
                     AccountFieldGroup.Auth,
+                AccountField.DefaultAccount => 
+                    AccountFieldGroup.System,
                 _ =>
                     AccountFieldGroup.Base,
             };
@@ -49,7 +52,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountFieldGroup.Links,
                 AccountFieldGroup.Property
             }.Contains(group);
-
 
         public override int DefaultGroupHeight(AccountFieldGroup group) => 60;
 

@@ -8,9 +8,14 @@ namespace PlayStationGames.AccountEngine.Data
 {
     public class Account : RootDAO<AccountField>
     {
-
         public Account() : base() =>
             GenerateGuid();
+
+        public bool DefaultAccount
+        { 
+            get => defaultAccount;
+            set => defaultAccount = BoolValue(ModifyValue(AccountField.DefaultAccount, defaultAccount, value));
+        }
 
         public Guid Id
         {
@@ -64,6 +69,7 @@ namespace PlayStationGames.AccountEngine.Data
         {
             Id = Guid.Empty;
             Name = string.Empty;
+            DefaultAccount = false;
             Avatar = null;
             avatarBase64 = string.Empty;
             Country = string.Empty;
@@ -87,6 +93,7 @@ namespace PlayStationGames.AccountEngine.Data
             if (id == Guid.Empty)
                 GenerateGuid();
             Name = XmlHelper.Value(element, XmlConsts.Name);
+            DefaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
             avatarBase64 = XmlHelper.Value(element, XmlConsts.Image);
             Avatar = XmlHelper.ValueBitmap(element, XmlConsts.Image);
             Country = XmlHelper.Value(element, XmlConsts.Country);
@@ -100,6 +107,7 @@ namespace PlayStationGames.AccountEngine.Data
         {
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
             XmlHelper.AppendElement(element, XmlConsts.Name, Name);
+            XmlHelper.AppendElement(element, XmlConsts.Default, DefaultAccount);
             if (avatarBase64 == string.Empty)
             {
                 if (Avatar != null)
@@ -122,6 +130,7 @@ namespace PlayStationGames.AccountEngine.Data
         private string password = string.Empty;
         private string psnProfilesLink = string.Empty;
         private string strategeLink = string.Empty;
+        private bool defaultAccount = false;
 
 
         /*
@@ -153,6 +162,9 @@ namespace PlayStationGames.AccountEngine.Data
                 case AccountField.Name:
                     Name = StringValue(value);
                     break;
+                case AccountField.DefaultAccount:
+                    DefaultAccount = BoolValue(value);
+                    break;
                 case AccountField.Login:
                     Login = StringValue(value);
                     break;
@@ -182,6 +194,7 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.Avatar => Avatar,
                 AccountField.Id => Id,
                 AccountField.Name => Name,
+                AccountField.DefaultAccount => DefaultAccount,
                 AccountField.Login => Login,
                 AccountField.Password => Password,
                 AccountField.Country => Country,

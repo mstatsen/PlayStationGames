@@ -1,6 +1,11 @@
 using OxXMLEngine.ControlFactory.Accessors;
 using OxXMLEngine.ControlFactory.Context;
+using OxXMLEngine.ControlFactory.ValueAccessors;
 using OxXMLEngine.Data;
+using PlayStationGames.AccountEngine.Data;
+using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.GameEngine.ControlFactory.ValueAccessors;
+using System.Security.Principal;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -10,13 +15,20 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
     {
         public AccountAccessor(IBuilderContext<TField, TDAO> context) : base(context) { }
 
+        protected override ValueAccessor CreateValueAccessor() =>
+            new AccountValueAccessor();
+
         protected override void InitControl()
         {
             base.InitControl();
             ComboBox.Items.Clear();
+            ComboBox.Items.Add(AccountValueAccessor.NullAccount);
+            RootListDAO<AccountField, Account> accountList = DataManager.ListController<AccountField, Account>().FullItemsList;
 
-            for (int y = DateTime.Today.Year; y > 1990; y--)
-                ComboBox.Items.Add(y);
+            foreach (var account in accountList)
+                ComboBox.Items.Add(account);
+
+            ComboBox.SelectedItem = AccountValueAccessor.NullAccount;
         }
     }
 }

@@ -115,7 +115,8 @@ namespace PlayStationGames.GameEngine.Editor
         protected override int Top(GameField field) => 
             field switch
             {
-                GameField.Licensed or
+                GameField.Licensed =>
+                    Layouter[GameField.Name]!.Top,
                 GameField.Owner =>
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
@@ -138,14 +139,13 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Image or 
                 GameField.Verified => 
                     8,
-                GameField.Licensed => 
-                    200,
-                GameField.Owner =>
-                    300,
+                GameField.Licensed =>
+                    390,
+                GameField.Owner or
                 GameField.Source or 
                 GameField.Platform or 
                 GameField.Format => 
-                    290,
+                    302,
                 GameField.Name or 
                 GameField.Edition or 
                 GameField.Series or
@@ -177,7 +177,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Language =>
                     206,
                 GameField.Code =>
-                    342,
+                    348,
                 GameField.Developer or 
                 GameField.Publisher or 
                 GameField.Year or 
@@ -193,28 +193,31 @@ namespace PlayStationGames.GameEngine.Editor
         protected override int Height(GameField field) =>
             field == GameField.Image
                 ? 110
-                : field == GameField.Verified ||
-                    field == GameField.Licensed
-                    ? 20
-                    : base.Height(field);
+                : field == GameField.Name 
+                    ? 42 
+                    : field == GameField.Verified ||
+                        field == GameField.Licensed
+                        ? 20
+                        : base.Height(field);
 
         protected override int Width(GameField field) => 
             field switch
             {
                 GameField.Image => 
                     200,
+                GameField.Owner or
                 GameField.Source or 
                 GameField.Platform or 
                 GameField.Format =>
                     140,
-                GameField.Owner =>
-                    70,
                 GameField.ScreenView => 
                     112,
-                GameField.Name or 
+                GameField.Name =>
+                    272,
                 GameField.Edition or 
                 GameField.Series or 
-                GameField.EmulatorType or
+                GameField.EmulatorType =>
+                    374,
                 GameField.Developer or 
                 GameField.Publisher => 
                     362,
@@ -242,7 +245,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.CompleteTime =>
                     104,
                 GameField.Code =>
-                    88,
+                    94,
                 GameField.Genre => 
                     174,
                 GameField.ReleasePlatforms => 
@@ -259,11 +262,11 @@ namespace PlayStationGames.GameEngine.Editor
                     12,
                 GameField.Difficult =>
                     20,
-                GameField.Image or
-                GameField.Platform => 
+                GameField.Image => 
                     8,
                 GameField.Edition => 
                     4,
+                GameField.Platform or
                 GameField.Region or
                 GameField.Source or
                 GameField.Format or 

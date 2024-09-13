@@ -21,7 +21,7 @@ namespace PlayStationGames.AccountEngine.Data
         protected override DAOEditor<AccountField, Account, AccountFieldGroup> CreateEditor() => new AccountEditor();
         protected override DAOWorker<AccountField, Account, AccountFieldGroup> CreateWorker() => new AccountWorker();
 
-        public override string Name => "Accounts";
+        public override string Name => "PSN Accounts";
 
         protected override FieldHelper<AccountField> RegisterFieldHelper() =>
             TypeHelper.Register<AccountFieldHelper>();

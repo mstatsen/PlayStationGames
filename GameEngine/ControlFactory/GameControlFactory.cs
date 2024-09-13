@@ -58,12 +58,8 @@ namespace PlayStationGames.GameEngine.ControlFactory
                 _ => context.Name == "Link" ? NewLinkButtonAccessor(context) : base.CreateOtherAccessor(context)
             };
 
-        private IControlAccessor CreateOwnerAccessor(IBuilderContext<GameField, Game> context)
-        {
-            ControlBuilder<AccountField, Account> accountBuilder =
-                DataManager.Builder<AccountField, Account>(ControlScope.Editor);
-            return (ExtractAccessor<AccountField, Account>)accountBuilder[AccountField.Account];
-        }
+        private IControlAccessor CreateOwnerAccessor(IBuilderContext<GameField, Game> context) =>
+            new AccountAccessor<GameField, Game>(context);
 
         private static IControlAccessor NewLinkButtonAccessor(IBuilderContext<GameField, Game> context) =>
             new LinkButtonAccessor<GameField, Game>(context);

@@ -13,6 +13,7 @@
         Games,
         StrategeLink,
         PSNProfilesLink,
+        DefaultAccount,
 
         //system
         Field,

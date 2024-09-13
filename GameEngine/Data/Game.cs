@@ -4,6 +4,7 @@ using OxXMLEngine.Data;
 using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.XML;
+using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -484,7 +485,7 @@ namespace PlayStationGames.GameEngine.Data
                     Licensed = BoolValue(value);
                     break;
                 case GameField.Owner:
-                    Owner = GuidValue(value);
+                    Owner = value is Account account ? account.Id : GuidValue(value);
                     break;
                 case GameField.Difficult:
                     Difficult = TypeHelper.Value<Difficult>(value);

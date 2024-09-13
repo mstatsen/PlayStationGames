@@ -109,7 +109,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.DLC or 
                 GameFieldGroup.RelatedGames or
                 GameFieldGroup.Emulator =>
-                    448,
+                    460,
                 GameFieldGroup.Trophyset or 
                 GameFieldGroup.Genre =>
                     252,
