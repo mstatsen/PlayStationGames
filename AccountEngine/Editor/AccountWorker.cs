@@ -6,6 +6,7 @@ using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Editor;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.ConsoleEngine.Editor;
 using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Editor
@@ -19,6 +20,7 @@ namespace PlayStationGames.AccountEngine.Editor
             Editor.MainPanel.BaseColor = new OxColorHelper(Color.FromArgb(245, 251, 232)).Darker(7);
             ControlPainter.ColorizeControl(consolesButton, Editor.MainPanel.BaseColor);
             ControlPainter.ColorizeControl(gamesButton, Editor.MainPanel.BaseColor);
+            gamesWorker.BaseColor = Editor.MainPanel.BaseColor;
         }
 
         protected override bool SyncFieldValues(AccountField field, bool byUser)
@@ -70,12 +72,17 @@ namespace PlayStationGames.AccountEngine.Editor
             Editor.Groups[AccountFieldGroup.Property].Height = gamesButton.Bottom;
             Editor.Groups.SetGroupsSize();
             Editor.InvalidateSize();
+
+            gamesWorker.Renew(Item);
         }
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)
         {
-            OxMessage.ShowInfo("Games selector under construction");
+            if (Item != null)
+                gamesWorker.Show();
         }
+
+        private readonly GamesWorker gamesWorker = new();
 
         private void ConsoleButtonClickHandler(object? sender, EventArgs e)
         {
@@ -103,6 +110,7 @@ namespace PlayStationGames.AccountEngine.Editor
         protected override void AfterGrabControls()
         {
             base.AfterGrabControls();
+            gamesWorker.Save();
         }
 
         private readonly OxButton consolesButton = new("Consoles", null)

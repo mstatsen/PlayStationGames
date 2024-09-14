@@ -66,10 +66,10 @@ namespace PlayStationGames.AccountEngine.Editor
                     220,
                 AccountField.Login or
                 AccountField.Password => 
-                    296,
+                    300,
                 AccountField.StrategeLink or
                 AccountField.PSNProfilesLink =>
-                    288,
+                    290,
                 _ => 210
             };
 
