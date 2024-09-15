@@ -4,24 +4,24 @@ using OxXMLEngine.Data;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 
-namespace PlayStationGames.GameEngine.ControlFactory.ValueAccessors
+namespace PlayStationGames.AccountEngine.ControlFactory.ValueAccessors
 {
     public class AccountValueAccessor : ValueAccessor
     {
-        public static Account NullAccount = new() 
-        { 
-            Id = Guid.Empty, 
-            Name = "Not license"
+        public static Account NullAccount = new()
+        {
+            Id = Guid.Empty,
+            Name = "Not available"
         };
 
         private OxComboBox ComboBox => (OxComboBox)Control;
-        public override object? GetValue() => 
+        public override object? GetValue() =>
             ComboBox.SelectedItem == null ? null : ((Account)ComboBox.SelectedItem).Id;
 
         public override void SetValue(object? value)
         {
             if (value == null ||
-                (value is not Guid id))
+                value is not Guid id)
                 return;
 
             ComboBox.SelectedItem = id == Guid.Empty

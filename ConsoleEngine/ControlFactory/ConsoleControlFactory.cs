@@ -12,6 +12,9 @@ using OxXMLEngine.View;
 
 using OxXMLEngine.ControlFactory.Initializers;
 using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
+using PlayStationGames.AccountEngine.ControlFactory.Accessors;
+using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory
 {
@@ -27,6 +30,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                     ConsoleField.Storages => CreateListAccessor<Storage, Storages, StoragesControl>(context),
                     ConsoleField.Folders => CreateListAccessor<Folder, Folders, FoldersControl>(context),
                     ConsoleField.Accessories => CreateListAccessor<Accessory, Accessories, AccessoriesControl>(context),
+                    ConsoleField.Accounts => CreateListAccessor<ConsoleAccount, ConsoleAccounts, AccountsControl>(context),
                     _ => base.CreateOtherAccessor(context),
                 }
                 : 
@@ -34,7 +38,12 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                 ? CreateEnumAccessor<AccessoryType>(context)
                 : context.Name == "JoystickType"
                     ? CreateEnumAccessor<JoystickType>(context)
-                    : base.CreateOtherAccessor(context);
+                    : context.Name == "ConsoleAccount"
+                        ? CreateAccountAccessor(context)
+                        : base.CreateOtherAccessor(context);
+
+        private IControlAccessor CreateAccountAccessor(IBuilderContext<ConsoleField, PSConsole> context) =>
+            new AccountAccessor<ConsoleField, PSConsole>(context);
 
         protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context) => 
             context.Name switch

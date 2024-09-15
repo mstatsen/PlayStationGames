@@ -3,6 +3,8 @@ using OxLibrary.Panels;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using OxXMLEngine.Editor;
+using OxXMLEngine.Data.Types;
+using PlayStationGames.ConsoleEngine.Data.Types;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
@@ -16,7 +18,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
         protected override void PreparePanels()
         {
             PrepareParentPanel(PanelRight, MainPanel, DockStyle.Fill);
-            PanelRight.Width = 300;
+            PanelRight.Width = 450;
             PrepareParentPanel(PanelLeft, MainPanel);
         }
 
@@ -25,6 +27,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             return group switch
             {
                 ConsoleFieldGroup.Base or
+                ConsoleFieldGroup.Accounts or
                 ConsoleFieldGroup.Storages => 
                     PanelLeft,
                 ConsoleFieldGroup.Folders or
@@ -39,21 +42,28 @@ namespace PlayStationGames.ConsoleEngine.Editor
             MinimumSize = new Size(0, 0);
             MaximumSize = new Size(0, 0);
             PanelLeft.Width = CalcedWidth(PanelLeft);
-            MainPanel.SetContentSize(
-                PanelLeft.Width + (PanelRight.Visible ? 300 : 0),
-                Groups[ConsoleFieldGroup.Storages].Visible ? 434 : 200
-            );
-
-            if (Groups[ConsoleFieldGroup.Folders].Visible)
-                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Bottom;
-            else Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Fill;
-
+            ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
+            ConsoleGeneration generation = ((ConsoleWorker)Worker).Generation;
+            FirmwareType firmware = ((ConsoleWorker)Worker).Firmware;
+            Groups[ConsoleFieldGroup.Accessories].Dock = generationHelper.FolderSupport(generation)
+                ? DockStyle.Bottom
+                : DockStyle.Fill;
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
+            MainPanel.SetContentSize(
+                PanelLeft.Width + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders),
+                (generationHelper.StorageSupport(generation)
+                    ? Groups[ConsoleFieldGroup.Storages].Bottom
+                    : generationHelper.MaxAccountsCount(generation, firmware) > 0 &&
+                        !generationHelper.FolderSupport(generation)
+                            ? Groups[ConsoleFieldGroup.Accounts].Bottom
+                            : Groups[ConsoleFieldGroup.Base].Height + 140) + 13
+            );
         }
 
         protected override void SetPaddings()
         {
             base.SetPaddings();
+            Groups[ConsoleFieldGroup.Accounts].Paddings.RightOx = OxSize.Medium;
             Groups[ConsoleFieldGroup.Storages].Paddings.RightOx = OxSize.Medium;
             Groups[ConsoleFieldGroup.Folders].Paddings.RightOx = OxSize.Medium;
             Groups[ConsoleFieldGroup.Accessories].Paddings.RightOx = OxSize.Medium;
@@ -71,8 +81,11 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             switch (group)
             {
-                case ConsoleFieldGroup.Storages:
+                case ConsoleFieldGroup.Accounts:
                 case ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Accessories].Dock == DockStyle.Bottom:
+                    frame.Margins.TopOx = OxSize.None;
+                    break;
+                case ConsoleFieldGroup.Storages:
                     frame.Margins.TopOx = OxSize.None;
                     break;
                 default:

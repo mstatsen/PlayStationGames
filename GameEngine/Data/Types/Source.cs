@@ -8,7 +8,6 @@
         Torrent,
         PKGj,
         Physical,
-        Lost,
-        Other
+        Lost
     };
 }

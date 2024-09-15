@@ -12,8 +12,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             {
                 ConsoleFieldGroup.Folders,
                 ConsoleFieldGroup.Accessories,
-                ConsoleFieldGroup.Base,
-                ConsoleFieldGroup.Storages
+                ConsoleFieldGroup.Storages,
+                ConsoleFieldGroup.Accounts,
+                ConsoleFieldGroup.Base
             };
 
         public override string GetName(ConsoleFieldGroup value) => 
@@ -23,6 +24,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleFieldGroup.Accessories => "Accessories",
                 ConsoleFieldGroup.Storages => "Storages",
                 ConsoleFieldGroup.Folders => "Folders",
+                ConsoleFieldGroup.Accounts => "Accounts",
                 _ => string.Empty,
             };
 
@@ -32,27 +34,40 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Storages => ConsoleFieldGroup.Storages,
                 ConsoleField.Folders => ConsoleFieldGroup.Folders,
                 ConsoleField.Accessories => ConsoleFieldGroup.Accessories,
+                ConsoleField.Accounts => ConsoleFieldGroup.Accounts,
                 _ => ConsoleFieldGroup.Base,
             };
 
-        public override int GroupWidth(ConsoleFieldGroup group) => 300;
+        public override int GroupWidth(ConsoleFieldGroup group) =>
+            group switch
+            { 
+                ConsoleFieldGroup.Folders or
+                ConsoleFieldGroup.Accessories =>
+                    450,
+                _=> 300
+            };
 
         public override int DefaultGroupHeight(ConsoleFieldGroup group) => 
             group switch
             {
                 ConsoleFieldGroup.Accessories => 198,
+                ConsoleFieldGroup.Accounts or
+                ConsoleFieldGroup.Storages => 84,
                 _ => 140,
             };
 
-        public override bool IsCalcedHeightGroup(ConsoleFieldGroup group) => false;
+        public override bool IsCalcedHeightGroup(ConsoleFieldGroup group) => 
+            group == ConsoleFieldGroup.Base;
 
         public override DockStyle GroupDock(ConsoleFieldGroup group) => 
             group switch
             {
-                ConsoleFieldGroup.Base or 
+                ConsoleFieldGroup.Base or
+                ConsoleFieldGroup.Storages or
+                ConsoleFieldGroup.Accounts =>
+                    DockStyle.Top,
                 ConsoleFieldGroup.Folders => 
                     DockStyle.Fill,
-                ConsoleFieldGroup.Storages or
                 ConsoleFieldGroup.Accessories => 
                     DockStyle.Bottom,
                 _ => 

@@ -19,6 +19,7 @@ using PlayStationGames.GameEngine.Grid;
 using PlayStationGames.GameEngine.View;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
+using PlayStationGames.AccountEngine.ControlFactory.Accessors;
 
 namespace PlayStationGames.GameEngine.ControlFactory
 {
@@ -52,16 +53,23 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
                     GameField.Id => CreateLabelAccessor(context),
                     GameField.StrategeLink or GameField.PSNProfilesLink => NewLinkButtonAccessor(context),
-                    GameField.Owner => CreateOwnerAccessor(context),
+                    GameField.Owner => CreateAccountAccessor(context),
                     _ => base.CreateOtherAccessor(context),
                 },
                 _ => context.Name == "Link" ? NewLinkButtonAccessor(context) : base.CreateOtherAccessor(context)
             };
 
-        private IControlAccessor CreateOwnerAccessor(IBuilderContext<GameField, Game> context) =>
-            new AccountAccessor<GameField, Game>(context);
+        private IControlAccessor CreateAccountAccessor(IBuilderContext<GameField, Game> context)
+        {
+            context.AdditionalContext = new AccountAccessorParameters()
+            {
+                UseNullable = true,
+                OnlyNullable = true
+            };
+            return new AccountAccessor<GameField, Game>(context);
+        }
 
-        private static IControlAccessor NewLinkButtonAccessor(IBuilderContext<GameField, Game> context) =>
+        private static IControlAccessor NewLinkButtonAccessor(IBuilderContext<GameField, Game> context) => 
             new LinkButtonAccessor<GameField, Game>(context);
 
         protected override IControlAccessor CreateViewAccessor(IBuilderContext<GameField, Game> context) => 

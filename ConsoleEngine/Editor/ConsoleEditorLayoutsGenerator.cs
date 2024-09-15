@@ -17,7 +17,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
             {
                 ConsoleField.Folders,
                 ConsoleField.Storages,
-                ConsoleField.Accessories
+                ConsoleField.Accessories,
+                ConsoleField.Accounts
             };
 
         protected override List<ConsoleField> FillDockFields() => 
@@ -25,7 +26,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
             {
                 ConsoleField.Folders,
                 ConsoleField.Storages,
-                ConsoleField.Accessories
+                ConsoleField.Accessories,
+                ConsoleField.Accounts
             };
 
         protected override List<ConsoleField> OffsettingFields() =>

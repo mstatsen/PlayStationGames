@@ -80,7 +80,6 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
-           
             XmlHelper.AppendElement(element, XmlConsts.Id, id);
             XmlHelper.AppendElement(element, XmlConsts.Type, type);
 
@@ -105,7 +104,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             string joystickTypeName = Type == AccessoryType.Joystick ? TypeHelper.FullName(JoystickType) + " ": string.Empty;
             string typeStr = JoystickType == JoystickType.Other ? TypeHelper.FullName(Type) : string.Empty;
             string colorStr = Color != string.Empty ? Color + " " : string.Empty;
-            string descriptionStr = description != string.Empty ? " " : string.Empty + description; 
+            string descriptionStr = description == string.Empty ? " " : " (" + description+")"; 
             return $"{countStr}{colorStr}{joystickTypeName}{typeStr}{descriptionStr}";
         }
 

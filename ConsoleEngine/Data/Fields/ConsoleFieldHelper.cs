@@ -21,6 +21,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Folders => "Folders",
                 ConsoleField.Accessories => "Accessories",
                 ConsoleField.Games => "Games",
+                ConsoleField.Accounts => "Accounts",
                 ConsoleField.Firmware => "Firmware",
                 ConsoleField.Console => "Console",
                 ConsoleField.Field => "Field",
@@ -50,7 +51,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Firmware,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
-                ConsoleField.Accessories
+                ConsoleField.Accessories,
+                ConsoleField.Accounts
             };
 
         private static readonly ConsoleFieldsVariantDictionary fieldDictionary = 
@@ -68,7 +70,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                         ConsoleField.Storages,
                         ConsoleField.Folders,
                         ConsoleField.Accessories,
-                        ConsoleField.Games
+                        ConsoleField.Games,
+                        ConsoleField.Accounts
                     },
                     [FieldsFilling.Default] = new List<ConsoleField>
                     {
@@ -137,7 +140,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Storages,
                 ConsoleField.Folders,
                 ConsoleField.Accessories,
-                ConsoleField.Games
+                ConsoleField.Games,
+                ConsoleField.Accounts
             };
 
         protected override List<ConsoleField> GetCardFields() =>
@@ -151,7 +155,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Storages,
                 ConsoleField.Folders,
                 ConsoleField.Accessories,
-                ConsoleField.Games
+                ConsoleField.Games,
+                ConsoleField.Accounts
             };
 
         protected override FilterOperation GetDefaultFilterOperation(ConsoleField field) =>
@@ -161,7 +166,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Storages or
                 ConsoleField.Folders or
                 ConsoleField.Accessories or
-                ConsoleField.Games =>
+                ConsoleField.Games or
+                ConsoleField.Accounts =>
                     FilterOperation.Contains,
                 _ =>
                     FilterOperation.Equals
@@ -174,7 +180,15 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         public override List<ConsoleField> Depended(ConsoleField field) => 
             field switch
             {
-                ConsoleField.Model => new List<ConsoleField>() { ConsoleField.Generation },
+                ConsoleField.Model => new List<ConsoleField>() 
+                { 
+                    ConsoleField.Generation 
+                },
+                ConsoleField.Accounts => new List<ConsoleField>()
+                { 
+                    ConsoleField.Generation,
+                    ConsoleField.Firmware
+                },
                 _ => base.Depended(field),
             };
 
@@ -227,7 +241,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Storages or 
                 ConsoleField.Folders or
                 ConsoleField.Accessories or
-                ConsoleField.Games =>
+                ConsoleField.Games or
+                ConsoleField.Accounts =>
                     FieldType.List,
                 ConsoleField.Icon =>
                     FieldType.Image,

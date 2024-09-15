@@ -1,6 +1,7 @@
 ﻿using OxXMLEngine.Data;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.XML;
+using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
@@ -49,6 +50,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public Folders Folders => folders;
         public Storages Storages => storages;
+        public ConsoleAccounts Accounts => accounts;
         public Accessories Accessories => accessories;
 
         public override void Clear()
@@ -59,6 +61,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             model = TypeHelper.DefaultValue<ConsoleModel>();
             storages.Clear();
             folders.Clear();
+            accounts.Clear();
             accessories.Clear();
         }
 
@@ -68,6 +71,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             AddMember(ConsoleField.Storages, Storages);
             AddMember(ConsoleField.Folders, Folders);
             AddMember(ConsoleField.Accessories, Accessories);
+            AddMember(ConsoleField.Accounts, Accounts);
         }
 
         private void GenerateGuid() =>
@@ -99,6 +103,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         private ConsoleModel model = default!;
         private readonly Storages storages = new ();
         private readonly Folders folders = new ();
+        private readonly ConsoleAccounts accounts = new();
         private readonly Accessories accessories = new();
         private FirmwareType firmware;
 
@@ -139,6 +144,9 @@ namespace PlayStationGames.ConsoleEngine.Data
                 case ConsoleField.Accessories:
                     Accessories.CopyFrom((DAO?)value);
                     break;
+                case ConsoleField.Accounts:
+                    Accounts.CopyFrom((DAO?)value);
+                    break;
             }
         }
 
@@ -153,6 +161,7 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ConsoleField.Firmware => Firmware,
                 ConsoleField.Storages => Storages,
                 ConsoleField.Folders => Folders,
+                ConsoleField.Accounts => Accounts,
                 ConsoleField.Accessories => Accessories,
                 ConsoleField.Games => 
                     DataManager.DecoratorFactory<ConsoleField, PSConsole>().Decorator(OxXMLEngine.Data.Decorator.DecoratorType.Table, this),
@@ -217,6 +226,7 @@ namespace PlayStationGames.ConsoleEngine.Data
                     ConsoleField.Storages => storages.CompareTo(yConsole.Storages),
                     ConsoleField.Folders => folders.CompareTo(yConsole.Folders),
                     ConsoleField.Accessories => folders.CompareTo(yConsole.Accessories),
+                    ConsoleField.Accounts => accounts.CompareTo(yConsole.Accounts),
                     _ => 0,
                 };
 

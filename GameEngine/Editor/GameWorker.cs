@@ -6,6 +6,7 @@ using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Data.Filter;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.Editor;
+using PlayStationGames.AccountEngine.ControlFactory.Accessors;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.GameEngine.ControlFactory.Controls;
@@ -127,8 +128,9 @@ namespace PlayStationGames.GameEngine.Editor
                 case GameField.Platform:
                     if (byUser)
                         SyncFormatWithPlatform();
+
+                    SyncOwnerWithControls();
                     break;
-                case GameField.Licensed:
                 case GameField.TrophysetAccess:
                 case GameField.AvailablePlatinum:
                 case GameField.AvailableGold:
@@ -143,6 +145,13 @@ namespace PlayStationGames.GameEngine.Editor
                 case GameField.EarnedNet:
                     trophiesControlsHelper.CalcTrophiesControls();
                     break;
+                case GameField.Licensed:
+                    SyncOwnerWithControls();
+                    trophiesControlsHelper.CalcTrophiesControls();
+                    break;
+                case GameField.Source:
+                    SyncOwnerWithControls();
+                    break;
             }
 
             SetRelatedGamesFilter();
@@ -150,7 +159,6 @@ namespace PlayStationGames.GameEngine.Editor
             return field switch
             {
                 GameField.Licensed or
-                GameField.Owner or
                 GameField.Platform or 
                 GameField.Format or
                 GameField.TrophysetAccess or
@@ -164,9 +172,9 @@ namespace PlayStationGames.GameEngine.Editor
 
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
 
-        protected override void SetGroupsAvailability()
+        protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
-            Editor.Groups[GameFieldGroup.Trophyset].Visible = CalcedTrophiesVisible;
+            Editor.Groups[GameFieldGroup.Trophyset].Visible = Editor.Groups[GameFieldGroup.Trophyset].Visible = CalcedTrophiesVisible;
             Editor.Groups[GameFieldGroup.Installations].Visible =
                 sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
 
@@ -212,12 +220,20 @@ namespace PlayStationGames.GameEngine.Editor
             foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                 foreach (GameField field in groupHelper.Fields(group))
                     Builder[field].ReadOnly = verified && !unverifiedFields.Contains(field);
+
+            if (!verified)
+                Builder[GameField.Owner].ReadOnly = !AccountAvailable();
+
+            if (afterSyncValues && ownerReadOnlyChanged)
+                Builder[GameField.Owner].SetDefaultValue();
+
+            return false;
         }
 
         private bool CalcedTrophiesVisible =>
             Builder.Value<bool>(GameField.Licensed)
             && TypeHelper.Helper<GameFormatHelper>().AvailableTrophies(Builder.Value<GameFormat>(GameField.Format))
-            && TypeHelper.Helper<PlatformTypeHelper>().IsPSNPlatform(Builder.Value<PlatformType>(GameField.Platform));
+            && TypeHelper.Helper<PlatformTypeHelper>().PlatformWithTrophies(Builder.Value<PlatformType>(GameField.Platform));
         
         private void FillFormCaptionFromControls() => 
             FillFormCaption(
@@ -238,6 +254,28 @@ namespace PlayStationGames.GameEngine.Editor
                 )
             );
 
+        private bool ownerReadOnlyChanged = false;
+
+        private void SyncOwnerWithControls()
+        {
+            bool accountAvailable = AccountAvailable();
+            ownerReadOnlyChanged = accountAvailable == Builder[GameField.Owner].ReadOnly;
+
+            if (!ownerReadOnlyChanged)
+                return;
+
+            if (Builder[GameField.Owner].Context.AdditionalContext is AccountAccessorParameters parameters)
+            {
+                parameters.UseNullable = !accountAvailable;
+                parameters.OnlyNullable = !accountAvailable;
+            }
+            Builder[GameField.Owner].RenewControl(true);
+        }
+
+        private bool AccountAvailable() =>
+            Builder[GameField.Licensed].BoolValue
+            && TypeHelper.Helper<PlatformTypeHelper>().IsPSNPlatform(Builder[GameField.Platform].EnumValue<PlatformType>())
+            && TypeHelper.Helper<SourceHelper>().IsPSN(Builder[GameField.Source].EnumValue<Source>());
 
         protected readonly TrophiesControlsHelper trophiesControlsHelper;
 

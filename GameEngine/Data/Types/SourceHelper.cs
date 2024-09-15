@@ -15,7 +15,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                 Source.PKGj => "PKGj",
                 Source.Physical => "Physical",
                 Source.Lost => "Lost",
-                _ => "Other",
+                _ => "Other"
             };
 
         public override string GetShortName(Source value) => 
@@ -63,7 +63,6 @@ namespace PlayStationGames.GameEngine.Data.Types
 
             result.Add(Source.Physical);
             result.Add(Source.Lost);
-            result.Add(Source.Other);
             return result;
         }
 
@@ -71,19 +70,25 @@ namespace PlayStationGames.GameEngine.Data.Types
         {
             List<Source> result = new();
 
-            if (result.Count == 0)
-                foreach (Source item in Enum.GetValues(typeof(Source)))
-                    result.Add(item);
+            foreach (Source item in Enum.GetValues(typeof(Source)))
+            {
+                if (IsDigital(item) &&
+                    !TypeHelper.Helper<PlatformTypeHelper>().StoragesSupport(platform))
+                    continue;
+
+                result.Add(item);
+            }
 
             if (platform == PlatformType.PSVita)
                 result.Remove(Source.Torrent);
-            else result.Remove(Source.PKGj);
+            else
+                result.Remove(Source.PKGj);
 
             return result;
         }
 
         public override Source EmptyValue() => 
-            Source.Other;
+            Source.Physical;
 
         public override Source DefaultValue() =>
             Source.PSN;

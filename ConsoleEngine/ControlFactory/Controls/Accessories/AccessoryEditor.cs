@@ -39,10 +39,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             typeControl = (EnumAccessor<ConsoleField, PSConsole, AccessoryType>)Context.Builder.Accessor("AccessoryType", FieldType.Enum, ParentItem);
             joystickTypeControl = (EnumAccessor<ConsoleField, PSConsole, JoystickType>)Context.Builder.Accessor("JoystickType", FieldType.Enum, ParentItem);
             //TODO: replace with builder.Accessor
-            /*
-            sizeControl = new TextAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Storages));
-            freeSizeControl = new TextAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Storages));
-            */
             colorControl = new ColorComboBoxAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Accessories));
             countControl = new NumericAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Accessories));
             descriptionControl = Context.Builder.Accessor("Accessory_Description", FieldType.Memo, true);

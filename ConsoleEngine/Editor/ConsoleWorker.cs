@@ -31,17 +31,24 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 .Contains(field))
                 FillFormCaptionFromControls();
 
-            return field == ConsoleField.Generation;
+            return field is ConsoleField.Generation or 
+                ConsoleField.Firmware;
         }
 
         private readonly ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
 
-        protected override void SetGroupsAvailability()
+        protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
-            base.SetGroupsAvailability();
+            bool needRecalcEditorSize = base.SetGroupsAvailability() ||
+                Editor.Groups[ConsoleFieldGroup.Folders].Visible != generationHelper.FolderSupport(Generation) ||
+                Editor.Groups[ConsoleFieldGroup.Storages].Visible != generationHelper.StorageSupport(Generation) ||
+                Editor.Groups[ConsoleFieldGroup.Accounts].Visible != generationHelper.MaxAccountsCount(Generation, Firmware) > 0;
+
             Editor.Groups[ConsoleFieldGroup.Folders].Visible = generationHelper.FolderSupport(Generation);
             Editor.Groups[ConsoleFieldGroup.Storages].Visible = generationHelper.StorageSupport(Generation);
+            Editor.Groups[ConsoleFieldGroup.Accounts].Visible = generationHelper.MaxAccountsCount(Generation, Firmware) > 0;
             installationsButton.Visible = generationHelper.StorageSupport(Generation);
+            return needRecalcEditorSize;
         }
 
         private void FillFormCaptionFromControls() =>
@@ -104,8 +111,11 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 }
             };
 
-        private ConsoleGeneration Generation =>
+        public ConsoleGeneration Generation =>
             Builder.Value<ConsoleGeneration>(ConsoleField.Generation);
+
+        public FirmwareType Firmware =>
+            Builder.Value<FirmwareType>(ConsoleField.Firmware);
 
         protected override void BeforeGrabControls()
         {

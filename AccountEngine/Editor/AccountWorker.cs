@@ -6,8 +6,6 @@ using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Editor;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.ConsoleEngine.Editor;
-using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -31,11 +29,6 @@ namespace PlayStationGames.AccountEngine.Editor
                 FillFormCaptionFromControls();
 
             return false;
-        }
-
-        protected override void SetGroupsAvailability()
-        {
-            base.SetGroupsAvailability();
         }
 
         private void FillFormCaptionFromControls() =>

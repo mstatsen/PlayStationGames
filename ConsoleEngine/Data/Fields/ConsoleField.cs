@@ -13,6 +13,7 @@
         Folders,
         Accessories,
         Games,
+        Accounts,
         Field
     }
 }

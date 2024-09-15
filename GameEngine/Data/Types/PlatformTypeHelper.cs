@@ -11,7 +11,11 @@ namespace PlayStationGames.GameEngine.Data.Types
         public override string GetFullName(PlatformType type) => 
             TypeHelper.Name(DependsOnValue(type)) + " " + GetName(type);
 
-        public bool IsPSNPlatform(PlatformType type) => 
+        public bool IsPSNPlatform(PlatformType type) =>
+            PlatformWithTrophies(type)
+                || type == PlatformType.PSP;
+
+        public bool PlatformWithTrophies(PlatformType type) =>
             type == PlatformType.PS3
                 || type == PlatformType.PS4
                 || type == PlatformType.PS5
@@ -123,33 +127,13 @@ namespace PlayStationGames.GameEngine.Data.Types
                         return result;
                     }
                     break;
-                case GameField.Source:
-                    if (value is Source source)
-                    {
-                        SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
-
-                        List<PlatformType> result = new();
-
-                        if (sourceHelper.IsPSN(source))
-                        {
-                            foreach (PlatformType platform in All())
-                                if (IsPSNPlatform(platform))
-                                    result.Add(platform);
-                            return result;
-                        }
-
-                        if (sourceHelper.IsDigital(source))
-                        {
-                            result.AddRange(All());
-                            result.Remove(PlatformType.PSOne);
-                            return result;
-                        }
-                    }
-                    break;
             }
 
             return base.DependedList(field, value);
         }
+
+        public bool StoragesSupport(PlatformType platformType) => 
+            platformType != PlatformType.PSOne;
 
         public List<ConsoleGeneration> Generations(PlatformType platformType, Source source, bool licensed)
         {

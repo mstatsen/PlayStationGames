@@ -563,7 +563,7 @@ namespace PlayStationGames.GameEngine.Data
             game.Owner != Guid.Empty
             && game.Licensed 
             && TypeHelper.Helper<GameFormatHelper>().AvailableTrophies(game.Format)
-            && TypeHelper.Helper<PlatformTypeHelper>().IsPSNPlatform(game.PlatformType);
+            && TypeHelper.Helper<PlatformTypeHelper>().PlatformWithTrophies(game.PlatformType);
 
         private void UpdateRelatedGames()
         {

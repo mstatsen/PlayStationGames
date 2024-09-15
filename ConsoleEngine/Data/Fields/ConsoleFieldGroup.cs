@@ -5,6 +5,7 @@
         Storages,
         Base,
         Accessories,
-        Folders
+        Folders,
+        Accounts
     }
 }
