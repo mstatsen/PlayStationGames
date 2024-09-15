@@ -123,7 +123,7 @@ namespace PlayStationGames.GameEngine.Editor
                     (Parent(field).Height - Height(field)) / 2,
                 GameField.AvailablePlatinum or
                 GameField.EarnedPlatinum =>
-                    80,
+                    140,
                 GameField.EmulatorType =>
                     Layouter[GameField.Edition]!.Top,
                 GameField.Language or
@@ -260,8 +260,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EarnedFromDLC or 
                 GameField.AvailableFromDLC =>
                     12,
-                GameField.Difficult =>
-                    20,
                 GameField.Image => 
                     8,
                 GameField.Edition => 
@@ -277,7 +275,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EarnedNet or 
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze or 
-                GameField.AvailableNet or 
+                GameField.AvailableNet or
+                GameField.Difficult or
                 GameField.CompleteTime or
                 GameField.Genre or 
                 GameField.Publisher or 

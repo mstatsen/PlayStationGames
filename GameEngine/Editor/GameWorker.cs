@@ -53,7 +53,7 @@ namespace PlayStationGames.GameEngine.Editor
             {
                 Text = text,
                 Left = left,
-                Top = 52,
+                Top = 112,
                 Parent = Editor.Groups[GameFieldGroup.Trophyset],
                 AutoSize = true,
                 Font = new Font(Styles.FontFamily, Styles.DefaultFontSize,
