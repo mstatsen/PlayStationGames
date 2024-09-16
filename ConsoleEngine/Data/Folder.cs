@@ -6,6 +6,9 @@ namespace PlayStationGames.ConsoleEngine.Data
 {
     public class Folder : DAO
     {
+        public Folder(): base() => 
+            WithoutXmlNode = true;
+
         public string Name
         {
             get => name;
@@ -18,10 +21,10 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override void Init() { }
 
         protected override void LoadData(XmlElement element) => 
-            name = XmlHelper.Value(element, XmlConsts.Name);
+            name = element.InnerText;
 
         protected override void SaveData(XmlElement element, bool clearModified = true) => 
-            XmlHelper.AppendElement(element, XmlConsts.Name, name);
+            XmlHelper.AppendElement(element, XmlConsts.Folder, name);
 
         private string name = string.Empty;
 
