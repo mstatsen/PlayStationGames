@@ -880,6 +880,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Year or 
                 GameField.Pegi => 
                     40,
+                GameField.Licensed or
                 GameField.Difficult or 
                 GameField.Progress or 
                 GameField.FullPlatinum or 
@@ -1008,5 +1009,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 field == GameField.Name)
                 context.AdditionalContext = true;
         }
+
+        public override bool IsImageColumn(GameField field) => 
+            base.IsImageColumn(field) || 
+            field == GameField.Licensed;
     }
 }

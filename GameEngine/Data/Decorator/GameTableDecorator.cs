@@ -2,7 +2,6 @@
 using OxXMLEngine;
 using OxXMLEngine.Data;
 using OxXMLEngine.Data.Types;
-using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Fields;
@@ -45,6 +44,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.TrophysetAccess => TrophysetAccesibility,
                 GameField.Verified => Verified,
                 GameField.Owner => Owner,
+                GameField.Licensed => Licensed,
                 _ => base.Value(field),
             };
 
@@ -179,6 +179,14 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 return string.Empty;
             }
         }
+
+        public object? Licensed =>
+            OxImageBoxer.BoxingImage(
+                Dao.Licensed 
+                    ? OxIcons.tick 
+                    : new Bitmap(16, 16), 
+                new Size(16, 16)
+            );
 
         private object? Link(string Name) =>
             Dao.Links.Find(l => l.Name.Equals(Name));
