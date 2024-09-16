@@ -22,7 +22,7 @@ namespace PlayStationGames.GameEngine.Data
         public override void Init() { }
 
         protected override void LoadData(XmlElement element) =>
-            Name = element.InnerText;
+            name = element.InnerText;
 
         protected override void SaveData(XmlElement element, bool clearModified = true) => 
             XmlHelper.AppendElement(element, XmlConsts.DLC, Name);

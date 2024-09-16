@@ -81,8 +81,8 @@ namespace PlayStationGames.ConsoleEngine.Data
         {
             XmlHelper.AppendElement(element, XmlConsts.Id, id);
             XmlHelper.AppendElement(element, XmlConsts.Placement, placement);
-            XmlHelper.AppendElement(element, XmlConsts.Size, size);
-            XmlHelper.AppendElement(element, XmlConsts.FreeSize, freeSize);
+            XmlHelper.AppendElement(element, XmlConsts.Size, size, true);
+            XmlHelper.AppendElement(element, XmlConsts.FreeSize, freeSize, true);
             XmlHelper.AppendElement(element, XmlConsts.Name, name);
         }
 

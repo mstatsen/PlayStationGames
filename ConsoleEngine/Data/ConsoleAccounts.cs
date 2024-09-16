@@ -1,4 +1,5 @@
 ﻿using OxXMLEngine.Data;
+using PlayStationGames.AccountEngine.Data;
 
 namespace PlayStationGames.ConsoleEngine.Data
 {
@@ -15,5 +16,13 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ? "[LOST ACCOUNT]"
                 : account.ToString();
         }
+
+        public void Add(Account account) =>
+            Add(
+                new ConsoleAccount()
+                { 
+                    Id = account.Id,
+                }
+            );
     }
 }

@@ -28,7 +28,7 @@ namespace PlayStationGames.GameEngine.Data
         public override void Init() { }
 
         protected override void LoadData(XmlElement element) =>
-            PlayMode = TypeHelper.Parse<PlayMode>(element.InnerText);
+            playMode = TypeHelper.Parse<PlayMode>(element.InnerText);
 
         public override bool Equals(object? obj) =>
             obj is GameMode mode && (base.Equals(obj) || mode.PlayMode == PlayMode);

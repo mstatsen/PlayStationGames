@@ -10,7 +10,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             {
                 StoragePlacement.Internal => "Internal",
                 StoragePlacement.External => "External",
-                _ => "",
+                _ => string.Empty,
             };
 
         public override StoragePlacement EmptyValue() =>

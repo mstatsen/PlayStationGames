@@ -1,7 +1,6 @@
 ﻿using OxXMLEngine.Data;
 using OxXMLEngine.Data.Types;
 using OxXMLEngine.XML;
-using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
@@ -12,7 +11,6 @@ namespace PlayStationGames.ConsoleEngine.Data
 {
     public class PSConsole : RootDAO<ConsoleField>
     {
-
         public PSConsole() : base() =>
             GenerateGuid();
 
@@ -25,11 +23,6 @@ namespace PlayStationGames.ConsoleEngine.Data
         public Bitmap Icon => 
             (Bitmap)this[ConsoleField.Icon]!;
 
-        public string Name
-        {
-            get => name;
-            set => name = StringValue(ModifyValue(ConsoleField.Name, name, value));
-        }
         public ConsoleGeneration Generation
         {
             get => generation;
@@ -56,7 +49,6 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override void Clear()
         {
             Id = Guid.Empty;
-            Name = string.Empty;
             generation = TypeHelper.DefaultValue<ConsoleGeneration>();
             model = TypeHelper.DefaultValue<ConsoleModel>();
             storages.Clear();
@@ -79,10 +71,12 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         protected override void LoadData(XmlElement element)
         {
+            base.LoadData(element);
             id = XmlHelper.ValueGuid(element, XmlConsts.Id);
+
             if (id == Guid.Empty)
                 GenerateGuid();
-            name = XmlHelper.Value(element, XmlConsts.Name);
+
             generation = XmlHelper.Value<ConsoleGeneration>(element, XmlConsts.Generation);
             model = XmlHelper.Value<ConsoleModel>(element, XmlConsts.Model);
             firmware = XmlHelper.Value<FirmwareType>(element, XmlConsts.Firmware);
@@ -90,15 +84,14 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
+            base.SaveData(element, clearModified);
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
-            XmlHelper.AppendElement(element, XmlConsts.Name, Name);
             XmlHelper.AppendElement(element, XmlConsts.Generation, generation);
             XmlHelper.AppendElement(element, XmlConsts.Model, model);
             XmlHelper.AppendElement(element, XmlConsts.Firmware, firmware);
         }
 
         private Guid id = Guid.Empty;
-        private string name = string.Empty;
         private ConsoleGeneration generation = default!;
         private ConsoleModel model = default!;
         private readonly Storages storages = new ();
@@ -118,13 +111,12 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         protected override void SetFieldValue(ConsoleField field, object? value)
         {
+            base.SetFieldValue(field, value);
+
             switch (field)
             {
                 case ConsoleField.Id:
                     Id = GuidValue(value);
-                    break;
-                case ConsoleField.Name:
-                    Name = StringValue(value);
                     break;
                 case ConsoleField.Generation:
                     Generation = TypeHelper.Value<ConsoleGeneration>(value);
@@ -155,7 +147,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             {
                 ConsoleField.Console => this,
                 ConsoleField.Id => Id,
-                ConsoleField.Name => Name,
+                ConsoleField.Name => base.GetFieldValue(field),
                 ConsoleField.Generation => Generation,
                 ConsoleField.Model => Model,
                 ConsoleField.Firmware => Firmware,
@@ -168,9 +160,6 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ConsoleField.Icon => TypeHelper.Helper<ConsoleGenerationHelper>().Icon(Generation),
                 _ => null,
             };
-
-        public override string ToString() =>
-            Name;
 
         public override int CompareTo(DAO? other)
         {

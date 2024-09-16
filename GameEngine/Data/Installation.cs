@@ -42,15 +42,18 @@ namespace PlayStationGames.GameEngine.Data
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
             XmlHelper.AppendElement(element, XmlConsts.ConsoleId, ConsoleId);
-            XmlHelper.AppendElement(element, XmlConsts.StorageId, StorageId);
-            XmlHelper.AppendElement(element, XmlConsts.Folder, Folder);
+
+            if (StorageId != Guid.Empty)
+                XmlHelper.AppendElement(element, XmlConsts.StorageId, StorageId);
+
+            XmlHelper.AppendElement(element, XmlConsts.Folder, Folder, true);
         }
 
         protected override void LoadData(XmlElement element)
         {
-            ConsoleId = XmlHelper.ValueGuid(element, XmlConsts.ConsoleId);
-            StorageId = XmlHelper.ValueGuid(element, XmlConsts.StorageId);
-            Folder = XmlHelper.Value(element, XmlConsts.Folder);
+            consoleId = XmlHelper.ValueGuid(element, XmlConsts.ConsoleId);
+            storageId = XmlHelper.ValueGuid(element, XmlConsts.StorageId);
+            folder = XmlHelper.Value(element, XmlConsts.Folder);
         }
 
         public override bool Equals(object? obj) =>

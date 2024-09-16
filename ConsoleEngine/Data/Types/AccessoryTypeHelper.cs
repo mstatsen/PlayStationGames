@@ -19,7 +19,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.Box => "Original box",
                 AccessoryType.Cover => "Cover",
                 AccessoryType.Other => "Other",
-                _ => "",
+                _ => string.Empty,
             };
 
         public override AccessoryType EmptyValue() =>

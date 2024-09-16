@@ -29,12 +29,6 @@ namespace PlayStationGames.AccountEngine.Data
             set => avatar = ModifyValue(AccountField.Avatar, avatar, value);
         }
 
-        public string Name
-        {
-            get => name;
-            set => name = StringValue(ModifyValue(AccountField.Name, name, value));
-        }
-
         public string Login
         {
             get => login;
@@ -68,7 +62,6 @@ namespace PlayStationGames.AccountEngine.Data
         public override void Clear()
         {
             Id = Guid.Empty;
-            Name = string.Empty;
             DefaultAccount = false;
             Avatar = null;
             avatarBase64 = string.Empty;
@@ -89,10 +82,10 @@ namespace PlayStationGames.AccountEngine.Data
 
         protected override void LoadData(XmlElement element)
         {
+            base.LoadData(element);
             id = XmlHelper.ValueGuid(element, XmlConsts.Id);
             if (id == Guid.Empty)
                 GenerateGuid();
-            Name = XmlHelper.Value(element, XmlConsts.Name);
             DefaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
             avatarBase64 = XmlHelper.Value(element, XmlConsts.Image);
             Avatar = XmlHelper.ValueBitmap(element, XmlConsts.Image);
@@ -105,8 +98,8 @@ namespace PlayStationGames.AccountEngine.Data
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
+            base.SaveData(element, clearModified);
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
-            XmlHelper.AppendElement(element, XmlConsts.Name, Name);
             XmlHelper.AppendElement(element, XmlConsts.Default, DefaultAccount);
             if (avatarBase64 == string.Empty)
             {
@@ -124,7 +117,6 @@ namespace PlayStationGames.AccountEngine.Data
         private Guid id = Guid.Empty;
         private string avatarBase64 = string.Empty;
         private Bitmap? avatar = null;
-        private string name = string.Empty;
         private string country = string.Empty;
         private string login = string.Empty;
         private string password = string.Empty;
@@ -154,13 +146,11 @@ namespace PlayStationGames.AccountEngine.Data
 
         protected override void SetFieldValue(AccountField field, object? value)
         {
+            base.SetFieldValue(field, value);
             switch (field)
             {
                 case AccountField.Id:
                     Id = GuidValue(value);
-                    break;
-                case AccountField.Name:
-                    Name = StringValue(value);
                     break;
                 case AccountField.DefaultAccount:
                     DefaultAccount = BoolValue(value);
@@ -193,7 +183,7 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.Account => this,
                 AccountField.Avatar => Avatar,
                 AccountField.Id => Id,
-                AccountField.Name => Name,
+                AccountField.Name => base.GetFieldValue(field),
                 AccountField.DefaultAccount => DefaultAccount,
                 AccountField.Login => Login,
                 AccountField.Password => Password,
@@ -205,9 +195,6 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.PSNProfilesLink => PSNProfilesLink,
                 _ => null,
             };
-
-        public override string ToString() =>
-            Name;
 
         public override int CompareTo(DAO? other)
         {

@@ -25,7 +25,7 @@ namespace PlayStationGames.GameEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.Platform, Type);
 
         protected override void LoadData(XmlElement element) => 
-            Type = TypeHelper.Parse<PlatformType>(element.InnerText);
+            type = TypeHelper.Parse<PlatformType>(element.InnerText);
 
         public override bool Equals(object? obj) => 
             obj is Platform otherPlatform 

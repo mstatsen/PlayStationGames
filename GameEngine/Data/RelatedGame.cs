@@ -32,14 +32,16 @@ namespace PlayStationGames.GameEngine.Data
 
         protected override void LoadData(XmlElement element)
         {
-            GameId = XmlHelper.ValueGuid(element, XmlConsts.GameId);
-            SameTrophyset = XmlHelper.ValueBool(element, XmlConsts.SameTrophyset);
+            gameId = XmlHelper.ValueGuid(element, XmlConsts.GameId);
+            sameTrophyset = XmlHelper.ValueBool(element, XmlConsts.SameTrophyset);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
             XmlHelper.AppendElement(element, XmlConsts.GameId, GameId);
-            XmlHelper.AppendElement(element, XmlConsts.SameTrophyset, SameTrophyset);
+
+            if (sameTrophyset)
+                XmlHelper.AppendElement(element, XmlConsts.SameTrophyset, SameTrophyset);
         }
 
         public override string ToString()

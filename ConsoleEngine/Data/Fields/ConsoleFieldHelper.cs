@@ -26,7 +26,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Console => "Console",
                 ConsoleField.Field => "Field",
                 ConsoleField.Icon => "Icon",
-                _ => "",
+                _ => string.Empty,
             };
 
         internal class ConsoleFieldsFillingDictionary : FieldsFillingDictionary<ConsoleField> { };

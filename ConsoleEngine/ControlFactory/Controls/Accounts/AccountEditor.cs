@@ -48,7 +48,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 : base.EmptyMandatoryField();
 
         private IControlAccessor? accountControl;
-        private AccountInitializer accountInitializer = new();
+        private readonly AccountInitializer accountInitializer = new();
 
         protected override void SetPaddings() =>
             MainPanel.Paddings.SetSize(OxSize.Extra);

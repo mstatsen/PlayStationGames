@@ -176,7 +176,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 if (account != null)
                     return account.Name;
 
-                return AccountValueAccessor.NullAccount.Name;
+                return string.Empty;
             }
         }
 

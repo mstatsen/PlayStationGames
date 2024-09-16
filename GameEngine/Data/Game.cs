@@ -17,21 +17,18 @@ namespace PlayStationGames.GameEngine.Data
     public class Game : RootDAO<GameField>
     {
         private Guid id = Guid.Empty;
-        private string imageBase64 = string.Empty;
-        private Bitmap? image = null;
-        private string name = string.Empty;
         private string edition = string.Empty;
         private string series = string.Empty;
         private Guid owner = Guid.Empty;
-        private PlatformType platformType;
-        private GameFormat format;
-        private Source sourceType;
-        private GameRegion region;
-        private GameLanguage language;
-        private ScreenView screenView;
-        private Difficult difficult;
-        private CompleteTime completeTime;
-        private TrophysetAccess trophysetAccess;
+        private PlatformType platformType = TypeHelper.DefaultValue<PlatformType>();
+        private GameFormat format = TypeHelper.DefaultValue<GameFormat>();
+        private Source sourceType = TypeHelper.DefaultValue<Source>();
+        private GameRegion region = TypeHelper.DefaultValue<GameRegion>();
+        private GameLanguage language = TypeHelper.DefaultValue<GameLanguage>();
+        private ScreenView screenView = TypeHelper.DefaultValue<ScreenView>();
+        private Difficult difficult = TypeHelper.DefaultValue<Difficult>();
+        private CompleteTime completeTime = TypeHelper.DefaultValue<CompleteTime>();
+        private TrophysetAccess trophysetAccess = TypeHelper.DefaultValue<TrophysetAccess>();
         private string code = string.Empty;
         private bool verified = false;
         private bool licensed = true;
@@ -41,14 +38,13 @@ namespace PlayStationGames.GameEngine.Data
         private string developer = string.Empty;
         private string publisher = string.Empty;
         private int year;
-        private Pegi pegi;
+        private Pegi pegi = TypeHelper.DefaultValue<Pegi>();
         private int criticScore;
         public readonly ListDAO<Installation> Installations = new();
         public readonly ListDAO<DLC> Dlcs = new();
         public readonly ListDAO<Tag> Tags = new();
         public readonly ListDAO<Link> Links = new();
         public readonly RelatedGames RelatedGames = new();
-
         public readonly ListDAO<GameMode> GameModes = new() 
         { 
             XmlName = "Modes",
@@ -152,22 +148,8 @@ namespace PlayStationGames.GameEngine.Data
             set => criticScore = ModifyValue(GameField.CriticScore, criticScore, value);
         }
 
-        public string Name
-        {
-            get => name;
-            set => name = StringValue(ModifyValue(GameField.Name, name, value));
-        }
-
-        public string OriginalName
-        {
-            get => name.Replace(" (Copy)", "");
-        }
-
-        public Bitmap? Image
-        {
-            get => image;
-            set => image = ModifyValue(GameField.Image, image, value);
-        }
+        public string OriginalName => 
+            Name.Replace(" (Copy)", string.Empty);
 
         public string Edition
         {
@@ -203,8 +185,10 @@ namespace PlayStationGames.GameEngine.Data
         {
             switch (field)
             {
-                case GameField.Id:
+                case GameField.Image:
                 case GameField.Name:
+                    return base.CompareField(field, y);
+                case GameField.Id:
                 case GameField.Owner:
                 case GameField.Edition:
                 case GameField.Series:
@@ -300,8 +284,8 @@ namespace PlayStationGames.GameEngine.Data
             set => code = StringValue(ModifyValue(GameField.Code, code, value));
         }
 
-        public Game() : base() =>
-            GenerateGuid();
+        public Game() : base() => 
+            GenerateId();
 
         private static object? PrepareValueToSet(GameField field, object? value)
         {
@@ -382,17 +366,12 @@ namespace PlayStationGames.GameEngine.Data
                 !CheckValueModified(this[field], value))
                 return;
 
+            base.SetFieldValue(field, value);
+
             switch (field)
             {
                 case GameField.Id:
                     Id = GuidValue(value);
-                    break;
-                case GameField.Name:
-                    Name = StringValue(value);
-                    break;
-                case GameField.Image:
-                    Image = (Bitmap?)value;
-                    imageBase64 = string.Empty;
                     break;
                 case GameField.Edition:
                     Edition = StringValue(value);
@@ -634,8 +613,8 @@ namespace PlayStationGames.GameEngine.Data
             field switch
             {
                 GameField.Id => id,
-                GameField.Name => name,
-                GameField.Image => image,
+                GameField.Name or GameField.Image => 
+                    base.GetFieldValue(field),
                 GameField.Edition => edition,
                 GameField.Series => series,
                 GameField.PlatformFamily => PlatformFamily.Sony,
@@ -688,10 +667,13 @@ namespace PlayStationGames.GameEngine.Data
 
         public override void Clear()
         {
+            if (State is
+                DAOState.Creating or
+                DAOState.Loading)
+                return;
+
+            base.Clear();
             Id = Guid.Empty;
-            Name = string.Empty;
-            Image = null;
-            imageBase64 = string.Empty;
             Edition = string.Empty;
             Series = string.Empty;
             Verified = false;
@@ -728,12 +710,11 @@ namespace PlayStationGames.GameEngine.Data
             EarnedTrophies.Clear();
         }
 
-        private void GenerateGuid() => 
-            Id = Guid.NewGuid();
+        private void GenerateId() => Id = Guid.NewGuid();
 
         public override void Init()
         {
-            GenerateGuid();
+            GenerateId();
             AddMember(GameField.GameModes, GameModes);
             AddMember(GameField.Dlcs, Dlcs);
             AddMember(GameField.Tags, Tags);
@@ -747,22 +728,18 @@ namespace PlayStationGames.GameEngine.Data
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
+            base.SaveData(element, clearModified);
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
-            XmlHelper.AppendElement(element, XmlConsts.Name, Name);
-
-            if (imageBase64 == string.Empty)
-            {
-                if (Image != null)
-                    XmlHelper.AppendElement(element, XmlConsts.Image, Image);
-            }
-            else XmlHelper.AppendElement(element, XmlConsts.Image, imageBase64);
 
             if (Owner != Guid.Empty)
                 XmlHelper.AppendElement(element, XmlConsts.Owner, Owner);
 
             XmlHelper.AppendElement(element, XmlConsts.Edition, Edition, true);
             XmlHelper.AppendElement(element, XmlConsts.Series, Series, true);
-            XmlHelper.AppendElement(element, XmlConsts.Source, SourceType);
+
+            if (SourceType != TypeHelper.DefaultValue<Source>())
+                XmlHelper.AppendElement(element, XmlConsts.Source, SourceType);
+
             XmlHelper.AppendElement(element, XmlConsts.Region, GameRegion);
             XmlHelper.AppendElement(element, XmlConsts.Language, GameLanguage);
             XmlHelper.AppendElement(element, XmlConsts.Code, Code, true);
@@ -773,56 +750,56 @@ namespace PlayStationGames.GameEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.EmulatorType, EmulatorType, true);
             XmlHelper.AppendElement(element, XmlConsts.ROMs, ROMs, true);
             XmlHelper.AppendElement(element, XmlConsts.Screen, ScreenView);
-            XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
-            XmlHelper.AppendElement(element, XmlConsts.CompleteTime, CompleteTime);
             XmlHelper.AppendElement(element, XmlConsts.Genre, Genre, true);
-            XmlHelper.AppendElement(element, XmlConsts.TrophysetAccess, TrophysetAccess);
             XmlHelper.AppendElement(element, XmlConsts.Developer, Developer, true);
             XmlHelper.AppendElement(element, XmlConsts.Publisher, Publisher, true);
             XmlHelper.AppendElement(element, XmlConsts.Year, Year);
             XmlHelper.AppendElement(element, XmlConsts.PEGI, Pegi);
-            XmlHelper.AppendElement(element, XmlConsts.CriticScore, CriticScore);
+
+            if (CriticScore >= 0)
+                XmlHelper.AppendElement(element, XmlConsts.CriticScore, CriticScore);
+
+            if (TypeHelper.Helper<SourceHelper>().TrophysetSupport(SourceType) &&
+                TypeHelper.Helper<PlatformTypeHelper>().PlatformWithTrophies(PlatformType))
+            {
+                XmlHelper.AppendElement(element, XmlConsts.TrophysetAccess, TrophysetAccess);
+                XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
+                XmlHelper.AppendElement(element, XmlConsts.CompleteTime, CompleteTime);
+            }
         }
 
         protected override void LoadData(XmlElement element)
         {
+            base.LoadData(element);
             id = XmlHelper.ValueGuid(element, XmlConsts.Id);
             if (id == Guid.Empty)
-                GenerateGuid();
+                GenerateId();
 
-            Name = XmlHelper.Value(element, XmlConsts.Name);
-            imageBase64 = XmlHelper.Value(element, XmlConsts.Image);
-            Image = XmlHelper.ValueBitmap(element, XmlConsts.Image);
-            Edition = XmlHelper.Value(element, XmlConsts.Edition);
-            Series = XmlHelper.Value(element, XmlConsts.Series);
-            PlatformType = XmlHelper.Value<PlatformType>(element, XmlConsts.Platform);
-            Format = XmlHelper.Value<GameFormat>(element, XmlConsts.Format);
-            Verified = XmlHelper.ValueBool(element, XmlConsts.Verified);
-
-            Licensed = (XmlHelper.Value(element, XmlConsts.Licensed) == string.Empty) 
+            edition = XmlHelper.Value(element, XmlConsts.Edition);
+            series = XmlHelper.Value(element, XmlConsts.Series);
+            platformType = XmlHelper.Value<PlatformType>(element, XmlConsts.Platform);
+            format = XmlHelper.Value<GameFormat>(element, XmlConsts.Format);
+            verified = XmlHelper.ValueBool(element, XmlConsts.Verified);
+            licensed = (XmlHelper.Value(element, XmlConsts.Licensed) == string.Empty) 
                 || XmlHelper.ValueBool(element, XmlConsts.Licensed);
-
             owner = XmlHelper.ValueGuid(element, XmlConsts.Owner);
-            SourceType = XmlHelper.Value<Source>(element, XmlConsts.Source);
-            GameRegion = XmlHelper.Value<GameRegion>(element, XmlConsts.Region);
-            GameLanguage = XmlHelper.Value<GameLanguage>(element, XmlConsts.Language);
-            Code = XmlHelper.Value(element, XmlConsts.Code);
-            EmulatorType = XmlHelper.Value(element, XmlConsts.EmulatorType);
-            ROMs = XmlHelper.Value(element, XmlConsts.ROMs);
-            ScreenView = XmlHelper.Value<ScreenView>(element, XmlConsts.Screen);
-            Genre = XmlHelper.Value(element, XmlConsts.Genre);
-            Difficult = XmlHelper.Value<Difficult>(element, XmlConsts.Difficult);
-            CompleteTime = XmlHelper.Value<CompleteTime>(element, XmlConsts.CompleteTime);
+            sourceType = XmlHelper.Value<Source>(element, XmlConsts.Source);
+            region = XmlHelper.Value<GameRegion>(element, XmlConsts.Region);
+            language = XmlHelper.Value<GameLanguage>(element, XmlConsts.Language);
+            code = XmlHelper.Value(element, XmlConsts.Code);
+            emulatorType = XmlHelper.Value(element, XmlConsts.EmulatorType);
+            roms = XmlHelper.Value(element, XmlConsts.ROMs);
+            screenView = XmlHelper.Value<ScreenView>(element, XmlConsts.Screen);
+            genre = XmlHelper.Value(element, XmlConsts.Genre);
+            difficult = XmlHelper.Value<Difficult>(element, XmlConsts.Difficult);
+            completeTime = XmlHelper.Value<CompleteTime>(element, XmlConsts.CompleteTime);
             trophysetAccess = XmlHelper.Value<TrophysetAccess>(element, XmlConsts.TrophysetAccess);
-            Developer = XmlHelper.Value(element, XmlConsts.Developer);
-            Publisher = XmlHelper.Value(element, XmlConsts.Publisher);
-            Year = XmlHelper.ValueInt(element, XmlConsts.Year);
-            Pegi = XmlHelper.Value<Pegi>(element, XmlConsts.PEGI);
-            CriticScore = XmlHelper.ValueInt(element, XmlConsts.CriticScore);
+            developer = XmlHelper.Value(element, XmlConsts.Developer);
+            publisher = XmlHelper.Value(element, XmlConsts.Publisher);
+            year = XmlHelper.ValueInt(element, XmlConsts.Year);
+            pegi = XmlHelper.Value<Pegi>(element, XmlConsts.PEGI);
+            criticScore = XmlHelper.ValueInt(element, XmlConsts.CriticScore);
         }
-
-        public override string ToString() => 
-            Name;
 
         public override int CompareTo(DAO? other)
         {
@@ -864,9 +841,6 @@ namespace PlayStationGames.GameEngine.Data
             obj is Game otherGame
             && (base.Equals(obj)
                 || (Id.Equals(otherGame.Id)
-                    && ((Image == null && otherGame.Image == null) 
-                        || Image != null && Image.Equals(otherGame.Image))
-                    && Name.Equals(otherGame.Name)
                     && Edition.Equals(otherGame.Edition)
                     && Series.Equals(otherGame.Series)
                     && PlatformType.Equals(otherGame.PlatformType)

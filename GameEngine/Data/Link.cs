@@ -38,8 +38,8 @@ namespace PlayStationGames.GameEngine.Data
 
         protected override void LoadData(XmlElement element)
         {
-            Name = XmlHelper.Value(element, XmlConsts.Name);
-            Url = XmlHelper.Value(element, XmlConsts.URL);
+            name = XmlHelper.Value(element, XmlConsts.Name);
+            url = XmlHelper.Value(element, XmlConsts.URL);
         }
         public override string ToString() => 
             Name;

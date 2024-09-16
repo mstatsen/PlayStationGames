@@ -21,7 +21,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 JoystickType.MoveController => "Move controller",
                 JoystickType.NavigationController => "Navigation Controller",
                 JoystickType.Other => "Other",
-                _ => "",
+                _ => string.Empty,
             };
 
         public override JoystickType EmptyValue() =>

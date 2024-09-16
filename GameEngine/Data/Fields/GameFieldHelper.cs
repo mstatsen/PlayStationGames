@@ -811,9 +811,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
         };
 
         public override GameField FieldMetaData => GameField.Field;
-
         public override GameField TitleField => GameField.Name;
-
+        public override GameField ImageField => GameField.Image;
         public override GameField UniqueField => GameField.Id;
 
         public override List<GameField> Depended(GameField field) => 

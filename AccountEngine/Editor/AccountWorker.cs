@@ -6,6 +6,7 @@ using OxXMLEngine.Data.Fields;
 using OxXMLEngine.Editor;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using System;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -18,6 +19,7 @@ namespace PlayStationGames.AccountEngine.Editor
             Editor.MainPanel.BaseColor = new OxColorHelper(Color.FromArgb(245, 251, 232)).Darker(7);
             ControlPainter.ColorizeControl(consolesButton, Editor.MainPanel.BaseColor);
             ControlPainter.ColorizeControl(gamesButton, Editor.MainPanel.BaseColor);
+            consolesWorker.BaseColor = Editor.MainPanel.BaseColor;
             gamesWorker.BaseColor = Editor.MainPanel.BaseColor;
         }
 
@@ -66,6 +68,7 @@ namespace PlayStationGames.AccountEngine.Editor
             Editor.Groups.SetGroupsSize();
             Editor.InvalidateSize();
 
+            consolesWorker.Renew(Item);
             gamesWorker.Renew(Item);
         }
 
@@ -76,10 +79,12 @@ namespace PlayStationGames.AccountEngine.Editor
         }
 
         private readonly GamesWorker gamesWorker = new();
+        private readonly ConsolesWorker consolesWorker = new();
 
         private void ConsoleButtonClickHandler(object? sender, EventArgs e)
         {
-            OxMessage.ShowInfo("Consoles selector under construction");
+            if (Item != null)
+                consolesWorker.Show();
         }
 
         protected override List<List<AccountField>> LabelGroups =>
@@ -103,6 +108,7 @@ namespace PlayStationGames.AccountEngine.Editor
         protected override void AfterGrabControls()
         {
             base.AfterGrabControls();
+            consolesWorker.Save();
             gamesWorker.Save();
         }
 

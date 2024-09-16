@@ -229,7 +229,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         public override string ColumnCaption(AccountField field) =>
             field switch
             {
-                AccountField.Avatar => "",
+                AccountField.Avatar => string.Empty,
                 _ => base.ColumnCaption(field)
             };
 

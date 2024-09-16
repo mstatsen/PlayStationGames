@@ -78,5 +78,7 @@ namespace PlayStationGames.GameEngine.Data
         {
             new GamesSummary()
         };
+
+        public override bool UseImageList => true;
     }
 }

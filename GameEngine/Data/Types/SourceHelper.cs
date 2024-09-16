@@ -121,6 +121,15 @@ namespace PlayStationGames.GameEngine.Data.Types
                 _ => false,
             };
 
+        public bool TrophysetSupport(Source value) =>
+            value switch
+            {
+                Source.Torrent or
+                Source.PKGj =>
+                    false,
+                _ => true,
+            };
+
         public bool IsDigital(Source value) => 
             value switch
             {

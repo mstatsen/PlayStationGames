@@ -1,4 +1,5 @@
-﻿using OxLibrary;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using OxLibrary;
 using OxLibrary.Controls;
 using OxXMLEngine.ControlFactory;
 using OxXMLEngine.Data;
@@ -129,7 +130,7 @@ namespace PlayStationGames.GameEngine.Editor
                     if (byUser)
                         SyncFormatWithPlatform();
 
-                    SyncOwnerWithControls();
+                    SyncOwnerWithControls(byUser);
                     break;
                 case GameField.TrophysetAccess:
                 case GameField.AvailablePlatinum:
@@ -146,11 +147,11 @@ namespace PlayStationGames.GameEngine.Editor
                     trophiesControlsHelper.CalcTrophiesControls();
                     break;
                 case GameField.Licensed:
-                    SyncOwnerWithControls();
+                    SyncOwnerWithControls(byUser);
                     trophiesControlsHelper.CalcTrophiesControls();
                     break;
                 case GameField.Source:
-                    SyncOwnerWithControls();
+                    SyncOwnerWithControls(byUser);
                     break;
             }
 
@@ -253,15 +254,14 @@ namespace PlayStationGames.GameEngine.Editor
                     )
                 )
             );
-
         private bool ownerReadOnlyChanged = false;
 
-        private void SyncOwnerWithControls()
+        private void SyncOwnerWithControls(bool byUser)
         {
             bool accountAvailable = AccountAvailable();
             ownerReadOnlyChanged = accountAvailable == Builder[GameField.Owner].ReadOnly;
 
-            if (!ownerReadOnlyChanged)
+            if (byUser && !ownerReadOnlyChanged)
                 return;
 
             if (Builder[GameField.Owner].Context.AdditionalContext is AccountAccessorParameters parameters)
