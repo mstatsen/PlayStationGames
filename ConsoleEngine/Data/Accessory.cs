@@ -8,12 +8,6 @@ namespace PlayStationGames.ConsoleEngine.Data
 {
     public class Accessory : DAO
     {
-        public Guid Id
-        {
-            get => id;
-            set => id = ModifyValue(id, value);
-        }
-
         public AccessoryType Type
         {
             get => type;
@@ -46,7 +40,6 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override void Clear()
         {
-            Id = Guid.Empty;
             type = TypeHelper.DefaultValue<AccessoryType>();
             JoystickType = TypeHelper.DefaultValue<JoystickType>();
             color = "Black";
@@ -54,18 +47,10 @@ namespace PlayStationGames.ConsoleEngine.Data
             count = 1;
         }
 
-        public override void Init() => 
-            GenerateGuid();
-
-        private void GenerateGuid() =>
-            Id = Guid.NewGuid();
+        public override void Init() { }
 
         protected override void LoadData(XmlElement element)
         {
-            id = XmlHelper.ValueGuid(element, XmlConsts.Id);
-            if (id == Guid.Empty)
-                GenerateGuid();
-
             type = XmlHelper.Value<AccessoryType>(element, XmlConsts.Type);
             joystickType = XmlHelper.Value<JoystickType>(element, XmlConsts.JoystickType);
             color = XmlHelper.Value(element, XmlConsts.Color);
@@ -80,7 +65,6 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
-            XmlHelper.AppendElement(element, XmlConsts.Id, id);
             XmlHelper.AppendElement(element, XmlConsts.Type, type);
 
             if (type == AccessoryType.Joystick)
@@ -108,7 +92,6 @@ namespace PlayStationGames.ConsoleEngine.Data
             return $"{countStr}{colorStr}{joystickTypeName}{typeStr}{descriptionStr}";
         }
 
-        private Guid id = Guid.Empty;
         private AccessoryType type = default!;
         private JoystickType joystickType = default!;
         private string color = "Black";
