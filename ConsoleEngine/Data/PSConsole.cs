@@ -1,6 +1,7 @@
-﻿using OxXMLEngine.Data;
-using OxXMLEngine.Data.Types;
-using OxXMLEngine.XML;
+﻿using OxDAOEngine.Data;
+using OxDAOEngine.Data.Decorator;
+using OxDAOEngine.Data.Types;
+using OxDAOEngine.XML;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
@@ -156,7 +157,7 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ConsoleField.Accounts => Accounts,
                 ConsoleField.Accessories => Accessories,
                 ConsoleField.Games => 
-                    DataManager.DecoratorFactory<ConsoleField, PSConsole>().Decorator(OxXMLEngine.Data.Decorator.DecoratorType.Table, this),
+                    DataManager.DecoratorFactory<ConsoleField, PSConsole>().Decorator(DecoratorType.Table, this),
                 ConsoleField.Icon => TypeHelper.Helper<ConsoleGenerationHelper>().Icon(Generation),
                 _ => null,
             };

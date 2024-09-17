@@ -1,6 +1,7 @@
-﻿using OxXMLEngine.Data;
-using OxXMLEngine.Data.Types;
-using OxXMLEngine.XML;
+﻿using OxDAOEngine.Data;
+using OxDAOEngine.Data.Decorator;
+using OxDAOEngine.Data.Types;
+using OxDAOEngine.XML;
 using PlayStationGames.AccountEngine.Data.Fields;
 using System.Xml;
 
@@ -190,7 +191,7 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.Country => Country,
                 AccountField.Consoles or
                 AccountField.Games =>
-                    DataManager.DecoratorFactory<AccountField, Account>().Decorator(OxXMLEngine.Data.Decorator.DecoratorType.Table, this),
+                    DataManager.DecoratorFactory<AccountField, Account>().Decorator(DecoratorType.Table, this),
                 AccountField.StrategeLink => StrategeLink,
                 AccountField.PSNProfilesLink => PSNProfilesLink,
                 _ => null,

@@ -4,10 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlayStationGames", "PlayStationGames.csproj", "{3A261ADC-727D-4DFA-A129-1B1DE0506DE6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OxXMLEngine", "..\OxXMLEngine\OxXMLEngine.csproj", "{B6D07FA5-1F92-4DB2-9D26-B2DCBAD8CEBB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F60753F-480F-4032-943E-3615BE9A3736} = {5F60753F-480F-4032-943E-3615BE9A3736}
+		{CCE806AE-005B-435A-B843-5A4B7261427C} = {CCE806AE-005B-435A-B843-5A4B7261427C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OxLibrary", "..\OxLibrary\OxLibrary.csproj", "{CCE806AE-005B-435A-B843-5A4B7261427C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OxDAOEngine", "..\OxDAOEngine\OxDAOEngine.csproj", "{5F60753F-480F-4032-943E-3615BE9A3736}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +23,14 @@ Global
 		{3A261ADC-727D-4DFA-A129-1B1DE0506DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A261ADC-727D-4DFA-A129-1B1DE0506DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A261ADC-727D-4DFA-A129-1B1DE0506DE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6D07FA5-1F92-4DB2-9D26-B2DCBAD8CEBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6D07FA5-1F92-4DB2-9D26-B2DCBAD8CEBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6D07FA5-1F92-4DB2-9D26-B2DCBAD8CEBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6D07FA5-1F92-4DB2-9D26-B2DCBAD8CEBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CCE806AE-005B-435A-B843-5A4B7261427C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCE806AE-005B-435A-B843-5A4B7261427C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCE806AE-005B-435A-B843-5A4B7261427C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCE806AE-005B-435A-B843-5A4B7261427C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F60753F-480F-4032-943E-3615BE9A3736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F60753F-480F-4032-943E-3615BE9A3736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F60753F-480F-4032-943E-3615BE9A3736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F60753F-480F-4032-943E-3615BE9A3736}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

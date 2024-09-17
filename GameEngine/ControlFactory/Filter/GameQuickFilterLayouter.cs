@@ -1,8 +1,7 @@
-﻿using OxXMLEngine.ControlFactory.Filter;
-using OxXMLEngine.Data.Filter;
-using OxXMLEngine.Settings;
+﻿using OxDAOEngine.ControlFactory.Filter;
+using OxDAOEngine.Data.Filter;
+using OxDAOEngine.Settings;
 using PlayStationGames.GameEngine.Data.Fields;
-using System.Collections.Generic;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Filter
 {

@@ -1,4 +1,4 @@
-﻿using OxXMLEngine.Data.Decorator;
+﻿using OxDAOEngine.Data.Decorator;
 using PlayStationGames.AccountEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
