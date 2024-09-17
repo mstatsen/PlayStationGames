@@ -148,7 +148,7 @@ namespace PlayStationGames
             mainTabControl.ActivateFirstPage();
         }
 
-        private void MainToolBarActoinClickHandler(object? sender, ToolbarActionEventArgs EventArgs)
+        private void MainToolBarActoinClickHandler(object? sender, OxActionEventArgs<OxToolbarAction> EventArgs)
         {
             switch (EventArgs.Action)
             {
