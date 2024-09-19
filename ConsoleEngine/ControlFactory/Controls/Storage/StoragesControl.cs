@@ -7,5 +7,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
     public class StoragesControl : ListItemsControl<Storages, Storage, StorageEditor, ConsoleField, PSConsole>
     {
         protected override string GetText() => "Storages";
+        protected override string ItemName() => "Storage";
     }
 }

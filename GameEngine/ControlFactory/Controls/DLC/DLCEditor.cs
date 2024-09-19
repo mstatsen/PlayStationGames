@@ -10,8 +10,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
     {
         private IControlAccessor NameControl = default!;
 
-        protected override string Title => "DLC";
-
         protected override void CreateControls()
         {
             NameControl = Context.Builder.Accessor("DLC_Name", FieldType.Memo);

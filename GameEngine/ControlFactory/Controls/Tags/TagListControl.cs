@@ -7,7 +7,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
     public class TagListControl : ListItemsControl<ListDAO<Tag>, Tag, TagEditor, GameField, Game> 
     {
-        protected override string GetText() => 
-            "Tag List";
+        protected override string GetText() => "Tag List";
+        protected override string ItemName() => "Tag";
     }
 }

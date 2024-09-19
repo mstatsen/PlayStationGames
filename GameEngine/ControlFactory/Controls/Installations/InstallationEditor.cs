@@ -17,8 +17,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
     public partial class InstallationEditor : ListItemEditor<Installation, GameField, Game>
     {
-        protected override string Title => "Installation";
-
         private ExtractAccessor<ConsoleField, PSConsole> consoleControl = default!;
         private IControlAccessor storageControl = default!;
         private IControlAccessor folderControl = default!;

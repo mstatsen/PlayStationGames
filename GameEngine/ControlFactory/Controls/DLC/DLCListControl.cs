@@ -9,5 +9,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
     {
         protected override string GetText() => 
             "DLC List";
+
+        protected override string ItemName() => "DLC";
     }
 }

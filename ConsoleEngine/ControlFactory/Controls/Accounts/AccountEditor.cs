@@ -23,8 +23,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         protected override void GrabControls(ConsoleAccount item) => 
             item.Id = accountControl!.GuidValue;
 
-        protected override string Title => "Account";
-
         protected override void CreateControls()
         {
             accountControl = 

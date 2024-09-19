@@ -75,8 +75,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             item.FreeSize = freeSizeControl!.StringValue;
         }
 
-        protected override string Title => "Storage";
-
         protected override string EmptyMandatoryField() => 
             nameControl!.IsEmpty ? "Name"
                 : placementControl!.IsEmpty ? "Placement"

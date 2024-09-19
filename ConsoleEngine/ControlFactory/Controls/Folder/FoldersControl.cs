@@ -7,5 +7,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
     public class FoldersControl : ListItemsControl<Folders, Folder, FolderEditor, ConsoleField, PSConsole> 
     {
         protected override string GetText() => "Folders";
+        protected override string ItemName() => "Folder";
     }
 }

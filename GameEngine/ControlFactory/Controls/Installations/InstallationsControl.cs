@@ -5,6 +5,7 @@ using OxDAOEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxLibrary;
+using OxLibrary.Controls;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -13,13 +14,18 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void InitButtons()
         {
             base.InitButtons();
+            OxIconButton viewButton = CreateButton(OxIcons.eye);
+            viewButton.ToolTipText = "View the console";
+
             PrepareViewButton(
-                CreateButton(OxIcons.eye),
+                viewButton,
                 (s, e) => DataManager.ViewItem<ConsoleField, PSConsole>(ConsoleField.Id, SelectedItem.ConsoleId),
                 true);
         }
 
         protected override string GetText() => 
             "Installations";
+
+        protected override string ItemName() => "Installation";
     }
 }

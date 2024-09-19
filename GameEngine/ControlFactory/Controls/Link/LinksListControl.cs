@@ -4,6 +4,7 @@ using OxDAOEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using System.Diagnostics;
+using OxLibrary.Controls;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -12,8 +13,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void InitButtons()
         {
             base.InitButtons();
+            OxIconButton goButton = CreateButton(OxIcons.go);
+            goButton.ToolTipText = "Follow the link";
             PrepareViewButton(
-                CreateButton(OxIcons.go),
+                goButton,
                 (s, e) => Process.Start(
                     new ProcessStartInfo
                     {
@@ -23,6 +26,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 ), 
                 true);
         }
+
+        protected override string ItemName() => "Link";
 
         protected override string GetText() => "Links";
     }

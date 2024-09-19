@@ -54,8 +54,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     GameControl.Width = MainPanel.ContentContainer.Width - GameControl.Left - (firstSet ? 116 : 8);
             } 
         }
-        protected override string Title => "Related Game";
-
 
         protected override void CreateControls()
         {

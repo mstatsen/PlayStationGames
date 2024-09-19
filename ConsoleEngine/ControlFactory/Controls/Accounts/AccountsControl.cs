@@ -7,5 +7,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
     public class AccountsControl : ListItemsControl<ConsoleAccounts, ConsoleAccount, AccountEditor, ConsoleField, PSConsole> 
     {
         protected override string GetText() => "Accounts";
+        protected override string ItemName() => "Account";
     }
 }

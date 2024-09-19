@@ -26,8 +26,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         public GameModeEditor() => 
             InitializeComponent();
 
-        protected override string Title => "Game Mode";
-
         private readonly PlayModeInitializer playModeInitializer = new();
         private void CreatePlayModeControl()
         {

@@ -19,8 +19,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 NameControl.Context.InitControl(NameControl);
         }
 
-        protected override string Title => "Tag";
-
         private void CreateNameControl()
         {
             NameControl = (ComboBoxAccessor<GameField, Game>)Context.Builder

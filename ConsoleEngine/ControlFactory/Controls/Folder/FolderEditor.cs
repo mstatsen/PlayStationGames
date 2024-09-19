@@ -16,8 +16,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         protected override void GrabControls(Folder item) => 
             item.Name = folderControl!.StringValue;
 
-        protected override string Title => "Folder";
-
         protected override void CreateControls()
         {
             folderControl = new TextAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Folders))

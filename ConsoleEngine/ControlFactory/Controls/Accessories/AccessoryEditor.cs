@@ -155,8 +155,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             item.Description = descriptionControl!.StringValue;
         }
 
-        protected override string Title => "Accessory";
-
         protected override string EmptyMandatoryField() => 
             typeControl!.IsEmpty 
                 ? "Type"
