@@ -112,8 +112,6 @@ namespace PlayStationGames.AccountEngine.Data
         private string country = string.Empty;
         private string login = string.Empty;
         private string password = string.Empty;
-        private string psnProfilesLink = string.Empty;
-        private string strategeLink = string.Empty;
         private bool defaultAccount = false;
 
 
