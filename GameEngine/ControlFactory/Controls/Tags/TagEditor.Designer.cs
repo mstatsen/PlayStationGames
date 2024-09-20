@@ -33,15 +33,15 @@
             // MainPanel
             // 
             this.MainPanel.Size = new System.Drawing.Size(390, 230);
-            this.MainPanel.Text = "Link";
+            this.MainPanel.Text = "Tag";
             // 
             // LinkEditor
             // 
             this.ClientSize = new System.Drawing.Size(390, 230);
             this.MaximumSize = new System.Drawing.Size(390, 230);
             this.MinimumSize = new System.Drawing.Size(390, 230);
-            this.Name = "LinkEditor";
-            this.Text = "Link";
+            this.Name = "TagEditor";
+            this.Text = "Tag";
             this.ResumeLayout(false);
 
         }

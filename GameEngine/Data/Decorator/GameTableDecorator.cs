@@ -42,16 +42,9 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Dlcs => DLC,
                 GameField.GameModes => GameModes,
                 GameField.TrophysetAccess => TrophysetAccesibility,
-                GameField.Verified => Verified,
                 GameField.Owner => Owner,
-                GameField.Licensed => Licensed,
                 _ => base.Value(field),
             };
-
-        private object Verified =>
-            Dao.Verified 
-                ? Consts.Yes
-                : string.Empty;
 
         private static string CalcedTrophies(int earned, int available) =>
             available > 0
@@ -179,14 +172,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 return string.Empty;
             }
         }
-
-        public object? Licensed =>
-            OxImageBoxer.BoxingImage(
-                Dao.Licensed 
-                    ? OxIcons.tick 
-                    : new Bitmap(16, 16), 
-                new Size(16, 16)
-            );
 
         private object? Link(string Name) =>
             Dao.Links.Find(l => l.Name.Equals(Name));

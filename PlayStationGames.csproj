@@ -58,10 +58,6 @@
     <Compile Update="GameEngine\ControlFactory\Controls\GameMode\GameModesControl.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationEditor.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationsControl.cs" />
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkButton.cs" />
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkButtonList.cs" />
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkEditor.cs" />
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinksListControl.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\RelatedGame\RelatedGameEditor.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\RelatedGame\RelatedGamesControl.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\ReleasePlatforms\ReleasePlatformListControl.cs" />

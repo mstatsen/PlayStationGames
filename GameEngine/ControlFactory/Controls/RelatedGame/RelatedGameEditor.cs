@@ -129,14 +129,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         }
 
         protected override int ContentWidth => 480;
-        protected override int ContentHeight => SameTrophysetControl!.Bottom + 12;
+        protected override int ContentHeight => (availableTrophies ? SameTrophysetControl!.Bottom : GameControl!.Bottom) + 12;
 
         protected override RelatedGame CreateNewItem() => new();
 
         protected override void FillControls(RelatedGame item)
         {
             SelectedGame = DataManager.Item<GameField, Game>(GameField.Id, item.GameId);
-            SameTrophysetControl!.Value = item.SameTrophyset;
+            SameTrophysetControl!.Value = availableTrophies && item.SameTrophyset;
         }
 
         protected override void GrabControls(RelatedGame item)
@@ -155,5 +155,18 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameControl!.IsEmpty
                 ? "Releated game"
                 : base.EmptyMandatoryField();
+
+        private bool availableTrophies = true;
+        public bool AvailableTrophies 
+        {
+            get => SameTrophysetControl != null && SameTrophysetControl.Visible;
+            set
+            {
+                availableTrophies = value;
+
+                if (SameTrophysetControl != null) 
+                    SameTrophysetControl.Visible = value;
+            }
+        }
     }
 }

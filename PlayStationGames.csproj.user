@@ -43,18 +43,6 @@
     <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationsControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkButtonList.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinkEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="GameEngine\ControlFactory\Controls\Link\LinksListControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="GameEngine\ControlFactory\Controls\RelatedGame\RelatedGameEditor.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -11,6 +11,13 @@ namespace PlayStationGames.GameEngine.Data
         private Guid consoleId = Guid.Empty;
         private Guid storageId = Guid.Empty;
         private string folder = string.Empty;
+        private int size = 0;
+
+        public int Size
+        {
+            get => size;
+            set => size = ModifyValue(size, value);
+        }
 
         public Guid ConsoleId
         {
@@ -35,6 +42,7 @@ namespace PlayStationGames.GameEngine.Data
             ConsoleId = Guid.Empty;
             StorageId = Guid.Empty;
             Folder = string.Empty;
+            Size = 0;
         }
 
         public override void Init() { }
@@ -47,6 +55,10 @@ namespace PlayStationGames.GameEngine.Data
                 XmlHelper.AppendElement(element, XmlConsts.StorageId, StorageId);
 
             XmlHelper.AppendElement(element, XmlConsts.Folder, Folder, true);
+
+            if (Size > 0)
+                XmlHelper.AppendElement(element, XmlConsts.Size, Size);
+
         }
 
         protected override void LoadData(XmlElement element)
@@ -54,6 +66,7 @@ namespace PlayStationGames.GameEngine.Data
             consoleId = XmlHelper.ValueGuid(element, XmlConsts.ConsoleId);
             storageId = XmlHelper.ValueGuid(element, XmlConsts.StorageId);
             folder = XmlHelper.Value(element, XmlConsts.Folder);
+            size = XmlHelper.ValueInt(element, XmlConsts.Size);
         }
 
         public override bool Equals(object? obj) =>
@@ -61,10 +74,11 @@ namespace PlayStationGames.GameEngine.Data
             && (base.Equals(obj)
                 || (ConsoleId.Equals(otherInstallation.ConsoleId)
                     && StorageId.Equals(otherInstallation.StorageId)
-                    && Folder.Equals(otherInstallation.Folder)));
+                    && Folder.Equals(otherInstallation.Folder))
+                    && Size.Equals(otherInstallation.Size));
 
         public override int GetHashCode() => 
-            HashCode.Combine(ConsoleId, StorageId, Folder);
+            HashCode.Combine(ConsoleId, StorageId, Folder, Size);
 
         public override string? ToString()
         {

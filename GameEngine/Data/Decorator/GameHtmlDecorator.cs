@@ -2,6 +2,8 @@
 using OxDAOEngine.Data.Decorator;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
+using OxDAOEngine.Data.Links;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
@@ -91,7 +93,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             List<string?> list = new();
 
-            foreach (Link link in Dao.Links)
+            foreach (Link<GameField> link in Dao.Links)
             {
                 string fontColor = ColorTranslator.ToHtml(new OxColorHelper(link.LinkColor).HDarker(1).Bluer(2));
                 list.Add(

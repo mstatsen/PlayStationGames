@@ -50,6 +50,7 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<TrophyTypeHelper>();
             TypeHelper.Register<GameRegionHelper>();
             TypeHelper.Register<GameLanguageHelper>();
+            TypeHelper.Register<GameLinkTypeHelper>();
         }
 
         public override string Name => "Games";

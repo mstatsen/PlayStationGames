@@ -1,6 +1,6 @@
 ﻿namespace PlayStationGames.GameEngine.Data.Types
 {
-    public enum LinkType
+    public enum GameLinkType
     {
         Stratege,
         PSNProfiles,

@@ -2,6 +2,7 @@
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Filter;
+using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.XML;
 using PlayStationGames.AccountEngine.Data;
@@ -43,7 +44,7 @@ namespace PlayStationGames.GameEngine.Data
         public readonly ListDAO<Installation> Installations = new();
         public readonly ListDAO<DLC> Dlcs = new();
         public readonly ListDAO<Tag> Tags = new();
-        public readonly ListDAO<Link> Links = new();
+        public readonly Links<GameField> Links = new();
         public readonly RelatedGames RelatedGames = new();
         public readonly ListDAO<GameMode> GameModes = new() 
         { 
@@ -299,8 +300,8 @@ namespace PlayStationGames.GameEngine.Data
                         };
                     break;
                 case GameField.Links:
-                    if (value is Link link)
-                        return new ListDAO<Link>()
+                    if (value is Link<GameField> link)
+                        return new Links<GameField>()
                         {
                             link
                         };

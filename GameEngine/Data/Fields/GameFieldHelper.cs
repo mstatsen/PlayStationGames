@@ -955,15 +955,17 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     FieldType.Guid,
                 GameField.GameModes or 
                 GameField.Dlcs or 
-                GameField.Links or 
                 GameField.Installations or 
                 GameField.RelatedGames or 
                 GameField.ReleasePlatforms or
                 GameField.Tags => 
                     FieldType.List,
+                GameField.StrategeLink or
+                GameField.PSNProfilesLink =>
+                    FieldType.Link,
+                GameField.Links =>
+                    FieldType.LinkList,
                 GameField.Year or 
-                GameField.StrategeLink or 
-                GameField.PSNProfilesLink or
                 GameField.Owner => 
                     FieldType.Custom,
                 _ => 
@@ -985,6 +987,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.ScreenView => TypeHelper.Helper<ScreenViewHelper>(),
                 GameField.TrophysetAccess => TypeHelper.Helper<TrophysetAccessHelper>(),
                 GameField.Status => TypeHelper.Helper<StatusHelper>(),
+                GameField.Links => TypeHelper.Helper<GameLinkTypeHelper>(),
+                GameField.PSNProfilesLink => TypeHelper.Helper<GameLinkTypeHelper>(),
+                GameField.StrategeLink => TypeHelper.Helper<GameLinkTypeHelper>(),
                 _ => null
             };
 

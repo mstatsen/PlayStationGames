@@ -12,6 +12,7 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using OxLibrary;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -20,8 +21,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private ExtractAccessor<ConsoleField, PSConsole> consoleControl = default!;
         private IControlAccessor storageControl = default!;
         private IControlAccessor folderControl = default!;
+        private IControlAccessor sizeControl = default!;
         private OxLabel storageLabel = default!;
         private OxLabel folderLabel = default!;
+        private OxLabel sizeLabel = default!;
+        private OxLabel sizeLabel2 = default!;
 
         private static ControlBuilder<ConsoleField, PSConsole> ConsoleBuilder =>
             DataManager.Builder<ConsoleField, PSConsole>(ControlScope.Editor);
@@ -32,15 +36,21 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             storageControl = ConsoleBuilder.Accessor("StorageSelector", FieldType.Extract);
             folderControl = ConsoleBuilder.Accessor("FolderSelector", FieldType.Extract);
             consoleControl.ValueChangeHandler += (s, e) => SetConsoleValueInControl();
+            sizeControl = ConsoleBuilder.Accessor("InstallationSize", FieldType.Integer);
 
             int lastBottom = PrepareControl(consoleControl);
             lastBottom = PrepareControl(storageControl, lastBottom);
-            PrepareControl(folderControl, lastBottom);
+            lastBottom = PrepareControl(folderControl, lastBottom);
+            PrepareControl(sizeControl, lastBottom, false);
             SetConsoleValueInControl();
 
             CreateLabel("Console", consoleControl);
             storageLabel = CreateLabel("Storage", storageControl);
             folderLabel = CreateLabel("Folder", folderControl);
+            sizeLabel = CreateLabel("Size", sizeControl);
+            sizeLabel2 = CreateLabel("Mb", sizeControl, true);
+
+            ((NumericAccessor<ConsoleField, PSConsole>)sizeControl).MaximumValue = 1000000;
         }
 
         private void SetConsoleValueInControl()
@@ -55,6 +65,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 storageControl.Enabled = false;
                 folderControl.Value = null;
                 folderControl.Enabled = false;
+                sizeControl.Value = null;
+                sizeControl.Enabled = false;
             }
             else
             {
@@ -78,6 +90,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     folderInitializer.Filter = filter;
 
                 folderControl.RenewControl(true);
+                sizeControl.Enabled = true;
             }
         }
 
@@ -90,6 +103,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             {
                 storageControl.Value = console.Storages.GetById(item.StorageId);
                 folderControl.Value = console.Folders.GetByName(item.Folder);
+                sizeControl.Value = item.Size;
             }
         }
 
@@ -97,30 +111,39 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             PSConsole? console = consoleControl?.DAOValue<PSConsole>();
 
-            if (console != null)
+            if (console == null)
+                return;
+
+            item.ConsoleId = console.Id;
+            Storage? storage = storageControl.DAOValue<Storage>();
+
+            if (storage != null)
             {
-                item.ConsoleId = console.Id;
-                Storage? storage = storageControl.DAOValue<Storage>();
+                item.StorageId = storage.Id;
+                Folder? folder = folderControl.DAOValue<Folder>();
 
-                if (storage != null)
-                {
-                    item.StorageId = storage.Id;
-                    Folder? folder = folderControl.DAOValue<Folder>();
-
-                    item.Folder = folder == null || folderControl.IsEmpty
-                        ? string.Empty
-                        : folder.Name;
-                }
+                item.Folder = folder == null || folderControl.IsEmpty
+                    ? string.Empty
+                    : folder.Name;
             }
+
+            item.Size = sizeControl.IntValue;
         }
 
-        private int PrepareControl(IControlAccessor accessor, int lastBottom = -1)
+        private int PrepareControl(IControlAccessor accessor, int lastBottom = -1, bool fullRow = true)
         {
             accessor.Parent = this;
             accessor.Left = 80;
             accessor.Top = lastBottom == -1 ? 8 : lastBottom + 4;
-            accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-            accessor.Width = MainPanel.ContentContainer.Width - accessor.Left - 8;
+            accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+
+            if (fullRow)
+            {
+                accessor.Anchor |= AnchorStyles.Right;
+                accessor.Width = MainPanel.ContentContainer.Width - accessor.Left - 8;
+            }
+            else accessor.Width = 120;
+
             accessor.Height = 24;
             return accessor.Bottom;
         }
@@ -132,15 +155,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     ? "Storage"
                     : base.EmptyMandatoryField();
 
-        protected override int ContentHeight =>
-            (folderControl != null && folderControl.Visible
-            ? folderControl.Bottom
-                : storageControl != null && storageControl.Visible
-                    ? storageControl.Bottom
-                    : consoleControl != null 
-                        ? consoleControl.Bottom
-                        : 26)
-            + 8;
+        protected override int ContentHeight => sizeControl.Bottom + 8;
 
         public override void RenewData()
         {
@@ -168,6 +183,18 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             storageLabel.Visible = storageAvailable;
             folderControl.Visible = folderAvailable;
             folderLabel.Visible = folderAvailable;
+
+            int lastBottom = consoleControl!.Bottom;
+
+            if (folderControl.Visible)
+                lastBottom = folderControl.Bottom;
+            else
+            if (storageControl.Visible)
+                lastBottom = storageControl.Bottom;
+
+            PrepareControl(sizeControl, lastBottom, false);
+            OxControlHelper.AlignByBaseLine(sizeControl.Control, sizeLabel);
+            OxControlHelper.AlignByBaseLine(sizeControl.Control, sizeLabel2);
         }
 
         private void RenewConsoleControl()
