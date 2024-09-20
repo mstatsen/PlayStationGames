@@ -987,9 +987,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.ScreenView => TypeHelper.Helper<ScreenViewHelper>(),
                 GameField.TrophysetAccess => TypeHelper.Helper<TrophysetAccessHelper>(),
                 GameField.Status => TypeHelper.Helper<StatusHelper>(),
-                GameField.Links => TypeHelper.Helper<GameLinkTypeHelper>(),
-                GameField.PSNProfilesLink => TypeHelper.Helper<GameLinkTypeHelper>(),
-                GameField.StrategeLink => TypeHelper.Helper<GameLinkTypeHelper>(),
                 _ => null
             };
 
