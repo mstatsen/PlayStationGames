@@ -4,6 +4,7 @@ using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Types;
+using PlayStationGames.PSNEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Fields
 {

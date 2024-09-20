@@ -15,6 +15,7 @@ using PlayStationGames.GameEngine.Data.Filter;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.Editor;
 using PlayStationGames.GameEngine.Summary;
+using PlayStationGames.PSNEngine.Data.Types;
 
 
 namespace PlayStationGames.GameEngine.Data

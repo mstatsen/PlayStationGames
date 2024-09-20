@@ -1,6 +1,6 @@
-﻿namespace PlayStationGames.GameEngine.Data.Types
+﻿namespace PlayStationGames.PSNEngine.Data.Types
 {
-    public enum GameLinkType
+    public enum PSNLinkType
     {
         PSN,
         Stratege,
