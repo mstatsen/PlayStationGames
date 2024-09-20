@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.Data.Types;
 using OxLibrary;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {
@@ -17,9 +18,20 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
                 AccountField.Avatar => OxImageBoxer.BoxingImage(Dao.Avatar, new Size(70, 40)),
                 AccountField.Consoles => ConsolesCount(),
                 AccountField.Games => GamesCount(),
+                AccountField.StrategeLink => StrategeLink,
+                AccountField.PSNProfilesLink => PSNProfilesLink,
                 _ => base.Value(field),
             };
         }
+
+        private object? StrategeLink =>
+            Link("Stratege");
+
+        private object? PSNProfilesLink =>
+            Link("PSNProfiles");
+
+        private object? Link(string Name) =>
+            Dao.Links.Find(l => l.Name.Equals(Name));
 
         private int ConsolesCount()
         {

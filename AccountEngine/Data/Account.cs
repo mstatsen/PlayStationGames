@@ -1,8 +1,11 @@
 ﻿using OxDAOEngine.Data;
 using OxDAOEngine.Data.Decorator;
+using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.XML;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data;
 using System.Xml;
 
 namespace PlayStationGames.AccountEngine.Data
@@ -11,6 +14,8 @@ namespace PlayStationGames.AccountEngine.Data
     {
         public Account() : base() =>
             GenerateGuid();
+
+        public readonly Links<AccountField> Links = new();
 
         public bool DefaultAccount
         { 
@@ -48,18 +53,6 @@ namespace PlayStationGames.AccountEngine.Data
             set => country = StringValue(ModifyValue(AccountField.Country, country, value));
         }
 
-        public string PSNProfilesLink
-        {
-            get => psnProfilesLink;
-            set => psnProfilesLink = StringValue(ModifyValue(AccountField.PSNProfilesLink, psnProfilesLink, value));
-        }
-
-        public string StrategeLink
-        {
-            get => strategeLink;
-            set => strategeLink = StringValue(ModifyValue(AccountField.StrategeLink, strategeLink, value));
-        }
-
         public override void Clear()
         {
             Id = Guid.Empty;
@@ -69,13 +62,13 @@ namespace PlayStationGames.AccountEngine.Data
             Country = string.Empty;
             Login = string.Empty;
             Password = string.Empty;
-            PSNProfilesLink = string.Empty;
-            StrategeLink = string.Empty;
-    }
+            Links.Clear();
+        }
 
         public override void Init()
         {
             GenerateGuid();
+            AddMember(AccountField.Links, Links);
         }
 
         private void GenerateGuid() =>
@@ -93,8 +86,6 @@ namespace PlayStationGames.AccountEngine.Data
             Country = XmlHelper.Value(element, XmlConsts.Country);
             Login = XmlHelper.Value(element, XmlConsts.Login);
             Password = XmlHelper.Value(element, XmlConsts.Password);
-            PSNProfilesLink = XmlHelper.Value(element, XmlConsts.PSNProfilesLink);
-            StrategeLink = XmlHelper.Value(element, XmlConsts.StrategeLink);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
@@ -102,17 +93,17 @@ namespace PlayStationGames.AccountEngine.Data
             base.SaveData(element, clearModified);
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
             XmlHelper.AppendElement(element, XmlConsts.Default, DefaultAccount);
+            
             if (avatarBase64 == string.Empty)
             {
                 if (Avatar != null)
                     XmlHelper.AppendElement(element, XmlConsts.Image, Avatar);
             }
             else XmlHelper.AppendElement(element, XmlConsts.Image, avatarBase64);
+
             XmlHelper.AppendElement(element, XmlConsts.Country, Country);
             XmlHelper.AppendElement(element, XmlConsts.Login, Login);
             XmlHelper.AppendElement(element, XmlConsts.Password, Password);
-            XmlHelper.AppendElement(element, XmlConsts.PSNProfilesLink, PSNProfilesLink);
-            XmlHelper.AppendElement(element, XmlConsts.StrategeLink, StrategeLink);
         }
 
         private Guid id = Guid.Empty;
@@ -145,8 +136,29 @@ namespace PlayStationGames.AccountEngine.Data
         //public int GamesCount => Storages.GamesCount();
         */
 
+        private static object? PrepareValueToSet(AccountField field, object? value)
+        {
+            switch (field)
+            {
+                case AccountField.Links:
+                    if (value is Link<GameField> link)
+                        return new Links<GameField>()
+                        {
+                            link
+                        };
+                    break;
+            }
+
+            return value;
+        }
+
         protected override void SetFieldValue(AccountField field, object? value)
         {
+            value = PrepareValueToSet(field, value);
+
+            if (!CheckValueModified(this[field], value))
+                return;
+
             base.SetFieldValue(field, value);
             switch (field)
             {
@@ -169,11 +181,8 @@ namespace PlayStationGames.AccountEngine.Data
                 case AccountField.Country:
                     Country = StringValue(value);
                     break;
-                case AccountField.StrategeLink:
-                    StrategeLink = StringValue(value);
-                    break;
-                case AccountField.PSNProfilesLink:
-                    PSNProfilesLink = StringValue(value);
+                case AccountField.Links:
+                    Links.CopyFrom((DAO?)value);
                     break;
             }
         }
@@ -189,11 +198,10 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.Login => Login,
                 AccountField.Password => Password,
                 AccountField.Country => Country,
+                AccountField.Links => Links,
                 AccountField.Consoles or
                 AccountField.Games =>
                     DataManager.DecoratorFactory<AccountField, Account>().Decorator(DecoratorType.Table, this),
-                AccountField.StrategeLink => StrategeLink,
-                AccountField.PSNProfilesLink => PSNProfilesLink,
                 _ => null,
             };
 
@@ -210,19 +218,30 @@ namespace PlayStationGames.AccountEngine.Data
             return Name.CompareTo(otherAccount.Name);
         }
 
-        public override int CompareField(AccountField field, IFieldMapping<AccountField> y) => 
-            field switch
+        public override int CompareField(AccountField field, IFieldMapping<AccountField> y)
+        {
+            switch (field)
             {
-                AccountField.Id or 
-                AccountField.Name or 
-                AccountField.Country or 
-                AccountField.Login or 
-                AccountField.Password or 
-                AccountField.PSNProfilesLink or 
-                AccountField.StrategeLink => 
-                    StringValue(this[field]).CompareTo(StringValue(y[field])),
-                _ => base.CompareField(field, y),
+                case AccountField.Id:
+                case AccountField.Name:
+                case AccountField.Country:
+                case AccountField.Login:
+                case AccountField.Password:
+                case AccountField.PSNProfilesLink:
+                case AccountField.StrategeLink:
+                    return StringValue(this[field]).CompareTo(StringValue(y[field]));
             };
+
+            if (y is Account yAccount)
+                return field switch
+                {
+                    AccountField.Links =>
+                        Links.CompareTo(yAccount.Links),
+                    _ => base.CompareField(field, y),
+                };
+
+            return base.CompareField(field, y);
+        }
 
         private readonly AccountFieldHelper fieldHelper =
             TypeHelper.Helper<AccountFieldHelper>();

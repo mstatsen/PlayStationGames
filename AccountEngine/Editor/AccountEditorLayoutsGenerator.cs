@@ -3,7 +3,6 @@ using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Editor;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
-using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -19,7 +18,8 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.Consoles,
                 AccountField.Games,
                 AccountField.Avatar,
-                AccountField.DefaultAccount
+                AccountField.DefaultAccount,
+                AccountField.Links
             };
 
         protected override List<AccountField> AutoSizeFields() =>
@@ -48,13 +48,10 @@ namespace PlayStationGames.AccountEngine.Editor
             field is AccountField.Avatar or 
                 AccountField.DefaultAccount
             ? 8
-            : field is AccountField.PSNProfilesLink or 
-                AccountField.StrategeLink
-                ? 84 
-                : field is AccountField.Name or
-                    AccountField.Country
-                    ? 154
-                    : 74;
+            : field is AccountField.Name or
+                AccountField.Country
+                ? 154
+                : 74;
 
         protected override int Width(AccountField field) =>
             field switch
@@ -71,6 +68,12 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.PSNProfilesLink =>
                     290,
                 _ => 210
+            };
+
+        protected override List<AccountField> FillDockFields() =>
+            new()
+            {
+                AccountField.Links
             };
 
         protected override Color BackColor(AccountField field) =>

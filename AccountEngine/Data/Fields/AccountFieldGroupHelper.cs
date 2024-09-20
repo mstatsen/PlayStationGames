@@ -30,8 +30,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         public override AccountFieldGroup Group(AccountField field) =>
             field switch
             {
-                AccountField.StrategeLink or 
-                AccountField.PSNProfilesLink => 
+                AccountField.Links => 
                     AccountFieldGroup.Links,
                 AccountField.Login or
                 AccountField.Password =>
@@ -49,11 +48,12 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             {
                 AccountFieldGroup.Base,
                 AccountFieldGroup.Auth,
-                AccountFieldGroup.Links,
                 AccountFieldGroup.Property
             }.Contains(group);
 
-        public override int DefaultGroupHeight(AccountFieldGroup group) => 60;
-
+        public override int DefaultGroupHeight(AccountFieldGroup group) => 
+            group == AccountFieldGroup.Links 
+                ? 84 
+                : 60;
     }
 }

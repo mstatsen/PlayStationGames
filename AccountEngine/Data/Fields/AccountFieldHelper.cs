@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Types;
+using PlayStationGames.AccountEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Fields
@@ -25,6 +26,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Consoles => "Consoles",
                 AccountField.Games => "Games",
                 AccountField.StrategeLink => "Stratege",
+                AccountField.Links => "Links",
                 AccountField.PSNProfilesLink => "PSNProfiles",
                 AccountField.DefaultAccount => "Default Account",
                 _ => string.Empty,
@@ -106,7 +108,11 @@ namespace PlayStationGames.AccountEngine.Data.Fields
 
         protected override List<AccountField> GetGroupByFields() => new() { };
 
-        protected override List<AccountField> GetCalcedFields() => new() { };
+        protected override List<AccountField> GetCalcedFields() => new() 
+        {
+            AccountField.StrategeLink,
+            AccountField.PSNProfilesLink
+        };
 
         protected override List<AccountField> GetIconFields() => new() { };
 
@@ -117,8 +123,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.Country,
             AccountField.Login,
             AccountField.Password,
-            AccountField.PSNProfilesLink,
-            AccountField.StrategeLink,
+            AccountField.Links,
             AccountField.DefaultAccount
         };
 
@@ -134,8 +139,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.Games,
             AccountField.Login,
             AccountField.Password,
-            AccountField.PSNProfilesLink,
-            AccountField.StrategeLink,
+            AccountField.Links,
             AccountField.DefaultAccount
         };
 
@@ -153,7 +157,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Login or
                 AccountField.Country or
                 AccountField.Consoles or
-                AccountField.Games => 
+                AccountField.Games or
+                AccountField.Links =>
                     FilterOperation.Contains,
                 _ =>
                     FilterOperation.Equals
@@ -165,6 +170,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             [AccountField.Consoles] = FilterOperations.EnumOperations,
             [AccountField.Country] = FilterOperations.StringOperations,
             [AccountField.Games] = FilterOperations.EnumOperations,
+            [AccountField.Links] = FilterOperations.EnumOperations,
             [AccountField.Id] = FilterOperations.StringOperations,
             [AccountField.Login] = FilterOperations.StringOperations,
             [AccountField.Name] = FilterOperations.StringOperations,
@@ -220,6 +226,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Consoles or
                 AccountField.Games => 
                     FieldType.List,
+                AccountField.Links =>
+                    FieldType.LinkList,
                 AccountField.DefaultAccount =>
                     FieldType.Boolean,
                 _ =>
@@ -234,5 +242,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             };
 
         public override ITypeHelper? GetHelper(AccountField field) => null;
+
+        public override ILinkHelper<AccountField>? GetLinkHelper() => TypeHelper.Helper<AccountLinkTypeHelper>();
     }
 }

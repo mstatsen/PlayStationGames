@@ -11,6 +11,7 @@
         Country,
         Consoles,
         Games,
+        Links,
         StrategeLink,
         PSNProfilesLink,
         DefaultAccount,

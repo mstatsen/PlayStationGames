@@ -9,6 +9,7 @@ using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Editor;
 using PlayStationGames.AccountEngine.Data.Decorator;
 using PlayStationGames.AccountEngine.ControlFactory;
+using PlayStationGames.AccountEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Data
 {
@@ -25,6 +26,8 @@ namespace PlayStationGames.AccountEngine.Data
 
         protected override FieldHelper<AccountField> RegisterFieldHelper() =>
             TypeHelper.Register<AccountFieldHelper>();
+
+        protected override void RegisterHelpers() => TypeHelper.Register<AccountLinkTypeHelper>();
 
         protected override FieldGroupHelper<AccountField, AccountFieldGroup> RegisterFieldGroupHelper() =>
             TypeHelper.Register<AccountFieldGroupHelper>();
