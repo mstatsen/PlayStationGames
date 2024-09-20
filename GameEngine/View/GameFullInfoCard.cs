@@ -95,11 +95,8 @@ namespace PlayStationGames.GameEngine.View
         private void FillLinksLayout()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Top = 8;
-            Layouter.Template.Left = 4;
-            Layouter.Template.Width = 120;
+            Layouter.Template.Dock = DockStyle.Top;
             Layouter.Template.BackColor = BaseColor;
-            Layouter.Template.Anchors = AnchorStyles.Left | AnchorStyles.Top;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.Parent = LinksPanel;
             Layouter.AddFromTemplate(GameField.Links);
@@ -220,7 +217,7 @@ namespace PlayStationGames.GameEngine.View
         private readonly OxPanel StockPanel = new(new Size(200, 160));
         private readonly OxPanel TrophiesPanel = new(new Size(200, 156));
         private readonly OxPanel ReleasePanel = new(new Size(200, 140));
-        private readonly OxPanel LinksPanel = new(new Size(200, 36));
+        private readonly OxPanel LinksPanel = new(new Size(200, 48));
 
         public GameFullInfoCard() : base() { }
     }
