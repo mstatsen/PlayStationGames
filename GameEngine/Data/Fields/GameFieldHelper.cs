@@ -1018,5 +1018,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override bool IsImageColumn(GameField field) => 
             base.IsImageColumn(field) || 
             field == GameField.Licensed;
+
+        public override ILinkHelper<GameField>? GetLinkHelper() => TypeHelper.Helper<GameLinkTypeHelper>();
     }
 }

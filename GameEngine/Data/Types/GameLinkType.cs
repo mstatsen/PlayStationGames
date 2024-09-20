@@ -2,8 +2,9 @@
 {
     public enum GameLinkType
     {
+        PSN,
         Stratege,
         PSNProfiles,
-        Walkthrough
+        Other
     }
 }
