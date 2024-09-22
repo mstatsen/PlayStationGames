@@ -1,9 +1,11 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using OxDAOEngine.Data;
 using OxDAOEngine.XML;
 using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.ConsoleEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.Data
 {
@@ -13,26 +15,54 @@ namespace PlayStationGames.ConsoleEngine.Data
         public Guid Id
         {
             get => id;
-            set => id = ModifyValue(id, value);
+            set
+            {
+                id = ModifyValue(id, value);
+                savedToString = null;
+            }
         }
 
         public override void Clear()
         {
             id = AccountValueAccessor.NullAccount.Id;
+            savedToString = null;
         }
 
         public override void Init() { }
 
-        protected override void LoadData(XmlElement element) =>
+        protected override void LoadData(XmlElement element)
+        {
             id = XmlHelper.ValueGuid(element, XmlConsts.Id);
 
-        protected override void SaveData(XmlElement element, bool clearModified = true) =>
+            if (State == DAOState.Coping)
+                savedToString = (string?)XmlHelper.Value(element, "ToStringValue");
+            else
+                if (State == DAOState.Loading)
+                CalcToString();
+        }
+
+        protected override void SaveData(XmlElement element, bool clearModified = true)
+        {
             XmlHelper.AppendElement(element, XmlConsts.Id, id);
 
-        public override string ToString()
+            if (State == DAOState.Coping)
+                XmlHelper.AppendElement(element, "ToStringValue", savedToString);
+        }
+
+        private string? savedToString;
+
+        private void CalcToString()
         {
             Account? account = DataManager.Item<AccountField, Account>(AccountField.Id, id);
-            return account != null ? account.ToString() : AccountValueAccessor.NullAccount.Name;
+            savedToString = account != null ? account.ToString() : AccountValueAccessor.NullAccount.Name;
+        }
+
+        public override string? ToString()
+        {
+            if (savedToString == null)
+                CalcToString();
+
+            return savedToString;
         }
     }
 }

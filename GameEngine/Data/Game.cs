@@ -6,6 +6,7 @@ using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.XML;
 using PlayStationGames.AccountEngine.Data;
+using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -176,10 +177,32 @@ namespace PlayStationGames.GameEngine.Data
             set => licensed = BoolValue(ModifyValue(GameField.Licensed, licensed, value));
         }
 
+        private string? oldAccountName;
+
         public Guid Owner
         {
             get => owner;
-            set => owner = GuidValue(ModifyValue(GameField.Owner, owner, value));
+            set
+            {
+                Guid oldOwnerId = owner;
+
+                owner = GuidValue(
+                    ModifyValue(
+                        GameField.Owner,
+                        owner,
+                        value,
+                        oldAccountName
+                    )
+                );
+
+                SetOldOwnerName(oldOwnerId);
+            }
+        }
+
+        private void SetOldOwnerName(Guid oldOwnerId)
+        {
+            Account? account = DataManager.ListController<AccountField, Account>().Item(AccountField.Id, oldOwnerId);
+            oldAccountName = account?.Name;
         }
 
         public override int CompareField(GameField field, IFieldMapping<GameField> y)
@@ -784,6 +807,7 @@ namespace PlayStationGames.GameEngine.Data
             licensed = (XmlHelper.Value(element, XmlConsts.Licensed) == string.Empty) 
                 || XmlHelper.ValueBool(element, XmlConsts.Licensed);
             owner = XmlHelper.ValueGuid(element, XmlConsts.Owner);
+            SetOldOwnerName(owner);
             sourceType = XmlHelper.Value<Source>(element, XmlConsts.Source);
             region = XmlHelper.Value<GameRegion>(element, XmlConsts.Region);
             language = XmlHelper.Value<GameLanguage>(element, XmlConsts.Language);

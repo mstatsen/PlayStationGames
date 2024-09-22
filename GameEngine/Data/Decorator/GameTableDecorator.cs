@@ -54,10 +54,8 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         private string CalcedNet =>
             CalcedTrophies(Dao.EarnedTrophies.Net, Dao.AvailableTrophies.Net);
 
-        private string Installations =>
-            Dao.Installations.Count > 0
-                ? Dao.Installations.Count.ToString()
-                : string.Empty;
+        private string Installations => 
+            Dao.Installations.ToString();
 
         private string CalcedGenre
         {

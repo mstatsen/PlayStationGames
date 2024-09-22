@@ -100,24 +100,15 @@ namespace PlayStationGames.GameEngine.Data
 
         private void OnConsoleRemove(PSConsole dao, DAOEntityEventArgs e)
         {
-            //FullItemsList.StartLoading();
+            List<Game> gamesInstalledOnCurrentConsole = FullItemsList
+                .FindAll(
+                    (g) => g.Installations.Contains(
+                        (i) => i.ConsoleId == dao.Id
+                    )
+                );
 
-            try
-            {
-                List<Game> gamesInstalledOnCurrentConsole = FullItemsList
-                    .FindAll(
-                        (g) => g.Installations.Contains(
-                            (i) => i.ConsoleId == dao.Id
-                        )
-                    );
-
-                foreach (Game game in gamesInstalledOnCurrentConsole)
-                    game.Installations.RemoveAll((i) => i.ConsoleId == dao.Id);
-            }
-            finally
-            {
-                //FullItemsList.FinishLoading();
-            }
+            foreach (Game game in gamesInstalledOnCurrentConsole)
+                game.Installations.RemoveAll((i) => i.ConsoleId == dao.Id);
         }
     }
 }

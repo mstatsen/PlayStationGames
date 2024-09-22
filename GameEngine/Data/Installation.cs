@@ -61,6 +61,7 @@ namespace PlayStationGames.GameEngine.Data
             StorageId = Guid.Empty;
             Folder = string.Empty;
             Size = 0;
+            savedToString = null;
         }
 
         public override void Init() { }
