@@ -716,15 +716,15 @@ namespace PlayStationGames.GameEngine.Data
         public override void Init()
         {
             GenerateId();
-            AddMember(GameField.GameModes, GameModes);
-            AddMember(GameField.Dlcs, Dlcs);
-            AddMember(GameField.Tags, Tags);
-            AddMember(GameField.Installations, Installations);
-            AddMember(GameField.Links, Links);
-            AddMember(GameField.RelatedGames, RelatedGames);
+            AddListMember(GameField.GameModes, GameModes);
+            AddListMember(GameField.Dlcs, Dlcs);
+            AddListMember(GameField.Tags, Tags);
+            AddListMember(GameField.Installations, Installations);
+            AddListMember(GameField.Links, Links);
+            AddListMember(GameField.RelatedGames, RelatedGames);
             AddMember(AvailableTrophies);
             AddMember(EarnedTrophies);
-            AddMember(GameField.ReleasePlatforms, ReleasePlatforms);
+            AddListMember(GameField.ReleasePlatforms, ReleasePlatforms);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)

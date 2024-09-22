@@ -15,8 +15,10 @@ using PlayStationGames.GameEngine.Data.Filter;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.Editor;
 using PlayStationGames.GameEngine.Summary;
-using PlayStationGames.PSNEngine.Data.Types;
-
+using PlayStationGames.ConsoleEngine.Data;
+using PlayStationGames.ConsoleEngine.Data.Fields;
+using PlayStationGames.AccountEngine.Data;
+using PlayStationGames.AccountEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.Data
 {
@@ -83,5 +85,39 @@ namespace PlayStationGames.GameEngine.Data
         };
 
         public override bool UseImageList => true;
+
+        protected override void SetHandlers()
+        {
+            DataManager.ListController<ConsoleField, PSConsole>().RemoveHandler += OnConsoleRemove;
+            DataManager.ListController<AccountField, Account>().RemoveHandler += OnAccountRemove;
+        }
+
+        private void OnAccountRemove(Account dao, DAOEntityEventArgs e)
+        {
+            foreach (Game game in FullItemsList.FindAll((g) => g.Owner == dao.Id))
+                game.Owner = Guid.Empty;
+        }
+
+        private void OnConsoleRemove(PSConsole dao, DAOEntityEventArgs e)
+        {
+            //FullItemsList.StartLoading();
+
+            try
+            {
+                List<Game> gamesInstalledOnCurrentConsole = FullItemsList
+                    .FindAll(
+                        (g) => g.Installations.Contains(
+                            (i) => i.ConsoleId == dao.Id
+                        )
+                    );
+
+                foreach (Game game in gamesInstalledOnCurrentConsole)
+                    game.Installations.RemoveAll((i) => i.ConsoleId == dao.Id);
+            }
+            finally
+            {
+                //FullItemsList.FinishLoading();
+            }
+        }
     }
 }

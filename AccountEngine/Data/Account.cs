@@ -68,7 +68,7 @@ namespace PlayStationGames.AccountEngine.Data
         public override void Init()
         {
             GenerateGuid();
-            AddMember(AccountField.Links, Links);
+            AddListMember(AccountField.Links, Links);
         }
 
         private void GenerateGuid() =>

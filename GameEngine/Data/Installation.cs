@@ -22,19 +22,37 @@ namespace PlayStationGames.GameEngine.Data
         public Guid ConsoleId
         {
             get => consoleId;
-            set => consoleId = ModifyValue(consoleId, value);
+            set
+            {
+                consoleId = ModifyValue(consoleId, value);
+
+                if (State != DAOState.Loading)
+                    savedToString = null;
+            }
         }
 
         public Guid StorageId
         {
             get => storageId;
-            set => storageId = ModifyValue(storageId, value);
+            set
+            {
+                storageId = ModifyValue(storageId, value);
+
+                if (State != DAOState.Loading)
+                    savedToString = null;
+            }
         }
 
         public string Folder
         {
             get => folder;
-            set => folder = StringValue(ModifyValue(folder, value));
+            set
+            {
+                folder = StringValue(ModifyValue(folder, value));
+
+                if (State != DAOState.Loading)
+                    savedToString = null;
+            }
         }
 
         public override void Clear()
@@ -59,6 +77,8 @@ namespace PlayStationGames.GameEngine.Data
             if (Size > 0)
                 XmlHelper.AppendElement(element, XmlConsts.Size, Size);
 
+            if (State == DAOState.Coping)
+                XmlHelper.AppendElement(element, "ToStringValue", savedToString);
         }
 
         protected override void LoadData(XmlElement element)
@@ -67,6 +87,12 @@ namespace PlayStationGames.GameEngine.Data
             storageId = XmlHelper.ValueGuid(element, XmlConsts.StorageId);
             folder = XmlHelper.Value(element, XmlConsts.Folder);
             size = XmlHelper.ValueInt(element, XmlConsts.Size);
+            
+            if (State == DAOState.Coping)
+                savedToString = (string?)XmlHelper.Value(element, "ToStringValue");
+            else
+                if (State == DAOState.Loading)
+                    CalcToString();
         }
 
         public override bool Equals(object? obj) =>
@@ -80,21 +106,34 @@ namespace PlayStationGames.GameEngine.Data
         public override int GetHashCode() => 
             HashCode.Combine(ConsoleId, StorageId, Folder, Size);
 
-        public override string? ToString()
+        private string? savedToString;
+
+        private void CalcToString()
         {
             PSConsole? console = DataManager.Item<ConsoleField, PSConsole>(ConsoleField.Id, ConsoleId);
 
             if (console == null)
-                return null;
+            {
+                savedToString = null;
+                return;
+            }
 
             string folderName = console.Folders.CheckName(Folder);
 
             if (folderName != string.Empty)
                 folderName = $"/{folderName}";
 
-            return console == null
-                ? base.ToString() 
+            savedToString = console == null
+                ? base.ToString()
                 : $"{console.Name}/{console.Storages.StorageName(StorageId)}{folderName}";
+        }
+
+        public override string? ToString()
+        {
+            if (savedToString == null)
+                CalcToString();
+
+            return savedToString;
         }
     }
 }

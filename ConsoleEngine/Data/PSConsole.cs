@@ -61,10 +61,10 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override void Init()
         {
             GenerateGuid();
-            AddMember(ConsoleField.Storages, Storages);
-            AddMember(ConsoleField.Folders, Folders);
-            AddMember(ConsoleField.Accessories, Accessories);
-            AddMember(ConsoleField.Accounts, Accounts);
+            AddListMember(ConsoleField.Storages, Storages);
+            AddListMember(ConsoleField.Folders, Folders);
+            AddListMember(ConsoleField.Accessories, Accessories);
+            AddListMember(ConsoleField.Accounts, Accounts);
         }
 
         private void GenerateGuid() =>

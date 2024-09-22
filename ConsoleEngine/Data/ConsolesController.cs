@@ -5,11 +5,16 @@ using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Sorting;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.Editor;
+using PlayStationGames.AccountEngine.Data;
+using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.ControlFactory;
 using PlayStationGames.ConsoleEngine.Data.Decorator;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Editor;
+using PlayStationGames.GameEngine.Data;
+using PlayStationGames.GameEngine.Data.Fields;
+using System;
 
 namespace PlayStationGames.ConsoleEngine.Data
 {
@@ -61,5 +66,14 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override bool AvailableSummary => false;
         public override bool AvailableCategories => false;
         public override bool AvailableQuickFilter => false;
+
+        protected override void SetHandlers() => 
+            DataManager.ListController<AccountField, Account>().RemoveHandler += OnAccountRemove;
+
+        private void OnAccountRemove(Account dao, DAOEntityEventArgs e)
+        {
+            foreach (PSConsole console in FullItemsList.FindAll((c) => c.Accounts.Contains((ca) => ca.Id == dao.Id)))
+                console.Accounts.RemoveAll((c) => c.Id == dao.Id);
+        }
     }
 }
