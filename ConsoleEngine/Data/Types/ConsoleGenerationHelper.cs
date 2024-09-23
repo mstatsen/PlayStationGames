@@ -70,7 +70,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 ConsoleGeneration.PS2 => ConsoleIcons.ps2,
                 ConsoleGeneration.PSP => ConsoleIcons.psp,
                 ConsoleGeneration.PS1 => ConsoleIcons.ps1,
-                _ => OxIcons.close
+                _ => OxIcons.Close
             };
     }
 }

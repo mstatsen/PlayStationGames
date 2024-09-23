@@ -14,7 +14,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void InitButtons()
         {
             base.InitButtons();
-            OxIconButton viewButton = CreateButton(OxIcons.eye);
+            OxIconButton viewButton = CreateButton(OxIcons.Eye);
             viewButton.ToolTipText = "View the console";
 
             PrepareViewButton(

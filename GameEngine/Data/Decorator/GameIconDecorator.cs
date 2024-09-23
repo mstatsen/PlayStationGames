@@ -10,7 +10,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         public override object? Value(GameField field) => 
             field switch
             {
-                GameField.Image => Dao.Image ?? OxIcons.close,
+                GameField.Image => Dao.Image ?? OxIcons.Close,
                 _ => base.Value(field),
             };
     }

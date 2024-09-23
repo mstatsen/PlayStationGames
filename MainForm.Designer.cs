@@ -30,21 +30,24 @@ namespace PlayStationGames
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            SuspendLayout();
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 400);
-            this.Location = new System.Drawing.Point(0, 0);
-            this.MinimumSize = new System.Drawing.Size(600, 400);
-            this.Name = "MainForm";
-            this.Text = "Playstation Games";
-            this.Load += new System.EventHandler(this.MainFormLoad);
-            this.Shown += new System.EventHandler(this.MainFormShow);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(747, 554);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Location = new Point(0, 0);
+            Margin = new Padding(4, 3, 4, 3);
+            MaximumSize = new Size(2240, 1200);
+            MinimumSize = new Size(700, 462);
+            Name = "MainForm";
+            Text = "Playstation Games";
+            Load += MainFormLoad;
+            Shown += MainFormShow;
+            ResumeLayout(false);
         }
 
         #endregion

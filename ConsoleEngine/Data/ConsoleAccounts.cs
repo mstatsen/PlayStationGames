@@ -8,7 +8,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         public ConsoleAccount? GetById(Guid id) =>
             Find(s => s.Id == id);
 
-        public string AccountName(Guid id)
+        public string? AccountName(Guid id)
         {
             ConsoleAccount? account = GetById(id);
 

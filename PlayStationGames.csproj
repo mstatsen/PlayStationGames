@@ -7,7 +7,12 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>PlayStationGames.Program</StartupObject>
+    <ApplicationIcon>PS.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="PS.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OxDAOEngine\OxDAOEngine.csproj" />
