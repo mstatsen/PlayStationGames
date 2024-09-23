@@ -2,7 +2,6 @@
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.AccountEngine.Data.Types;
-using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Fields
 {
@@ -219,10 +218,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     FieldType.Guid,
                 AccountField.Avatar => 
                     FieldType.Image,
-                /* TODO:
-                   AccountField.Country => 
-                    FieldType.Enum,
-                */
+                AccountField.Country => 
+                    FieldType.Country,
                 AccountField.Consoles or
                 AccountField.Games => 
                     FieldType.List,

@@ -3,9 +3,8 @@ using OxDAOEngine.Data.Decorator;
 using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.XML;
+using OxLibrary.Data.Countries;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data;
 using System.Xml;
 
 namespace PlayStationGames.AccountEngine.Data
@@ -47,10 +46,10 @@ namespace PlayStationGames.AccountEngine.Data
             set => password = StringValue(ModifyValue(AccountField.Password, password, value));
         }
 
-        public string Country
+        public Country? Country
         {
             get => country;
-            set => country = StringValue(ModifyValue(AccountField.Country, country, value));
+            set => country = ModifyValue(AccountField.Country, country, value);
         }
 
         public override void Clear()
@@ -59,7 +58,7 @@ namespace PlayStationGames.AccountEngine.Data
             DefaultAccount = false;
             Avatar = null;
             avatarBase64 = string.Empty;
-            Country = string.Empty;
+            Country = null;
             Login = string.Empty;
             Password = string.Empty;
             Links.Clear();
@@ -83,7 +82,7 @@ namespace PlayStationGames.AccountEngine.Data
             DefaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
             avatarBase64 = XmlHelper.Value(element, XmlConsts.Image);
             Avatar = XmlHelper.ValueBitmap(element, XmlConsts.Image);
-            Country = XmlHelper.Value(element, XmlConsts.Country);
+            Country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
             Login = XmlHelper.Value(element, XmlConsts.Login);
             Password = XmlHelper.Value(element, XmlConsts.Password);
         }
@@ -101,7 +100,9 @@ namespace PlayStationGames.AccountEngine.Data
             }
             else XmlHelper.AppendElement(element, XmlConsts.Image, avatarBase64);
 
-            XmlHelper.AppendElement(element, XmlConsts.Country, Country);
+            if (Country != null)
+                XmlHelper.AppendElement(element, XmlConsts.Country, Country.Alpha3, true);
+
             XmlHelper.AppendElement(element, XmlConsts.Login, Login);
             XmlHelper.AppendElement(element, XmlConsts.Password, Password);
         }
@@ -109,7 +110,7 @@ namespace PlayStationGames.AccountEngine.Data
         private Guid id = Guid.Empty;
         private string avatarBase64 = string.Empty;
         private Bitmap? avatar = null;
-        private string country = string.Empty;
+        private Country? country = null;
         private string login = string.Empty;
         private string password = string.Empty;
         private bool defaultAccount = false;
@@ -139,8 +140,8 @@ namespace PlayStationGames.AccountEngine.Data
             switch (field)
             {
                 case AccountField.Links:
-                    if (value is Link<GameField> link)
-                        return new Links<GameField>()
+                    if (value is Link<AccountField> link)
+                        return new Links<AccountField>()
                         {
                             link
                         };
@@ -177,7 +178,7 @@ namespace PlayStationGames.AccountEngine.Data
                     Password = StringValue(value);
                     break;
                 case AccountField.Country:
-                    Country = StringValue(value);
+                    Country = (Country)value;
                     break;
                 case AccountField.Links:
                     Links.CopyFrom((DAO?)value);
