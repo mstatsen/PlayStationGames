@@ -45,8 +45,15 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
         protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context) => 
             context.Name switch
             {
-                "StorageSelector" => new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Storages, true),
-                "FolderSelector" => new ExtractInitializer<ConsoleField, PSConsole>(ConsoleField.Folders, true),
+                "StorageSelector" => new ExtractInitializer<ConsoleField, PSConsole>(
+                    ConsoleField.Storages, 
+                    fullExtract: true, 
+                    fixedExtract: true
+                ),
+                "FolderSelector" => new ExtractInitializer<ConsoleField, PSConsole>(
+                    ConsoleField.Folders, 
+                    fullExtract: true, 
+                    fixedExtract: true),
                 "AccessoryType" => new AccessoryTypeInitializer((PSConsole)context.AdditionalContext!),
                 "JoystickType" => new JoystickTypeInitializer((PSConsole)context.AdditionalContext!),
                 _ => base.Initializer(context),
