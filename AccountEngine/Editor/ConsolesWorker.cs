@@ -6,6 +6,8 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
+using OxDAOEngine.Data.Types;
+using OxLibrary.Dialogs;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -15,22 +17,29 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private Account? account;
 
-        private bool CanUnselectItemHandler(PSConsole currentItem, RootListDAO<ConsoleField, PSConsole> selectedList)
+        private CanSelectResult CanUnselectItemHandler(PSConsole currentItem, RootListDAO<ConsoleField, PSConsole> selectedList)
         {
             if (account == null)
-                return false;
+                return CanSelectResult.Return;
 
             currentItem.Accounts.Remove((a) => a.Id == account.Id);
-            return true;
+            return CanSelectResult.Available;
         }
 
-        private bool CanSelectItemHandler(PSConsole currentItem, RootListDAO<ConsoleField, PSConsole> selectedList)
+        private CanSelectResult CanSelectItemHandler(PSConsole currentItem, RootListDAO<ConsoleField, PSConsole> selectedList)
         {
             if (account == null)
-                return false;
+                return CanSelectResult.Return;
+
+            if (currentItem.Accounts.Count >= TypeHelper.Helper<ConsoleGenerationHelper>()
+                .MaxAccountsCount(currentItem.Generation, currentItem.Firmware))
+            {
+                OxMessage.ShowError($"Console \"{currentItem.Name}\" already contains maximum count of possible registered accounts.");
+                return CanSelectResult.Continue;
+            }
 
             currentItem.Accounts.Add(account);
-            return true;
+            return CanSelectResult.Available;
         }
 
         private readonly IListController<ConsoleField, PSConsole> ConsolesController = 
@@ -48,11 +57,11 @@ namespace PlayStationGames.AccountEngine.Editor
             availableConsoles.CopyFrom(FullConsolesList.FilteredList(SuilableConsolesFilter));
 
             ItemsChooserParams<ConsoleField, PSConsole> chooserParams = new(
-                availableConsoles, existsConsoles)
+                availableConsoles, registeredConsoles)
             {
                 Title = "Consoles",
-                AvailableTitle = "Available Consoles",
-                SelectedTitle = "Exists Consoles",
+                AvailableTitle = "Available consoles",
+                SelectedTitle = "Registered on consoles",
                 SelectedGridFields = new List<ConsoleField>()
                 {
                     ConsoleField.Icon,
@@ -68,12 +77,12 @@ namespace PlayStationGames.AccountEngine.Editor
             chooserParams.CanUnselectItem += CanUnselectItemHandler;
 
             if (ItemsChooser<ConsoleField, PSConsole>.ChooseItems(chooserParams, out RootListDAO<ConsoleField, PSConsole> selectedConsoles))
-                existsConsoles.LinkedCopyFrom(selectedConsoles);
+                registeredConsoles.LinkedCopyFrom(selectedConsoles);
 
             selectedConsoles.Clear();
         }
 
-        private readonly RootListDAO<ConsoleField, PSConsole> existsConsoles = new();
+        private readonly RootListDAO<ConsoleField, PSConsole> registeredConsoles = new();
 
         private IMatcher<ConsoleField> SuilableConsolesFilter
         {
@@ -100,7 +109,7 @@ namespace PlayStationGames.AccountEngine.Editor
         public void Renew(Account? account)
         {
             this.account = account;
-            existsConsoles.Clear();
+            registeredConsoles.Clear();
 
             if (account != null)
                 foreach (PSConsole console in DataManager.FullItemsList<ConsoleField, PSConsole>()
@@ -108,7 +117,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 {
                     PSConsole tempConsole = new();
                     tempConsole.CopyFrom(console);
-                    existsConsoles.Add(tempConsole);
+                    registeredConsoles.Add(tempConsole);
                 }
         }
 
@@ -118,7 +127,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 return;
 
             RenewOwners();
-            existsConsoles.Clear();
+            registeredConsoles.Clear();
         }
 
         private void RenewOwners()
@@ -131,14 +140,12 @@ namespace PlayStationGames.AccountEngine.Editor
             try
             {
                 foreach (PSConsole console in FullConsolesList
-                    .FindAll((c) => c.Accounts.GetById(account.Id) != null &&
-                            !existsConsoles.Contains((c2) => c2.Id == c.Id)
-                        )
+                    .FindAll((c) => c.Accounts.GetById(account.Id) != null)
                     )
                     console.Accounts.RemoveAll((a) => a.Id == account.Id);
                     
 
-                foreach (PSConsole console in existsConsoles)
+                foreach (PSConsole console in registeredConsoles)
                     ConsolesController.Item(ConsoleField.Id, console.Id)?.Accounts.Add(account);
             }
             finally

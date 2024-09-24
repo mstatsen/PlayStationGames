@@ -21,10 +21,10 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private PSConsole? Console;
 
-        private bool CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
         {
             if (Console == null)
-                return false;
+                return CanSelectResult.Return;
 
             bool uninstallAvailable = !needShowUninstallMessage 
                 || OxMessage.ShowConfirm(
@@ -33,32 +33,32 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             needShowUninstallMessage = false;
 
-
             if (uninstallAvailable)
             {
                 currentItem.Installations.RemoveAll(i => i.ConsoleId == Console.Id);
-                return true;
+                return CanSelectResult.Available;
             }
 
-            return false;
+            return CanSelectResult.Return;
         }
 
         private readonly InstallationPlaceSelector placeSelector = new();
         private bool ApplyPlacementForAll = false;
         private bool needShowUninstallMessage = true;
 
-        private bool CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
         {
             if (Console == null)
-                return false;
+                return CanSelectResult.Return;
 
             if (!ApplyPlacementForAll)
             {
                 placeSelector.GamesCount = selectedList.Count;
                 placeSelector.Game = currentItem;
                 DialogResult result = placeSelector.ShowAsDialog();
+
                 if (result == OxDialogButtonsHelper.Result(OxDialogButton.Cancel))
-                    return false;
+                    return CanSelectResult.Return;
                     
                 ApplyPlacementForAll = result == OxDialogButtonsHelper.Result(OxDialogButton.ApplyForAll);
             }
@@ -72,7 +72,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 }
             );
 
-            return true;
+            return CanSelectResult.Available;
         }
 
         public void Show()

@@ -5,7 +5,7 @@ using OxDAOEngine.Data.Extract;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 
-namespace PlayStationGames.GameEngine.ControlFactory.Controls
+namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
 {
     public class TagNameInitializer : EmptyControlInitializer
     {

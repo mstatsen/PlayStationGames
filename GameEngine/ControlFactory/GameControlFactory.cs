@@ -15,6 +15,8 @@ using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.Grid;
 using PlayStationGames.GameEngine.View;
 using PlayStationGames.AccountEngine.ControlFactory.Accessors;
+using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
+using PlayStationGames.GameEngine.ControlFactory.Initializers;
 
 namespace PlayStationGames.GameEngine.ControlFactory
 {
@@ -76,6 +78,9 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     return new ExtractInitializer<GameField, Game>(accessorContext.Field, true,
                         variant != null && variant.Equals(QuickFilterVariant.Export));
                 }
+
+                if (accessorContext.Field == GameField.Owner)
+                    return new OwnerInitializer();
             }
 
             if (context.Name == "TagName")

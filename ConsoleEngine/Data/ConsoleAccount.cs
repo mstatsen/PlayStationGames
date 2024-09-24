@@ -5,7 +5,6 @@ using OxDAOEngine.XML;
 using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.ConsoleEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.Data
 {
@@ -64,5 +63,12 @@ namespace PlayStationGames.ConsoleEngine.Data
 
             return savedToString;
         }
+
+        public override bool Equals(object? obj) =>
+            obj is ConsoleAccount otherAccount
+            && (base.Equals(obj)
+                || Id.Equals(otherAccount.Id));
+
+        public override int GetHashCode() => Id.GetHashCode();
     }
 }

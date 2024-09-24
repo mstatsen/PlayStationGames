@@ -34,7 +34,8 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
                 !parameters.OnlyNullable)
             {
                 foreach (var account in DataManager.ListController<AccountField, Account>().FullItemsList)
-                    ComboBox.Items.Add(account);
+                    if (AvailableValue(account))
+                        ComboBox.Items.Add(account);
             }
 
             SetDefaultValue();

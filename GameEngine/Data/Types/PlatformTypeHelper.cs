@@ -170,7 +170,6 @@ namespace PlayStationGames.GameEngine.Data.Types
                     break;
 
                 case PlatformType.PSOne:
-                    result.Add(ConsoleGeneration.PS1);
                     result.Add(ConsoleGeneration.PS2);
                     result.Add(ConsoleGeneration.PS3);
 

@@ -16,19 +16,19 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private Account? account;
 
-        private bool CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
         {
             currentItem.Owner = AccountValueAccessor.NullAccount.Id;
-            return true;
+            return CanSelectResult.Available;
         }
 
-        private bool CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
         {
             if (account == null)
-                return false;
+                return CanSelectResult.Return;
 
             currentItem.Owner = account.Id;
-            return true;
+            return CanSelectResult.Available;
         }
 
         public void Show()
