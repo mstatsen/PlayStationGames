@@ -27,14 +27,17 @@ namespace PlayStationGames.GameEngine.Data.Types
         public override string GetFullName(GameRegion value) =>
             value switch
             {
-                GameRegion.World => "WORLDWIDE",
-                GameRegion.America => "UNITED STATES, CANADA, U.S. TERRITORIES, LATIN AMERICA",
-                GameRegion.Europe => "EUROPEAN UNION, JAPAN, MIDDLE EAST, EGYPT, SOUTH AFRICA, GREENLAND, FRENCH TERRITORIES",
-                GameRegion.Asia => "TAIWAN, SOUTH KOREA, THE PHILIPPINES, INDONESIA, HONG KONG",
-                GameRegion.Australia => "AUSTRALIA, NEW ZEALAND, PACIFIC ISLANDS, BRAZIL",
-                GameRegion.Russia => "RUSSIA, EASTERN EUROPE, PAKISTAN, INDIA, THE MAJORITY OF AFRICA, NORTH KOREA, MONGOLIA",
-                GameRegion.China => "MAINLAND CHINA",
+                GameRegion.World => "Worldwide",
+                GameRegion.America => "United States\nCanada\nU.S.Territories\nLatin America",
+                GameRegion.Europe => "European Union\nJapan\nMiddle East\nEgypt\nSouth Africa\nGreenland\nFrench Territories",
+                GameRegion.Asia => "Taiwan\nSouth Korea\nThe Phillippines\nIndonesia\nHong Kong",
+                GameRegion.Australia => "Australia\nNew Zeland\nPacific islands\nBrazil",
+                GameRegion.Russia => "Rusia\nEastern Europe\nPakistan\nIndia\nThe Majority of Africa\nNorth Kkorea\nMongolia",
+                GameRegion.China => "Mainland China",
                 _ => string.Empty
             };
+
+        public override bool UseShortNameForControl => true;
+        public override bool UseToolTipForControl => true;
     }
 }

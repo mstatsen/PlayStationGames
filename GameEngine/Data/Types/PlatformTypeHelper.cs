@@ -187,5 +187,8 @@ namespace PlayStationGames.GameEngine.Data.Types
 
         public override Color GetBaseColor(PlatformType value) => default;
         public override Color GetFontColor(PlatformType value) => default;
+
+        public override bool UseShortNameForControl => true;
+        public override bool UseToolTipForControl => true;
     }
 }

@@ -25,9 +25,16 @@ namespace PlayStationGames.GameEngine.Data.Types
             };
 
         public override string GetFullName(CompleteTime value) =>
-            $"{GetShortName(value)} hours";
+            value switch
+            {
+                CompleteTime.ctUnknown =>
+                    "Unknown time",
+                _ => $"roughy {GetShortName(value)} hours"
+            };
 
         public override string GetShortName(CompleteTime value) =>
             ((int)value).ToString();
+
+        public override bool UseToolTipForControl => true;
     }
 }

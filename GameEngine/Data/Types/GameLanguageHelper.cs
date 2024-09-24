@@ -31,5 +31,8 @@ namespace PlayStationGames.GameEngine.Data.Types
                 GameLanguage.EnglishSubtitles => "English subtitles only",
                 _ => "Other",
             };
+
+        public override bool UseShortNameForControl => true;
+        public override bool UseToolTipForControl => true;
     }
 }
