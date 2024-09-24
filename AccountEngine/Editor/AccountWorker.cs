@@ -5,6 +5,8 @@ using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Editor;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using OxDAOEngine.Data.Types;
+using PlayStationGames.AccountEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -27,6 +29,13 @@ namespace PlayStationGames.AccountEngine.Editor
                     AccountField.Name}
                 .Contains(field))
                 FillFormCaptionFromControls();
+
+            switch (field)
+            { 
+                case AccountField.Type:
+                    gamesButton.Enabled = TypeHelper.Value<AccountType>(Builder.Value(field)) == AccountType.PSN;
+                    break;
+            }
 
             return false;
         }
@@ -62,7 +71,7 @@ namespace PlayStationGames.AccountEngine.Editor
             gamesButton.Click -= GamesButtonClickHandler;
             gamesButton.Click += GamesButtonClickHandler;
 
-            Editor.Groups[AccountFieldGroup.Property].Height = gamesButton.Bottom;
+            Editor.Groups[AccountFieldGroup.Property].Height = consolesButton.Bottom;
             Editor.Groups.SetGroupsSize();
             Editor.InvalidateSize();
 
@@ -90,6 +99,7 @@ namespace PlayStationGames.AccountEngine.Editor
             {
                 new List<AccountField> {
                     AccountField.Name,
+                    AccountField.Type,
                     AccountField.Country,
                 },
                 new List<AccountField> {
@@ -97,11 +107,6 @@ namespace PlayStationGames.AccountEngine.Editor
                     AccountField.Password,
                 }
             };
-
-        protected override void BeforeGrabControls()
-        {
-            base.BeforeGrabControls();
-        }
 
         protected override void AfterGrabControls()
         {

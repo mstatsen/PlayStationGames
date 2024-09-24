@@ -31,6 +31,7 @@ namespace PlayStationGames.AccountEngine.Editor
         protected override List<AccountField> OffsettingFields() =>
             new()
             {
+                AccountField.Type,
                 AccountField.Password,
                 AccountField.Country,
                 AccountField.StrategeLink
@@ -49,8 +50,9 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.DefaultAccount
             ? 8
             : field is AccountField.Name or
-                AccountField.Country
-                ? 154
+                AccountField.Country or
+                AccountField.Type
+                ? 169
                 : 74;
 
         protected override int Width(AccountField field) =>
@@ -59,11 +61,12 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.Avatar => 
                     80,
                 AccountField.Name or
-                AccountField.Country => 
-                    220,
+                AccountField.Country or
+                AccountField.Type => 
+                    225,
                 AccountField.Login or
                 AccountField.Password => 
-                    300,
+                    320,
                 AccountField.StrategeLink or
                 AccountField.PSNProfilesLink =>
                     290,

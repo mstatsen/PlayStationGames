@@ -5,6 +5,7 @@ using OxDAOEngine.Data.Types;
 using OxDAOEngine.XML;
 using OxLibrary.Data.Countries;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.AccountEngine.Data.Types;
 using System.Xml;
 
 namespace PlayStationGames.AccountEngine.Data
@@ -20,6 +21,12 @@ namespace PlayStationGames.AccountEngine.Data
         { 
             get => defaultAccount;
             set => defaultAccount = BoolValue(ModifyValue(AccountField.DefaultAccount, defaultAccount, value));
+        }
+
+        public AccountType Type
+        {
+            get => type;
+            set => type = ModifyValue(AccountField.Type, type, value);
         }
 
         public Guid Id
@@ -61,6 +68,7 @@ namespace PlayStationGames.AccountEngine.Data
             Country = null;
             Login = string.Empty;
             Password = string.Empty;
+            Type = default!;
             Links.Clear();
         }
 
@@ -85,6 +93,7 @@ namespace PlayStationGames.AccountEngine.Data
             Country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
             Login = XmlHelper.Value(element, XmlConsts.Login);
             Password = XmlHelper.Value(element, XmlConsts.Password);
+            Type = XmlHelper.Value<AccountType>(element, XmlConsts.Type);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
@@ -92,7 +101,9 @@ namespace PlayStationGames.AccountEngine.Data
             base.SaveData(element, clearModified);
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
             XmlHelper.AppendElement(element, XmlConsts.Default, DefaultAccount);
-            
+            XmlHelper.AppendElement(element, XmlConsts.Type, Type);
+
+
             if (avatarBase64 == string.Empty)
             {
                 if (Avatar != null)
@@ -114,6 +125,7 @@ namespace PlayStationGames.AccountEngine.Data
         private string login = string.Empty;
         private string password = string.Empty;
         private bool defaultAccount = false;
+        private AccountType type = default!;
 
 
         /*
@@ -164,6 +176,9 @@ namespace PlayStationGames.AccountEngine.Data
                 case AccountField.Id:
                     Id = GuidValue(value);
                     break;
+                case AccountField.Type:
+                    Type = TypeHelper.Value<AccountType>(value);
+                    break;
                 case AccountField.DefaultAccount:
                     DefaultAccount = BoolValue(value);
                     break;
@@ -178,7 +193,7 @@ namespace PlayStationGames.AccountEngine.Data
                     Password = StringValue(value);
                     break;
                 case AccountField.Country:
-                    Country = (Country)value;
+                    Country = (Country?)value;
                     break;
                 case AccountField.Links:
                     Links.CopyFrom((DAO?)value);
@@ -193,6 +208,7 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.Avatar => Avatar,
                 AccountField.Id => Id,
                 AccountField.Name => base.GetFieldValue(field),
+                AccountField.Type => Type,
                 AccountField.DefaultAccount => DefaultAccount,
                 AccountField.Login => Login,
                 AccountField.Password => Password,
@@ -214,7 +230,7 @@ namespace PlayStationGames.AccountEngine.Data
             if (otherAccount == null)
                 return 1;
 
-            return Name.CompareTo(otherAccount.Name);
+            return Id.CompareTo(otherAccount.Id);
         }
 
         public override int CompareField(AccountField field, IFieldMapping<AccountField> y)
@@ -236,6 +252,8 @@ namespace PlayStationGames.AccountEngine.Data
                 {
                     AccountField.Links =>
                         Links.CompareTo(yAccount.Links),
+                    AccountField.Type =>
+                        Type.CompareTo(yAccount.Type),
                     _ => base.CompareField(field, y),
                 };
 

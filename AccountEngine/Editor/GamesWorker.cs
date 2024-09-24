@@ -1,11 +1,9 @@
 ﻿using OxLibrary;
-using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Grid;
 using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
 using PlayStationGames.AccountEngine.Data;
-using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
@@ -15,9 +13,6 @@ namespace PlayStationGames.AccountEngine.Editor
     public class GamesWorker
     {
         public Color BaseColor { get; set; } = Styles.CardColor;
-
-        private static ControlBuilder<AccountField, Account> Builder =>
-            DataManager.Builder<AccountField, Account>(ControlScope.Editor);
 
         private Account? account;
 

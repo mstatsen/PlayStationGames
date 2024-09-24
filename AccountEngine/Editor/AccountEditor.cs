@@ -17,8 +17,8 @@ namespace PlayStationGames.AccountEngine.Editor
             MinimumSize = new Size(0, 0);
             MaximumSize = new Size(0, 0);
             MainPanel.SetContentSize(
-                400,
-                Groups[AccountFieldGroup.Property].Bottom + 16
+                420,
+                Groups[AccountFieldGroup.Property].Bottom + 15
             );
         }
 

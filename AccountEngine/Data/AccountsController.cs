@@ -27,7 +27,11 @@ namespace PlayStationGames.AccountEngine.Data
         protected override FieldHelper<AccountField> RegisterFieldHelper() =>
             TypeHelper.Register<AccountFieldHelper>();
 
-        protected override void RegisterHelpers() => TypeHelper.Register<AccountLinkTypeHelper>();
+        protected override void RegisterHelpers()
+        {
+            TypeHelper.Register<AccountLinkTypeHelper>();
+            TypeHelper.Register<AccountTypeHelper>();
+        }
 
         protected override FieldGroupHelper<AccountField, AccountFieldGroup> RegisterFieldGroupHelper() =>
             TypeHelper.Register<AccountFieldGroupHelper>();

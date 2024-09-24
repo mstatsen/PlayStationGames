@@ -6,6 +6,7 @@
         Id,
         Avatar,
         Name,
+        Type,
         Login,
         Password,
         Country,

@@ -6,6 +6,7 @@ using OxDAOEngine.Grid;
 using OxDAOEngine.View;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.AccountEngine.Data.Types;
 using PlayStationGames.AccountEngine.Grid;
 using PlayStationGames.AccountEngine.View;
 
@@ -17,6 +18,8 @@ namespace PlayStationGames.AccountEngine.ControlFactory
             context is FieldContext<AccountField, Account> accessorContext
                 ? accessorContext.Field switch
                 {
+                    AccountField.Type =>
+                        new EnumAccessor<AccountField, Account, AccountType>(context),
                     _ => base.CreateOtherAccessor(context),
                 }
                 : base.CreateOtherAccessor(context);

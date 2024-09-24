@@ -19,6 +19,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Id => "Id",
                 AccountField.Avatar => "Avatar",
                 AccountField.Name => "Name",
+                AccountField.Type => "Type",
                 AccountField.Login => "Login",
                 AccountField.Password => "Password",
                 AccountField.Country => "Country",
@@ -41,6 +42,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             {
                 [FieldsFilling.Full] = new List<AccountField>
                 {
+                    AccountField.Type,
                     AccountField.Login,
                     AccountField.Password,
                     AccountField.Country,
@@ -60,6 +62,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 {
                     AccountField.Avatar,
                     AccountField.Name,
+                    AccountField.Type,
                     AccountField.Login,
                     AccountField.Country,
                     AccountField.PSNProfilesLink,
@@ -72,6 +75,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 {
                     AccountField.Avatar,
                     AccountField.Name,
+                    AccountField.Type,
                     AccountField.Login,
                     AccountField.Country,
                     AccountField.PSNProfilesLink,
@@ -81,7 +85,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 [FieldsFilling.Min] = new List<AccountField>
                 {
                     AccountField.Avatar,
-                    AccountField.Name
+                    AccountField.Name,
+                    AccountField.Type
                 }
             }
         };
@@ -102,7 +107,9 @@ namespace PlayStationGames.AccountEngine.Data.Fields
 
         protected override List<AccountField> GetMandatoryFields() => new()
         {
-            AccountField.Name
+            AccountField.Name,
+            AccountField.Type,
+            AccountField.Country
         };
 
         protected override List<AccountField> GetGroupByFields() => new() { };
@@ -119,6 +126,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         {
             AccountField.Avatar,
             AccountField.Name,
+            AccountField.Type,
             AccountField.Country,
             AccountField.Login,
             AccountField.Password,
@@ -133,6 +141,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         {
             AccountField.Avatar,
             AccountField.Name,
+            AccountField.Type,
             AccountField.Country,
             AccountField.Consoles,
             AccountField.Games,
@@ -170,6 +179,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             [AccountField.Country] = FilterOperations.StringOperations,
             [AccountField.Games] = FilterOperations.EnumOperations,
             [AccountField.Links] = FilterOperations.EnumOperations,
+            [AccountField.Type] = FilterOperations.EnumOperations,
             [AccountField.Id] = FilterOperations.StringOperations,
             [AccountField.Login] = FilterOperations.StringOperations,
             [AccountField.Name] = FilterOperations.StringOperations,
@@ -227,6 +237,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     FieldType.LinkList,
                 AccountField.DefaultAccount =>
                     FieldType.Boolean,
+                AccountField.Type =>
+                    FieldType.Enum,
                 _ =>
                     FieldType.String,
             };
@@ -238,7 +250,13 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 _ => base.ColumnCaption(field)
             };
 
-        public override ITypeHelper? GetHelper(AccountField field) => null;
+        public override ITypeHelper? GetHelper(AccountField field) =>
+            field switch
+            { 
+                AccountField.Type =>
+                    TypeHelper.Helper<AccountTypeHelper>(),
+                _=> null
+            };
 
         public override ILinkHelper<AccountField>? GetLinkHelper() => TypeHelper.Helper<AccountLinkTypeHelper>();
     }
