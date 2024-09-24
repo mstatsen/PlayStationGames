@@ -1,11 +1,9 @@
 ﻿using OxLibrary;
-using PlayStationGames.ConsoleEngine.Data;
-using PlayStationGames.ConsoleEngine.Data.Fields;
 using OxDAOEngine;
-using OxDAOEngine.Data.Types;
 using OxDAOEngine.Grid;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
+using OxDAOEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Grid
 {
@@ -18,7 +16,7 @@ namespace PlayStationGames.AccountEngine.Grid
         {
             DataGridViewCellStyle style = new()
             {
-                BackColor = Color.FromArgb(245, 251, 232),
+                BackColor = TypeHelper.BackColor(account?.Type),
                 ForeColor = EngineStyles.DefaultGridFontColor
             };
 

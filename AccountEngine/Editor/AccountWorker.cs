@@ -7,6 +7,8 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.AccountEngine.Data.Types;
+using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -16,7 +18,9 @@ namespace PlayStationGames.AccountEngine.Editor
 
         protected override void PrepareStyles()
         {
-            Editor.MainPanel.BaseColor = new OxColorHelper(Color.FromArgb(245, 251, 232)).Darker(7);
+            Editor.MainPanel.BaseColor = new OxColorHelper(
+                TypeHelper.BackColor(Builder.Value<AccountType>(AccountField.Type))
+            ).Darker(7);
             ControlPainter.ColorizeControl(consolesButton, Editor.MainPanel.BaseColor);
             ControlPainter.ColorizeControl(gamesButton, Editor.MainPanel.BaseColor);
             consolesWorker.BaseColor = Editor.MainPanel.BaseColor;
