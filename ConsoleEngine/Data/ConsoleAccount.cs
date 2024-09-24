@@ -37,7 +37,7 @@ namespace PlayStationGames.ConsoleEngine.Data
                 savedToString = (string?)XmlHelper.Value(element, "ToStringValue");
             else
                 if (State == DAOState.Loading)
-                CalcToString();
+                    CalcToString();
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
@@ -58,7 +58,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override string? ToString()
         {
-            if (savedToString == null)
+            if (savedToString == string.Empty || savedToString == null)
                 CalcToString();
 
             return savedToString;
