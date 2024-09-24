@@ -54,5 +54,8 @@ namespace PlayStationGames.GameEngine.Data
                     && Type == otherTrophy.Type
                     && Count == otherTrophy.Count
                 );
+
+        public override int GetHashCode() => 
+            Type.GetHashCode() ^ Count.GetHashCode();
     }
 }

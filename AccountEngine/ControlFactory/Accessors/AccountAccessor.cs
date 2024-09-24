@@ -2,13 +2,14 @@ using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.ControlFactory.ValueAccessors;
 using OxDAOEngine.Data;
+using OxLibrary.Controls;
 using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 {
-    public class AccountAccessor<TField, TDAO> : ComboBoxAccessor<TField, TDAO>
+    public class AccountAccessor<TField, TDAO> : ComboBoxAccessor<TField, TDAO, Account, OxPicturedComboBox<Account>>
         where TField : notnull, Enum
         where TDAO : RootDAO<TField>, new()
     {
@@ -16,6 +17,14 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
         protected override ValueAccessor CreateValueAccessor() =>
             new AccountValueAccessor();
+
+        protected override void AfterControlCreated()
+        {
+            base.AfterControlCreated();
+            ComboBox.GetItemPicture += GetAccountPictureHandler;
+        }
+
+        private Bitmap? GetAccountPictureHandler(Account item) => item.Avatar;
 
         protected override void InitControl()
         {

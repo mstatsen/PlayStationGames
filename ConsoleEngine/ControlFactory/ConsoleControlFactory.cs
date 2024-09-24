@@ -39,7 +39,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                         ? CreateAccountAccessor(context)
                         : base.CreateOtherAccessor(context);
 
-        private IControlAccessor CreateAccountAccessor(IBuilderContext<ConsoleField, PSConsole> context) =>
+        private static IControlAccessor CreateAccountAccessor(IBuilderContext<ConsoleField, PSConsole> context) =>
             new AccountAccessor<ConsoleField, PSConsole>(context);
 
         protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context) => 

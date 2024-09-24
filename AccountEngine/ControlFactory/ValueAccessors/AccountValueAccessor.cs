@@ -14,9 +14,9 @@ namespace PlayStationGames.AccountEngine.ControlFactory.ValueAccessors
             Name = "Not available"
         };
 
-        private OxComboBox ComboBox => (OxComboBox)Control;
+        private OxPicturedComboBox<Account> ComboBox => (OxPicturedComboBox<Account>)Control;
         public override object? GetValue() =>
-            ComboBox.SelectedItem == null ? null : ((Account)ComboBox.SelectedItem).Id;
+            ComboBox.SelectedItem?.Id;
 
         public override void SetValue(object? value)
         {
@@ -26,8 +26,8 @@ namespace PlayStationGames.AccountEngine.ControlFactory.ValueAccessors
 
             ComboBox.SelectedItem = id == Guid.Empty
                 ? NullAccount
-                : (object?)DataManager.ListController<AccountField, Account>()
-                        .FullItemsList.Find((a) => a.Id == id);
+                : DataManager.ListController<AccountField, Account>()
+                    .FullItemsList.Find((a) => a.Id == id);
         }
     }
 }

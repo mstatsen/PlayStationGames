@@ -12,7 +12,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
 
         public override void InitControl(Control control)
         {
-            OxComboBox ComboBox = (OxComboBox)control;
+            OxPicturedComboBox<Account> ComboBox = (OxPicturedComboBox<Account>)control;
 
             if (ComboBox.Items.Count > 0)
                 ComboBox.SelectedIndex = 0;
