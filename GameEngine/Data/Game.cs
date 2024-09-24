@@ -862,10 +862,10 @@ namespace PlayStationGames.GameEngine.Data
             return 0;
         }
 
-        public override bool Equals(object? obj) =>
-            obj is Game otherGame
-            && (base.Equals(obj)
-                || (Id.Equals(otherGame.Id)
+        public override bool Equals(object? obj) => 
+            base.Equals(obj)
+                || ((obj is Game otherGame)
+                    && Id.Equals(otherGame.Id)
                     && Edition.Equals(otherGame.Edition)
                     && Series.Equals(otherGame.Series)
                     && PlatformType.Equals(otherGame.PlatformType)
@@ -874,7 +874,7 @@ namespace PlayStationGames.GameEngine.Data
                     && Owner.Equals(otherGame.Owner)
                     && Verified.Equals(otherGame.Verified)
                     && SourceType.Equals(otherGame.SourceType)
-                    && EmulatorType.Equals(otherGame.EmulatorType) 
+                    && EmulatorType.Equals(otherGame.EmulatorType)
                     && ROMs.Equals(otherGame.ROMs)
                     && ScreenView.Equals(otherGame.ScreenView)
                     && Genre.Equals(otherGame.Genre)
@@ -885,7 +885,7 @@ namespace PlayStationGames.GameEngine.Data
                     && Dlcs.Equals(otherGame.Dlcs)
                     && Tags.Equals(otherGame.Tags)
                     && Links.Equals(otherGame.Links)
-                    && RelatedGames.Equals(otherGame.RelatedGames))
+                    && RelatedGames.Equals(otherGame.RelatedGames)
                     && EarnedTrophies.Equals(otherGame.EarnedTrophies)
                     && AvailableTrophies.Equals(otherGame.AvailableTrophies)
                     && TrophysetAccess.Equals(otherGame.TrophysetAccess)
@@ -914,16 +914,17 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Year or 
                 GameField.Progress => 
                     int.Parse(value),
-                GameField.Region => TypeHelper.Parse<GameRegion>(value),
-                GameField.Language => TypeHelper.Parse<GameLanguage>(value),
-                GameField.Platform => TypeHelper.Parse<PlatformType>(value),
-                GameField.Format => TypeHelper.Parse<GameFormat>(value),
-                GameField.Source => TypeHelper.Parse<Source>(value),
-                GameField.Pegi => TypeHelper.Parse<Pegi>(value),
-                GameField.Difficult => TypeHelper.Parse<Difficult>(value),
-                GameField.CompleteTime => TypeHelper.Parse<CompleteTime>(value),
-                GameField.ScreenView => TypeHelper.Parse<ScreenView>(value),
-                GameField.Status => TypeHelper.Parse<Status>(value),
+                GameField.Region or
+                GameField.Language or
+                GameField.Platform or
+                GameField.Format or
+                GameField.Source or
+                GameField.Pegi or
+                GameField.Difficult or
+                GameField.CompleteTime or
+                GameField.ScreenView or
+                GameField.Status =>
+                    FieldHelper.GetHelper(field)!.Parse(value),
                 _ => value,
             };
 
@@ -954,7 +955,23 @@ namespace PlayStationGames.GameEngine.Data
                 )
                 filter.AddFilter(ConsoleField.Generation, generation, FilterConcat.OR);
 
-            if (!licensed)
+            if (licensed)
+            {
+                if (TypeHelper.Helper<SourceHelper>().IsPSN(gameControlBuilder[GameField.Source].EnumValue<Source>()))
+                    filter.AddFilter(
+                        ConsoleField.Accounts,
+                        FilterOperation.Contains,
+                        new ConsoleAccounts() 
+                        { 
+                            new ConsoleAccount() 
+                            { 
+                                Id = gameControlBuilder[GameField.Owner].GuidValue 
+                            } 
+                        },
+                        FilterConcat.AND
+                    );
+            }
+            else
                 filter.AddFilter(ConsoleField.Firmware, FirmwareType.Custom, FilterConcat.AND);
 
             return filter;

@@ -5,13 +5,12 @@ namespace PlayStationGames.GameEngine.Data
 {
     public class TrophyList : ListDAO<Trophy>
     {
-        public Trophy Add(TrophyType type, int count)
-        {
-            Trophy trophy = Add();
-            trophy.Type = type;
-            trophy.Count = count;
-            return trophy;
-        }
+        public Trophy Add(TrophyType type, int count) => 
+            Add(new()
+            {
+                Type = type,
+                Count = count
+            });
 
         private Trophy? TrophyByType(TrophyType type) => 
             Find(t => t.Type == type);

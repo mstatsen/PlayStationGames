@@ -47,5 +47,12 @@ namespace PlayStationGames.GameEngine.Data
 
         public override string ToString() => 
             $"{count} - {TypeHelper.Name(type)}";
+
+        public override bool Equals(object? obj) => 
+            base.Equals(obj)
+                || (obj is Trophy otherTrophy
+                    && Type == otherTrophy.Type
+                    && Count == otherTrophy.Count
+                );
     }
 }
