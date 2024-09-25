@@ -15,7 +15,7 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
 
             return field switch
             {
-                AccountField.Avatar => OxImageBoxer.BoxingImage(Dao.Avatar, new Size(70, 40)),
+                AccountField.Avatar => OxImageBoxer.BoxingImage(Dao.Image, new Size(70, 40)),
                 AccountField.Consoles => ConsolesCount(),
                 AccountField.Games => GamesCount(),
                 AccountField.StrategeLink => StrategeLink,

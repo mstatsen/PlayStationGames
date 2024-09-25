@@ -35,12 +35,6 @@ namespace PlayStationGames.AccountEngine.Data
             set => id = GuidValue(ModifyValue(AccountField.Id, id, value));
         }
 
-        public Bitmap? Avatar
-        {
-            get => avatar;
-            set => avatar = ModifyValue(AccountField.Avatar, avatar, value);
-        }
-
         public string Login
         {
             get => login;
@@ -61,10 +55,9 @@ namespace PlayStationGames.AccountEngine.Data
 
         public override void Clear()
         {
+            base.Clear();
             Id = Guid.Empty;
             DefaultAccount = false;
-            Avatar = null;
-            avatarBase64 = string.Empty;
             Country = null;
             Login = string.Empty;
             Password = string.Empty;
@@ -88,8 +81,6 @@ namespace PlayStationGames.AccountEngine.Data
             if (id == Guid.Empty)
                 GenerateGuid();
             DefaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
-            avatarBase64 = XmlHelper.Value(element, XmlConsts.Image);
-            Avatar = XmlHelper.ValueBitmap(element, XmlConsts.Image);
             Country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
             Login = XmlHelper.Value(element, XmlConsts.Login);
             Password = XmlHelper.Value(element, XmlConsts.Password);
@@ -103,14 +94,6 @@ namespace PlayStationGames.AccountEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.Default, DefaultAccount);
             XmlHelper.AppendElement(element, XmlConsts.Type, Type);
 
-
-            if (avatarBase64 == string.Empty)
-            {
-                if (Avatar != null)
-                    XmlHelper.AppendElement(element, XmlConsts.Image, Avatar);
-            }
-            else XmlHelper.AppendElement(element, XmlConsts.Image, avatarBase64);
-
             if (Country != null)
                 XmlHelper.AppendElement(element, XmlConsts.Country, Country.Alpha3, true);
 
@@ -119,8 +102,6 @@ namespace PlayStationGames.AccountEngine.Data
         }
 
         private Guid id = Guid.Empty;
-        private string avatarBase64 = string.Empty;
-        private Bitmap? avatar = null;
         private Country? country = null;
         private string login = string.Empty;
         private string password = string.Empty;
@@ -171,6 +152,7 @@ namespace PlayStationGames.AccountEngine.Data
                 return;
 
             base.SetFieldValue(field, value);
+
             switch (field)
             {
                 case AccountField.Id:
@@ -184,10 +166,6 @@ namespace PlayStationGames.AccountEngine.Data
                     break;
                 case AccountField.Login:
                     Login = StringValue(value);
-                    break;
-                case AccountField.Avatar:
-                    Avatar = (Bitmap?)value;
-                    avatarBase64 = string.Empty;
                     break;
                 case AccountField.Password:
                     Password = StringValue(value);
@@ -205,9 +183,10 @@ namespace PlayStationGames.AccountEngine.Data
             field switch
             {
                 AccountField.Account => this,
-                AccountField.Avatar => Avatar,
                 AccountField.Id => Id,
-                AccountField.Name => base.GetFieldValue(field),
+                AccountField.Name or 
+                AccountField.Avatar =>
+                    base.GetFieldValue(field),
                 AccountField.Type => Type,
                 AccountField.DefaultAccount => DefaultAccount,
                 AccountField.Login => Login,
@@ -232,6 +211,19 @@ namespace PlayStationGames.AccountEngine.Data
 
             return Id.CompareTo(otherAccount.Id);
         }
+
+        public override bool Equals(object? obj) => 
+            base.Equals(obj)
+            && (obj is Account otherAccount)
+            && DefaultAccount.Equals(otherAccount.DefaultAccount)
+            && Type.Equals(otherAccount.Type)
+            && (Country != null
+                ? Country.Equals(otherAccount.Country)
+                : otherAccount.Country != null
+            )
+            && Login.Equals(otherAccount.Login)
+            && Password.Equals(otherAccount.Password)
+            && Links.Equals(otherAccount.Links);
 
         public override int CompareField(AccountField field, IFieldMapping<AccountField> y)
         {
@@ -270,5 +262,7 @@ namespace PlayStationGames.AccountEngine.Data
             fieldHelper.CalcedFields.Contains(field);
 
         public override string FullTitle() => Name;
+
+        public override int GetHashCode() => Id.GetHashCode();
     }
 }

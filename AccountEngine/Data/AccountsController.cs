@@ -55,5 +55,6 @@ namespace PlayStationGames.AccountEngine.Data
         public override bool AvailableIcons => false;
         public override bool AvailableBatchUpdate => false;
         public override bool AvailableCopyItems => false;
+        public override bool UseImageList => true;
     }
 }

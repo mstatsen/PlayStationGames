@@ -24,7 +24,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
             ComboBox.GetItemPicture += GetAccountPictureHandler;
         }
 
-        private Bitmap? GetAccountPictureHandler(Account item) => item.Avatar;
+        private Bitmap? GetAccountPictureHandler(Account item) => item.Image;
 
         protected override void InitControl()
         {

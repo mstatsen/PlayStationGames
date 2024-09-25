@@ -17,7 +17,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override string ColumnCaption(GameField field) => 
             field switch
             {
-                GameField.Image => string.Empty,
                 GameField.TrophysetAccess => "Trophyset",
                 GameField.ReleasePlatforms => "Released on",
                 _ => base.ColumnCaption(field),

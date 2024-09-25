@@ -243,13 +243,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     FieldType.String,
             };
 
-        public override string ColumnCaption(AccountField field) =>
-            field switch
-            {
-                AccountField.Avatar => string.Empty,
-                _ => base.ColumnCaption(field)
-            };
-
         public override ITypeHelper? GetHelper(AccountField field) =>
             field switch
             { 
@@ -259,5 +252,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             };
 
         public override ILinkHelper<AccountField>? GetLinkHelper() => TypeHelper.Helper<AccountLinkTypeHelper>();
+
+        public override AccountField ImageField => AccountField.Avatar;
     }
 }
