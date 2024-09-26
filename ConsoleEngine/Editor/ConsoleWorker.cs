@@ -95,7 +95,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
         private void InstallationsClickHandler(object? sender, EventArgs e)
         {
             if (Item != null)
-                installationsWorker.Show();
+                installationsWorker.Show(Editor);
         }
 
         private readonly InstallationsWorker installationsWorker = new();

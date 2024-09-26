@@ -17,13 +17,17 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private Account? account;
 
-        private CanSelectResult CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanUnselectItemHandler(Game currentItem, 
+            RootListDAO<GameField, Game> selectedList, 
+            ItemsChooser<GameField, Game> chooser)
         {
             currentItem.Owner = AccountValueAccessor.NullAccount.Id;
             return CanSelectResult.Available;
         }
 
-        private CanSelectResult CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanSelectItemHandler(Game currentItem, 
+            RootListDAO<GameField, Game> selectedList, 
+            ItemsChooser<GameField, Game> chooser)
         {
             if (account == null)
                 return CanSelectResult.Return;
@@ -32,7 +36,7 @@ namespace PlayStationGames.AccountEngine.Editor
             return CanSelectResult.Available;
         }
 
-        public void Show()
+        public void Show(Control owner)
         {
             if (account == null)
                 return;
@@ -58,7 +62,7 @@ namespace PlayStationGames.AccountEngine.Editor
             chooserParams.CanSelectItem += CanSelectItemHandler;
             chooserParams.CanUnselectItem += CanUnselectItemHandler;
 
-            if (ItemsChooser<GameField, Game>.ChooseItems(chooserParams, out RootListDAO<GameField, Game> selectedGames))
+            if (ItemsChooser<GameField, Game>.ChooseItems(owner, chooserParams, out RootListDAO<GameField, Game> selectedGames))
             {
                 existsGames.LinkedCopyFrom(selectedGames);
                 Modified = true;

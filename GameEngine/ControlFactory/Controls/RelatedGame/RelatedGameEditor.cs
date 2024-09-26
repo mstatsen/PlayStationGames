@@ -143,7 +143,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             if (SelectedGame == null)
             {
-                OxMessage.ShowError("Select the Game for relate!");
+                OxMessage.ShowError("Select the Game for relate!", this);
                 return;
             }
 

@@ -85,7 +85,7 @@ namespace PlayStationGames.AccountEngine.Editor
         private void GamesButtonClickHandler(object? sender, EventArgs e)
         {
             if (Item != null)
-                gamesWorker.Show();
+                gamesWorker.Show(Editor);
         }
 
         private readonly GamesWorker gamesWorker = new();
@@ -94,7 +94,7 @@ namespace PlayStationGames.AccountEngine.Editor
         private void ConsoleButtonClickHandler(object? sender, EventArgs e)
         {
             if (Item != null)
-                consolesWorker.Show();
+                consolesWorker.Show(Editor);
         }
 
         protected override List<List<AccountField>> LabelGroups =>

@@ -8,6 +8,8 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using OxDAOEngine.Data.Types;
 using OxLibrary.Dialogs;
+using OxDAOEngine.Editor;
+using Microsoft.VisualBasic.FileIO;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -17,7 +19,9 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private Account? account;
 
-        private CanSelectResult CanUnselectItemHandler(PSConsole currentItem, RootListDAO<ConsoleField, PSConsole> selectedList)
+        private CanSelectResult CanUnselectItemHandler(PSConsole currentItem, 
+            RootListDAO<ConsoleField, PSConsole> selectedList, 
+            ItemsChooser<ConsoleField, PSConsole> chooser)
         {
             if (account == null)
                 return CanSelectResult.Return;
@@ -26,7 +30,9 @@ namespace PlayStationGames.AccountEngine.Editor
             return CanSelectResult.Available;
         }
 
-        private CanSelectResult CanSelectItemHandler(PSConsole currentItem, RootListDAO<ConsoleField, PSConsole> selectedList)
+        private CanSelectResult CanSelectItemHandler(PSConsole currentItem, 
+            RootListDAO<ConsoleField, PSConsole> selectedList, 
+            ItemsChooser<ConsoleField, PSConsole> chooser)
         {
             if (account == null)
                 return CanSelectResult.Return;
@@ -34,7 +40,7 @@ namespace PlayStationGames.AccountEngine.Editor
             if (currentItem.Accounts.Count >= TypeHelper.Helper<ConsoleGenerationHelper>()
                 .MaxAccountsCount(currentItem.Generation, currentItem.Firmware))
             {
-                OxMessage.ShowError($"Console \"{currentItem.Name}\" already contains maximum count of possible registered accounts.");
+                OxMessage.ShowError($"Console \"{currentItem.Name}\" already contains maximum count of possible registered accounts.", chooser);
                 return CanSelectResult.Continue;
             }
 
@@ -48,7 +54,7 @@ namespace PlayStationGames.AccountEngine.Editor
         private RootListDAO<ConsoleField, PSConsole> FullConsolesList =>
             ConsolesController.FullItemsList;
 
-        public void Show()
+        public void Show(Control owner)
         {
             if (account == null)
                 return;
@@ -76,7 +82,9 @@ namespace PlayStationGames.AccountEngine.Editor
             chooserParams.CanSelectItem += CanSelectItemHandler;
             chooserParams.CanUnselectItem += CanUnselectItemHandler;
 
-            if (ItemsChooser<ConsoleField, PSConsole>.ChooseItems(chooserParams, out RootListDAO<ConsoleField, PSConsole> selectedConsoles))
+            if (ItemsChooser<ConsoleField, PSConsole>.ChooseItems(owner, 
+                chooserParams, 
+                out RootListDAO<ConsoleField, PSConsole> selectedConsoles))
             {
                 registeredConsoles.LinkedCopyFrom(selectedConsoles);
                 Modified = true;

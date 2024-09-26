@@ -21,15 +21,17 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private PSConsole? Console;
 
-        private CanSelectResult CanUnselectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanUnselectItemHandler(Game currentItem, 
+            RootListDAO<GameField, Game> selectedList, 
+            ItemsChooser<GameField, Game> chooser)
         {
             if (Console == null)
                 return CanSelectResult.Return;
 
             bool uninstallAvailable = !needShowUninstallMessage
                 || OxMessage.ShowConfirm(
-                $"Are you sure to want uninstall {(selectedList.Count > 1 ? "selected games" : currentItem.FullTitle())}?"
-            ) == DialogResult.Yes;
+                    $"Are you sure to want uninstall {(selectedList.Count > 1 ? "selected games" : currentItem.FullTitle())}?", 
+                    chooser) == DialogResult.Yes;
 
             needShowUninstallMessage = false;
 
@@ -46,7 +48,9 @@ namespace PlayStationGames.ConsoleEngine.Editor
         private bool ApplyPlacementForAll = false;
         private bool needShowUninstallMessage = true;
 
-        private CanSelectResult CanSelectItemHandler(Game currentItem, RootListDAO<GameField, Game> selectedList)
+        private CanSelectResult CanSelectItemHandler(Game currentItem, 
+            RootListDAO<GameField, Game> selectedList, 
+            ItemsChooser<GameField, Game> chooser)
         {
             if (Console == null)
                 return CanSelectResult.Return;
@@ -55,7 +59,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             {
                 placeSelector.GamesCount = selectedList.Count;
                 placeSelector.Game = currentItem;
-                DialogResult result = placeSelector.ShowAsDialog();
+                DialogResult result = placeSelector.ShowAsDialog(chooser);
 
                 if (result == OxDialogButtonsHelper.Result(OxDialogButton.Cancel))
                     return CanSelectResult.Return;
@@ -75,7 +79,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             return CanSelectResult.Available;
         }
 
-        public void Show()
+        public void Show(Control owner)
         {
             if (Console == null)
                 return;
@@ -115,7 +119,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             chooserParams.CompleteSelect += CompleteSelectHandler;
             chooserParams.CanUnselectItem += CanUnselectItemHandler;
 
-            if (ItemsChooser<GameField, Game>.ChooseItems(chooserParams, out RootListDAO<GameField, Game> selectedGames))
+            if (ItemsChooser<GameField, Game>.ChooseItems(owner, chooserParams, out RootListDAO<GameField, Game> selectedGames))
             {
                 installedGames.LinkedCopyFrom(selectedGames);
                 Modified = true;
