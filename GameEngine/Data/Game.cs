@@ -76,78 +76,78 @@ namespace PlayStationGames.GameEngine.Data
         public Guid Id
         {
             get => id;
-            set => id = GuidValue(ModifyValue(GameField.Id, id, value));
+            set => ModifyValue(GameField.Id, id, value, n=> id = GuidValue(n));
         }
 
         public string EmulatorType
         {
             get => emulatorType;
-            set => emulatorType = StringValue(ModifyValue(GameField.EmulatorType, emulatorType, value));
+            set => ModifyValue(GameField.EmulatorType, emulatorType, value, n => emulatorType = StringValue(n));
         }
 
         public string ROMs
         {
             get => roms;
-            set => roms = StringValue(ModifyValue(GameField.EmulatorROMs, roms, value));
+            set => ModifyValue(GameField.EmulatorROMs, roms, value, n => roms = StringValue(n));
         }
 
         public string Genre
         {
             get => genre;
-            set => genre = StringValue(ModifyValue(GameField.Genre, genre, value));
+            set => ModifyValue(GameField.Genre, genre, value,n => genre = StringValue(n));
         }
 
         public ScreenView ScreenView
         {
             get => screenView;
-            set => screenView = ModifyValue(GameField.ScreenView, screenView, value);
+            set => ModifyValue(GameField.ScreenView, screenView, value, n => screenView = n);
         }
 
         public Difficult Difficult
         {
             get => difficult;
-            set => difficult = ModifyValue(GameField.Difficult, difficult, value);
+            set => ModifyValue(GameField.Difficult, difficult, value, n => difficult = n);
         }
         public CompleteTime CompleteTime
         {
             get => completeTime;
-            set => completeTime = ModifyValue(GameField.CompleteTime, completeTime, value);
+            set => ModifyValue(GameField.CompleteTime, completeTime, value, n => completeTime = n);
         }
 
         public TrophysetAccess TrophysetAccess
         {
             get => trophysetAccess;
-            set => trophysetAccess = ModifyValue(GameField.TrophysetAccess, trophysetAccess, value);
+            set => ModifyValue(GameField.TrophysetAccess, trophysetAccess, value, n => trophysetAccess = n);
         }
 
         public string Developer
         {
             get => developer;
-            set => developer = StringValue(ModifyValue(GameField.Developer, developer, value));
+            set => ModifyValue(GameField.Developer, developer, value, n => developer = StringValue(n));
         }
 
         public string Publisher
         {
             get => publisher;
-            set => publisher = StringValue(ModifyValue(GameField.Publisher, publisher, value));
+            set => ModifyValue(GameField.Publisher, publisher, value, n => publisher = StringValue(n));
         }
 
         public int Year
         {
             get => year;
-            set => year = ModifyValue(GameField.Year, year, value);
+            set => ModifyValue(GameField.Year, year, value, n => year = n);
         }
 
         public Pegi Pegi
         {
             get => pegi;
-            set => pegi = ModifyValue(GameField.Pegi, pegi, value);
+            set => ModifyValue(GameField.Pegi, pegi, value, n => pegi = n);
         }
 
         public int CriticScore
         {
             get => criticScore;
-            set => criticScore = ModifyValue(GameField.CriticScore, criticScore, value);
+            set => ModifyValue(GameField.CriticScore, criticScore, value, n => criticScore = n);
         }
 
         public string OriginalName => 
@@ -156,25 +156,25 @@ namespace PlayStationGames.GameEngine.Data
         public string Edition
         {
             get => edition;
-            set => edition = StringValue(ModifyValue(GameField.Edition, edition, value));
+            set => ModifyValue(GameField.Edition, edition, value, n => edition = StringValue(n));
         }
 
         public string Series
         {
             get => series;
-            set => series = StringValue(ModifyValue(GameField.Series, series, value));
+            set => ModifyValue(GameField.Series, series, value, n => series = StringValue(n));
         }
 
         public bool Verified
         {
             get => verified;
-            set => verified = BoolValue(ModifyValue(GameField.Verified, verified, value));
+            set => ModifyValue(GameField.Verified, verified, value, n => verified = BoolValue(n));
         }
 
         public bool Licensed
         {
             get => licensed;
-            set => licensed = BoolValue(ModifyValue(GameField.Licensed, licensed, value));
+            set => ModifyValue(GameField.Licensed, licensed, value, n => licensed = BoolValue(n));
         }
 
         private string? oldAccountName;
@@ -186,13 +186,12 @@ namespace PlayStationGames.GameEngine.Data
             {
                 Guid oldOwnerId = owner;
 
-                owner = GuidValue(
-                    ModifyValue(
-                        GameField.Owner,
-                        owner,
-                        value,
-                        oldAccountName
-                    )
+                ModifyValue(
+                    GameField.Owner,
+                    owner,
+                    value,
+                    n => owner = GuidValue(n),
+                    oldAccountName
                 );
 
                 SetOldOwnerName(oldOwnerId);
@@ -275,41 +274,40 @@ namespace PlayStationGames.GameEngine.Data
         public PlatformType PlatformType
         {
             get => platformType;
-            set => platformType = ModifyValue(GameField.Platform, platformType, value);
+            set => ModifyValue(GameField.Platform, platformType, value, n => platformType = n);
         }
 
         public GameFormat Format
         {
             get => format;
-            set => format = ModifyValue(GameField.Format, format, value);
+            set => ModifyValue(GameField.Format, format, value, n => format = n);
         }
 
         public Source SourceType
         {
             get => sourceType;
-            set => sourceType = ModifyValue(GameField.Source, sourceType, value);
+            set => ModifyValue(GameField.Source, sourceType, value, n => sourceType = n);
         }
 
         public GameRegion GameRegion
         {
             get => region;
-            set => region = ModifyValue(GameField.Region, region, value);
+            set => ModifyValue(GameField.Region, region, value, n => region = n);
         }
 
         public GameLanguage GameLanguage
         {
             get => language;
-            set => language = ModifyValue(GameField.Language, language, value);
+            set => ModifyValue(GameField.Language, language, value, n => language = n);
         }
 
         public string Code
         {
             get => code;
-            set => code = StringValue(ModifyValue(GameField.Code, code, value));
+            set => ModifyValue(GameField.Code, code, value, n => code = StringValue(n));
         }
 
-        public Game() : base() => 
-            GenerateId();
+        public Game() : base() { }
 
         private static object? PrepareValueToSet(GameField field, object? value)
         {
@@ -566,7 +564,7 @@ namespace PlayStationGames.GameEngine.Data
             game.Owner != Guid.Empty
             && game.Licensed 
             && TypeHelper.Helper<GameFormatHelper>().AvailableTrophies(game.Format)
-            && TypeHelper.Helper<PlatformTypeHelper>().PlatformWithTrophies(game.PlatformType);
+            && platformTypeHelper.PlatformWithTrophies(game.PlatformType);
 
         private void UpdateRelatedGames()
         {
@@ -697,32 +695,32 @@ namespace PlayStationGames.GameEngine.Data
                 return;
 
             base.Clear();
-            Id = Guid.Empty;
-            Edition = string.Empty;
-            Series = string.Empty;
-            Verified = false;
-            Licensed = true;
-            Owner = Guid.Empty;
-            ROMs = string.Empty;
-            EmulatorType = string.Empty;
-            Genre = string.Empty;
-            Developer = string.Empty;
-            Publisher = string.Empty;
-            Code = string.Empty;
-            Year = GameConsts.Empty_Year;
-            CriticScore = GameConsts.Empty_CriticScore;
+            id = Guid.Empty;
+            edition = string.Empty;
+            series = string.Empty;
+            verified = false;
+            licensed = true;
+            owner = Guid.Empty;
+            roms = string.Empty;
+            emulatorType = string.Empty;
+            genre = string.Empty;
+            developer = string.Empty;
+            publisher = string.Empty;
+            code = string.Empty;
+            year = GameConsts.Empty_Year;
+            criticScore = GameConsts.Empty_CriticScore;
 
-            PlatformType = TypeHelper.DefaultValue<PlatformType>();
-            Format = TypeHelper.Helper<GameFormatHelper>().DefaultFormat(PlatformType);
-            ScreenView = TypeHelper.DefaultValue<ScreenView>();
-            Difficult = TypeHelper.DefaultValue<Difficult>();
-            CompleteTime = TypeHelper.DefaultValue<CompleteTime>();
+            platformType = TypeHelper.DefaultValue<PlatformType>();
+            format = TypeHelper.Helper<GameFormatHelper>().DefaultFormat(PlatformType);
+            screenView = TypeHelper.DefaultValue<ScreenView>();
+            difficult = TypeHelper.DefaultValue<Difficult>();
+            completeTime = TypeHelper.DefaultValue<CompleteTime>();
             trophysetAccess = TypeHelper.DefaultValue<TrophysetAccess>();
-            SourceType = TypeHelper.DefaultValue<Source>();
-            GameRegion = TypeHelper.DefaultValue<GameRegion>();
-            GameLanguage = TypeHelper.DefaultValue<GameLanguage>();
-            Pegi = TypeHelper.DefaultValue<Pegi>();
-
+            sourceType = TypeHelper.DefaultValue<Source>();
+            region = TypeHelper.DefaultValue<GameRegion>();
+            language = TypeHelper.DefaultValue<GameLanguage>();
+            pegi = TypeHelper.DefaultValue<Pegi>();
+            
             ReleasePlatforms.Clear();
             GameModes.Clear();
             Installations.Clear();
@@ -734,11 +732,8 @@ namespace PlayStationGames.GameEngine.Data
             EarnedTrophies.Clear();
         }
 
-        private void GenerateId() => Id = Guid.NewGuid();
-
         public override void Init()
         {
-            GenerateId();
             AddListMember(GameField.GameModes, GameModes);
             AddListMember(GameField.Dlcs, Dlcs);
             AddListMember(GameField.Tags, Tags);
@@ -783,8 +778,8 @@ namespace PlayStationGames.GameEngine.Data
             if (CriticScore >= 0)
                 XmlHelper.AppendElement(element, XmlConsts.CriticScore, CriticScore);
 
-            if (TypeHelper.Helper<SourceHelper>().TrophysetSupport(SourceType) &&
-                TypeHelper.Helper<PlatformTypeHelper>().PlatformWithTrophies(PlatformType))
+            if (sourceHelper.TrophysetSupport(SourceType) &&
+                platformTypeHelper.PlatformWithTrophies(PlatformType))
             {
                 XmlHelper.AppendElement(element, XmlConsts.TrophysetAccess, TrophysetAccess);
                 XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
@@ -795,10 +790,7 @@ namespace PlayStationGames.GameEngine.Data
         protected override void LoadData(XmlElement element)
         {
             base.LoadData(element);
-            id = XmlHelper.ValueGuid(element, XmlConsts.Id);
-            if (id == Guid.Empty)
-                GenerateId();
-
+            id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
             edition = XmlHelper.Value(element, XmlConsts.Edition);
             series = XmlHelper.Value(element, XmlConsts.Series);
             platformType = XmlHelper.Value<PlatformType>(element, XmlConsts.Platform);
@@ -947,7 +939,7 @@ namespace PlayStationGames.GameEngine.Data
             bool licensed = gameControlBuilder.Value<bool>(GameField.Licensed);
 
             foreach (ConsoleGeneration generation in
-                TypeHelper.Helper<PlatformTypeHelper>().Generations(
+                platformTypeHelper.Generations(
                     gameControlBuilder.Value<PlatformType>(GameField.Platform),
                     gameControlBuilder.Value<Source>(GameField.Source),
                     licensed)
@@ -956,7 +948,7 @@ namespace PlayStationGames.GameEngine.Data
 
             if (licensed)
             {
-                if (TypeHelper.Helper<SourceHelper>().IsPSN(gameControlBuilder[GameField.Source].EnumValue<Source>()))
+                if (sourceHelper.IsPSN(gameControlBuilder[GameField.Source].EnumValue<Source>()))
                     filter.AddFilter(
                         ConsoleField.Accounts,
                         FilterOperation.Contains,
@@ -975,5 +967,15 @@ namespace PlayStationGames.GameEngine.Data
 
             return filter;
         }
+
+        private static readonly PlatformTypeHelper platformTypeHelper = TypeHelper.Helper<PlatformTypeHelper>();
+        private static readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
+
+        public bool AccountAvailable => 
+            Licensed
+                ? platformTypeHelper.IsPSNPlatform(PlatformType)
+                    && sourceHelper.IsPSN(SourceType)
+                : PlatformType == PlatformType.PSVita
+                    && SourceType == Source.PKGj;
     }
 }

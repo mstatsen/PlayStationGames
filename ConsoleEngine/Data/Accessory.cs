@@ -59,7 +59,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override void Clear()
         {
             type = TypeHelper.DefaultValue<AccessoryType>();
-            JoystickType = TypeHelper.DefaultValue<JoystickType>();
+            joystickType = TypeHelper.DefaultValue<JoystickType>();
             color = "Black";
             withCover = false;
             withStickCovers = false;

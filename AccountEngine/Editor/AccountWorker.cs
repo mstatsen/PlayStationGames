@@ -7,8 +7,7 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.AccountEngine.Data.Types;
-using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Types;
+using OxDAOEngine.Data;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -117,6 +116,16 @@ namespace PlayStationGames.AccountEngine.Editor
             base.AfterGrabControls();
             consolesWorker.Save();
             gamesWorker.Save();
+            ResetDefaultAccountIfExists();
+        }
+
+        private void ResetDefaultAccountIfExists()
+        {
+            if (Item != null && Item.DefaultAccount)
+                foreach (Account account in DataManager.FullItemsList<AccountField, Account>()
+                    .FindAll(a => a.DefaultAccount && a.Id != Item.Id)
+                )
+                    account.DefaultAccount = false;
         }
 
         private readonly OxButton consolesButton = new("Consoles", null)

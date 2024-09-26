@@ -17,7 +17,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         public override void Clear() => 
-            Type = TypeHelper.DefaultValue<PlatformType>();
+            type = TypeHelper.DefaultValue<PlatformType>();
 
         public override void Init() { }
 

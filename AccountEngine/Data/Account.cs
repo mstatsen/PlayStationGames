@@ -12,45 +12,44 @@ namespace PlayStationGames.AccountEngine.Data
 {
     public class Account : RootDAO<AccountField>
     {
-        public Account() : base() =>
-            GenerateGuid();
+        public Account() : base() { }
 
         public readonly Links<AccountField> Links = new();
 
         public bool DefaultAccount
         { 
             get => defaultAccount;
-            set => defaultAccount = BoolValue(ModifyValue(AccountField.DefaultAccount, defaultAccount, value));
+            set => ModifyValue(AccountField.DefaultAccount, defaultAccount, value, n => defaultAccount = BoolValue(n));
         }
 
         public AccountType Type
         {
             get => type;
-            set => type = ModifyValue(AccountField.Type, type, value);
+            set => ModifyValue(AccountField.Type, type, value, n => type = n);
         }
 
         public Guid Id
         {
             get => id;
-            set => id = GuidValue(ModifyValue(AccountField.Id, id, value));
+            set => ModifyValue(AccountField.Id, id, value, n => id = GuidValue(n));
         }
 
         public string Login
         {
             get => login;
-            set => login = StringValue(ModifyValue(AccountField.Login, login, value));
+            set => ModifyValue(AccountField.Login, login, value, n => login = StringValue(n));
         }
 
         public string Password
         {
             get => password;
-            set => password = StringValue(ModifyValue(AccountField.Password, password, value));
+            set => ModifyValue(AccountField.Password, password, value, n => password = StringValue(n));
         }
 
         public Country? Country
         {
             get => country;
-            set => country = ModifyValue(AccountField.Country, country, value);
+            set => ModifyValue(AccountField.Country, country, value, n => country = n);
         }
 
         public override void Clear()
@@ -65,26 +64,19 @@ namespace PlayStationGames.AccountEngine.Data
             Links.Clear();
         }
 
-        public override void Init()
-        {
-            GenerateGuid();
+        public override void Init() => 
             AddListMember(AccountField.Links, Links);
-        }
 
-        private void GenerateGuid() =>
-            Id = Guid.NewGuid();
 
         protected override void LoadData(XmlElement element)
         {
             base.LoadData(element);
-            id = XmlHelper.ValueGuid(element, XmlConsts.Id);
-            if (id == Guid.Empty)
-                GenerateGuid();
-            DefaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
-            Country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
-            Login = XmlHelper.Value(element, XmlConsts.Login);
-            Password = XmlHelper.Value(element, XmlConsts.Password);
-            Type = XmlHelper.Value<AccountType>(element, XmlConsts.Type);
+            id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
+            defaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
+            country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
+            login = XmlHelper.Value(element, XmlConsts.Login);
+            password = XmlHelper.Value(element, XmlConsts.Password);
+            type = XmlHelper.Value<AccountType>(element, XmlConsts.Type);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)

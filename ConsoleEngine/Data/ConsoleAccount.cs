@@ -31,7 +31,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         protected override void LoadData(XmlElement element)
         {
-            id = XmlHelper.ValueGuid(element, XmlConsts.Id);
+            id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
 
             if (State == DAOState.Coping)
                 savedToString = (string?)XmlHelper.Value(element, "ToStringValue");

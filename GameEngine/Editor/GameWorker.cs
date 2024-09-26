@@ -276,18 +276,21 @@ namespace PlayStationGames.GameEngine.Editor
             
             Builder[GameField.Owner].RenewControl(true);
 
-            if (!byUser)
-                Builder[GameField.Owner].Value = Item!.Owner;
+            if (!accountAvailable )
+                Builder[GameField.Owner].Value = null;
+            else
+                if (!byUser)
+                    Builder[GameField.Owner].Value = Item!.Owner;
         }
 
-        private bool AccountAvailable()
-        {
-            return Builder[GameField.Licensed].BoolValue
-                ? platformTypeHelper.IsPSNPlatform(Builder[GameField.Platform].EnumValue<PlatformType>())
-                    && sourceHelper.IsPSN(Builder[GameField.Source].EnumValue<Source>())
-                : Builder[GameField.Platform].EnumValue<PlatformType>() == PlatformType.PSVita
-                    && Builder[GameField.Source].EnumValue<Source>() == Source.PKGj;
-        }
+        private bool AccountAvailable() => 
+            new Game()
+            {
+                Licensed = Builder[GameField.Licensed].BoolValue,
+                PlatformType = Builder[GameField.Platform].EnumValue<PlatformType>(),
+                SourceType = Builder[GameField.Source].EnumValue<Source>()
+
+            }.AccountAvailable;
 
         protected readonly TrophiesControlsHelper trophiesControlsHelper;
 

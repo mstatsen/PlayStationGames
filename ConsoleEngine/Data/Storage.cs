@@ -52,25 +52,16 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override void Clear()
         {
-            Id = Guid.Empty;
+            id = Guid.Empty;
             placement = TypeHelper.DefaultValue<StoragePlacement>();
             size = string.Empty;
             freeSize = string.Empty;
             name = string.Empty;
         }
 
-        public override void Init() => 
-            GenerateGuid();
-
-        private void GenerateGuid() =>
-            Id = Guid.NewGuid();
-
         protected override void LoadData(XmlElement element)
         {
-            id = XmlHelper.ValueGuid(element, XmlConsts.Id);
-            if (id == Guid.Empty)
-                GenerateGuid();
-
+            id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
             placement = XmlHelper.Value<StoragePlacement>(element, XmlConsts.Placement);
             size = XmlHelper.Value(element, XmlConsts.Size);
             freeSize = XmlHelper.Value(element, XmlConsts.FreeSize);
@@ -102,5 +93,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override int GetHashCode() => 
             id.GetHashCode();
+
+        public override void Init() { }
     }
 }

@@ -26,21 +26,22 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
         private Bitmap? GetAccountPictureHandler(Account item) => item.Image;
 
+        private AccountAccessorParameters? Parameters =>
+            Context!.AdditionalContext is AccountAccessorParameters
+                ? Context!.AdditionalContext! as AccountAccessorParameters
+                : null;
+
         protected override void InitControl()
         {
             base.InitControl();
             ComboBox.Items.Clear();
 
-            AccountAccessorParameters? parameters = Context!.AdditionalContext is AccountAccessorParameters 
-                ? Context!.AdditionalContext! as AccountAccessorParameters 
-                : null;
-
-            if (parameters == null ||
-                parameters.UseNullable)
+            if (Parameters == null ||
+                Parameters.UseNullable)
                 ComboBox.Items.Add(AccountValueAccessor.NullAccount);
 
-            if (parameters == null ||
-                !parameters.OnlyNullable)
+            if (Parameters == null ||
+                !Parameters.OnlyNullable)
             {
                 foreach (var account in DataManager.ListController<AccountField, Account>().FullItemsList)
                     if (AvailableValue(account))
@@ -52,23 +53,9 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
         public override void SetDefaultValue()
         {
-
-            foreach (object item in ComboBox.Items)
-            {
-                if (item is Account account && account.DefaultAccount)
-                {
-                    ComboBox.SelectedItem = account;
-                    return;
-                }
-            }
-
-            if (ComboBox.Items.Count > 1)
-            {
-                ComboBox.SelectedIndex = 1;
-                return;
-            }
-
-            base.SetDefaultValue();
+            if (Parameters != null &&
+                Parameters.UseNullable)
+                base.SetDefaultValue();
         }
     }
 }

@@ -82,6 +82,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             RootListDAO<GameField, Game> availableGames = new();
             availableGames.CopyFrom(DataManager.FullItemsList<GameField, Game>().FilteredList(SuilableGamesFilter));
+            availableGames.RemoveAll(
+                g => g.AccountAvailable && 
+                    !Console.Accounts.Contains(
+                        a => a.Id == g.Owner
+                    ), 
+                false
+            );
 
             ItemsChooserParams<GameField, Game> chooserParams = new(
                 availableGames, installedGames)

@@ -7,7 +7,7 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
-using Microsoft.VisualBasic.FileIO;
+using PlayStationGames.AccountEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -107,7 +107,13 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Save()
         {
-            if (account == null || !Modified)
+            if (account == null)
+                return;
+
+            if (ClearOwnerForGamesForLocalAccount())
+                return;
+
+            if (!Modified)
                 return;
 
             RenewOwners();
@@ -115,41 +121,56 @@ namespace PlayStationGames.AccountEngine.Editor
             Modified = false;
         }
 
+        private bool ClearOwnerForGamesForLocalAccount()
+        {
+            if (account == null || 
+                account.Type != AccountType.Local)
+                return false;
+
+            List<Game> owneredGameList = FullGameList.FindAll(g => g.Owner == account.Id);
+
+                foreach (Game game in owneredGameList)
+                    game.Owner = AccountValueAccessor.NullAccount.Id;
+
+            return true;
+        }
+
         private bool Modified = false;
+
+        private readonly IListController<GameField, Game> gamesController = DataManager.ListController<GameField, Game>();
+        private RootListDAO<GameField, Game> FullGameList => gamesController.FullItemsList;
 
         private void RenewOwners()
         {
             if (account == null)
                 return;
 
-            IListController<GameField, Game> gamesController = DataManager.ListController<GameField, Game>();
             gamesController.FullItemsList.StartSilentChange();
+            List<Game> updatedList = FullGameList.FindAll((g) =>
+                g.Owner == account.Id &&
+                !existsGames.Contains((g2) => g2.Id == g.Id)
+            );
 
             try
             {
-                foreach (Game game in gamesController.FullItemsList.FindAll((g) => 
-                        g.Owner == account.Id && 
-                        !existsGames.Contains((g2) => g2.Id == g.Id)
-                    )
-                )
+                
+
+                foreach (Game game in updatedList)
                     game.Owner = AccountValueAccessor.NullAccount.Id;
 
-                foreach (Game game in existsGames)
-                {
-                    Game? foundGame = DataManager.ListController<GameField, Game>().Item(GameField.Id, game.Id);
+                List<Game> updatedList2 = FullGameList.FindAll(g => existsGames.Contains(g2 => g2.Id == g.Id));
 
-                    if (foundGame != null)
-                        foundGame.Owner = account.Id;
-                }
+                foreach (Game game in updatedList2)
+                    game.Owner = account.Id;
+
+                updatedList.AddRange(updatedList2);
             }
             finally
             {
+                foreach (Game game in updatedList)
+                    game.ChangeHandler?.Invoke(game, new(DAOOperation.Modify));
+
                 gamesController.FullItemsList.FinishSilentChange();
-
-                foreach (Game game in gamesController.FullItemsList.FindAll((g) => g.Owner == account.Id))
-                    game.ChangeHandler?.Invoke(game, new DAOEntityEventArgs(DAOOperation.Modify));
-
-                gamesController.ListChanged?.Invoke(gamesController, new EventArgs());
             }
         }
     }

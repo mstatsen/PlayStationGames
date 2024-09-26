@@ -12,13 +12,12 @@ namespace PlayStationGames.ConsoleEngine.Data
 {
     public class PSConsole : RootDAO<ConsoleField>
     {
-        public PSConsole() : base() =>
-            GenerateGuid();
+        public PSConsole() : base() { }
 
         public Guid Id
         {
             get => id;
-            set => id = GuidValue(ModifyValue(ConsoleField.Id, id, value));
+            set => ModifyValue(ConsoleField.Id, id, value, (n) => id = GuidValue(n));
         }
 
         public Bitmap Icon => 
@@ -27,19 +26,19 @@ namespace PlayStationGames.ConsoleEngine.Data
         public ConsoleGeneration Generation
         {
             get => generation;
-            set => generation = ModifyValue(ConsoleField.Generation, generation, value);
+            set => ModifyValue(ConsoleField.Generation, generation, value, n => generation = n);
         }
 
         public ConsoleModel Model
         {
             get => model;
-            set => model = ModifyValue(ConsoleField.Model, model, value);
+            set => ModifyValue(ConsoleField.Model, model, value, n => model = n);
         }
 
         public FirmwareType Firmware
         {
             get => firmware;
-            set => firmware = ModifyValue(ConsoleField.Firmware, firmware, value);
+            set => ModifyValue(ConsoleField.Firmware, firmware, value, n => firmware = n);
         }
 
         public Folders Folders => folders;
@@ -60,24 +59,16 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override void Init()
         {
-            GenerateGuid();
             AddListMember(ConsoleField.Storages, Storages);
             AddListMember(ConsoleField.Folders, Folders);
             AddListMember(ConsoleField.Accessories, Accessories);
             AddListMember(ConsoleField.Accounts, Accounts);
         }
 
-        private void GenerateGuid() =>
-            Id = Guid.NewGuid();
-
         protected override void LoadData(XmlElement element)
         {
             base.LoadData(element);
-            id = XmlHelper.ValueGuid(element, XmlConsts.Id);
-
-            if (id == Guid.Empty)
-                GenerateGuid();
-
+            id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
             generation = XmlHelper.Value<ConsoleGeneration>(element, XmlConsts.Generation);
             model = XmlHelper.Value<ConsoleModel>(element, XmlConsts.Model);
             firmware = XmlHelper.Value<FirmwareType>(element, XmlConsts.Firmware);
