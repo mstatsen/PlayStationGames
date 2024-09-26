@@ -29,7 +29,7 @@ namespace PlayStationGames.GameEngine.Editor
         public void CalcTrophiesControls()
         {
             TrophysetAccess? trophiesAvailableValue = 
-                (TrophysetAccess?)controlBuilder.Value(GameField.TrophysetAccess);
+                controlBuilder.Value<TrophysetAccess>(GameField.TrophysetAccess);
             bool trophiesAvailable = trophiesAvailableValue != null 
                 && !trophiesAvailableValue.Equals(TrophysetAccess.NoSet);
 

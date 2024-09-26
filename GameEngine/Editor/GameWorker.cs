@@ -245,17 +245,15 @@ namespace PlayStationGames.GameEngine.Editor
                 new Game
                 {
                     Name = Builder[GameField.Name].SingleStringValue,
-                    PlatformType = TypeHelper.Value<PlatformType>(Builder.Value(GameField.Platform)),
-                    SourceType = TypeHelper.Value<Source>(Builder.Value(GameField.Source)),
-                    GameRegion = TypeHelper.Value<GameRegion>(Builder.Value(GameField.Region))
+                    PlatformType = Builder.Value<PlatformType>(GameField.Platform),
+                    SourceType = Builder.Value<Source>(GameField.Source),
+                    GameRegion = Builder.Value<GameRegion>(GameField.Region)
                 });
 
         private void SyncFormatWithPlatform() =>
             Builder[GameField.Format].Value = TypeHelper.TypeObject<GameFormat>(
                 formatHelper.DefaultFormat(
-                    TypeHelper.Value<PlatformType>(
-                        Builder.Value(GameField.Platform)
-                    )
+                    Builder.Value<PlatformType>(GameField.Platform)
                 )
             );
         private bool ownerReadOnlyChanged = false;
@@ -379,7 +377,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         private void SyncInstallationsWithPlatform()
         {
-            ListDAO<Installation>? installations = (ListDAO<Installation>?) Builder.Value(GameField.Installations);
+            ListDAO<Installation>? installations = Builder.Value<ListDAO<Installation>>(GameField.Installations);
 
             if (installations == null)
                 return;

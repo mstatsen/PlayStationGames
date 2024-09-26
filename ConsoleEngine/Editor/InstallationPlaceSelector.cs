@@ -55,7 +55,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
         }
 
         private OxLabel CreateLabel(string caption, Control control) => 
-            (OxLabel)OxControlHelper.AlignByBaseLine(control,
+            OxControlHelper.AlignByBaseLine(control,
                 new OxLabel()
                 {
                     Parent = this,
