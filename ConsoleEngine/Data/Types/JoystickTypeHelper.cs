@@ -42,9 +42,13 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 JoystickType.DS2Replica or
                 JoystickType.DS3Replica or
                 JoystickType.DS4Replica or
-                JoystickType.DS5Replica => true,
+                JoystickType.DS5Replica or
+                JoystickType.Other => true,
                 _ => false
             };
+
+        public bool WithSticks(JoystickType type) =>
+            type != JoystickType.MoveController;
 
         public bool SupportByGeneration(ConsoleGeneration generation, JoystickType type)
         {

@@ -77,7 +77,10 @@ namespace PlayStationGames.AccountEngine.Editor
             chooserParams.CanUnselectItem += CanUnselectItemHandler;
 
             if (ItemsChooser<ConsoleField, PSConsole>.ChooseItems(chooserParams, out RootListDAO<ConsoleField, PSConsole> selectedConsoles))
+            {
                 registeredConsoles.LinkedCopyFrom(selectedConsoles);
+                Modified = true;
+            }
 
             selectedConsoles.Clear();
         }
@@ -108,6 +111,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Renew(Account? account)
         {
+            Modified = false;
             this.account = account;
             registeredConsoles.Clear();
 
@@ -123,12 +127,15 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Save()
         {
-            if (account == null)
+            if (account == null || !Modified)
                 return;
 
             RenewOwners();
             registeredConsoles.Clear();
+            Modified = false;
         }
+
+        private bool Modified = false;
 
         private void RenewOwners()
         {
@@ -143,7 +150,6 @@ namespace PlayStationGames.AccountEngine.Editor
                     .FindAll((c) => c.Accounts.GetById(account.Id) != null)
                     )
                     console.Accounts.RemoveAll((a) => a.Id == account.Id);
-                    
 
                 foreach (PSConsole console in registeredConsoles)
                     ConsolesController.Item(ConsoleField.Id, console.Id)?.Accounts.Add(account);

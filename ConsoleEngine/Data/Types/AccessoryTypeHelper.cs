@@ -18,6 +18,25 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.Bag => "Bag",
                 AccessoryType.Box => "Original box",
                 AccessoryType.Cover => "Cover",
+                AccessoryType.StickCover => "Reserve stick cover",
+                AccessoryType.Other => "Other",
+                _ => string.Empty,
+            };
+
+        public override string GetShortName(AccessoryType value) =>
+            value switch
+            {
+                AccessoryType.Joystick => "Joystick",
+                AccessoryType.RemoteControl => "Remote",
+                AccessoryType.MemoryCard => "MemoryCard",
+                AccessoryType.Camera => "Camera",
+                AccessoryType.Earphones => "Earphones",
+                AccessoryType.Charger => "Charger",
+                AccessoryType.Connector => "Connector",
+                AccessoryType.Bag => "Bag",
+                AccessoryType.Box => "Box",
+                AccessoryType.Cover => "Cover",
+                AccessoryType.StickCover => "StickCover",
                 AccessoryType.Other => "Other",
                 _ => string.Empty,
             };

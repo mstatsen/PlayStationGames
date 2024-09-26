@@ -56,7 +56,8 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<GameLinkTypeHelper>();
         }
 
-        public override string Name => "Games";
+        public override string ListName => "Games";
+        public override string ItemName => "Game";
 
         protected override FieldHelper<GameField> RegisterFieldHelper() =>
             TypeHelper.Register<GameFieldHelper>();

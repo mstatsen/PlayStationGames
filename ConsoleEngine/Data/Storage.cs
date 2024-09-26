@@ -86,6 +86,11 @@ namespace PlayStationGames.ConsoleEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.Name, name);
         }
 
+        public override bool Equals(object? obj) => 
+            base.Equals(obj)
+            || (obj is Storage otherStorage
+                && Id.Equals(otherStorage.Id));
+
         public override string ToString() =>
             $"{Name} ({Size} Gb)";
 
@@ -94,5 +99,8 @@ namespace PlayStationGames.ConsoleEngine.Data
         private string size = string.Empty;
         private string freeSize = string.Empty;
         private string name = string.Empty;
+
+        public override int GetHashCode() => 
+            id.GetHashCode();
     }
 }

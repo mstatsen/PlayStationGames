@@ -69,7 +69,7 @@ namespace PlayStationGames
             {
                 DialogResult userConfirm = OxMessage.ShowWarning(
                     "You have uncommitted changes. Do you want to save it?"
-                );
+               );
 
                 switch (userConfirm)
                 {

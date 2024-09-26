@@ -12,6 +12,7 @@
         Box,
         Bag,
         Cover,
+        StickCover,
         Other
     }
 }

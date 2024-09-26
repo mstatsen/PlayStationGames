@@ -202,7 +202,9 @@ namespace PlayStationGames.GameEngine.View
 
 
         protected override string GetTitle() =>
-            Item != null ? Item.Name + " (" + TypeHelper.ShortName(Item.PlatformType) + ")" : "Unknown Game";
+            Item != null 
+                ? $"{Item.Name} ({TypeHelper.ShortName(Item.PlatformType)})" 
+                : "Unknown Game";
 
         protected override void PreparePanels()
         {

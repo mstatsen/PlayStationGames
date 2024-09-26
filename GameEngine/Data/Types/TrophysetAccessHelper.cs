@@ -16,5 +16,16 @@ namespace PlayStationGames.GameEngine.Data.Types
                 TrophysetAccess.NoSet => "No trophyset",
                 _ => string.Empty,
             };
+
+        public override string GetFullName(TrophysetAccess value) =>
+            value switch
+            {
+                TrophysetAccess.Ordinary => "The game supports a full set of trophies",
+                TrophysetAccess.NeverGet => "Network trophies are no longer available\n(servers are disabled)",
+                TrophysetAccess.NoSet => "The game does not support trophies",
+                _ => string.Empty,
+            };
+
+        public override bool UseToolTipForControl => true;
     }
 }

@@ -26,7 +26,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             if (Console == null)
                 return CanSelectResult.Return;
 
-            bool uninstallAvailable = !needShowUninstallMessage 
+            bool uninstallAvailable = !needShowUninstallMessage
                 || OxMessage.ShowConfirm(
                 $"Are you sure to want uninstall {(selectedList.Count > 1 ? "selected games" : currentItem.FullTitle())}?"
             ) == DialogResult.Yes;
@@ -59,7 +59,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
                 if (result == OxDialogButtonsHelper.Result(OxDialogButton.Cancel))
                     return CanSelectResult.Return;
-                    
+
                 ApplyPlacementForAll = result == OxDialogButtonsHelper.Result(OxDialogButton.ApplyForAll);
             }
 
@@ -86,9 +86,11 @@ namespace PlayStationGames.ConsoleEngine.Editor
             ItemsChooserParams<GameField, Game> chooserParams = new(
                 availableGames, installedGames)
             {
-                Title = "Installed Games",
-                AvailableTitle = "Available Games",
-                SelectedTitle = "Installed Games",
+                Title = "Games",
+                AvailableTitle = "Available for install",
+                SelectedTitle = "Installed",
+                SelectButtonTip = "Install games",
+                UnselectButtonTip = "Uninstall games",
                 SelectedGridFields = new List<GameField>()
                 {
                     GameField.Image,
@@ -107,7 +109,10 @@ namespace PlayStationGames.ConsoleEngine.Editor
             chooserParams.CanUnselectItem += CanUnselectItemHandler;
 
             if (ItemsChooser<GameField, Game>.ChooseItems(chooserParams, out RootListDAO<GameField, Game> selectedGames))
+            {
                 installedGames.LinkedCopyFrom(selectedGames);
+                Modified = true;
+            }
 
             selectedGames.Clear();
         }
@@ -168,6 +173,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         public void Renew(PSConsole? console)
         {
+            Modified = false;
             Console = console;
             installedGames.Clear();
 
@@ -183,13 +189,16 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         public void Save()
         {
-            if (Console == null)
+            if (Console == null || !Modified)
                 return;
 
             RemoveInactiveInstallations();
             RenewInstallations();
             installedGames.Clear();
+            Modified = false;
         }
+
+        private bool Modified = false;
 
         private void RenewInstallations()
         {
@@ -202,13 +211,18 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
                 if (game == null)
                     continue;
-
-                game.Installations.RemoveAll(i => i.ConsoleId == Console.Id);
-
+                
                 Installation? newInstallation = installedGame.Installations.Find(i => i.ConsoleId == Console.Id);
 
-                if (newInstallation != null)
+                if (newInstallation == null)
+                    continue;
+
+                Installation? currentInstallation = game.Installations.Find(i => i.ConsoleId == Console.Id);
+
+                if (currentInstallation == null)
                     game.Installations.Add(newInstallation);
+                else
+                    currentInstallation.CopyFrom(newInstallation);
             }
         }
 

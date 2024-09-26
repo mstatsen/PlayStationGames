@@ -7,6 +7,7 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using Microsoft.VisualBasic.FileIO;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -58,7 +59,10 @@ namespace PlayStationGames.AccountEngine.Editor
             chooserParams.CanUnselectItem += CanUnselectItemHandler;
 
             if (ItemsChooser<GameField, Game>.ChooseItems(chooserParams, out RootListDAO<GameField, Game> selectedGames))
+            {
                 existsGames.LinkedCopyFrom(selectedGames);
+                Modified = true;
+            }
 
             selectedGames.Clear();
         }
@@ -69,14 +73,17 @@ namespace PlayStationGames.AccountEngine.Editor
         {
             get
             {
-                Filter<GameField, Game> filter = new();
+                Filter<GameField, Game> filter = new(FilterConcat.OR);
 
                 if (account != null)
                 {
-                    filter.AddFilter(GameField.Licensed, true, FilterConcat.AND);
-                    filter.AddFilter(GameField.Source, Source.PSN, FilterConcat.OR);
-                    filter.AddFilter(GameField.Source, Source.PlayAtHome, FilterConcat.OR);
-                    filter.AddFilter(GameField.Source, Source.PSPlus, FilterConcat.OR);
+                    FilterGroup<GameField, Game> psnGroup = filter.AddGroup(FilterConcat.OR);
+                    psnGroup.Add(GameField.Source, FilterOperation.Equals, Source.PSN);
+                    psnGroup.Add(GameField.Source, FilterOperation.Equals, Source.PlayAtHome);
+                    psnGroup.Add(GameField.Source, FilterOperation.Equals, Source.PSPlus);
+                    FilterGroup<GameField, Game> pkgjGroup = filter.AddGroup(FilterConcat.AND);
+                    pkgjGroup.Add(pkgjGroup.Add(GameField.Source, FilterOperation.Equals, Source.PKGj));
+                    pkgjGroup.Add(pkgjGroup.Add(GameField.Platform, FilterOperation.Equals, PlatformType.PSVita));
                 }
 
                 return filter;
@@ -85,6 +92,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Renew(Account? account)
         {
+            Modified = false;
             this.account = account;
             existsGames.Clear();
 
@@ -99,12 +107,15 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Save()
         {
-            if (account == null)
+            if (account == null || !Modified)
                 return;
 
             RenewOwners();
             existsGames.Clear();
+            Modified = false;
         }
+
+        private bool Modified = false;
 
         private void RenewOwners()
         {

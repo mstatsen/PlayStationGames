@@ -173,6 +173,10 @@ namespace PlayStationGames.GameEngine.Editor
         }
 
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
+        private readonly PlatformTypeHelper platformTypeHelper = TypeHelper.Helper<PlatformTypeHelper>();
+        private readonly GameFieldGroupHelper groupHelper = TypeHelper.Helper<GameFieldGroupHelper>();
+        private readonly GameFormatHelper formatHelper = TypeHelper.Helper<GameFormatHelper>();
+        private readonly GameFieldHelper fieldHelper = TypeHelper.Helper<GameFieldHelper>();
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
@@ -216,8 +220,7 @@ namespace PlayStationGames.GameEngine.Editor
                 availableTrophiesLabel.Visible = !withoutTrophyset;
 
             bool verified = Builder.Value<bool>(GameField.Verified);
-            GameFieldGroupHelper groupHelper = TypeHelper.Helper<GameFieldGroupHelper>();
-            List<GameField> unverifiedFields = TypeHelper.Helper<GameFieldHelper>().UnverifiedFields();
+            List<GameField> unverifiedFields = fieldHelper.UnverifiedFields();
 
             foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                 foreach (GameField field in groupHelper.Fields(group))
@@ -233,9 +236,9 @@ namespace PlayStationGames.GameEngine.Editor
         }
 
         private bool CalcedTrophiesVisible =>
-            Builder.Value<bool>(GameField.Licensed)
-            && TypeHelper.Helper<GameFormatHelper>().AvailableTrophies(Builder.Value<GameFormat>(GameField.Format))
-            && TypeHelper.Helper<PlatformTypeHelper>().PlatformWithTrophies(Builder.Value<PlatformType>(GameField.Platform));
+            AccountAvailable()
+            && formatHelper.AvailableTrophies(Builder.Value<GameFormat>(GameField.Format))
+            && platformTypeHelper.PlatformWithTrophies(Builder.Value<PlatformType>(GameField.Platform));
         
         private void FillFormCaptionFromControls() => 
             FillFormCaption(
@@ -249,7 +252,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         private void SyncFormatWithPlatform() =>
             Builder[GameField.Format].Value = TypeHelper.TypeObject<GameFormat>(
-                TypeHelper.Helper<GameFormatHelper>().DefaultFormat(
+                formatHelper.DefaultFormat(
                     TypeHelper.Value<PlatformType>(
                         Builder.Value(GameField.Platform)
                     )
@@ -277,10 +280,14 @@ namespace PlayStationGames.GameEngine.Editor
                 Builder[GameField.Owner].Value = Item!.Owner;
         }
 
-        private bool AccountAvailable() =>
-            Builder[GameField.Licensed].BoolValue
-            && TypeHelper.Helper<PlatformTypeHelper>().IsPSNPlatform(Builder[GameField.Platform].EnumValue<PlatformType>())
-            && TypeHelper.Helper<SourceHelper>().IsPSN(Builder[GameField.Source].EnumValue<Source>());
+        private bool AccountAvailable()
+        {
+            return Builder[GameField.Licensed].BoolValue
+                ? platformTypeHelper.IsPSNPlatform(Builder[GameField.Platform].EnumValue<PlatformType>())
+                    && sourceHelper.IsPSN(Builder[GameField.Source].EnumValue<Source>())
+                : Builder[GameField.Platform].EnumValue<PlatformType>() == PlatformType.PSVita
+                    && Builder[GameField.Source].EnumValue<Source>() == Source.PKGj;
+        }
 
         protected readonly TrophiesControlsHelper trophiesControlsHelper;
 
@@ -360,10 +367,8 @@ namespace PlayStationGames.GameEngine.Editor
                 invisibleGroups.Add(GameFieldGroup.Installations);
             else SyncInstallationsWithPlatform();
 
-            GameFieldGroupHelper helper = TypeHelper.Helper<GameFieldGroupHelper>();
-
             foreach (GameFieldGroup group in invisibleGroups)
-                foreach (GameField field in helper.Fields(group))
+                foreach (GameField field in groupHelper.Fields(group))
                     Builder[field].Clear();
 
             Item[GameField.RelatedGames] = Builder.Value<RelatedGames>(GameField.RelatedGames);

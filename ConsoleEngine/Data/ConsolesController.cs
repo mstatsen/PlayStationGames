@@ -12,9 +12,6 @@ using PlayStationGames.ConsoleEngine.Data.Decorator;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Editor;
-using PlayStationGames.GameEngine.Data;
-using PlayStationGames.GameEngine.Data.Fields;
-using System;
 
 namespace PlayStationGames.ConsoleEngine.Data
 {
@@ -24,7 +21,8 @@ namespace PlayStationGames.ConsoleEngine.Data
         ConsoleFieldGroup, 
         ConsolesController>
     {
-        public override string Name => "Consoles";
+        public override string ListName => "Consoles";
+        public override string ItemName => "Console";
 
         protected override DecoratorFactory<ConsoleField, PSConsole> CreateDecoratorFactory() =>
             new ConsoleDecoratorFactory();

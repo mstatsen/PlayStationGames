@@ -233,5 +233,24 @@ namespace PlayStationGames.ConsoleEngine.Data
             fieldHelper.CalcedFields.Contains(field);
 
         public override string FullTitle() => Name;
+
+        public override bool Equals(object? obj)
+        {
+            if (!base.Equals(obj))
+                return false;
+            
+            if (obj is PSConsole otherConsole)
+                return Generation.Equals(otherConsole.Generation)
+                    && Model.Equals(otherConsole.Model)
+                    && Storages.Equals(otherConsole.Storages)
+                    && Folders.Equals(otherConsole.Folders)
+                    && Accounts.Equals(otherConsole.Accounts)
+                    && Accessories.Equals(otherConsole.Accessories)
+                    && Firmware.Equals(otherConsole.Firmware);
+            else return false;
+        }
+
+        public override int GetHashCode() => 
+            Id.GetHashCode();
     }
 }
