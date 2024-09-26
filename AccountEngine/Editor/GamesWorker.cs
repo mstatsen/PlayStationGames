@@ -153,8 +153,6 @@ namespace PlayStationGames.AccountEngine.Editor
 
             try
             {
-                
-
                 foreach (Game game in updatedList)
                     game.Owner = AccountValueAccessor.NullAccount.Id;
 
@@ -167,9 +165,6 @@ namespace PlayStationGames.AccountEngine.Editor
             }
             finally
             {
-                foreach (Game game in updatedList)
-                    game.ChangeHandler?.Invoke(game, new(DAOOperation.Modify));
-
                 gamesController.FullItemsList.FinishSilentChange();
             }
         }
