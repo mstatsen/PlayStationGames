@@ -102,7 +102,7 @@ namespace PlayStationGames.GameEngine.Editor
                 return;
 
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = Item;
-            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).AvailableTrophies = CalcedTrophiesVisible &&
+            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).AvailableTrophyset = AvailableTrophyset &&
                 Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet;
 
             Filter<GameField, Game> relatedGameFilter = new();
@@ -180,7 +180,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
-            Editor.Groups[GameFieldGroup.Trophyset].Visible = Editor.Groups[GameFieldGroup.Trophyset].Visible = CalcedTrophiesVisible;
+            Editor.Groups[GameFieldGroup.Trophyset].Visible = Editor.Groups[GameFieldGroup.Trophyset].Visible = AvailableTrophyset;
             Editor.Groups[GameFieldGroup.Installations].Visible =
                 sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
 
@@ -235,11 +235,14 @@ namespace PlayStationGames.GameEngine.Editor
             return false;
         }
 
-        private bool CalcedTrophiesVisible =>
-            AccountAvailable()
-            && formatHelper.AvailableTrophies(Builder.Value<GameFormat>(GameField.Format))
-            && platformTypeHelper.PlatformWithTrophies(Builder.Value<PlatformType>(GameField.Platform));
-        
+        private bool AvailableTrophyset =>
+            new Game()
+            {
+                PlatformType = Builder[GameField.Platform].EnumValue<PlatformType>(),
+                Format = Builder[GameField.Format].EnumValue<GameFormat>(),
+
+            }.TrophysetAvailable;
+
         private void FillFormCaptionFromControls() => 
             FillFormCaption(
                 new Game
@@ -338,7 +341,7 @@ namespace PlayStationGames.GameEngine.Editor
             if (Item == null)
                 return;
 
-            if (!CalcedTrophiesVisible)
+            if (!AvailableTrophyset)
             {
                 Builder[GameField.TrophysetAccess].Value = TrophysetAccess.NoSet;
                 trophiesControlsHelper.CalcTrophiesControls();

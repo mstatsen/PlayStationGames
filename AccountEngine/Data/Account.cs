@@ -10,8 +10,19 @@ using System.Xml;
 
 namespace PlayStationGames.AccountEngine.Data
 {
-    public class Account : RootDAO<AccountField>
+    public class Account : RootDAO<AccountField>, IEmptyChecked
     {
+        public class EmptyAccount : Account
+        {
+            public EmptyAccount() => Id = Guid.NewGuid();
+            public override bool IsEmpty => true;
+        }
+
+        public static EmptyAccount AnyAccount = new()
+        {
+            Name = "Any"
+        };
+
         public Account() : base() { }
 
         public readonly Links<AccountField> Links = new();

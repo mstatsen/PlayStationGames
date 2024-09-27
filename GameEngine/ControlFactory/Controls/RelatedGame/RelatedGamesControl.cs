@@ -11,7 +11,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         RelatedGameEditor, GameField, Game>
     {
         private bool availableTrophies = true;
-        public bool AvailableTrophies 
+        public bool AvailableTrophyset 
         {
             get => availableTrophies;
             set => availableTrophies = value;

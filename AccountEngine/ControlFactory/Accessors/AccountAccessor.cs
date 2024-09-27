@@ -1,7 +1,9 @@
+using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.ControlFactory.ValueAccessors;
 using OxDAOEngine.Data;
+using OxDAOEngine.Data.Types;
 using OxLibrary.Controls;
 using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
 using PlayStationGames.AccountEngine.Data;
@@ -36,11 +38,16 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
             base.InitControl();
             ComboBox.Items.Clear();
 
-            if (Parameters == null ||
+            if (Context.IsQuickFilter)
+                ComboBox.Items.Add(Account.AnyAccount);
+
+            if (Context.Scope != ControlScope.Editor ||
+                Parameters == null ||
                 Parameters.UseNullable)
                 ComboBox.Items.Add(AccountValueAccessor.NullAccount);
 
-            if (Parameters == null ||
+            if (Context.Scope != ControlScope.Editor || 
+                Parameters == null ||
                 !Parameters.OnlyNullable)
             {
                 foreach (var account in DataManager.ListController<AccountField, Account>().FullItemsList)

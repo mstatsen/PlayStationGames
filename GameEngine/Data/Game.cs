@@ -778,8 +778,7 @@ namespace PlayStationGames.GameEngine.Data
             if (CriticScore >= 0)
                 XmlHelper.AppendElement(element, XmlConsts.CriticScore, CriticScore);
 
-            if (sourceHelper.TrophysetSupport(SourceType) &&
-                platformTypeHelper.PlatformWithTrophies(PlatformType))
+            if (TrophysetAvailable)
             {
                 XmlHelper.AppendElement(element, XmlConsts.TrophysetAccess, TrophysetAccess);
                 XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
@@ -969,6 +968,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         private static readonly PlatformTypeHelper platformTypeHelper = TypeHelper.Helper<PlatformTypeHelper>();
+        private static readonly GameFormatHelper formatHelper = TypeHelper.Helper<GameFormatHelper>();
         private static readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
 
         public bool AccountAvailable => 
@@ -977,5 +977,9 @@ namespace PlayStationGames.GameEngine.Data
                     && sourceHelper.IsPSN(SourceType)
                 : PlatformType == PlatformType.PSVita
                     && SourceType == Source.PKGj;
+
+        public bool TrophysetAvailable =>
+            formatHelper.AvailableTrophies(Format)
+            && platformTypeHelper.PlatformWithTrophies(PlatformType);
     }
 }
