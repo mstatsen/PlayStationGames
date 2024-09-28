@@ -126,6 +126,21 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 checkBox.ReadOnly = readOnly;
         }
 
-        private bool readOnly = false;
+        private bool readOnly;
+
+        protected override void SetItemEdited(EventHandler? value)
+        {
+            foreach (OxCheckBox checkBox in CheckBoxes.Values)
+                checkBox.CheckedChanged -= ItemEdited;
+
+            base.SetItemEdited(value);
+
+            foreach (OxCheckBox checkBox in CheckBoxes.Values)
+                checkBox.CheckedChanged += ItemEdited;
+        }
+
+        protected override bool IndentItems => true;
+        public override object? PrepareValueToReadOnly(Platforms? value) => 
+            "Released on\r\n" + base.PrepareValueToReadOnly(value);
     }
 }

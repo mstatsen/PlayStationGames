@@ -13,6 +13,7 @@ using PlayStationGames.GameEngine.ControlFactory.Controls;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxDAOEngine.ControlFactory.Accessors;
 
 namespace PlayStationGames.GameEngine.Editor
 {
@@ -29,7 +30,8 @@ namespace PlayStationGames.GameEngine.Editor
         protected override void AfterColorizeControls()
         {
             base.AfterColorizeControls();
-            ((OxPictureContainer)Layouter.PlacedControl(GameField.Image)!.Control).BaseColor = new OxColorHelper(Editor.MainPanel.BaseColor).Lighter();
+            ((OxPictureContainer)Layouter.PlacedControl(GameField.Image)!.Control).BaseColor = 
+                new OxColorHelper(Editor.MainPanel.BaseColor).Lighter();
         }
 
         protected override void BeforeFillControls()
@@ -67,6 +69,19 @@ namespace PlayStationGames.GameEngine.Editor
             trophiesControlsHelper.ClearUnusedCaptions();
         }
 
+        protected override void AfterLayoutControls()
+        {
+            base.AfterLayoutControls();
+
+            foreach (GameField field in fieldHelper.TrophiesFields)
+            {
+                if (field is GameField.AvailablePlatinum or GameField.EarnedPlatinum)
+                    continue;
+
+                ((NumericAccessor<GameField, Game>)Builder[field]).CenteredReadonlyText = true;
+            }
+        }
+
         protected override void AfterFillControlsAndSetHandlers()
         {
             base.AfterFillControlsAndSetHandlers();
@@ -102,8 +117,9 @@ namespace PlayStationGames.GameEngine.Editor
                 return;
 
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = Item;
-            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).AvailableTrophyset = AvailableTrophyset &&
-                Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet;
+            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).AvailableTrophyset = 
+                AvailableTrophyset 
+                && Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet;
 
             Filter<GameField, Game> relatedGameFilter = new();
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);
@@ -184,32 +200,19 @@ namespace PlayStationGames.GameEngine.Editor
             Editor.Groups[GameFieldGroup.Installations].Visible =
                 sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
 
-            Editor.Groups[GameFieldGroup.DLC].Visible = Builder.Value<bool>(GameField.Licensed);
-
             bool isEmulator = Builder.Value<GameFormat>(GameField.Format) == GameFormat.Emulator;
             Editor.Groups[GameFieldGroup.Emulator].Visible = isEmulator;
             Editor.Groups[GameFieldGroup.Genre].Visible = !isEmulator;
             Editor.Groups[GameFieldGroup.RelatedGames].Visible = !isEmulator;
             Editor.Groups[GameFieldGroup.ReleaseBase].Visible = !isEmulator;
 
-            Builder.SetVisible(GameField.Edition, !isEmulator);
-            Builder.SetVisible(GameField.Series, !isEmulator);
             Builder.SetVisible(GameField.EmulatorType, isEmulator);
 
             bool withoutTrophyset = Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) == TrophysetAccess.NoSet;
 
-            Builder.SetVisible(GameField.AvailableBronze, !withoutTrophyset);
-            Builder.SetVisible(GameField.AvailableSilver, !withoutTrophyset);
-            Builder.SetVisible(GameField.AvailableGold, !withoutTrophyset);
-            Builder.SetVisible(GameField.AvailablePlatinum, !withoutTrophyset);
-            Builder.SetVisible(GameField.AvailableFromDLC, !withoutTrophyset);
-            Builder.SetVisible(GameField.AvailableNet, !withoutTrophyset);
-            Builder.SetVisible(GameField.EarnedBronze, !withoutTrophyset);
-            Builder.SetVisible(GameField.EarnedSilver, !withoutTrophyset);
-            Builder.SetVisible(GameField.EarnedGold, !withoutTrophyset);
-            Builder.SetVisible(GameField.EarnedPlatinum, !withoutTrophyset);
-            Builder.SetVisible(GameField.EarnedFromDLC, !withoutTrophyset);
-            Builder.SetVisible(GameField.EarnedNet, !withoutTrophyset);
+            foreach (GameField field in fieldHelper.TrophiesFields)
+                Builder.SetVisible(field, !withoutTrophyset);
+
             Builder.SetVisible(GameField.Difficult, !withoutTrophyset);
             Builder.SetVisible(GameField.CompleteTime, !withoutTrophyset);
 
@@ -222,16 +225,34 @@ namespace PlayStationGames.GameEngine.Editor
             bool verified = Builder.Value<bool>(GameField.Verified);
             List<GameField> unverifiedFields = fieldHelper.UnverifiedFields();
 
-            foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
-                foreach (GameField field in groupHelper.Fields(group))
-                    Builder[field].ReadOnly = verified && !unverifiedFields.Contains(field);
+            if (!verified)
+                foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
+                    foreach (GameField field in groupHelper.Fields(group))
+                        Builder[field].ReadOnly = false;
+
+            trophiesControlsHelper.SetTrophiesControlsVisible(verified);
+            Builder.SetVisible(GameField.Edition, 
+                !isEmulator 
+                && (!verified || !Builder[GameField.Edition].IsEmpty)
+            );
+            Builder.SetVisible(GameField.Series, 
+                !isEmulator 
+                && (!verified || !Builder[GameField.Series].IsEmpty)
+            );
+
+            if (verified)
+                foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
+                    foreach (GameField field in groupHelper.Fields(group))
+                        Builder[field].ReadOnly = !unverifiedFields.Contains(field);
 
             if (!verified)
-                Builder[GameField.Owner].ReadOnly = !AccountAvailable();
+                Builder[GameField.Owner].Enabled = AccountAvailable();
 
             if (afterSyncValues && ownerReadOnlyChanged)
                 Builder[GameField.Owner].SetDefaultValue();
 
+            Editor.Groups[GameFieldGroup.DLC].Visible = Builder.Value<bool>(GameField.Licensed) 
+                && (!verified || !Builder[GameField.Dlcs].IsEmpty);
             return false;
         }
 
@@ -264,7 +285,7 @@ namespace PlayStationGames.GameEngine.Editor
         private void SyncOwnerWithControls(bool byUser)
         {
             bool accountAvailable = AccountAvailable();
-            ownerReadOnlyChanged = accountAvailable == Builder[GameField.Owner].ReadOnly;
+            ownerReadOnlyChanged = accountAvailable != Builder[GameField.Owner].Enabled;
 
             if (byUser && !ownerReadOnlyChanged)
                 return;

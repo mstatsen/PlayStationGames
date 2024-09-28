@@ -3,90 +3,85 @@ using OxDAOEngine.ControlFactory;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxDAOEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Editor
 {
     public class TrophiesControlsHelper
     {
-        private readonly ControlBuilder<GameField, Game> controlBuilder;
+        private readonly ControlBuilder<GameField, Game> Builder;
         public TrophiesControlsHelper(ControlBuilder<GameField, Game> controlBuiler) =>
-            controlBuilder = controlBuiler;
+            Builder = controlBuiler;
+
+        GameFieldHelper fieldHelper = TypeHelper.Helper<GameFieldHelper>();
 
         public void ClearTrophiesControlsConstraints()
         {
-            controlBuilder.ClearValueConstraints(GameField.EarnedGold);
-            controlBuilder.ClearValueConstraints(GameField.EarnedSilver);
-            controlBuilder.ClearValueConstraints(GameField.EarnedBronze);
-            controlBuilder.ClearValueConstraints(GameField.EarnedFromDLC);
-            controlBuilder.ClearValueConstraints(GameField.EarnedNet);
-            controlBuilder.ClearValueConstraints(GameField.AvailableGold);
-            controlBuilder.ClearValueConstraints(GameField.AvailableSilver);
-            controlBuilder.ClearValueConstraints(GameField.AvailableBronze);
-            controlBuilder.ClearValueConstraints(GameField.AvailableFromDLC);
-            controlBuilder.ClearValueConstraints(GameField.AvailableNet);
+            foreach (GameField field in fieldHelper.TrophiesFields)
+                Builder.ClearValueConstraints(field);
         }
 
         public void CalcTrophiesControls()
         {
-            TrophysetAccess? trophiesAvailableValue = 
-                controlBuilder.Value<TrophysetAccess>(GameField.TrophysetAccess);
-            bool trophiesAvailable = trophiesAvailableValue != null 
+            TrophysetAccess? trophiesAvailableValue =
+                Builder.Value<TrophysetAccess>(GameField.TrophysetAccess);
+            bool trophiesAvailable = trophiesAvailableValue != null
                 && !trophiesAvailableValue.Equals(TrophysetAccess.NoSet);
 
             if (!trophiesAvailable)
-                controlBuilder[GameField.AvailablePlatinum].Value = false;
+                Builder[GameField.AvailablePlatinum].Value = false;
 
-            controlBuilder[GameField.AvailableGold].MaximumValue = trophiesAvailable ? 200 : 0;
-            controlBuilder[GameField.AvailableSilver].MaximumValue = trophiesAvailable ? 200 : 0;
-            controlBuilder[GameField.AvailableBronze].MaximumValue = trophiesAvailable ? 200 : 0;
+            Builder[GameField.AvailableGold].MaximumValue = trophiesAvailable ? 200 : 0;
+            Builder[GameField.AvailableSilver].MaximumValue = trophiesAvailable ? 200 : 0;
+            Builder[GameField.AvailableBronze].MaximumValue = trophiesAvailable ? 200 : 0;
 
-            controlBuilder[GameField.EarnedPlatinum].Enabled = controlBuilder[GameField.AvailablePlatinum].BoolValue;
+            Builder[GameField.EarnedPlatinum].Enabled = Builder[GameField.AvailablePlatinum].BoolValue;
 
             foreach (var item in DislbledIfOtherZero)
-                controlBuilder[item.Key].Enabled
-                    = controlBuilder[item.Value].IntValue > 0;
+                Builder[item.Key].Enabled
+                    = Builder[item.Value].IntValue > 0;
 
-            controlBuilder[GameField.AvailableFromDLC].MaximumValue = controlBuilder[GameField.AvailableGold].IntValue
-                + controlBuilder[GameField.AvailableSilver].IntValue
-                + controlBuilder[GameField.AvailableBronze].IntValue;
-            controlBuilder[GameField.AvailableNet].MaximumValue = controlBuilder[GameField.AvailableFromDLC].MaximumValue;
+            Builder[GameField.AvailableFromDLC].MaximumValue = Builder[GameField.AvailableGold].IntValue
+                + Builder[GameField.AvailableSilver].IntValue
+                + Builder[GameField.AvailableBronze].IntValue;
+            Builder[GameField.AvailableNet].MaximumValue = Builder[GameField.AvailableFromDLC].MaximumValue;
 
-            controlBuilder[GameField.EarnedGold].MaximumValue = controlBuilder[GameField.AvailableGold].IntValue;
-            controlBuilder[GameField.EarnedSilver].MaximumValue = controlBuilder[GameField.AvailableSilver].IntValue;
-            controlBuilder[GameField.EarnedBronze].MaximumValue = controlBuilder[GameField.AvailableBronze].IntValue;
+            Builder[GameField.EarnedGold].MaximumValue = Builder[GameField.AvailableGold].IntValue;
+            Builder[GameField.EarnedSilver].MaximumValue = Builder[GameField.AvailableSilver].IntValue;
+            Builder[GameField.EarnedBronze].MaximumValue = Builder[GameField.AvailableBronze].IntValue;
 
             int totalEarnedTrophies =
-                controlBuilder[GameField.EarnedGold].IntValue
-                + controlBuilder[GameField.EarnedSilver].IntValue
-                + controlBuilder[GameField.EarnedBronze].IntValue;
+                Builder[GameField.EarnedGold].IntValue
+                + Builder[GameField.EarnedSilver].IntValue
+                + Builder[GameField.EarnedBronze].IntValue;
 
-            controlBuilder[GameField.EarnedFromDLC].MaximumValue = Math.Min(
-                controlBuilder[GameField.AvailableFromDLC].IntValue,
+            Builder[GameField.EarnedFromDLC].MaximumValue = Math.Min(
+                Builder[GameField.AvailableFromDLC].IntValue,
                 totalEarnedTrophies);
-            controlBuilder[GameField.EarnedNet].MaximumValue = Math.Min(
-                controlBuilder[GameField.AvailableNet].IntValue,
+            Builder[GameField.EarnedNet].MaximumValue = Math.Min(
+                Builder[GameField.AvailableNet].IntValue,
                 totalEarnedTrophies);
 
-            if (!controlBuilder[GameField.EarnedPlatinum].Enabled)
-                controlBuilder[GameField.EarnedPlatinum].Value = false;
+            if (!Builder[GameField.EarnedPlatinum].Enabled)
+                Builder[GameField.EarnedPlatinum].Value = false;
 
             foreach (GameField field in ZeroIfDisabled)
-                if (!controlBuilder[field].Enabled)
-                    controlBuilder[field].Value = 0;
+                if (!Builder[field].Enabled)
+                    Builder[field].Value = 0;
 
-            if (!controlBuilder[GameField.Difficult].Enabled)
-                controlBuilder[GameField.Difficult].Value = Difficult.Unknown;
+            if (!Builder[GameField.Difficult].Enabled)
+                Builder[GameField.Difficult].Value = Difficult.Unknown;
 
-            if (!controlBuilder[GameField.CompleteTime].Enabled)
-                controlBuilder[GameField.CompleteTime].Value = CompleteTime.ctUnknown;
+            if (!Builder[GameField.CompleteTime].Enabled)
+                Builder[GameField.CompleteTime].Value = CompleteTime.ctUnknown;
         }
 
         public void ClearUnusedCaptions()
         {
-            ((OxLabel)controlBuilder[GameField.EarnedPlatinum].Control.Tag).Top -= 4;
-            controlBuilder[GameField.EarnedFromDLC].Text = string.Empty;
-            controlBuilder[GameField.AvailablePlatinum].Text = string.Empty;
-            controlBuilder[GameField.EarnedPlatinum].Text = string.Empty;
+            ((OxLabel)Builder[GameField.EarnedPlatinum].Control.Tag).Top -= 4;
+            Builder[GameField.EarnedFromDLC].Text = string.Empty;
+            Builder[GameField.AvailablePlatinum].Text = string.Empty;
+            Builder[GameField.EarnedPlatinum].Text = string.Empty;
         }
 
         public void AlignLabels()
@@ -95,10 +90,30 @@ namespace PlayStationGames.GameEngine.Editor
 
             foreach (GameField field in FieldsWithLabel)
                 minLabelLeft = Math.Min(minLabelLeft,
-                    ((OxLabel)controlBuilder.Control(field).Tag).Left);
+                    ((OxLabel)Builder.Control(field).Tag).Left);
 
             foreach (GameField field in FieldsWithLabel)
-                ((OxLabel)controlBuilder.Control(field).Tag).Left = minLabelLeft;
+                ((OxLabel)Builder.Control(field).Tag).Left = minLabelLeft;
+        }
+
+        private void SetTrophiesPairControlsVisible(GameField mainField, GameField dependField, bool visible)
+        {
+            Builder.SetVisible(mainField, visible);
+            Builder.SetVisible(dependField, visible);
+        }
+
+        public void SetTrophiesControlsVisible(bool verified)
+        {
+            foreach (var item in DislbledIfOtherZero)
+                SetTrophiesPairControlsVisible(
+                    item.Value, 
+                    item.Key, 
+                    !verified || Builder[item.Value].IntValue != 0);
+
+            SetTrophiesPairControlsVisible(
+                    GameField.AvailablePlatinum,
+                    GameField.EarnedPlatinum,
+                    !verified || Builder[GameField.AvailablePlatinum].BoolValue);
         }
 
         private readonly List<GameField> FieldsWithLabel = 

@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.ControlFactory;
+using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
@@ -813,6 +814,21 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override GameField TitleField => GameField.Name;
         public override GameField ImageField => GameField.Image;
         public override GameField UniqueField => GameField.Id;
+
+        public readonly List<GameField> TrophiesFields = new()
+        {
+            GameField.AvailablePlatinum,
+            GameField.AvailableGold,
+            GameField.AvailableSilver,
+            GameField.AvailableBronze,
+            GameField.AvailableFromDLC,
+            GameField.AvailableNet,
+            GameField.EarnedGold,
+            GameField.EarnedSilver,
+            GameField.EarnedBronze,
+            GameField.EarnedFromDLC,
+            GameField.EarnedNet
+        };
 
         public override List<GameField> Depended(GameField field) => 
             field switch
