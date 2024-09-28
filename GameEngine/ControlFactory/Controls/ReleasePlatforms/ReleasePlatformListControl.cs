@@ -140,6 +140,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         }
 
         protected override bool IndentItems => true;
+
         public override object? PrepareValueToReadOnly(Platforms? value) => 
             "Released on\r\n" + base.PrepareValueToReadOnly(value);
     }
