@@ -10,10 +10,16 @@ namespace PlayStationGames.GameEngine.Editor
     public class TrophiesControlsHelper
     {
         private readonly ControlBuilder<GameField, Game> Builder;
-        public TrophiesControlsHelper(ControlBuilder<GameField, Game> controlBuiler) =>
-            Builder = controlBuiler;
+        private readonly GameEditorLayoutsGenerator Generator;
 
-        GameFieldHelper fieldHelper = TypeHelper.Helper<GameFieldHelper>();
+        public TrophiesControlsHelper(ControlBuilder<GameField, Game> controlBuiler, 
+            GameEditorLayoutsGenerator generator)
+        {
+            Builder = controlBuiler;
+            Generator = generator;
+        }
+
+        private readonly GameFieldHelper fieldHelper = TypeHelper.Helper<GameFieldHelper>();
 
         public void ClearTrophiesControlsConstraints()
         {
@@ -96,24 +102,53 @@ namespace PlayStationGames.GameEngine.Editor
                 ((OxLabel)Builder.Control(field).Tag).Left = minLabelLeft;
         }
 
-        private void SetTrophiesPairControlsVisible(GameField mainField, GameField dependField, bool visible)
+        private int SetTrophiesPairControlsVisible(GameField mainField, GameField dependField, bool visible, int lastBottom, bool needOffset)
         {
             Builder.SetVisible(mainField, visible);
             Builder.SetVisible(dependField, visible);
+
+            if (visible)
+            {
+                if (needOffset)
+                    lastBottom += Generator.Offset(mainField);
+
+                Builder[mainField].Top = lastBottom;
+                Builder[dependField].Top = lastBottom;
+                lastBottom = Builder[mainField].Bottom;
+            }
+
+            return lastBottom;
         }
 
         public void SetTrophiesControlsVisible(bool verified)
         {
-            foreach (var item in DislbledIfOtherZero)
-                SetTrophiesPairControlsVisible(
-                    item.Value, 
-                    item.Key, 
-                    !verified || Builder[item.Value].IntValue != 0);
+            int lastBottom = Generator.Top(GameField.AvailablePlatinum) 
+                - Generator.Offset(GameField.AvailablePlatinum);
 
-            SetTrophiesPairControlsVisible(
-                    GameField.AvailablePlatinum,
-                    GameField.EarnedPlatinum,
-                    !verified || Builder[GameField.AvailablePlatinum].BoolValue);
+            bool visibleControlExist =
+                Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet
+                && (!verified || Builder[GameField.AvailablePlatinum].BoolValue);
+
+            lastBottom = SetTrophiesPairControlsVisible(
+                GameField.AvailablePlatinum,
+                GameField.EarnedPlatinum,
+                visibleControlExist,
+                lastBottom,
+                false);
+
+            foreach (var item in DislbledIfOtherZero)
+            {
+                bool currentVisible =
+                    Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet
+                    && (!verified || Builder[item.Value].IntValue != 0);
+                lastBottom = SetTrophiesPairControlsVisible(
+                    item.Value,
+                    item.Key,
+                    currentVisible,
+                    lastBottom,
+                    visibleControlExist);
+                visibleControlExist |= currentVisible;
+            }
         }
 
         private readonly List<GameField> FieldsWithLabel = 

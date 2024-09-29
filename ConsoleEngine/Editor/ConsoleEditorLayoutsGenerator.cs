@@ -12,7 +12,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
         public ConsoleEditorLayoutsGenerator(FieldGroupFrames<ConsoleField, ConsoleFieldGroup> groupFrames,
             ControlLayouter<ConsoleField, PSConsole> layouter) : base(groupFrames, layouter) { }
 
-        protected override List<ConsoleField> ControlsWithoutLabel() => 
+        public override List<ConsoleField> ControlsWithoutLabel() => 
             new()
             {
                 ConsoleField.Folders,
@@ -21,7 +21,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleField.Accounts
             };
 
-        protected override List<ConsoleField> FillDockFields() => 
+        public override List<ConsoleField> FillDockFields() => 
             new()
             {
                 ConsoleField.Folders,
@@ -30,7 +30,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleField.Accounts
             };
 
-        protected override List<ConsoleField> OffsettingFields() =>
+        public override List<ConsoleField> OffsettingFields() =>
             new()
             {
                 ConsoleField.Generation,
@@ -38,14 +38,14 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleField.Firmware
             };
 
-        protected override int Top(ConsoleField field) => 8;
+        public override int Top(ConsoleField field) => 8;
 
-        protected override int Left(ConsoleField field) => 94;
+        public override int Left(ConsoleField field) => 94;
 
-        protected override int Width(ConsoleField field) => 
+        public override int Width(ConsoleField field) => 
             field == ConsoleField.Name ? 180 : 100;
 
-        protected override int Offset(ConsoleField field) =>
+        public override int Offset(ConsoleField field) =>
             field switch
             {
                 ConsoleField.Generation => 4,

@@ -18,7 +18,7 @@ namespace PlayStationGames.GameEngine.Data
 {
     public class Game : RootDAO<GameField>
     {
-        private Guid id = Guid.Empty;
+        private Guid id = Guid.NewGuid();
         private string edition = string.Empty;
         private string series = string.Empty;
         private Guid owner = Guid.Empty;
@@ -695,7 +695,7 @@ namespace PlayStationGames.GameEngine.Data
                 return;
 
             base.Clear();
-            id = Guid.Empty;
+            id = Guid.NewGuid();
             edition = string.Empty;
             series = string.Empty;
             verified = false;

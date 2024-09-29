@@ -36,11 +36,11 @@ namespace PlayStationGames.AccountEngine.Editor
             switch (field)
             { 
                 case AccountField.Type:
-                    gamesButton.Enabled = TypeHelper.Value<AccountType>(Builder.Value(field)) == AccountType.PSN;
+                    RecalcButtonsAvailable();
                     break;
             }
 
-            return false;
+            return field == AccountField.Type;
         }
 
         private void FillFormCaptionFromControls() =>
@@ -59,20 +59,19 @@ namespace PlayStationGames.AccountEngine.Editor
         {
             base.AfterLayoutControls();
 
-            int buttonWidth = Editor.Groups[AccountFieldGroup.Property].Width / 2 - 26;
+            
             consolesButton.Parent = Editor.Groups[AccountFieldGroup.Property];
             consolesButton.Top = 12;
             consolesButton.Left = 12;
-            consolesButton.SetContentSize(buttonWidth, 40);
             consolesButton.Click -= ConsoleButtonClickHandler;
             consolesButton.Click += ConsoleButtonClickHandler;
 
             gamesButton.Parent = Editor.Groups[AccountFieldGroup.Property];
             gamesButton.Top = 12;
             gamesButton.Left = Editor.Groups[AccountFieldGroup.Property].Width / 2 - 2;
-            gamesButton.SetContentSize(buttonWidth, 40);
             gamesButton.Click -= GamesButtonClickHandler;
             gamesButton.Click += GamesButtonClickHandler;
+            RecalcButtonsAvailable();
 
             Editor.Groups[AccountFieldGroup.Property].Height = consolesButton.Bottom;
             Editor.Groups.SetGroupsSize();
@@ -80,6 +79,17 @@ namespace PlayStationGames.AccountEngine.Editor
 
             consolesWorker.Renew(Item);
             gamesWorker.Renew(Item);
+        }
+
+        private void RecalcButtonsAvailable()
+        {
+            bool gamesButtonVisible = TypeHelper.Value<AccountType>(Builder.Value(AccountField.Type)) == AccountType.PSN;
+            gamesButton.Visible = gamesButtonVisible;
+            int buttonWidth = gamesButtonVisible
+                ? Editor.Groups[AccountFieldGroup.Property].Width / 2 - 26
+                : Editor.Groups[AccountFieldGroup.Property].Width - 42;
+            consolesButton.SetContentSize(buttonWidth, 40);
+            gamesButton.SetContentSize(buttonWidth, 40);
         }
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)
@@ -146,5 +156,22 @@ namespace PlayStationGames.AccountEngine.Editor
                     Editor.Groups,
                     { AccountFieldGroup.System, Editor.MainPanel.Footer }
                 };
+
+        protected override bool SetGroupsAvailability(bool afterSyncValues = false)
+        {
+            if (Builder.Value<AccountType>(AccountField.Type) == AccountType.PSN)
+            {
+                Editor.Groups[AccountFieldGroup.Auth].Visible = true;
+                Editor.Groups[AccountFieldGroup.Links].Visible = true;
+                
+            }
+            else
+            {
+                Editor.Groups[AccountFieldGroup.Auth].Visible = false;
+                Editor.Groups[AccountFieldGroup.Links].Visible = false;
+            }
+
+            return afterSyncValues;
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override string GetName(GameField value) =>
             value switch
             {
-                GameField.Id => "Game ID:",
+                GameField.Id => "Game ID",
                 GameField.Name => "Name",
                 GameField.Owner => "PSN Profile",
                 GameField.Licensed => "Licensed",
@@ -920,7 +920,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override FieldType GetFieldType(GameField field) => 
             field switch
             {
-                GameField.Name or
+                GameField.Name =>
+                    FieldType.ShortMemo,
                 GameField.EmulatorROMs => 
                     FieldType.Memo,
                 GameField.Image => 

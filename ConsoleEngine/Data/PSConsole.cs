@@ -48,7 +48,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override void Clear()
         {
-            Id = Guid.Empty;
+            id = Guid.NewGuid();
             generation = TypeHelper.DefaultValue<ConsoleGeneration>();
             model = TypeHelper.DefaultValue<ConsoleModel>();
             storages.Clear();

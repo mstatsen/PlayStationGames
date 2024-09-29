@@ -12,7 +12,7 @@ namespace PlayStationGames.AccountEngine.Editor
         public AccountEditorLayoutsGenerator(FieldGroupFrames<AccountField, AccountFieldGroup> groupFrames,
             ControlLayouter<AccountField, Account> layouter) : base(groupFrames, layouter) { }
 
-        protected override List<AccountField> ControlsWithoutLabel() =>
+        public override List<AccountField> ControlsWithoutLabel() =>
             new()
             {
                 AccountField.Consoles,
@@ -22,13 +22,13 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.Links
             };
 
-        protected override List<AccountField> AutoSizeFields() =>
+        public override List<AccountField> AutoSizeFields() =>
             new()
             {
                 AccountField.DefaultAccount   
             };
 
-        protected override List<AccountField> OffsettingFields() =>
+        public override List<AccountField> OffsettingFields() =>
             new()
             {
                 AccountField.Type,
@@ -37,7 +37,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.StrategeLink
             };
 
-        protected override int Top(AccountField field) =>
+        public override int Top(AccountField field) =>
             field switch
             {
                 AccountField.DefaultAccount =>
@@ -45,7 +45,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 _ => 8
             };
 
-        protected override int Left(AccountField field) =>
+        public override int Left(AccountField field) =>
             field is AccountField.Avatar or 
                 AccountField.DefaultAccount
             ? 8
@@ -55,7 +55,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 ? 169
                 : 74;
 
-        protected override int Width(AccountField field) =>
+        public override int Width(AccountField field) =>
             field switch
             {
                 AccountField.Avatar => 
@@ -73,13 +73,13 @@ namespace PlayStationGames.AccountEngine.Editor
                 _ => 210
             };
 
-        protected override List<AccountField> FillDockFields() =>
+        public override List<AccountField> FillDockFields() =>
             new()
             {
                 AccountField.Links
             };
 
-        protected override Color BackColor(AccountField field) =>
+        public override Color BackColor(AccountField field) =>
             field switch
             {
                 AccountField.Avatar =>
@@ -89,14 +89,14 @@ namespace PlayStationGames.AccountEngine.Editor
                     Color.FromArgb(250, 250, 250),
             };
 
-        protected override int Height(AccountField field) =>
+        public override int Height(AccountField field) =>
             field == AccountField.Avatar
                 ? 80
                 : field == AccountField.DefaultAccount 
                     ? 20
                     : base.Height(field);
 
-        protected override AnchorStyles Anchors(AccountField field)
+        public override AnchorStyles Anchors(AccountField field)
         {
             AnchorStyles anchors = base.Anchors(field);
 

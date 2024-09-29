@@ -3,6 +3,7 @@ using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.ControlFactory.ValueAccessors;
 using OxDAOEngine.Data;
+using OxLibrary;
 using OxLibrary.Controls;
 using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
@@ -78,7 +79,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
             OnControlSizeChanged();
         }
 
-        private OxLabel ReadOnlyLabel = default!;
+        private OxTextBox ReadOnlyLabel = default!;
         private readonly OxPicture ReadOnlyPicture = new();
 
         private readonly int ReadOnlyPictureSize = 24;
@@ -89,7 +90,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
             {
                 Height = ReadOnlyPictureSize
             };
-            ReadOnlyLabel = (OxLabel)base.CreateReadOnlyControl()!;
+            ReadOnlyLabel = (OxTextBox)base.CreateReadOnlyControl()!;
             ReadOnlyLabel.Parent = readOnlyControl;
             ReadOnlyLabel.AutoSize = true;
             ReadOnlyLabel.Left = ReadOnlyPictureSize;
@@ -137,6 +138,16 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
             ReadOnlyLabel.Text = Control.Text;
             OnControlFontChanged();
+        }
+
+        protected override void OnControlBackColorChanged()
+        {
+            if (ReadOnlyControl == null)
+                return;
+
+            base.OnControlBackColorChanged();
+
+            ReadOnlyLabel.BackColor = ReadOnlyControl.BackColor;
         }
     }
 }

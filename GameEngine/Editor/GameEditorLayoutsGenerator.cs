@@ -12,7 +12,7 @@ namespace PlayStationGames.GameEngine.Editor
             ControlLayouter<GameField, Game> layouter) : base(groupFrames, layouter) { }
 
 
-        protected override List<GameField> ControlsWithoutLabel() =>
+        public override List<GameField> ControlsWithoutLabel() =>
             new()
             {
                 GameField.Image,
@@ -32,7 +32,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Tags
             };
 
-        protected override List<GameField> AutoSizeFields() =>
+        public override List<GameField> AutoSizeFields() =>
             new()
             {
                 GameField.AvailablePlatinum,
@@ -41,7 +41,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Licensed
             };
 
-        protected override List<GameField> FillDockFields() =>
+        public override List<GameField> FillDockFields() =>
             new()
             {
                 GameField.RelatedGames,
@@ -53,7 +53,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EmulatorROMs
             };
 
-        protected override List<GameField> OffsettingFields() =>
+        public override List<GameField> OffsettingFields() =>
             new()
             {
                 GameField.Image,
@@ -83,7 +83,7 @@ namespace PlayStationGames.GameEngine.Editor
             };
 
 
-        protected override AnchorStyles Anchors(GameField field)
+        public override AnchorStyles Anchors(GameField field)
         {
             AnchorStyles anchors = base.Anchors(field);
 
@@ -97,7 +97,7 @@ namespace PlayStationGames.GameEngine.Editor
             return anchors;
         }
 
-        protected override Color BackColor(GameField field) => 
+        public override Color BackColor(GameField field) => 
             field switch
             {
                 GameField.Image =>
@@ -112,7 +112,7 @@ namespace PlayStationGames.GameEngine.Editor
                     Color.FromArgb(250, 250, 250),
             };
 
-        protected override int Top(GameField field) => 
+        public override int Top(GameField field) => 
             field switch
             {
                 GameField.Licensed =>
@@ -133,7 +133,7 @@ namespace PlayStationGames.GameEngine.Editor
                     8
             };
 
-        protected override int Left(GameField field) => 
+        public override int Left(GameField field) => 
             field switch
             {
                 GameField.Image or 
@@ -190,7 +190,7 @@ namespace PlayStationGames.GameEngine.Editor
                     0,
             };
 
-        protected override int Height(GameField field) =>
+        public override int Height(GameField field) =>
             field == GameField.Image
                 ? 110
                 : field == GameField.Name 
@@ -200,7 +200,7 @@ namespace PlayStationGames.GameEngine.Editor
                         ? 20
                         : base.Height(field);
 
-        protected override int Width(GameField field) => 
+        public override int Width(GameField field) => 
             field switch
             {
                 GameField.Image => 
@@ -254,7 +254,7 @@ namespace PlayStationGames.GameEngine.Editor
                     0,
             };
 
-        protected override int Offset(GameField field) => 
+        public override int Offset(GameField field) => 
             field switch
             {
                 GameField.EarnedFromDLC or 
@@ -284,8 +284,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Pegi => 
                     2,
                 GameField.EarnedGold or 
-                GameField.AvailableGold => -
-                    4,
+                GameField.AvailableGold => 
+                    10,
                 _ => 
                     0,
             };

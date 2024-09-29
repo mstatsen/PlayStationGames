@@ -20,7 +20,7 @@ namespace PlayStationGames.GameEngine.Editor
     public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
     {
         public GameWorker() : base() =>
-            trophiesControlsHelper = new TrophiesControlsHelper(Builder);
+            trophiesControlsHelper = new TrophiesControlsHelper(Builder, (GameEditorLayoutsGenerator)Generator!);
 
         protected override void PrepareStyles() =>
             Editor.MainPanel.BaseColor = new OxColorHelper(
@@ -90,10 +90,10 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override FieldGroupFrames<GameField, GameFieldGroup> GetFieldGroupFrames() =>
             new()
-                {
-                    Editor.Groups,
-                    { GameFieldGroup.System, Editor.MainPanel.Footer }
-                };
+            {
+                Editor.Groups,
+                { GameFieldGroup.System, Editor.MainPanel.Footer }
+            };
 
 
         protected override void AfterAlignLabels()
@@ -189,7 +189,6 @@ namespace PlayStationGames.GameEngine.Editor
         }
 
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
-        private readonly PlatformTypeHelper platformTypeHelper = TypeHelper.Helper<PlatformTypeHelper>();
         private readonly GameFieldGroupHelper groupHelper = TypeHelper.Helper<GameFieldGroupHelper>();
         private readonly GameFormatHelper formatHelper = TypeHelper.Helper<GameFormatHelper>();
         private readonly GameFieldHelper fieldHelper = TypeHelper.Helper<GameFieldHelper>();
@@ -231,14 +230,19 @@ namespace PlayStationGames.GameEngine.Editor
                         Builder[field].ReadOnly = false;
 
             trophiesControlsHelper.SetTrophiesControlsVisible(verified);
-            Builder.SetVisible(GameField.Edition, 
-                !isEmulator 
-                && (!verified || !Builder[GameField.Edition].IsEmpty)
-            );
+            bool editionVisible =
+                !isEmulator
+                && (!verified || !Builder[GameField.Edition].IsEmpty);
+            Builder.SetVisible(GameField.Edition, editionVisible);
             Builder.SetVisible(GameField.Series, 
                 !isEmulator 
                 && (!verified || !Builder[GameField.Series].IsEmpty)
             );
+
+            Builder[GameField.Series].Top = (editionVisible
+                ? Builder[GameField.Edition].Bottom
+                : Builder[GameField.Edition].Top) 
+                + Generator!.Offset(GameField.Series);
 
             if (verified)
                 foreach (GameFieldGroup group in groupHelper.VerifiedGroups)

@@ -18,7 +18,7 @@ namespace PlayStationGames.AccountEngine.Data
             public override bool IsEmpty => true;
         }
 
-        public static EmptyAccount AnyAccount = new()
+        public readonly static EmptyAccount AnyAccount = new()
         {
             Name = "Any"
         };
@@ -66,7 +66,7 @@ namespace PlayStationGames.AccountEngine.Data
         public override void Clear()
         {
             base.Clear();
-            Id = Guid.Empty;
+            Id = Guid.NewGuid();
             DefaultAccount = false;
             Country = null;
             Login = string.Empty;
@@ -83,6 +83,9 @@ namespace PlayStationGames.AccountEngine.Data
         {
             base.LoadData(element);
             id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
+
+            if (id == Guid.Empty)
+                id = Guid.NewGuid();
             defaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
             country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
             login = XmlHelper.Value(element, XmlConsts.Login);

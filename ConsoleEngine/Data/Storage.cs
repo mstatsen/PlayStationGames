@@ -52,7 +52,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override void Clear()
         {
-            id = Guid.Empty;
+            id = Guid.NewGuid();
             placement = TypeHelper.DefaultValue<StoragePlacement>();
             size = string.Empty;
             freeSize = string.Empty;
