@@ -17,9 +17,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         protected override void PrepareStyles()
         {
-            Editor.MainPanel.BaseColor = new OxColorHelper(
-                TypeHelper.BackColor(Builder.Value<AccountType>(AccountField.Type))
-            ).Darker(7);
+            base.PrepareStyles();
             ControlPainter.ColorizeControl(consolesButton, Editor.MainPanel.BaseColor);
             ControlPainter.ColorizeControl(gamesButton, Editor.MainPanel.BaseColor);
             consolesWorker.BaseColor = Editor.MainPanel.BaseColor;
@@ -28,11 +26,6 @@ namespace PlayStationGames.AccountEngine.Editor
 
         protected override bool SyncFieldValues(AccountField field, bool byUser)
         {
-            if (new List<AccountField>{
-                    AccountField.Name}
-                .Contains(field))
-                FillFormCaptionFromControls();
-
             switch (field)
             { 
                 case AccountField.Type:
@@ -42,13 +35,6 @@ namespace PlayStationGames.AccountEngine.Editor
 
             return field == AccountField.Type;
         }
-
-        private void FillFormCaptionFromControls() =>
-            FillFormCaption(
-                new Account() 
-                { 
-                    Name = Builder[AccountField.Name].StringValue
-                });
 
         protected override EditorLayoutsGenerator<AccountField, Account, AccountFieldGroup> 
             CreateLayoutsGenerator(FieldGroupFrames<AccountField, AccountFieldGroup> frames, 

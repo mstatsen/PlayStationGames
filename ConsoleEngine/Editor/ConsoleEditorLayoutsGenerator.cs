@@ -51,5 +51,12 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleField.Generation => 4,
                 _ => base.Offset(field)
             };
+
+        public override List<ConsoleField> TitleAccordionFields() => new() 
+        { 
+            ConsoleField.Name 
+        };
+
+        public override ConsoleField BackColorField => ConsoleField.Firmware;
     }
 }

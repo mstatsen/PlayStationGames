@@ -289,5 +289,15 @@ namespace PlayStationGames.GameEngine.Editor
                 _ => 
                     0,
             };
+
+        public override List<GameField> TitleAccordionFields() => new()
+        {
+            GameField.Name,
+            GameField.Platform,
+            GameField.Source,
+            GameField.Region
+        };
+
+        public override GameField BackColorField => GameField.Source;
     }
 }

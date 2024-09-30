@@ -22,11 +22,6 @@ namespace PlayStationGames.GameEngine.Editor
         public GameWorker() : base() =>
             trophiesControlsHelper = new TrophiesControlsHelper(Builder, (GameEditorLayoutsGenerator)Generator!);
 
-        protected override void PrepareStyles() =>
-            Editor.MainPanel.BaseColor = new OxColorHelper(
-                TypeHelper.BackColor(Builder.Value<Source>(GameField.Source))
-            ).Darker(7);
-
         protected override void AfterColorizeControls()
         {
             base.AfterColorizeControls();
@@ -134,13 +129,6 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override bool SyncFieldValues(GameField field, bool byUser)
         {
-            if (new List<GameField>{
-                    GameField.Name,
-                    GameField.Platform,
-                    GameField.Source}
-                .Contains(field))
-                FillFormCaptionFromControls();
-
             switch (field)
             {
                 case GameField.Platform:
@@ -195,7 +183,8 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
-            Editor.Groups[GameFieldGroup.Trophyset].Visible = Editor.Groups[GameFieldGroup.Trophyset].Visible = AvailableTrophyset;
+            Editor.Groups[GameFieldGroup.Trophyset].Visible = 
+                Editor.Groups[GameFieldGroup.Trophyset].Visible = AvailableTrophyset;
             Editor.Groups[GameFieldGroup.Installations].Visible =
                 sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
 
@@ -267,16 +256,6 @@ namespace PlayStationGames.GameEngine.Editor
                 Format = Builder[GameField.Format].EnumValue<GameFormat>(),
 
             }.TrophysetAvailable;
-
-        private void FillFormCaptionFromControls() => 
-            FillFormCaption(
-                new Game
-                {
-                    Name = Builder[GameField.Name].SingleStringValue,
-                    PlatformType = Builder.Value<PlatformType>(GameField.Platform),
-                    SourceType = Builder.Value<Source>(GameField.Source),
-                    GameRegion = Builder.Value<GameRegion>(GameField.Region)
-                });
 
         private void SyncFormatWithPlatform() =>
             Builder[GameField.Format].Value = TypeHelper.TypeObject<GameFormat>(

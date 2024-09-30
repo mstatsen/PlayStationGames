@@ -17,23 +17,14 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         protected override void PrepareStyles()
         {
-            Editor.MainPanel.BaseColor = new OxColorHelper(
-                TypeHelper.BackColor(Builder.Value<FirmwareType>(ConsoleField.Firmware))
-            ).Darker(7);
+            base.PrepareStyles();
             ControlPainter.ColorizeControl(installationsButton, Editor.MainPanel.BaseColor);
             installationsWorker.BaseColor = Editor.MainPanel.BaseColor;
         }
 
-        protected override bool SyncFieldValues(ConsoleField field, bool byUser)
-        {
-            if (new List<ConsoleField>{
-                    ConsoleField.Name}
-                .Contains(field))
-                FillFormCaptionFromControls();
-
-            return field is ConsoleField.Generation or 
+        protected override bool SyncFieldValues(ConsoleField field, bool byUser) => 
+            field is ConsoleField.Generation or
                 ConsoleField.Firmware;
-        }
 
         private readonly ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
 
@@ -50,13 +41,6 @@ namespace PlayStationGames.ConsoleEngine.Editor
             installationsButton.Visible = generationHelper.StorageSupport(Generation);
             return needRecalcEditorSize;
         }
-
-        private void FillFormCaptionFromControls() =>
-            FillFormCaption(
-                new PSConsole() 
-                { 
-                    Name = Builder[ConsoleField.Name].StringValue
-                });
 
         protected override EditorLayoutsGenerator<ConsoleField, PSConsole, ConsoleFieldGroup> 
             CreateLayoutsGenerator(FieldGroupFrames<ConsoleField, ConsoleFieldGroup> frames, 

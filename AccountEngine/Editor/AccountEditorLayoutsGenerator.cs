@@ -109,5 +109,12 @@ namespace PlayStationGames.AccountEngine.Editor
 
             return anchors;
         }
+
+        public override List<AccountField> TitleAccordionFields() => new()
+        {
+            AccountField.Name
+        };
+
+        public override AccountField BackColorField => AccountField.Type;
     }
 }
