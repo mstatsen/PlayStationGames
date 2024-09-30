@@ -68,7 +68,8 @@ namespace PlayStationGames.GameEngine.ControlFactory
         {
             if (context is FieldContext<GameField, Game> accessorContext)
             {
-                if (accessorContext.Field == GameField.CriticScore)
+                if (!context.IsQuickFilter &&
+                    accessorContext.Field == GameField.CriticScore)
                     return new NumericInitializer(-1, 100);
 
                 if (context.IsQuickFilter &&

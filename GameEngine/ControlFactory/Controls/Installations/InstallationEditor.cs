@@ -13,6 +13,7 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxLibrary;
+using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -168,8 +169,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             bool storageAvailable = false;
             bool folderAvailable = false;
             ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
-            ExtractInitializer<ConsoleField, PSConsole>? consoleInitializer  =
-                (ExtractInitializer<ConsoleField, PSConsole>?)consoleControl?.Context.Initializer;
+            ConsoleInitializer? consoleInitializer  =
+                (ConsoleInitializer?)consoleControl?.Context.Initializer;
 
             if (consoleInitializer != null)
                 foreach (object console in consoleInitializer.AvailableItems)
@@ -199,11 +200,29 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void RenewConsoleControl()
         {
-            IFilteredInitializer<ConsoleField, PSConsole>? consoleInitializer =
-                (IFilteredInitializer<ConsoleField, PSConsole>?)consoleControl.Context.Initializer;
+            ConsoleInitializer? consoleInitializer =
+                (ConsoleInitializer?)consoleControl.Context.Initializer;
 
             if (consoleInitializer != null)
+            {
                 consoleInitializer.Filter = Game.AvailableConsoleFilter(Context.Builder);
+
+                if (ExistingItems != null)
+                {
+                    ListDAO<PSConsole> consolesList = new();
+
+                    foreach (object existingItem in ExistingItems)
+                        if (existingItem is Installation installation)
+                        {
+                            PSConsole? console = DataManager.Item<ConsoleField, PSConsole>(ConsoleField.Id, installation.ConsoleId);
+
+                            if (console != null)
+                                consolesList.Add(console);
+                        }
+                    
+                    consoleInitializer.ExistingConsoles = consolesList;
+                }
+            }
 
             consoleControl.RenewControl(true);
         }

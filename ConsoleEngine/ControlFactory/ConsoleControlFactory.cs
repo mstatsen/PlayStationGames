@@ -42,22 +42,32 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
         private static IControlAccessor CreateAccountAccessor(IBuilderContext<ConsoleField, PSConsole> context) =>
             new AccountAccessor<ConsoleField, PSConsole>(context);
 
-        protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context) => 
-            context.Name switch
+        protected override IInitializer? Initializer(IBuilderContext<ConsoleField, PSConsole> context)
+        {
+            if (context is FieldContext<ConsoleField, PSConsole> fieldContext)
+                switch (fieldContext.Field)
+                {
+                    case ConsoleField.Console:
+                        return new ConsoleInitializer(ConsoleField.Console, false, true, true);
+                }
+
+
+            return context.Name switch
             {
                 "StorageSelector" => new ExtractInitializer<ConsoleField, PSConsole>(
-                    ConsoleField.Storages, 
-                    fullExtract: true, 
+                    ConsoleField.Storages,
+                    fullExtract: true,
                     fixedExtract: true
                 ),
                 "FolderSelector" => new ExtractInitializer<ConsoleField, PSConsole>(
-                    ConsoleField.Folders, 
-                    fullExtract: true, 
+                    ConsoleField.Folders,
+                    fullExtract: true,
                     fixedExtract: true),
                 "AccessoryType" => new AccessoryTypeInitializer((PSConsole)context.AdditionalContext!),
                 "JoystickType" => new JoystickTypeInitializer((PSConsole)context.AdditionalContext!),
                 _ => base.Initializer(context),
             };
+        }
 
         public override IItemInfo<ConsoleField, PSConsole> CreateInfoCard() =>
             new ConsoleFullInfoCard();
