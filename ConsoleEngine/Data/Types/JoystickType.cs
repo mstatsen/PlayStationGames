@@ -2,11 +2,14 @@
 {
     public enum JoystickType
     {
+        PlayStation,
+        DualAnalog,
         Dualshock,
         Dualshock2,
+        Sixaxis,
         Dualshock3,
         Dualshock4,
-        Dualshock5,
+        Dualsense5,
         DSReplica,
         DS2Replica,
         DS3Replica,

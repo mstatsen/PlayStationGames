@@ -20,6 +20,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.Cover => "Cover",
                 AccessoryType.StickCover => "Reserve stick cover",
                 AccessoryType.Other => "Other",
+                AccessoryType.Documents => "Documents",
                 _ => string.Empty,
             };
 
@@ -38,6 +39,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.Cover => "Cover",
                 AccessoryType.StickCover => "StickCover",
                 AccessoryType.Other => "Other",
+                AccessoryType.Documents => "Documents",
                 _ => string.Empty,
             };
 
@@ -61,27 +63,34 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                     false
             };
 
-        public bool SupportByGeneration(ConsoleGeneration generation, AccessoryType type)
-        {
-            if (type == AccessoryType.MemoryCard)
-                return generation is ConsoleGeneration.PS1 or ConsoleGeneration.PS2;
+        public bool SupportModelCode(AccessoryType type, JoystickType joystickType) =>
+            type == AccessoryType.Joystick
+                ? TypeHelper.Helper<JoystickTypeHelper>().IsOficial(joystickType)
+                : type is AccessoryType.Camera or
+                    AccessoryType.Earphones;
 
-            if (type == AccessoryType.Charger || type == AccessoryType.Cover)
-                return generation is ConsoleGeneration.PSP or ConsoleGeneration.PSVita;
-
-            if (type == AccessoryType.RemoteControl)
-                return generation is not ConsoleGeneration.PSP and not ConsoleGeneration.PSVita;
-
-            
-            return generation switch
-                {
-                    ConsoleGeneration.PSP =>
-                        type != AccessoryType.Joystick,
-                    ConsoleGeneration.PSVita =>
-                        type != AccessoryType.Joystick &&
-                        type != AccessoryType.Camera,
-                    _ => true,
-                };
-        }
+        public bool SupportByGeneration(ConsoleGeneration generation, AccessoryType type) => 
+            type switch
+            {
+                AccessoryType.MemoryCard => 
+                    generation is ConsoleGeneration.PS1 or 
+                        ConsoleGeneration.PS2,
+                AccessoryType.Charger or 
+                AccessoryType.Cover => 
+                    generation is ConsoleGeneration.PSP or 
+                    ConsoleGeneration.PSVita,
+                AccessoryType.RemoteControl => 
+                    generation is not ConsoleGeneration.PSP and 
+                    not ConsoleGeneration.PSVita,
+                _ => generation switch
+                    {
+                        ConsoleGeneration.PSP =>
+                            type != AccessoryType.Joystick,
+                        ConsoleGeneration.PSVita =>
+                            type != AccessoryType.Joystick &&
+                            type != AccessoryType.Camera,
+                        _ => true,
+                    },
+            };
     }
 }

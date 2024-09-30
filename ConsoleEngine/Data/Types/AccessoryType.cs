@@ -10,6 +10,7 @@
         Connector,
         Charger,
         Box,
+        Documents,
         Bag,
         Cover,
         StickCover,

@@ -22,6 +22,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
 
         public override bool AvailableValue(JoystickType value) =>
             Console == null 
-            || TypeHelper.Helper<JoystickTypeHelper>().SupportByGeneration(Console.Generation, value);
+            || TypeHelper.Helper<JoystickTypeHelper>().SupportByGeneration(Console.Generation, Console.Model, value);
     }
 }

@@ -8,11 +8,14 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         public override string GetName(JoystickType value) =>
             value switch
             {
+                JoystickType.PlayStation => "PlayStation controller",
+                JoystickType.DualAnalog => "DualAnalog",
                 JoystickType.Dualshock => "Dualshock",
                 JoystickType.Dualshock2 => "Dualshock 2",
+                JoystickType.Sixaxis => "Sixaxis",
                 JoystickType.Dualshock3 => "Dualshock 3",
                 JoystickType.Dualshock4 => "Dualshock 4",
-                JoystickType.Dualshock5 => "Dualshock 5",
+                JoystickType.Dualsense5 => "Dualshock 5",
                 JoystickType.DSReplica => "Replica of Dualshock",
                 JoystickType.DS2Replica => "Replica of Dualshock 2",
                 JoystickType.DS3Replica => "Replica of Dualshock 3",
@@ -33,11 +36,14 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         public bool IsColored(JoystickType type) =>
             type switch
             {
+                JoystickType.PlayStation or
+                JoystickType.DualAnalog or
                 JoystickType.Dualshock or
                 JoystickType.Dualshock2 or
+                JoystickType.Sixaxis or
                 JoystickType.Dualshock3 or
                 JoystickType.Dualshock4 or
-                JoystickType.Dualshock5 or
+                JoystickType.Dualsense5 or
                 JoystickType.DSReplica or
                 JoystickType.DS2Replica or
                 JoystickType.DS3Replica or
@@ -48,11 +54,13 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             };
 
         public bool WithSticks(JoystickType type) =>
-            type != JoystickType.MoveController;
+            type is not JoystickType.PlayStation
+                and not JoystickType.MoveController;
 
-        public bool SupportByGeneration(ConsoleGeneration generation, JoystickType type)
+        public bool SupportByGeneration(ConsoleGeneration generation, ConsoleModel model, JoystickType type)
         {
-            if (generation == ConsoleGeneration.PSP || generation == ConsoleGeneration.PSVita)
+            if (generation == ConsoleGeneration.PSP || 
+                generation == ConsoleGeneration.PSVita)
                 return false;
 
             if (type == JoystickType.Other)
@@ -60,29 +68,55 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
 
             return generation switch
             {
-                ConsoleGeneration.PS5 => 
-                    type == JoystickType.Dualshock5 ||
-                    type == JoystickType.DS5Replica ||
-                    type == JoystickType.MoveController ||
-                    type == JoystickType.NavigationController,
-                ConsoleGeneration.PS4 => 
-                    type == JoystickType.Dualshock4 ||
-                    type == JoystickType.DS4Replica ||
-                    type == JoystickType.MoveController ||
-                    type == JoystickType.NavigationController,
-                ConsoleGeneration.PS3 => 
-                    type == JoystickType.Dualshock3 ||
-                    type == JoystickType.DS3Replica ||
-                    type == JoystickType.MoveController ||
-                    type == JoystickType.NavigationController,
-                ConsoleGeneration.PS2 => 
-                    type == JoystickType.Dualshock2 ||
-                    type == JoystickType.DS2Replica,
-                ConsoleGeneration.PS1 => 
-                    type == JoystickType.Dualshock ||
-                    type == JoystickType.DSReplica,
+                ConsoleGeneration.PS5 =>
+                    type is JoystickType.Dualsense5 or
+                    JoystickType.DS5Replica or
+                    JoystickType.MoveController or
+                    JoystickType.NavigationController,
+                ConsoleGeneration.PS4 =>
+                    type is JoystickType.Dualshock4 or
+                    JoystickType.DS4Replica or
+                    JoystickType.MoveController or
+                    JoystickType.NavigationController,
+                ConsoleGeneration.PS3 =>
+                    type is JoystickType.Dualshock4 or
+                    JoystickType.Dualshock3 or
+                    JoystickType.DS3Replica or
+                    JoystickType.Sixaxis or
+                    JoystickType.MoveController or
+                    JoystickType.NavigationController,
+                ConsoleGeneration.PS2 =>
+                    type is JoystickType.Dualshock2 or
+                    JoystickType.DS2Replica or
+                    JoystickType.Dualshock,
+                ConsoleGeneration.PS1 =>
+                    type is JoystickType.Dualshock2 or
+                    JoystickType.Dualshock or
+                    JoystickType.DSReplica,
+                ConsoleGeneration.PSVita when model == ConsoleModel.PSVitaTV  => 
+                    type is JoystickType.Dualshock3 or
+                    JoystickType.Dualshock4,
+                ConsoleGeneration.PSP when model == ConsoleModel.PSPGO =>
+                    type is JoystickType.Dualshock3,
                 _ => false,
             };
         }
+
+        public bool IsOficial(JoystickType joystickType) =>
+            joystickType switch
+            {
+                JoystickType.PlayStation or
+                JoystickType.DualAnalog or
+                JoystickType.Dualshock or
+                JoystickType.Dualshock2 or
+                JoystickType.Sixaxis or
+                JoystickType.Dualshock3 or
+                JoystickType.Dualshock4 or
+                JoystickType.Dualsense5 or
+                JoystickType.MoveController or
+                JoystickType.NavigationController =>
+                    true,
+                _ => false
+            };
     }
 }
