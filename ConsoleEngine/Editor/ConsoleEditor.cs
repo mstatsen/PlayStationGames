@@ -74,24 +74,20 @@ namespace PlayStationGames.ConsoleEngine.Editor
             base.SetFrameMargin(group, frame);
             frame.Margins.SetSize(OxSize.Extra);
             frame.Margins.LeftOx =
-                group == ConsoleFieldGroup.Folders || 
-                group == ConsoleFieldGroup.Accessories
+                group is ConsoleFieldGroup.Folders or
+                ConsoleFieldGroup.Accessories
                     ? OxSize.None 
                     : OxSize.Extra;
 
-            switch (group)
+            frame.Margins.TopOx = group switch
             {
-                case ConsoleFieldGroup.Accounts:
-                case ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Accessories].Dock == DockStyle.Bottom:
-                    frame.Margins.TopOx = OxSize.None;
-                    break;
-                case ConsoleFieldGroup.Storages:
-                    frame.Margins.TopOx = OxSize.None;
-                    break;
-                default:
-                    frame.Margins.TopOx = OxSize.Extra;
-                    break;
-            }
+                ConsoleFieldGroup.Accounts or
+                ConsoleFieldGroup.Storages =>
+                    OxSize.None,
+                ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Accessories].Dock == DockStyle.Bottom =>
+                    OxSize.None,
+                _ => OxSize.Extra,
+            };
         }
     }
 }

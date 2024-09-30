@@ -52,6 +52,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 Text = "With cover",
                 CheckAlign = ContentAlignment.MiddleLeft
             };
+            nameControl = new(context);
             coverColorControl = new(context);
             withStickCoversControl = new(context)
             {
@@ -63,6 +64,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
             int lastBottom = PrepareControl(typeControl, "Type", fullRow: true);
             lastBottom = PrepareControl(joystickTypeControl, "Joystick Type", lastBottom, true);
+            PrepareControl(nameControl, "Name", lastBottom, true);
             lastBottom = PrepareControl(colorControl, "Color", lastBottom);
             lastBottom = PrepareControl(withCoverControl, lastBottom: lastBottom);
             lastBottom = PrepareControl(coverColorControl, "Cover color", lastBottom);
@@ -120,6 +122,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             typeControl?.EnumValue == AccessoryType.Joystick;
 
         private readonly JoystickTypeHelper joystickTypeHelper = TypeHelper.Helper<JoystickTypeHelper>();
+        private readonly AccessoryTypeHelper typeHelper = TypeHelper.Helper<AccessoryTypeHelper>();
 
         private bool IsColored() => IsJoystick()
             && joystickTypeHelper.IsColored(joystickTypeControl.EnumValue);
@@ -135,6 +138,17 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             bool isJoystick = IsJoystick();
             joystickTypeControl.Visible = isJoystick;
             ((OxLabel)joystickTypeControl.Control.Tag).Visible = joystickTypeControl.Visible;
+
+            if (typeHelper.Named(typeControl.EnumValue, joystickTypeControl.EnumValue))
+            {
+                nameControl.Visible = true;
+                ((OxLabel)nameControl.Control.Tag).Visible = true;
+            }
+            else
+            {
+                nameControl.Visible = false;
+                ((OxLabel)nameControl.Control.Tag).Visible = false;
+            }
 
             colorControl.Visible = IsColored();
             ((OxLabel)colorControl.Control.Tag).Visible = colorControl.Visible;
@@ -153,11 +167,15 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 descriptionControl == null)
                 return;
 
-            int lastBottom = typeControl.Bottom;
+        bool named = typeHelper.Named(typeControl.EnumValue, joystickTypeControl.EnumValue);
+        int lastBottom = typeControl.Bottom;
 
             if (IsJoystick())
             {
                 lastBottom = SetControlTop(joystickTypeControl, lastBottom);
+
+                if (named)
+                    lastBottom = SetControlTop(nameControl, lastBottom);
 
                 if (IsColored())
                     lastBottom = SetControlTop(colorControl, lastBottom);
@@ -170,6 +188,9 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 if (joystickTypeHelper.WithSticks(joystickTypeControl.EnumValue))
                     lastBottom = SetControlTop(withStickCoversControl, lastBottom);
             }
+            else
+                if (named)
+                    lastBottom = SetControlTop(nameControl, lastBottom);
 
             lastBottom = SetControlTop(countControl, lastBottom);
             lastBottom = SetControlTop(descriptionControl, lastBottom);
@@ -180,6 +201,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             typeControl.Value = item.Type;
             RenewAccessoryType();
+            nameControl.Value = item.Name;
             joystickTypeControl.Value = item.JoystickType;
             RenewJoystickType();
             colorControl.Value = item.Color;
@@ -194,6 +216,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         protected override void GrabControls(Accessory item)
         {
             item.Type = typeControl.EnumValue;
+            item.Name = nameControl.StringValue;
             item.JoystickType = joystickTypeControl.EnumValue;
             item.Color = colorControl.StringValue;
             item.WithCover = withCoverControl.BoolValue;
@@ -214,6 +237,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         private EnumAccessor<ConsoleField, PSConsole, AccessoryType> typeControl = default!;
         private EnumAccessor<ConsoleField, PSConsole, JoystickType> joystickTypeControl = default!;
+        private TextAccessor<ConsoleField, PSConsole> nameControl = default!;
         private ColorComboBoxAccessor<ConsoleField, PSConsole> colorControl = default!;
         private NumericAccessor<ConsoleField, PSConsole> countControl = default!;
         private IControlAccessor descriptionControl = default!;

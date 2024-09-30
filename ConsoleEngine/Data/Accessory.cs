@@ -14,6 +14,12 @@ namespace PlayStationGames.ConsoleEngine.Data
             set => type = ModifyValue(type, value);
         }
 
+        public string Name
+        {
+            get => name;
+            set => name = StringValue(ModifyValue(name, value));
+        }
+
         public JoystickType JoystickType
         {
             get => joystickType;
@@ -59,6 +65,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override void Clear()
         {
             type = TypeHelper.DefaultValue<AccessoryType>();
+            name = string.Empty;
             joystickType = TypeHelper.DefaultValue<JoystickType>();
             color = "Black";
             withCover = false;
@@ -73,6 +80,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         protected override void LoadData(XmlElement element)
         {
             type = XmlHelper.Value<AccessoryType>(element, XmlConsts.Type);
+            name = XmlHelper.Value(element, XmlConsts.Name);
             joystickType = XmlHelper.Value<JoystickType>(element, XmlConsts.JoystickType);
             color = XmlHelper.Value(element, XmlConsts.Color);
             coverColor = XmlHelper.Value(element, XmlConsts.CoverColor);
@@ -90,6 +98,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
             XmlHelper.AppendElement(element, XmlConsts.Type, type);
+            XmlHelper.AppendElement(element, XmlConsts.Name, name);
 
             if (type == AccessoryType.Joystick)
             {
@@ -118,12 +127,25 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override string ToString()
         {
-            string countStr = Count > 1 ? Count.ToString() + " " : string.Empty;
-            string joystickTypeName = Type == AccessoryType.Joystick ? TypeHelper.FullName(JoystickType) + " ": string.Empty;
-            string typeStr = JoystickType == JoystickType.Other ? TypeHelper.FullName(Type) : string.Empty;
-            string colorStr = Color != string.Empty ? Color + " " : string.Empty;
-            string withCoverStr = withCover ? $" with {coverColor} cover" : string.Empty;
-            return $"{countStr}{colorStr}{joystickTypeName}{typeStr}{withCoverStr}";
+            string countStr = Count > 1 
+                ? Count.ToString() + " " 
+                : string.Empty;
+            string colorStr = Color != string.Empty
+                ? Color + " "
+                : string.Empty;
+            bool named = TypeHelper.Helper<AccessoryTypeHelper>().Named(type, joystickType);
+            string nameStr = named && name != string.Empty
+                ? name + " "
+                : Type == AccessoryType.Joystick
+                    ? TypeHelper.FullName(JoystickType) + " "
+                    : string.Empty;
+            string typeStr = !named && JoystickType == JoystickType.Other 
+                ? TypeHelper.FullName(Type) + " "
+                : string.Empty;
+            string withCoverStr = withCover 
+                ? $"with {coverColor} cover" 
+                : string.Empty;
+            return $"{countStr}{colorStr}{nameStr}{typeStr}{withCoverStr}".Trim();
         }
 
         public override int CompareTo(DAO? other)
@@ -142,6 +164,11 @@ namespace PlayStationGames.ConsoleEngine.Data
                 return result;
 
             result = JoystickType.CompareTo(otherAccessory.JoystickType);
+
+            if (result != 0)
+                return result;
+
+            result = Name.CompareTo(otherAccessory.Name);
 
             if (result != 0)
                 return result;
@@ -172,6 +199,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             base.Equals(obj) 
             || (obj is Accessory acessory
                     && type.Equals(acessory.Type)
+                    && name.Equals(acessory.Name)
                     && joystickType.Equals(acessory.JoystickType)
                     && color.Equals(acessory.Color)
                     && coverColor.Equals(acessory.CoverColor)
@@ -183,6 +211,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         private AccessoryType type = default!;
         private JoystickType joystickType = default!;
+        private string name = default!;
         private string color = "Black";
         private string coverColor = "Black";
         private bool withCover = false;
@@ -191,7 +220,8 @@ namespace PlayStationGames.ConsoleEngine.Data
         private int count = 1;
 
         public override int GetHashCode() => 
-            Type.GetHashCode() ^ (count * color.GetHashCode()) 
+            type.GetHashCode() ^ (count * color.GetHashCode()) 
+            + name.GetHashCode()
             + joystickType.GetHashCode() ^ withCover.GetHashCode() 
             + withStickCovers.GetHashCode() * description.GetHashCode() 
             + coverColor.GetHashCode();

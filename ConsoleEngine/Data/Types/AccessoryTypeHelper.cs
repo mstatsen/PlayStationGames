@@ -47,6 +47,20 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         public override AccessoryType DefaultValue() =>
             AccessoryType.Joystick;
 
+        public bool Named(AccessoryType type, JoystickType joystickType) =>
+            type switch
+            {
+                AccessoryType.Joystick => 
+                    joystickType == JoystickType.Other,
+                AccessoryType.Camera or
+                AccessoryType.Earphones or
+                AccessoryType.Connector or
+                AccessoryType.Other => 
+                    true,
+                _ => 
+                    false
+            };
+
         public bool SupportByGeneration(ConsoleGeneration generation, AccessoryType type)
         {
             if (type == AccessoryType.MemoryCard)
