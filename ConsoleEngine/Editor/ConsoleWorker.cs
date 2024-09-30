@@ -22,24 +22,37 @@ namespace PlayStationGames.ConsoleEngine.Editor
             installationsWorker.BaseColor = Editor.MainPanel.BaseColor;
         }
 
-        protected override bool SyncFieldValues(ConsoleField field, bool byUser) => 
-            field is ConsoleField.Generation or
+        protected override bool SyncFieldValues(ConsoleField field, bool byUser)
+        {
+            if (field == ConsoleField.Firmware)
+            {
+                if (Firmware.Equals(FirmwareType.Official))
+                {
+                    Builder.SetVisible(ConsoleField.FirmwareName, false);
+                    Builder[ConsoleField.FirmwareVersion].Top = Builder[ConsoleField.FirmwareName].Top;
+                }
+                else
+                {
+                    Builder.SetVisible(ConsoleField.FirmwareName, true);
+                    Builder[ConsoleField.FirmwareVersion].Top = Builder[ConsoleField.FirmwareName].Bottom
+                        + Generator.Offset(ConsoleField.FirmwareVersion) + 2;
+                }
+            }
+
+            return 
+                field is ConsoleField.Generation or
                 ConsoleField.Firmware;
+        }
 
         private readonly ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
-            bool needRecalcEditorSize = base.SetGroupsAvailability() ||
-                Editor.Groups[ConsoleFieldGroup.Folders].Visible != generationHelper.FolderSupport(Generation) ||
-                Editor.Groups[ConsoleFieldGroup.Storages].Visible != generationHelper.StorageSupport(Generation) ||
-                Editor.Groups[ConsoleFieldGroup.Accounts].Visible != generationHelper.MaxAccountsCount(Generation, Firmware) > 0;
-
             Editor.Groups[ConsoleFieldGroup.Folders].Visible = generationHelper.FolderSupport(Generation);
             Editor.Groups[ConsoleFieldGroup.Storages].Visible = generationHelper.StorageSupport(Generation);
             Editor.Groups[ConsoleFieldGroup.Accounts].Visible = generationHelper.MaxAccountsCount(Generation, Firmware) > 0;
-            installationsButton.Visible = generationHelper.StorageSupport(Generation);
-            return needRecalcEditorSize;
+            Editor.Groups[ConsoleFieldGroup.Games].Visible = generationHelper.StorageSupport(Generation);
+            return true;
         }
 
         protected override EditorLayoutsGenerator<ConsoleField, PSConsole, ConsoleFieldGroup> 
@@ -47,9 +60,15 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ControlLayouter<ConsoleField, PSConsole> layouter) =>
                 new ConsoleEditorLayoutsGenerator(frames, layouter);
 
-        private readonly OxButton installationsButton = new("Installed games", null)
+        private readonly OxButton installationsButton = new("Install / uninstall", null)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
+            Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
+        };
+
+        private readonly OxLabel installedGamesLabel = new()
+        {
+            Text = "Installed games count",
             Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
         };
 
@@ -57,29 +76,37 @@ namespace PlayStationGames.ConsoleEngine.Editor
         {
             base.AfterLayoutControls();
 
-            Control? firmwareControl = Layouter.PlacedControl(ConsoleField.Firmware)?.Control;
-
-            if (firmwareControl != null)
-            {
-                installationsButton.Parent = firmwareControl.Parent;
-                installationsButton.Top = firmwareControl.Bottom + 16;
-                installationsButton.Left = 8;
-                installationsButton.SetContentSize(
-                    installationsButton.Parent.Width - installationsButton.Left * 2 - 2,
-                    40);
-                installationsButton.Click -= InstallationsClickHandler;
-                installationsButton.Click += InstallationsClickHandler;
-            }
-            else installationsButton.Visible = false;
-
+            Editor.Groups[ConsoleFieldGroup.Games].SizeChanged -= GamesGroupSizeChangedHandler;
+            Editor.Groups[ConsoleFieldGroup.Games].SizeChanged += GamesGroupSizeChangedHandler;
+            Control? firmwareVersionControl = Layouter.PlacedControl(ConsoleField.FirmwareVersion)?.Control;
+            installedGamesLabel.Parent = Editor.Groups[ConsoleFieldGroup.Games];
+            installedGamesLabel.Left = 8;
+            installationsButton.Parent = Editor.Groups[ConsoleFieldGroup.Games];
+            installationsButton.SetContentSize(installationsButton.Parent.Width / 3, 38);
+            installationsButton.Dock = DockStyle.Right;
+            installationsButton.Click -= InstallationsClickHandler;
+            installationsButton.Click += InstallationsClickHandler;
             installationsWorker.Renew(Item);
+            RenewInstalledGamesLabel();
             Builder.Control<AccessoriesControl>(ConsoleField.Accessories).ParentItem = Item;
+        }
+
+        private void RenewInstalledGamesLabel() => 
+            installedGamesLabel.Text = $"Installed games count: {installationsWorker.InstalledGamesCount}";
+
+        private void GamesGroupSizeChangedHandler(object? sender, EventArgs e)
+        {
+            installationsButton.SetContentSize(installationsButton.Parent.Width / 3, 38);
+            installedGamesLabel.Top = (installationsButton.Parent.Height - installedGamesLabel.Height) / 2;
         }
 
         private void InstallationsClickHandler(object? sender, EventArgs e)
         {
-            if (Item != null)
-                installationsWorker.Show(Editor);
+            if (Item == null)
+                return;
+
+            installationsWorker.Show(Editor);
+            RenewInstalledGamesLabel();
         }
 
         private readonly InstallationsWorker installationsWorker = new();
@@ -90,8 +117,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 new List<ConsoleField> {
                     ConsoleField.Name,
                     ConsoleField.Generation,
-                    ConsoleField.Model,
                     ConsoleField.Firmware
+                },
+                new List<ConsoleField> {
+                    ConsoleField.Model,
+                    ConsoleField.ModelCode,
+                    ConsoleField.FirmwareName,
+                    ConsoleField.FirmwareVersion
                 }
             };
 

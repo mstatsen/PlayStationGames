@@ -19,6 +19,19 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 _ => "Unknown",
             };
 
+        public override string GetFullName(ConsoleGeneration value) =>
+            value switch
+            {
+                ConsoleGeneration.PS5 => "PlayStation 5",
+                ConsoleGeneration.PS4 => "PlayStation 4",
+                ConsoleGeneration.PS3 => "PlayStation 3",
+                ConsoleGeneration.PSVita => "PlayStation Vita",
+                ConsoleGeneration.PS2 => "PlayStation 2",
+                ConsoleGeneration.PSP => "PlayStation Portable",
+                ConsoleGeneration.PS1 => "PlayStation 1",
+                _ => "Unknown",
+            };
+
         public override ConsoleGeneration EmptyValue() =>
             ConsoleGeneration.Unknown;
 
@@ -72,5 +85,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 ConsoleGeneration.PS1 => ConsoleIcons.ps1,
                 _ => OxIcons.Close
             };
+
+        public override bool UseFullNameForControl => true;
     }
 }

@@ -12,18 +12,20 @@ namespace PlayStationGames.ConsoleEngine.Editor
         public ConsoleEditorLayoutsGenerator(FieldGroupFrames<ConsoleField, ConsoleFieldGroup> groupFrames,
             ControlLayouter<ConsoleField, PSConsole> layouter) : base(groupFrames, layouter) { }
 
-        public override List<ConsoleField> ControlsWithoutLabel() => 
+        public override List<ConsoleField> ControlsWithoutLabel() =>
             new()
             {
+                ConsoleField.Name,
                 ConsoleField.Folders,
                 ConsoleField.Storages,
                 ConsoleField.Accessories,
                 ConsoleField.Accounts
             };
 
-        public override List<ConsoleField> FillDockFields() => 
+        public override List<ConsoleField> FillDockFields() =>
             new()
             {
+                ConsoleField.Name,
                 ConsoleField.Folders,
                 ConsoleField.Storages,
                 ConsoleField.Accessories,
@@ -33,23 +35,33 @@ namespace PlayStationGames.ConsoleEngine.Editor
         public override List<ConsoleField> OffsettingFields() =>
             new()
             {
-                ConsoleField.Generation,
                 ConsoleField.Model,
-                ConsoleField.Firmware
+                ConsoleField.ModelCode,
+                ConsoleField.FirmwareName,
+                ConsoleField.FirmwareVersion,
             };
 
         public override int Top(ConsoleField field) => 8;
 
-        public override int Left(ConsoleField field) => 94;
-
-        public override int Width(ConsoleField field) => 
-            field == ConsoleField.Name ? 180 : 100;
-
-        public override int Offset(ConsoleField field) =>
+        public override int Left(ConsoleField field) =>
             field switch
             {
-                ConsoleField.Generation => 4,
-                _ => base.Offset(field)
+                ConsoleField.Model or
+                ConsoleField.ModelCode or
+                ConsoleField.FirmwareName or
+                ConsoleField.FirmwareVersion =>
+                    154,
+                _ => 94
+            };
+
+
+        public override int Width(ConsoleField field) =>
+            field switch
+            {
+                ConsoleField.Generation or
+                ConsoleField.Firmware =>
+                    240,
+                _ => 180
             };
 
         public override List<ConsoleField> TitleAccordionFields() => new() 

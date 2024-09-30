@@ -17,16 +17,29 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Name => "Name",
                 ConsoleField.Generation => "Generation",
                 ConsoleField.Model => "Model",
+                ConsoleField.ModelCode => "Model Code",
                 ConsoleField.Storages => "Storages",
                 ConsoleField.Folders => "Folders",
                 ConsoleField.Accessories => "Accessories",
                 ConsoleField.Games => "Games",
                 ConsoleField.Accounts => "Accounts",
                 ConsoleField.Firmware => "Firmware",
+                ConsoleField.FirmwareName => "Firmware Name",
+                ConsoleField.FirmwareVersion => "Firmware Version",
                 ConsoleField.Console => "Console",
                 ConsoleField.Field => "Field",
                 ConsoleField.Icon => "Icon",
                 _ => string.Empty,
+            };
+
+        public override string GetCaption(ConsoleField value) =>
+            value switch
+            {
+                ConsoleField.ModelCode => "Code",
+                ConsoleField.Firmware => "Type",
+                ConsoleField.FirmwareName => "Name",
+                ConsoleField.FirmwareVersion => "Version",
+                _ => base.GetCaption(value),
             };
 
         internal class ConsoleFieldsFillingDictionary : FieldsFillingDictionary<ConsoleField> { };
@@ -48,7 +61,10 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Name,
                 ConsoleField.Generation,
                 ConsoleField.Model,
+                ConsoleField.ModelCode,
                 ConsoleField.Firmware,
+                ConsoleField.FirmwareName,
+                ConsoleField.FirmwareVersion,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
                 ConsoleField.Accessories,
@@ -66,6 +82,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                         ConsoleField.Name,
                         ConsoleField.Generation,
                         ConsoleField.Model,
+                        ConsoleField.ModelCode,
                         ConsoleField.Firmware,
                         ConsoleField.Storages,
                         ConsoleField.Folders,
@@ -136,7 +153,10 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Name,
                 ConsoleField.Generation,
                 ConsoleField.Model,
+                ConsoleField.ModelCode,
                 ConsoleField.Firmware,
+                ConsoleField.FirmwareName,
+                ConsoleField.FirmwareVersion,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
                 ConsoleField.Accessories,
@@ -151,7 +171,10 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Name,
                 ConsoleField.Generation,
                 ConsoleField.Model,
+                ConsoleField.ModelCode,
                 ConsoleField.Firmware,
+                ConsoleField.FirmwareName,
+                ConsoleField.FirmwareVersion,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
                 ConsoleField.Accessories,
@@ -233,7 +256,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Id => 
                     FieldType.Guid,
                 ConsoleField.Name => 
-                    FieldType.String,
+                    FieldType.Memo,
                 ConsoleField.Generation or 
                 ConsoleField.Model or 
                 ConsoleField.Firmware => 

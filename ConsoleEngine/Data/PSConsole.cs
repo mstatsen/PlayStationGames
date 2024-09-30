@@ -35,6 +35,25 @@ namespace PlayStationGames.ConsoleEngine.Data
             set => ModifyValue(ConsoleField.Model, model, value, n => model = n);
         }
 
+        public string ModelCode
+        {
+            get => modelCode;
+            set => ModifyValue(ConsoleField.ModelCode, modelCode, value, n => modelCode = StringValue(n));
+        }
+
+        public string FirmwareName
+        {
+            get => firmwareName;
+            set => ModifyValue(ConsoleField.FirmwareName, firmwareName, value, n => firmwareName = StringValue(n));
+        }
+
+        public string FirmwareVersion
+        {
+            get => firmwareVersion;
+            set => ModifyValue(ConsoleField.FirmwareName, firmwareVersion, value, n => firmwareVersion = StringValue(n));
+        }
+
+
         public FirmwareType Firmware
         {
             get => firmware;
@@ -51,6 +70,9 @@ namespace PlayStationGames.ConsoleEngine.Data
             id = Guid.NewGuid();
             generation = TypeHelper.DefaultValue<ConsoleGeneration>();
             model = TypeHelper.DefaultValue<ConsoleModel>();
+            modelCode = string.Empty;
+            firmwareName = string.Empty;
+            FirmwareVersion = string.Empty;
             storages.Clear();
             folders.Clear();
             accounts.Clear();
@@ -71,7 +93,10 @@ namespace PlayStationGames.ConsoleEngine.Data
             id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
             generation = XmlHelper.Value<ConsoleGeneration>(element, XmlConsts.Generation);
             model = XmlHelper.Value<ConsoleModel>(element, XmlConsts.Model);
+            modelCode = XmlHelper.Value(element, XmlConsts.ModelCode);
             firmware = XmlHelper.Value<FirmwareType>(element, XmlConsts.Firmware);
+            firmwareName = XmlHelper.Value(element, XmlConsts.FirmwareName);
+            firmwareVersion = XmlHelper.Value(element, XmlConsts.FirmwareVersion);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
@@ -80,12 +105,18 @@ namespace PlayStationGames.ConsoleEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
             XmlHelper.AppendElement(element, XmlConsts.Generation, generation);
             XmlHelper.AppendElement(element, XmlConsts.Model, model);
+            XmlHelper.AppendElement(element, XmlConsts.ModelCode, modelCode, true);
             XmlHelper.AppendElement(element, XmlConsts.Firmware, firmware);
+            XmlHelper.AppendElement(element, XmlConsts.FirmwareName, firmwareName);
+            XmlHelper.AppendElement(element, XmlConsts.FirmwareVersion, firmwareVersion);
         }
 
         private Guid id = Guid.Empty;
         private ConsoleGeneration generation = default!;
         private ConsoleModel model = default!;
+        private string modelCode = string.Empty;
+        private string firmwareName = string.Empty;
+        private string firmwareVersion = string.Empty;
         private readonly Storages storages = new ();
         private readonly Folders folders = new ();
         private readonly ConsoleAccounts accounts = new();
@@ -116,8 +147,17 @@ namespace PlayStationGames.ConsoleEngine.Data
                 case ConsoleField.Model:
                     Model = TypeHelper.Value<ConsoleModel>(value);
                     break;
+                case ConsoleField.ModelCode:
+                    ModelCode = StringValue(value);
+                    break;
                 case ConsoleField.Firmware:
                     Firmware = TypeHelper.Value<FirmwareType>(value);
+                    break;
+                case ConsoleField.FirmwareName:
+                    FirmwareName = StringValue(value);
+                    break;
+                case ConsoleField.FirmwareVersion:
+                    FirmwareVersion = StringValue(value);
                     break;
                 case ConsoleField.Storages:
                     Storages.CopyFrom((DAO?)value);
@@ -142,7 +182,10 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ConsoleField.Name => base.GetFieldValue(field),
                 ConsoleField.Generation => Generation,
                 ConsoleField.Model => Model,
+                ConsoleField.ModelCode => ModelCode,
                 ConsoleField.Firmware => Firmware,
+                ConsoleField.FirmwareName => FirmwareName,
+                ConsoleField.FirmwareVersion => FirmwareVersion,
                 ConsoleField.Storages => Storages,
                 ConsoleField.Folders => Folders,
                 ConsoleField.Accounts => Accounts,
@@ -186,7 +229,18 @@ namespace PlayStationGames.ConsoleEngine.Data
             if (Firmware < otherConsole.Firmware)
                 return -1;
 
-            return 0;
+            result = ModelCode.CompareTo(otherConsole.ModelCode);
+
+            if (result != 0) 
+                return result;
+
+            result = FirmwareName.CompareTo(otherConsole.FirmwareName);
+
+            if (result != 0)
+                return result;
+
+            result = FirmwareVersion.CompareTo(otherConsole.FirmwareVersion);
+            return result;
         }
 
         public override int CompareField(ConsoleField field, IFieldMapping<ConsoleField> y)
@@ -195,6 +249,9 @@ namespace PlayStationGames.ConsoleEngine.Data
             {
                 case ConsoleField.Id:
                 case ConsoleField.Name:
+                case ConsoleField.ModelCode:
+                case ConsoleField.FirmwareName:
+                case ConsoleField.FirmwareVersion:
                     return StringValue(this[field]).CompareTo(StringValue(y[field]));
             }
 
@@ -225,21 +282,19 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override string FullTitle() => Name;
 
-        public override bool Equals(object? obj)
-        {
-            if (!base.Equals(obj))
-                return false;
-            
-            if (obj is PSConsole otherConsole)
-                return Generation.Equals(otherConsole.Generation)
-                    && Model.Equals(otherConsole.Model)
-                    && Storages.Equals(otherConsole.Storages)
-                    && Folders.Equals(otherConsole.Folders)
-                    && Accounts.Equals(otherConsole.Accounts)
-                    && Accessories.Equals(otherConsole.Accessories)
-                    && Firmware.Equals(otherConsole.Firmware);
-            else return false;
-        }
+        public override bool Equals(object? obj) => 
+            base.Equals(obj)
+            && obj is PSConsole otherConsole
+            && Generation.Equals(otherConsole.Generation)
+            && Model.Equals(otherConsole.Model)
+            && ModelCode.Equals(otherConsole.ModelCode)
+            && Storages.Equals(otherConsole.Storages)
+            && Folders.Equals(otherConsole.Folders)
+            && Accounts.Equals(otherConsole.Accounts)
+            && Accessories.Equals(otherConsole.Accessories)
+            && Firmware.Equals(otherConsole.Firmware)
+            && FirmwareName.Equals(otherConsole.FirmwareName)
+            && FirmwareVersion.Equals(otherConsole.FirmwareVersion);
 
         public override int GetHashCode() => 
             Id.GetHashCode();

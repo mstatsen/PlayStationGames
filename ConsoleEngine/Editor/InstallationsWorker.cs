@@ -157,6 +157,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private readonly RootListDAO<GameField, Game> installedGames = new();
 
+        public int InstalledGamesCount => installedGames.Count;
+
         private static IMatcher<GameField> SuilableGamesFilter
         {
             get

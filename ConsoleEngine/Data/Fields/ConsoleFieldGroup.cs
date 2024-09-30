@@ -4,6 +4,9 @@
     {
         Storages,
         Base,
+        GenerationAndModel,
+        Firmware,
+        Games,
         Accessories,
         Folders,
         Accounts

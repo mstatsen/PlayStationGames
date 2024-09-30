@@ -22,33 +22,45 @@ namespace PlayStationGames.ConsoleEngine.Editor
             PrepareParentPanel(PanelLeft, MainPanel);
         }
 
-        protected override OxPane? GroupParent(ConsoleFieldGroup group)
-        {
-            return group switch
+        protected override OxPane? GroupParent(ConsoleFieldGroup group) => 
+            group switch
             {
                 ConsoleFieldGroup.Base or
+                ConsoleFieldGroup.GenerationAndModel or
+                ConsoleFieldGroup.Firmware or
                 ConsoleFieldGroup.Accounts or
-                ConsoleFieldGroup.Storages => 
+                ConsoleFieldGroup.Storages =>
                     PanelLeft,
                 ConsoleFieldGroup.Folders or
-                ConsoleFieldGroup.Accessories => 
+                ConsoleFieldGroup.Games or
+                ConsoleFieldGroup.Accessories =>
                     PanelRight,
                 _ => null,
             };
-        }
+
+        private readonly ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
 
         protected override void RecalcPanels()
         {
             MinimumSize = new Size(0, 0);
             MaximumSize = new Size(0, 0);
             PanelLeft.Width = CalcedWidth(PanelLeft);
-            ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
             ConsoleGeneration generation = ((ConsoleWorker)Worker).Generation;
             FirmwareType firmware = ((ConsoleWorker)Worker).Firmware;
-            Groups[ConsoleFieldGroup.Accessories].Dock = generationHelper.FolderSupport(generation)
-                ? DockStyle.Bottom
-                : DockStyle.Fill;
+
+            if (generationHelper.FolderSupport(generation))
+            {
+                Groups[ConsoleFieldGroup.Games].Dock = DockStyle.Bottom;
+                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Bottom;
+            }
+            else
+            {
+                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Fill;
+                Groups[ConsoleFieldGroup.Games].Dock = DockStyle.Top;
+            }
+
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
+            SetFrameMargin(ConsoleFieldGroup.Games, Groups[ConsoleFieldGroup.Games]);
             MainPanel.SetContentSize(
                 PanelLeft.Width + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders),
                 (generationHelper.StorageSupport(generation)
@@ -56,13 +68,14 @@ namespace PlayStationGames.ConsoleEngine.Editor
                     : generationHelper.MaxAccountsCount(generation, firmware) > 0 &&
                         !generationHelper.FolderSupport(generation)
                             ? Groups[ConsoleFieldGroup.Accounts].Bottom
-                            : Groups[ConsoleFieldGroup.Base].Height + 140) + 13
+                            : Groups[ConsoleFieldGroup.Firmware].Bottom + 140) + 13
             );
         }
 
         protected override void SetPaddings()
         {
             base.SetPaddings();
+            Groups[ConsoleFieldGroup.Games].Paddings.SetSize(OxSize.Large);
             Groups[ConsoleFieldGroup.Accounts].Paddings.RightOx = OxSize.Medium;
             Groups[ConsoleFieldGroup.Storages].Paddings.RightOx = OxSize.Medium;
             Groups[ConsoleFieldGroup.Folders].Paddings.RightOx = OxSize.Medium;
@@ -75,16 +88,22 @@ namespace PlayStationGames.ConsoleEngine.Editor
             frame.Margins.SetSize(OxSize.Extra);
             frame.Margins.LeftOx =
                 group is ConsoleFieldGroup.Folders or
-                ConsoleFieldGroup.Accessories
-                    ? OxSize.None 
-                    : OxSize.Extra;
+                    ConsoleFieldGroup.Games or
+                    ConsoleFieldGroup.Accessories
+                        ? OxSize.None 
+                        : OxSize.Extra;
 
             frame.Margins.TopOx = group switch
             {
+                ConsoleFieldGroup.GenerationAndModel or
+                ConsoleFieldGroup.Firmware or
                 ConsoleFieldGroup.Accounts or
                 ConsoleFieldGroup.Storages =>
                     OxSize.None,
-                ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Accessories].Dock == DockStyle.Bottom =>
+                ConsoleFieldGroup.Games when Groups[ConsoleFieldGroup.Games].Dock == DockStyle.Bottom =>
+                    OxSize.None,
+                ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Games].Dock == DockStyle.Bottom
+                    || generationHelper.StorageSupport(((ConsoleWorker)Worker).Generation) =>
                     OxSize.None,
                 _ => OxSize.Extra,
             };
