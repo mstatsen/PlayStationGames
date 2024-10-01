@@ -37,18 +37,30 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.CriticScore => "Critic Score",
                 GameField.Platform => "Platform",
                 GameField.Format => "Format",
-                GameField.EarnedPlatinum => "Platinum",
-                GameField.EarnedGold => "Gold",
-                GameField.EarnedSilver => "Silver",
-                GameField.EarnedBronze => "Bronze",
-                GameField.EarnedFromDLC => "From DLC",
-                GameField.EarnedNet => "Net",
-                GameField.AvailablePlatinum => "Platinum",
-                GameField.AvailableGold => "Gold",
-                GameField.AvailableSilver => "Silver",
-                GameField.AvailableBronze => "Bronze",
-                GameField.AvailableFromDLC => "From DLC",
-                GameField.AvailableNet => "Net",
+                GameField.EarnedPlatinum or
+                GameField.AvailablePlatinum or
+                GameField.FullPlatinum =>
+                    "Platinum",
+                GameField.EarnedGold or
+                GameField.AvailableGold or
+                GameField.FullGold => 
+                    "Gold",
+                GameField.EarnedSilver or
+                GameField.AvailableSilver or
+                GameField.FullSilver => 
+                    "Silver",
+                GameField.EarnedBronze or
+                GameField.AvailableBronze or
+                GameField.FullBronze => 
+                    "Bronze",
+                GameField.EarnedFromDLC or
+                GameField.AvailableFromDLC or
+                GameField.FullFromDLC => 
+                    "DLC",
+                GameField.EarnedNet or
+                GameField.AvailableNet or
+                GameField.FullNet => 
+                    "Net",
                 GameField.TrophysetAccess => "Access",
                 GameField.Source => "Source",
                 GameField.Developer => "Developer",
@@ -69,12 +81,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Progress => "Progress",
                 GameField.EarnedPoints => "Earned Points",
                 GameField.EarnedPointsOld => "Earned Points (Old)",
-                GameField.FullPlatinum => "Platinum",
-                GameField.FullGold => "Gold",
-                GameField.FullSilver => "Silver",
-                GameField.FullBronze => "Bronze",
-                GameField.FullFromDLC => "From DLC",
-                GameField.FullNet => "Net",
                 GameField.Status => "Status",
                 GameField.Field => "Field",
                 GameField.StrategeLink => "Stratege",

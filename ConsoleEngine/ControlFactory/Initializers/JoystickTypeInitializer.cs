@@ -10,18 +10,19 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
     {
         public PSConsole Console { get; set; }
         public JoystickTypeInitializer(PSConsole console) : base() => 
-            this.Console = console;
+            Console = console;
 
-        public override void InitControl(Control control)
-        {
-            OxComboBox ComboBox = (OxComboBox)control;
+        public override void InitControl(Control control) => 
+            ((OxComboBox)control).SelectedItem =
+                Console == null
+                    ? joystickTypeHelper.DefaultValue()
+                    : TypeHelper.Helper<ConsoleGenerationHelper>().DefaultJoystick(Console.Generation);
 
-            if (ComboBox.Items.Count > 0)
-                ComboBox.SelectedIndex = 0;
-        }
+        private readonly JoystickTypeHelper joystickTypeHelper = TypeHelper.Helper<JoystickTypeHelper>();
 
         public override bool AvailableValue(JoystickType value) =>
             Console == null 
-            || TypeHelper.Helper<JoystickTypeHelper>().SupportByGeneration(Console.Generation, Console.Model, value);
+            || joystickTypeHelper
+                .SupportByGeneration(Console.Generation, Console.Model, value);
     }
 }

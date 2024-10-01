@@ -14,7 +14,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                 TrophyType.Gold => "Gold",
                 TrophyType.Silver => "Silver",
                 TrophyType.Bronze => "Bronze",
-                TrophyType.FromDLC => "From DLC",
+                TrophyType.FromDLC => "DLC",
                 TrophyType.Net => "Net",
                 _ => string.Empty,
             };

@@ -36,22 +36,12 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             ConsoleGeneration.PS4;
 
 
-        public bool FolderSupport(ConsoleGeneration generation) 
-        {
-            if (!StorageSupport(generation))
-                return false;
-
-            return generation switch
-            {
-                ConsoleGeneration.PS5 or 
-                ConsoleGeneration.PS4 or 
-                ConsoleGeneration.PS3 or 
-                ConsoleGeneration.PSVita => 
-                    true,
-                _ => 
-                    false,
-            };
-        }
+        public bool FolderSupport(ConsoleGeneration generation) =>
+            generation is 
+                ConsoleGeneration.PS5
+                or ConsoleGeneration.PS4
+                or ConsoleGeneration.PS3
+                or ConsoleGeneration.PSVita;
 
         public bool StorageSupport(ConsoleGeneration generation) => 
             generation != ConsoleGeneration.PS1;
@@ -82,6 +72,25 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 ConsoleGeneration.PSP => ConsoleIcons.psp,
                 ConsoleGeneration.PS1 => ConsoleIcons.ps1,
                 _ => OxIcons.Close
+            };
+
+        public JoystickType DefaultJoystick(ConsoleGeneration generation) =>
+            generation switch
+            {
+                ConsoleGeneration.PS5 => 
+                    JoystickType.Dualsense5,
+                ConsoleGeneration.PS4 => 
+                    JoystickType.Dualshock4,
+                ConsoleGeneration.PSVita or
+                ConsoleGeneration.PSP or
+                ConsoleGeneration.PS3 => 
+                    JoystickType.Dualshock3,
+                ConsoleGeneration.PS2 => 
+                    JoystickType.Dualshock2,
+                ConsoleGeneration.PS1 => 
+                    JoystickType.Dualshock,
+                _ => 
+                    JoystickType.Other,
             };
 
         public override bool UseFullNameForControl => true;
