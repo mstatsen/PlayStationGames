@@ -73,6 +73,8 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private readonly RootListDAO<GameField, Game> existsGames = new();
 
+        public int GamesCount => existsGames.Count;
+
         private IMatcher<GameField> SuilableGamesFilter
         {
             get

@@ -18,7 +18,7 @@ namespace PlayStationGames.AccountEngine.Editor
             MaximumSize = new Size(0, 0);
             MainPanel.SetContentSize(
                 420,
-                Groups[AccountFieldGroup.Property].Bottom + 15
+                Groups[AccountFieldGroup.Games].Bottom + 15
             );
         }
 
@@ -27,14 +27,15 @@ namespace PlayStationGames.AccountEngine.Editor
             base.SetFrameMargin(group, frame);
             frame.Margins.RightOx = OxSize.Extra;
 
-            if (group == AccountFieldGroup.Property) 
+            if (group == AccountFieldGroup.Games) 
                 frame.Margins.BottomOx = OxSize.Extra;
         }
 
         protected override void SetPaddings()
         {
             base.SetPaddings();
-            Groups[AccountFieldGroup.Property].Paddings.Bottom = 6;
+            Groups[AccountFieldGroup.Consoles].Paddings.SetSize(OxSize.Large);
+            Groups[AccountFieldGroup.Games].Paddings.SetSize(OxSize.Large);
         }
     }
 }

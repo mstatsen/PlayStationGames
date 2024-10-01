@@ -60,7 +60,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ControlLayouter<ConsoleField, PSConsole> layouter) =>
                 new ConsoleEditorLayoutsGenerator(frames, layouter);
 
-        private readonly OxButton installationsButton = new("Install / uninstall", null)
+        private readonly OxButton installationsButton = new("Install / uninstall", OxIcons.Install)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
             Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)

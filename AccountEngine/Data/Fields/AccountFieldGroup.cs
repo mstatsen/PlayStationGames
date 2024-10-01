@@ -5,7 +5,8 @@
         Base,
         Auth,
         Links,
-        Property,
+        Consoles,
+        Games,
         System
     }
 }

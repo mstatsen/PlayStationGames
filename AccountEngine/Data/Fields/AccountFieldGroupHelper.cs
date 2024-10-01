@@ -10,7 +10,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         public override List<AccountFieldGroup> EditedList() => 
             new()
             {
-                AccountFieldGroup.Property,
+                AccountFieldGroup.Games,
+                AccountFieldGroup.Consoles,
                 AccountFieldGroup.Links,
                 AccountFieldGroup.Auth,
                 AccountFieldGroup.Base
@@ -22,7 +23,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountFieldGroup.Base => "Account",
                 AccountFieldGroup.Links => "Links",
                 AccountFieldGroup.Auth => "Auth",
-                AccountFieldGroup.Property => "Property",
+                AccountFieldGroup.Consoles => "Consoles",
+                AccountFieldGroup.Games => "Games",
                 AccountFieldGroup.System => "System",
                 _ => string.Empty,
             };
@@ -47,13 +49,19 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             new List<AccountFieldGroup>
             {
                 AccountFieldGroup.Base,
-                AccountFieldGroup.Auth,
-                AccountFieldGroup.Property
+                AccountFieldGroup.Auth
             }.Contains(group);
 
         public override int DefaultGroupHeight(AccountFieldGroup group) => 
-            group == AccountFieldGroup.Links 
-                ? 84 
-                : 60;
+            group switch
+            {
+                AccountFieldGroup.Consoles or
+                AccountFieldGroup.Games => 
+                    38,
+                AccountFieldGroup.Links =>
+                    84,
+                _=> 
+                    60
+            };
     }
 }

@@ -8,8 +8,6 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using OxDAOEngine.Data.Types;
 using OxLibrary.Dialogs;
-using OxDAOEngine.Editor;
-using Microsoft.VisualBasic.FileIO;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -116,6 +114,8 @@ namespace PlayStationGames.AccountEngine.Editor
                 return filter;
             }
         }
+
+        public int ConsolesCount => registeredConsoles.Count;
 
         public void Renew(Account? account)
         {
