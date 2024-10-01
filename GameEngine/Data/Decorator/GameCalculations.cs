@@ -8,10 +8,10 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             Game = game;
 
         public int GetEarnedPoints() =>
-            GetFullPoints(Game.EarnedTrophies);
+            GetFullPoints(Game.Trophyset.Earned);
 
         public int GetEarnedOldPoints() =>
-            GetFullOldPoints(Game.EarnedTrophies);
+            GetFullOldPoints(Game.Trophyset.Earned);
 
         public Status GetGameStatus()
         {
@@ -61,14 +61,14 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             CalcPoints(trophyset, 180);
 
         private int GetEarnedSimplePoints() =>
-            GetSimplePoints(Game.EarnedTrophies);
+            GetSimplePoints(Game.Trophyset.Earned);
 
         private int GetAvailableSimplePoints() =>
-            GetSimplePoints(Game.AvailableTrophies);
+            GetSimplePoints(Game.Trophyset.Available);
 
         private readonly Game Game;
 
         private int GetAvailablePoints() =>
-            GetFullPoints(Game.AvailableTrophies);
+            GetFullPoints(Game.Trophyset.Available);
     }
 }

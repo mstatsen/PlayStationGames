@@ -114,7 +114,7 @@ namespace PlayStationGames.GameEngine.Editor
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = Item;
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).AvailableTrophyset = 
                 AvailableTrophyset 
-                && Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet;
+                && Builder.Value<TrophysetType>(GameField.TrophysetType) != TrophysetType.NoSet;
 
             Filter<GameField, Game> relatedGameFilter = new();
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);
@@ -137,18 +137,16 @@ namespace PlayStationGames.GameEngine.Editor
 
                     SyncOwnerWithControls(byUser);
                     break;
-                case GameField.TrophysetAccess:
+                case GameField.TrophysetType:
                 case GameField.AvailablePlatinum:
                 case GameField.AvailableGold:
                 case GameField.AvailableSilver:
                 case GameField.AvailableBronze:
                 case GameField.AvailableFromDLC:
-                case GameField.AvailableNet:
                 case GameField.EarnedGold:
                 case GameField.EarnedSilver:
                 case GameField.EarnedBronze:
                 case GameField.EarnedFromDLC:
-                case GameField.EarnedNet:
                     trophiesControlsHelper.CalcTrophiesControls();
                     break;
                 case GameField.Licensed:
@@ -167,7 +165,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Licensed or
                 GameField.Platform or 
                 GameField.Format or
-                GameField.TrophysetAccess or
+                GameField.TrophysetType or
                 GameField.Source or 
                 GameField.Verified => 
                     true,
@@ -196,7 +194,7 @@ namespace PlayStationGames.GameEngine.Editor
 
             Builder.SetVisible(GameField.EmulatorType, isEmulator);
 
-            bool withoutTrophyset = Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) == TrophysetAccess.NoSet;
+            bool withoutTrophyset = Builder.Value<TrophysetType>(GameField.TrophysetType) == TrophysetType.NoSet;
 
             foreach (GameField field in fieldHelper.TrophiesFields)
                 Builder.SetVisible(field, !withoutTrophyset);
@@ -315,15 +313,14 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EmulatorType
             },
             new List<GameField> {
-                GameField.TrophysetAccess,
+                GameField.TrophysetType,
                 GameField.Difficult,
                 GameField.CompleteTime,
                 GameField.EarnedBronze,
                 GameField.EarnedSilver,
                 GameField.EarnedGold,
                 GameField.EarnedPlatinum,
-                GameField.EarnedFromDLC,
-                GameField.EarnedNet
+                GameField.EarnedFromDLC
             },
             new List<GameField> {
                 GameField.Developer,
@@ -347,7 +344,7 @@ namespace PlayStationGames.GameEngine.Editor
 
             if (!AvailableTrophyset)
             {
-                Builder[GameField.TrophysetAccess].Value = TrophysetAccess.NoSet;
+                Builder[GameField.TrophysetType].Value = TrophysetType.NoSet;
                 trophiesControlsHelper.CalcTrophiesControls();
             }
 

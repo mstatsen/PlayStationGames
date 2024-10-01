@@ -10,7 +10,6 @@
         CountGold,
         CountSilver,
         CountBronze,
-        CountFromDLC,
-        CountNet
+        CountFromDLC
     }
 }

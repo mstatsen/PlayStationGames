@@ -21,9 +21,9 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.ReleasePlatforms => 
                     ListToString(Dao.ReleasePlatforms.StringList),
                 GameField.Difficult => 
-                    TypeHelper.Name(Dao.Difficult),
+                    TypeHelper.Name(Dao.Trophyset.Difficult),
                 GameField.CompleteTime => 
-                    DecoratorHelper.NoWrap(TypeHelper.FullName(Dao.CompleteTime)),
+                    DecoratorHelper.NoWrap(TypeHelper.FullName(Dao.Trophyset.CompleteTime)),
                 GameField.ScreenView => 
                     ScreenView(),
                 GameField.Dlcs => 
@@ -34,7 +34,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     ListToHtmlColumn(Dao.RelatedGames.StringList),
                 GameField.GameModes => 
                     ListToHtmlColumn(Dao.GameModes.StringList),
-                GameField.TrophysetAccess => 
+                GameField.TrophysetType => 
                     TrophysetAccessibility(),
                 GameField.FullGenre => 
                     CalcedGenre(),
@@ -45,7 +45,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.FullSilver or 
                 GameField.FullBronze or 
                 GameField.FullFromDLC or 
-                GameField.FullNet or 
                 GameField.Pegi => 
                     DecoratorHelper.NoWrap(
                         OtherDecorator(DecoratorType.Card)[field]?.ToString()
@@ -114,7 +113,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             DecoratorHelper.ListToString(list, "<br>", noWrapItems);
 
         private object TrophysetAccessibility() =>
-            DecoratorHelper.NoWrap(TypeHelper.Name(Dao.TrophysetAccess));
+            DecoratorHelper.NoWrap(TypeHelper.Name(Dao.Trophyset.Type));
 
         private object ScreenView() =>
             DecoratorHelper.NoWrap(TypeHelper.Name(Dao.ScreenView));
@@ -142,13 +141,11 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.EarnedSilver or 
                 GameField.EarnedBronze or 
                 GameField.EarnedFromDLC or 
-                GameField.EarnedNet or 
                 GameField.AvailablePlatinum or 
                 GameField.AvailableGold or 
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze or 
                 GameField.AvailableFromDLC or 
-                GameField.AvailableNet or 
                 GameField.Source or 
                 GameField.Year or 
                 GameField.Pegi or 
@@ -157,14 +154,13 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.ScreenView or 
                 GameField.Links or
                 GameField.Tags or
-                GameField.TrophysetAccess or 
+                GameField.TrophysetType or 
                 GameField.Progress or 
                 GameField.FullPlatinum or 
                 GameField.FullGold or 
                 GameField.FullSilver or 
                 GameField.FullBronze or 
                 GameField.FullFromDLC or 
-                GameField.FullNet or 
                 GameField.Status or 
                 GameField.EarnedPoints or 
                 GameField.EarnedPointsOld or 

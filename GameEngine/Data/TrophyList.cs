@@ -60,11 +60,5 @@ namespace PlayStationGames.GameEngine.Data
             get => GetTrophyCount(TrophyType.FromDLC);
             set => SetTrophyCount(TrophyType.FromDLC, value);
         }
-
-        public int Net
-        {
-            get => GetTrophyCount(TrophyType.Net);
-            set => SetTrophyCount(TrophyType.Net, value);
-        }
     }
 }

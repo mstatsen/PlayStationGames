@@ -15,19 +15,17 @@ namespace PlayStationGames.GameEngine.Data.Types
                 TrophyType.Silver => "Silver",
                 TrophyType.Bronze => "Bronze",
                 TrophyType.FromDLC => "DLC",
-                TrophyType.Net => "Net",
                 _ => string.Empty,
             };
 
         public GameField EarnedGameField(TrophyType type) => 
-            type switch
+            type switch 
             {
                 TrophyType.Platinum => GameField.EarnedPlatinum,
                 TrophyType.Gold => GameField.EarnedGold,
                 TrophyType.Silver => GameField.EarnedSilver,
                 TrophyType.Bronze => GameField.EarnedBronze,
                 TrophyType.FromDLC => GameField.EarnedFromDLC,
-                TrophyType.Net => GameField.EarnedNet,
                 _ => GameField.Field,
             };
     }

@@ -28,16 +28,6 @@ namespace PlayStationGames.GameEngine.Grid
 
             switch (field)
             {
-                case GameField.Progress:
-                case GameField.FullPlatinum:
-                case GameField.FullGold:
-                case GameField.FullSilver:
-                case GameField.FullBronze:
-                case GameField.FullFromDLC:
-                case GameField.FullNet:
-                    if (item != null && item.TrophysetAccess == TrophysetAccess.NeverGet)
-                        style.ForeColor = Color.Red;
-                    break;
                 case GameField.Pegi:
                     fontStyle |= FontStyle.Bold;
                     style.ForeColor = new OxColorHelper(

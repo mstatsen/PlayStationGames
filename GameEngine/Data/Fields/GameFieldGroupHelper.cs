@@ -56,14 +56,12 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.EarnedSilver or 
                 GameField.EarnedBronze or 
                 GameField.EarnedFromDLC or 
-                GameField.EarnedNet or 
                 GameField.AvailablePlatinum or 
                 GameField.AvailableGold or 
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze or 
                 GameField.AvailableFromDLC or 
-                GameField.AvailableNet or 
-                GameField.TrophysetAccess => 
+                GameField.TrophysetType => 
                     GameFieldGroup.Trophyset,
                 GameField.Developer or 
                 GameField.Publisher or 

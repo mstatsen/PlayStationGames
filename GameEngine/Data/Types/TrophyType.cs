@@ -6,7 +6,6 @@
         Gold,
         Silver,
         Bronze,
-        FromDLC,
-        Net
+        FromDLC
     }
 }

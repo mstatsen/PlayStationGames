@@ -24,7 +24,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.FullSilver => CalcedSilver,
                 GameField.FullBronze => CalcedBronze,
                 GameField.FullFromDLC => CalcedFromDLC,
-                GameField.FullNet => CalcedNet,
                 GameField.Year => Year,
                 GameField.Pegi => Pegi,
                 GameField.Installations => Installations,
@@ -41,7 +40,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.ReleasePlatforms => ReleasePlatforms,
                 GameField.Dlcs => DLC,
                 GameField.GameModes => GameModes,
-                GameField.TrophysetAccess => TrophysetAccesibility,
+                GameField.TrophysetType => TrophysetAccesibility,
                 GameField.Owner => Owner,
                 _ => base.Value(field),
             };
@@ -50,9 +49,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             available > 0
                 ? $"{earned} / {available}"
                 : string.Empty;
-
-        private string CalcedNet =>
-            CalcedTrophies(Dao.EarnedTrophies.Net, Dao.AvailableTrophies.Net);
 
         private string Installations => 
             Dao.Installations.ToString();
@@ -74,7 +70,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             Dao.GameModes.ToString();
 
         private object? TrophysetAccesibility =>
-            TypeHelper.Name(Dao.TrophysetAccess);
+            TypeHelper.Name(Dao.Trophyset.Type);
 
         private object ReleasePlatforms =>
             Dao.ReleasePlatforms.ToString();
@@ -95,19 +91,19 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             OxImageBoxer.BoxingImage(Dao.Image, new Size(70, 40));
 
         private object CalcedFromDLC =>
-            CalcedTrophies(Dao.EarnedTrophies.FromDLC, Dao.AvailableTrophies.FromDLC);
+            CalcedTrophies(Dao.Trophyset.Earned.FromDLC, Dao.Trophyset.Available.FromDLC);
 
         private object CalcedBronze =>
-            CalcedTrophies(Dao.EarnedTrophies.Bronze, Dao.AvailableTrophies.Bronze);
+            CalcedTrophies(Dao.Trophyset.Earned.Bronze, Dao.Trophyset.Available.Bronze);
 
         private object CalcedSilver =>
-            CalcedTrophies(Dao.EarnedTrophies.Silver, Dao.AvailableTrophies.Silver);
+            CalcedTrophies(Dao.Trophyset.Earned.Silver, Dao.Trophyset.Available.Silver);
 
         private object CalcedGold =>
-            CalcedTrophies(Dao.EarnedTrophies.Gold, Dao.AvailableTrophies.Gold);
+            CalcedTrophies(Dao.Trophyset.Earned.Gold, Dao.Trophyset.Available.Gold);
 
         private object CalcedPlatinum =>
-            CalcedTrophies(Dao.EarnedTrophies.Platinum, Dao.AvailableTrophies.Platinum);
+            CalcedTrophies(Dao.Trophyset.Earned.Platinum, Dao.Trophyset.Available.Platinum);
 
         private object? Pegi =>
             Dao.Pegi == TypeHelper.EmptyValue<Pegi>()
@@ -121,9 +117,9 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             TypeHelper.Name(new GameCalculations(Dao).GetGameStatus());
 
         private object? CompleteTime =>
-            Dao.CompleteTime == TypeHelper.EmptyValue<CompleteTime>()
+            Dao.Trophyset.CompleteTime == TypeHelper.EmptyValue<CompleteTime>()
                 ? string.Empty
-                : TypeHelper.FullName(Dao.CompleteTime);
+                : TypeHelper.FullName(Dao.Trophyset.CompleteTime);
 
         private object? Format =>
             Dao.Format != TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType)
@@ -134,12 +130,12 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             TypeHelper.ShortName(Dao.PlatformType);
 
         private object? Difficult =>
-            Dao.Difficult == TypeHelper.EmptyValue<Difficult>()
+            Dao.Trophyset.Difficult == TypeHelper.EmptyValue<Difficult>()
                 ? string.Empty
-                : TypeHelper.FullName(Dao.Difficult);
+                : TypeHelper.FullName(Dao.Trophyset.Difficult);
 
         private object CalcedProgress =>
-            Dao.TrophysetAccess == TrophysetAccess.NoSet
+            Dao.Trophyset.Type == TrophysetType.NoSet
                 ? string.Empty
                 : $"{new GameCalculations(Dao).GetGameProgress()}%";
 

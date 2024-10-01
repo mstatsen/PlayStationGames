@@ -102,8 +102,6 @@ namespace PlayStationGames.GameEngine.Summary
                     TrophiesCount(TrophyType.Bronze),
                 LevelValueType.CountFromDLC => 
                     TrophiesCount(TrophyType.FromDLC),
-                LevelValueType.CountNet => 
-                    TrophiesCount(TrophyType.Net),
                 LevelValueType.Progress => 
                     Progress(),
                 _ => 

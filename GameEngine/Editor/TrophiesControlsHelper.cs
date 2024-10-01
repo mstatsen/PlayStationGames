@@ -29,10 +29,10 @@ namespace PlayStationGames.GameEngine.Editor
 
         public void CalcTrophiesControls()
         {
-            TrophysetAccess? trophiesAvailableValue =
-                Builder.Value<TrophysetAccess>(GameField.TrophysetAccess);
+            TrophysetType? trophiesAvailableValue =
+                Builder.Value<TrophysetType>(GameField.TrophysetType);
             bool trophiesAvailable = trophiesAvailableValue != null
-                && !trophiesAvailableValue.Equals(TrophysetAccess.NoSet);
+                && !trophiesAvailableValue.Equals(TrophysetType.NoSet);
 
             if (!trophiesAvailable)
                 Builder[GameField.AvailablePlatinum].Value = false;
@@ -50,7 +50,6 @@ namespace PlayStationGames.GameEngine.Editor
             Builder[GameField.AvailableFromDLC].MaximumValue = Builder[GameField.AvailableGold].IntValue
                 + Builder[GameField.AvailableSilver].IntValue
                 + Builder[GameField.AvailableBronze].IntValue;
-            Builder[GameField.AvailableNet].MaximumValue = Builder[GameField.AvailableFromDLC].MaximumValue;
 
             Builder[GameField.EarnedGold].MaximumValue = Builder[GameField.AvailableGold].IntValue;
             Builder[GameField.EarnedSilver].MaximumValue = Builder[GameField.AvailableSilver].IntValue;
@@ -63,9 +62,6 @@ namespace PlayStationGames.GameEngine.Editor
 
             Builder[GameField.EarnedFromDLC].MaximumValue = Math.Min(
                 Builder[GameField.AvailableFromDLC].IntValue,
-                totalEarnedTrophies);
-            Builder[GameField.EarnedNet].MaximumValue = Math.Min(
-                Builder[GameField.AvailableNet].IntValue,
                 totalEarnedTrophies);
 
             if (!Builder[GameField.EarnedPlatinum].Enabled)
@@ -126,7 +122,7 @@ namespace PlayStationGames.GameEngine.Editor
                 - Generator.Offset(GameField.AvailablePlatinum);
 
             bool visibleControlExist =
-                Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet
+                Builder.Value<TrophysetType>(GameField.TrophysetType) != TrophysetType.NoSet
                 && (!verified || Builder[GameField.AvailablePlatinum].BoolValue);
 
             lastBottom = SetTrophiesPairControlsVisible(
@@ -139,7 +135,7 @@ namespace PlayStationGames.GameEngine.Editor
             foreach (var item in DislbledIfOtherZero)
             {
                 bool currentVisible =
-                    Builder.Value<TrophysetAccess>(GameField.TrophysetAccess) != TrophysetAccess.NoSet
+                    Builder.Value<TrophysetType>(GameField.TrophysetType) != TrophysetType.NoSet
                     && (!verified || Builder[item.Value].IntValue != 0);
                 lastBottom = SetTrophiesPairControlsVisible(
                     item.Value,
@@ -158,8 +154,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EarnedGold,
                 GameField.EarnedSilver,
                 GameField.EarnedBronze,
-                GameField.EarnedFromDLC,
-                GameField.EarnedNet
+                GameField.EarnedFromDLC
             };
 
         private readonly List<GameField> ZeroIfDisabled = 
@@ -168,8 +163,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EarnedGold,
                 GameField.EarnedSilver,
                 GameField.EarnedBronze,
-                GameField.EarnedFromDLC,
-                GameField.EarnedNet
+                GameField.EarnedFromDLC
             };
 
         private readonly Dictionary<GameField, GameField> DislbledIfOtherZero =
@@ -178,8 +172,7 @@ namespace PlayStationGames.GameEngine.Editor
                 [GameField.EarnedGold] = GameField.AvailableGold,
                 [GameField.EarnedSilver] = GameField.AvailableSilver,
                 [GameField.EarnedBronze] = GameField.AvailableBronze,
-                [GameField.EarnedFromDLC] = GameField.AvailableFromDLC,
-                [GameField.EarnedNet] = GameField.AvailableNet
+                [GameField.EarnedFromDLC] = GameField.AvailableFromDLC
             };
     }
 }

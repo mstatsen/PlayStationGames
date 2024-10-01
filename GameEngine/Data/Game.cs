@@ -28,9 +28,6 @@ namespace PlayStationGames.GameEngine.Data
         private GameRegion region = TypeHelper.DefaultValue<GameRegion>();
         private GameLanguage language = TypeHelper.DefaultValue<GameLanguage>();
         private ScreenView screenView = TypeHelper.DefaultValue<ScreenView>();
-        private Difficult difficult = TypeHelper.DefaultValue<Difficult>();
-        private CompleteTime completeTime = TypeHelper.DefaultValue<CompleteTime>();
-        private TrophysetAccess trophysetAccess = TypeHelper.DefaultValue<TrophysetAccess>();
         private string code = string.Empty;
         private bool verified = false;
         private bool licensed = true;
@@ -47,27 +44,16 @@ namespace PlayStationGames.GameEngine.Data
         public readonly ListDAO<Tag> Tags = new();
         public readonly Links<GameField> Links = new();
         public readonly RelatedGames RelatedGames = new();
-        public readonly ListDAO<GameMode> GameModes = new() 
-        { 
+        public readonly ListDAO<GameMode> GameModes = new()
+        {
             XmlName = "Modes",
             SaveEmptyList = false
         };
+        public readonly Trophyset Trophyset = new();
 
         public readonly Platforms ReleasePlatforms = new() 
         { 
             XmlName = "ReleasePlatforms",
-            SaveEmptyList = false
-        };
-
-        public readonly TrophyList EarnedTrophies = new() 
-        { 
-            XmlName = "EarnedTrophies",
-            SaveEmptyList = false
-        };
-
-        public TrophyList AvailableTrophies = new() 
-        { 
-            XmlName = "AvailableTrophies",
             SaveEmptyList = false
         };
 
@@ -101,23 +87,6 @@ namespace PlayStationGames.GameEngine.Data
         {
             get => screenView;
             set => ModifyValue(GameField.ScreenView, screenView, value, n => screenView = n);
-        }
-
-        public Difficult Difficult
-        {
-            get => difficult;
-            set => ModifyValue(GameField.Difficult, difficult, value, n => difficult = n);
-        }
-        public CompleteTime CompleteTime
-        {
-            get => completeTime;
-            set => ModifyValue(GameField.CompleteTime, completeTime, value, n => completeTime = n);
-        }
-
-        public TrophysetAccess TrophysetAccess
-        {
-            get => trophysetAccess;
-            set => ModifyValue(GameField.TrophysetAccess, trophysetAccess, value, n => trophysetAccess = n);
         }
 
         public string Developer
@@ -230,12 +199,10 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.EarnedSilver:
                 case GameField.EarnedBronze:
                 case GameField.EarnedFromDLC:
-                case GameField.EarnedNet:
                 case GameField.AvailableGold:
                 case GameField.AvailableSilver:
                 case GameField.AvailableBronze:
                 case GameField.AvailableFromDLC:
-                case GameField.AvailableNet:
                 case GameField.Year:
                 case GameField.CriticScore:
                     return IntValue(this[field]).CompareTo(IntValue(y[field]));
@@ -246,12 +213,12 @@ namespace PlayStationGames.GameEngine.Data
                 {
                     GameField.Platform => platformType.CompareTo(yGame.PlatformType),
                     GameField.Format => format.CompareTo(yGame.Format),
-                    GameField.TrophysetAccess => TrophysetAccess.CompareTo(yGame.TrophysetAccess),
+                    GameField.TrophysetType => Trophyset.Type.CompareTo(yGame.Trophyset.Type),
                     GameField.Source => sourceType.CompareTo(yGame.SourceType),
                     GameField.Pegi => Pegi.CompareTo(yGame.Pegi),
                     GameField.ReleasePlatforms => ReleasePlatforms.CompareTo(yGame.ReleasePlatforms),
-                    GameField.Difficult => Difficult.CompareTo(yGame.Difficult),
-                    GameField.CompleteTime => CompleteTime.CompareTo(yGame.CompleteTime),
+                    GameField.Difficult => Trophyset.Difficult.CompareTo(yGame.Trophyset.Difficult),
+                    GameField.CompleteTime => Trophyset.CompleteTime.CompareTo(yGame.Trophyset.CompleteTime),
                     GameField.ScreenView => ScreenView.CompareTo(yGame.ScreenView),
                     GameField.Region => GameRegion.CompareTo(yGame.GameRegion),
                     GameField.Language => GameLanguage.CompareTo(yGame.GameLanguage),
@@ -419,44 +386,38 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Format:
                     Format = TypeHelper.Value<GameFormat>(value);
                     break;
-                case GameField.TrophysetAccess:
-                    TrophysetAccess = TypeHelper.Value<TrophysetAccess>(value);
+                case GameField.TrophysetType:
+                    Trophyset.Type = TypeHelper.Value<TrophysetType>(value);
                     break;
                 case GameField.EarnedPlatinum:
-                    EarnedTrophies.Platinum = IntValue(value);
+                    Trophyset.Earned.Platinum = IntValue(value);
                     break;
                 case GameField.EarnedGold:
-                    EarnedTrophies.Gold = IntValue(value);
+                    Trophyset.Earned.Gold = IntValue(value);
                     break;
                 case GameField.EarnedSilver:
-                    EarnedTrophies.Silver = IntValue(value);
+                    Trophyset.Earned.Silver = IntValue(value);
                     break;
                 case GameField.EarnedBronze:
-                    EarnedTrophies.Bronze = IntValue(value);
+                    Trophyset.Earned.Bronze = IntValue(value);
                     break;
                 case GameField.EarnedFromDLC:
-                    EarnedTrophies.FromDLC = IntValue(value);
-                    break;
-                case GameField.EarnedNet:
-                    EarnedTrophies.Net = IntValue(value);
+                    Trophyset.Earned.FromDLC = IntValue(value);
                     break;
                 case GameField.AvailablePlatinum:
-                    AvailableTrophies.Platinum = IntValue(value);
+                    Trophyset.Available.Platinum = IntValue(value);
                     break;
                 case GameField.AvailableGold:
-                    AvailableTrophies.Gold = IntValue(value);
+                    Trophyset.Available.Gold = IntValue(value);
                     break;
                 case GameField.AvailableSilver:
-                    AvailableTrophies.Silver = IntValue(value);
+                    Trophyset.Available.Silver = IntValue(value);
                     break;
                 case GameField.AvailableBronze:
-                    AvailableTrophies.Bronze = IntValue(value);
+                    Trophyset.Available.Bronze = IntValue(value);
                     break;
                 case GameField.AvailableFromDLC:
-                    AvailableTrophies.FromDLC = IntValue(value);
-                    break;
-                case GameField.AvailableNet:
-                    AvailableTrophies.Net = IntValue(value);
+                    Trophyset.Available.FromDLC = IntValue(value);
                     break;
                 case GameField.Source:
                     SourceType = TypeHelper.Value<Source>(value);
@@ -489,10 +450,10 @@ namespace PlayStationGames.GameEngine.Data
                     Owner = value is Account account ? account.Id : GuidValue(value);
                     break;
                 case GameField.Difficult:
-                    Difficult = TypeHelper.Value<Difficult>(value);
+                    Trophyset.Difficult = TypeHelper.Value<Difficult>(value);
                     break;
                 case GameField.CompleteTime:
-                    CompleteTime = TypeHelper.Value<CompleteTime>(value);
+                    Trophyset.CompleteTime = TypeHelper.Value<CompleteTime>(value);
                     break;
                 case GameField.Genre:
                     Genre = StringValue(value);
@@ -530,19 +491,17 @@ namespace PlayStationGames.GameEngine.Data
                 switch (field)
                 {
                     case GameField.Series:
-                    case GameField.TrophysetAccess:
+                    case GameField.TrophysetType:
                     case GameField.EarnedPlatinum:
                     case GameField.EarnedGold:
                     case GameField.EarnedSilver:
                     case GameField.EarnedBronze:
                     case GameField.EarnedFromDLC:
-                    case GameField.EarnedNet:
                     case GameField.AvailablePlatinum:
                     case GameField.AvailableGold:
                     case GameField.AvailableSilver:
                     case GameField.AvailableBronze:
                     case GameField.AvailableFromDLC:
-                    case GameField.AvailableNet:
                     case GameField.Developer:
                     case GameField.Publisher:
                     case GameField.Year:
@@ -642,19 +601,17 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.PlatformFamily => PlatformFamily.Sony,
                 GameField.Platform => platformType,
                 GameField.Format => format,
-                GameField.TrophysetAccess => TrophysetAccess,
-                GameField.EarnedPlatinum => EarnedTrophies.Platinum,
-                GameField.EarnedGold => EarnedTrophies.Gold,
-                GameField.EarnedSilver => EarnedTrophies.Silver,
-                GameField.EarnedBronze => EarnedTrophies.Bronze,
-                GameField.EarnedFromDLC => EarnedTrophies.FromDLC,
-                GameField.EarnedNet => EarnedTrophies.Net,
-                GameField.AvailablePlatinum => AvailableTrophies.Platinum,
-                GameField.AvailableGold => AvailableTrophies.Gold,
-                GameField.AvailableSilver => AvailableTrophies.Silver,
-                GameField.AvailableBronze => AvailableTrophies.Bronze,
-                GameField.AvailableFromDLC => AvailableTrophies.FromDLC,
-                GameField.AvailableNet => AvailableTrophies.Net,
+                GameField.TrophysetType => Trophyset.Type,
+                GameField.EarnedPlatinum => Trophyset.Earned.Platinum,
+                GameField.EarnedGold => Trophyset.Earned.Gold,
+                GameField.EarnedSilver => Trophyset.Earned.Silver,
+                GameField.EarnedBronze => Trophyset.Earned.Bronze,
+                GameField.EarnedFromDLC => Trophyset.Earned.FromDLC,
+                GameField.AvailablePlatinum => Trophyset.Available.Platinum,
+                GameField.AvailableGold => Trophyset.Available.Gold,
+                GameField.AvailableSilver => Trophyset.Available.Silver,
+                GameField.AvailableBronze => Trophyset.Available.Bronze,
+                GameField.AvailableFromDLC => Trophyset.Available.FromDLC,
                 GameField.Source => sourceType,
                 GameField.Region => region,
                 GameField.Language => language,
@@ -669,8 +626,8 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Owner => Owner,
                 GameField.Licensed => Licensed,
                 GameField.Installations => Installations,
-                GameField.Difficult => Difficult,
-                GameField.CompleteTime => CompleteTime,
+                GameField.Difficult => Trophyset.Difficult,
+                GameField.CompleteTime => Trophyset.CompleteTime,
                 GameField.Genre => Genre,
                 GameField.ScreenView => ScreenView,
                 GameField.GameModes => GameModes,
@@ -713,9 +670,6 @@ namespace PlayStationGames.GameEngine.Data
             platformType = TypeHelper.DefaultValue<PlatformType>();
             format = TypeHelper.Helper<GameFormatHelper>().DefaultFormat(PlatformType);
             screenView = TypeHelper.DefaultValue<ScreenView>();
-            difficult = TypeHelper.DefaultValue<Difficult>();
-            completeTime = TypeHelper.DefaultValue<CompleteTime>();
-            trophysetAccess = TypeHelper.DefaultValue<TrophysetAccess>();
             sourceType = TypeHelper.DefaultValue<Source>();
             region = TypeHelper.DefaultValue<GameRegion>();
             language = TypeHelper.DefaultValue<GameLanguage>();
@@ -723,25 +677,23 @@ namespace PlayStationGames.GameEngine.Data
             
             ReleasePlatforms.Clear();
             GameModes.Clear();
+            Trophyset.Clear();
             Installations.Clear();
             Dlcs.Clear();
             Tags.Clear();
             Links.Clear();
             RelatedGames.Clear();
-            AvailableTrophies.Clear();
-            EarnedTrophies.Clear();
         }
 
         public override void Init()
         {
+            AddMember(Trophyset);
             AddListMember(GameField.GameModes, GameModes);
             AddListMember(GameField.Dlcs, Dlcs);
             AddListMember(GameField.Tags, Tags);
             AddListMember(GameField.Installations, Installations);
             AddListMember(GameField.Links, Links);
             AddListMember(GameField.RelatedGames, RelatedGames);
-            AddMember(AvailableTrophies);
-            AddMember(EarnedTrophies);
             AddListMember(GameField.ReleasePlatforms, ReleasePlatforms);
         }
 
@@ -777,13 +729,6 @@ namespace PlayStationGames.GameEngine.Data
 
             if (CriticScore >= 0)
                 XmlHelper.AppendElement(element, XmlConsts.CriticScore, CriticScore);
-
-            if (TrophysetAvailable)
-            {
-                XmlHelper.AppendElement(element, XmlConsts.TrophysetAccess, TrophysetAccess);
-                XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
-                XmlHelper.AppendElement(element, XmlConsts.CompleteTime, CompleteTime);
-            }
         }
 
         protected override void LoadData(XmlElement element)
@@ -807,9 +752,6 @@ namespace PlayStationGames.GameEngine.Data
             roms = XmlHelper.Value(element, XmlConsts.ROMs);
             screenView = XmlHelper.Value<ScreenView>(element, XmlConsts.Screen);
             genre = XmlHelper.Value(element, XmlConsts.Genre);
-            difficult = XmlHelper.Value<Difficult>(element, XmlConsts.Difficult);
-            completeTime = XmlHelper.Value<CompleteTime>(element, XmlConsts.CompleteTime);
-            trophysetAccess = XmlHelper.Value<TrophysetAccess>(element, XmlConsts.TrophysetAccess);
             developer = XmlHelper.Value(element, XmlConsts.Developer);
             publisher = XmlHelper.Value(element, XmlConsts.Publisher);
             year = XmlHelper.ValueInt(element, XmlConsts.Year);
@@ -870,16 +812,12 @@ namespace PlayStationGames.GameEngine.Data
                 && ScreenView.Equals(otherGame.ScreenView)
                 && Genre.Equals(otherGame.Genre)
                 && GameModes.Equals(otherGame.GameModes)
+                && Trophyset.Equals(otherGame.Trophyset)
                 && Installations.Equals(otherGame.Installations)
-                && Difficult.Equals(otherGame.Difficult)
-                && CompleteTime.Equals(otherGame.CompleteTime)
                 && Dlcs.Equals(otherGame.Dlcs)
                 && Tags.Equals(otherGame.Tags)
                 && Links.Equals(otherGame.Links)
                 && RelatedGames.Equals(otherGame.RelatedGames)
-                && EarnedTrophies.Equals(otherGame.EarnedTrophies)
-                && AvailableTrophies.Equals(otherGame.AvailableTrophies)
-                && TrophysetAccess.Equals(otherGame.TrophysetAccess)
                 && Developer.Equals(otherGame.Developer)
                 && Publisher.Equals(otherGame.Publisher)
                 && Year.Equals(otherGame.Year)

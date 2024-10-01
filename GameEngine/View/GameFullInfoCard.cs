@@ -34,8 +34,7 @@ namespace PlayStationGames.GameEngine.View
                     [GameField.AvailableGold] = GameField.FullGold,
                     [GameField.AvailableSilver] = GameField.FullSilver,
                     [GameField.AvailableBronze] = GameField.FullBronze,
-                    [GameField.AvailableFromDLC] = GameField.FullFromDLC,
-                    [GameField.AvailableNet] = GameField.FullNet,
+                    [GameField.AvailableFromDLC] = GameField.FullFromDLC
                 };
 
                 bool firstLayout = true;

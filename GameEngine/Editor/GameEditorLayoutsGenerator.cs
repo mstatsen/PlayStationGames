@@ -25,7 +25,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.AvailableSilver,
                 GameField.AvailableBronze,
                 GameField.AvailableFromDLC,
-                GameField.AvailableNet,
                 GameField.ReleasePlatforms,
                 GameField.Verified,
                 GameField.Licensed,
@@ -67,12 +66,10 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EarnedSilver,
                 GameField.EarnedBronze,
                 GameField.EarnedFromDLC,
-                GameField.EarnedNet,
                 GameField.AvailableGold,
                 GameField.AvailableSilver,
                 GameField.AvailableBronze,
                 GameField.AvailableFromDLC,
-                GameField.AvailableNet,
                 GameField.Difficult,
                 GameField.CompleteTime,
                 GameField.Genre,
@@ -155,12 +152,11 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.ScreenView or
                 GameField.Genre =>
                     60,
-                GameField.TrophysetAccess or 
+                GameField.TrophysetType or 
                 GameField.EarnedGold or 
                 GameField.EarnedSilver or 
                 GameField.EarnedBronze or 
                 GameField.EarnedFromDLC or 
-                GameField.EarnedNet or
                 GameField.Difficult or
                 GameField.CompleteTime =>
                     76,
@@ -171,8 +167,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.AvailableGold or 
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze or 
-                GameField.AvailableFromDLC or 
-                GameField.AvailableNet =>
+                GameField.AvailableFromDLC =>
                     148,
                 GameField.Language =>
                     206,
@@ -221,18 +216,16 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Developer or 
                 GameField.Publisher => 
                     362,
-                GameField.TrophysetAccess => 
+                GameField.TrophysetType => 
                     158,
                 GameField.AvailableGold or 
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze or 
                 GameField.AvailableFromDLC or 
-                GameField.AvailableNet or 
                 GameField.EarnedGold or 
                 GameField.EarnedSilver or 
                 GameField.EarnedBronze or 
                 GameField.EarnedFromDLC or 
-                GameField.EarnedNet or 
                 GameField.Year or 
                 GameField.Pegi or 
                 GameField.CriticScore or
@@ -272,10 +265,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Series or 
                 GameField.EarnedSilver or 
                 GameField.EarnedBronze or 
-                GameField.EarnedNet or 
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze or 
-                GameField.AvailableNet or
                 GameField.Difficult or
                 GameField.CompleteTime or
                 GameField.Genre or 

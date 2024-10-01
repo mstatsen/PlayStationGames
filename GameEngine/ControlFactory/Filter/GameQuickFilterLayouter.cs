@@ -23,7 +23,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                     160,
                 GameField.CompleteTime => 
                     80,
-                GameField.TrophysetAccess => 
+                GameField.TrophysetType => 
                     148,
                 _ => 
                     100,
@@ -60,10 +60,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                         return "Full time";
                     break;
 
-                case GameField.TrophysetAccess:
+                case GameField.TrophysetType:
                     if (variant == QuickFilterVariant.Export ||
                         (variant == QuickFilterVariant.Base &&
-                        quickFilterFields.Contains(GameField.TrophysetAccess)))
+                        quickFilterFields.Contains(GameField.TrophysetType)))
                         return "Trophyset";
                     break;
             }
