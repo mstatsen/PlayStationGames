@@ -16,6 +16,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 ConsoleModel.PSPFat or 
                 ConsoleModel.PS1Fat => 
                     "Fat",
+                ConsoleModel.PS5Slim or
                 ConsoleModel.PS4Slim or 
                 ConsoleModel.PS3Slim or 
                 ConsoleModel.PSVitaSlim or 
@@ -52,6 +53,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 ConsoleModel.PSPFat or 
                 ConsoleModel.PS1Fat => 
                     "Fat",
+                ConsoleModel.PS5Slim or
                 ConsoleModel.PS4Slim or 
                 ConsoleModel.PS3Slim or 
                 ConsoleModel.PSVitaSlim or 
@@ -88,7 +90,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         public override object DependsOnValue(ConsoleModel value) => 
             value switch
             {
-                ConsoleModel.PS5Fat => 
+                ConsoleModel.PS5Fat or
+                ConsoleModel.PS5Slim => 
                     ConsoleGeneration.PS5,
                 ConsoleModel.PS4Fat or 
                 ConsoleModel.PS4Slim or 
