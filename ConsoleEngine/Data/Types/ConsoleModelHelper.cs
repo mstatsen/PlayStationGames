@@ -114,8 +114,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 ConsoleModel.PS1Fat or 
                 ConsoleModel.PS1One => 
                     ConsoleGeneration.PS1,
-                _ => 
-                    ConsoleGeneration.Unknown
+                _ => default
             };
 
         public override List<ConsoleModel> DependedList(ConsoleField field, object value)

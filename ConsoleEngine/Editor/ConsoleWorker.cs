@@ -92,7 +92,10 @@ namespace PlayStationGames.ConsoleEngine.Editor
         }
 
         private void RenewInstalledGamesLabel() => 
-            installedGamesLabel.Text = $"Installed games count: {installationsWorker.InstalledGamesCount}";
+            installedGamesLabel.Text =
+                installationsWorker.InstalledGamesCount > 0
+                    ? $"{installationsWorker.InstalledGamesCount} installed game{(installationsWorker.InstalledGamesCount > 1 ? "s" : string.Empty)}"
+                    : "No installed games";
 
         private void GamesGroupSizeChangedHandler(object? sender, EventArgs e)
         {

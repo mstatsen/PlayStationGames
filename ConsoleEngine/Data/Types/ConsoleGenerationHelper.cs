@@ -33,10 +33,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             };
 
         public override ConsoleGeneration EmptyValue() =>
-            ConsoleGeneration.Unknown;
-
-        public override ConsoleGeneration DefaultValue() =>
             ConsoleGeneration.PS4;
+
 
         public bool FolderSupport(ConsoleGeneration generation) 
         {

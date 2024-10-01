@@ -36,7 +36,8 @@ namespace PlayStationGames.AccountEngine.Editor
                 return CanSelectResult.Return;
 
             if (currentItem.Accounts.Count >= TypeHelper.Helper<ConsoleGenerationHelper>()
-                .MaxAccountsCount(currentItem.Generation, currentItem.Firmware))
+                .MaxAccountsCount(currentItem.Generation, currentItem.Firmware) 
+                && !currentItem.Accounts.Contains(c => c.Id == account.Id))
             {
                 OxMessage.ShowError($"Console \"{currentItem.Name}\" already contains maximum count of possible registered accounts.", chooser);
                 return CanSelectResult.Continue;
