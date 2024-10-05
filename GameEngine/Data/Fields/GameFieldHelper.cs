@@ -823,7 +823,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 _ => null
             };
 
-        public List<GameField> UnverifiedFields() => 
+        public static List<GameField> UnverifiedFields() =>
             new()
             {
                 GameField.Installations,

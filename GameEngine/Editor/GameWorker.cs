@@ -137,7 +137,7 @@ namespace PlayStationGames.GameEngine.Editor
             Builder.SetVisible(GameField.CompleteTime, !withoutTrophyset);
 
             bool verified = Builder.Value<bool>(GameField.Verified);
-            List<GameField> unverifiedFields = fieldHelper.UnverifiedFields();
+            List<GameField> unverifiedFields = GameFieldHelper.UnverifiedFields();
 
             if (!verified)
             {
