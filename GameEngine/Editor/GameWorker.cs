@@ -1,5 +1,4 @@
-﻿using OxLibrary;
-using OxLibrary.Controls;
+﻿using OxLibrary.Controls;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Fields;
@@ -13,68 +12,19 @@ using PlayStationGames.GameEngine.ControlFactory.Controls;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
-using OxDAOEngine.ControlFactory.Accessors;
+using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 
 namespace PlayStationGames.GameEngine.Editor
 {
     public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
     {
-        public GameWorker() : base() =>
-            trophiesControlsHelper = new TrophiesControlsHelper(Builder, (GameEditorLayoutsGenerator)Generator!);
+        public GameWorker() : base() { }
 
         protected override void AfterColorizeControls()
         {
             base.AfterColorizeControls();
-            ((OxPictureContainer)Layouter.PlacedControl(GameField.Image)!.Control).BaseColor = 
-                new OxColorHelper(Editor.MainPanel.BaseColor).Lighter();
-        }
-
-        protected override void BeforeFillControls()
-        {
-            base.BeforeFillControls();
-            trophiesControlsHelper.ClearTrophiesControlsConstraints();
-        }
-
-        private OxLabel? earnedTrophiesLabel;
-        private OxLabel? availableTrophiesLabel;
-
-        protected override void BeforeGenerateLayouts()
-        {
-            base.BeforeGenerateLayouts();
-            earnedTrophiesLabel ??= CreateTrophiesLabel("Earned", 76);
-            availableTrophiesLabel ??= CreateTrophiesLabel("Available", 148);
-        }
-
-        private OxLabel CreateTrophiesLabel(string text, int left) =>
-            new()
-            {
-                Text = text,
-                Left = left,
-                Top = 112,
-                Parent = Editor.Groups[GameFieldGroup.Trophyset],
-                AutoSize = true,
-                Font = new Font(Styles.FontFamily, Styles.DefaultFontSize,
-                        FontStyle.Bold | FontStyle.Underline | FontStyle.Italic)
-            };
-
-        protected override void AfterFillControls()
-        {
-            base.AfterFillControls();
-            trophiesControlsHelper.CalcTrophiesControls();
-            trophiesControlsHelper.ClearUnusedCaptions();
-        }
-
-        protected override void AfterLayoutControls()
-        {
-            base.AfterLayoutControls();
-
-            foreach (GameField field in fieldHelper.TrophiesFields)
-            {
-                if (field is GameField.AvailablePlatinum or GameField.EarnedPlatinum)
-                    continue;
-
-                ((NumericAccessor<GameField, Game>)Builder[field]).CenteredReadonlyText = true;
-            }
+            ((OxPictureContainer)Builder[GameField.Image].Control).BaseColor = Editor.MainPanel.Colors.Lighter();
+            ((TrophysetPanel)Builder[GameField.Trophyset].Control).BaseColor = Editor.MainPanel.Colors.Lighter();
         }
 
         protected override void AfterFillControlsAndSetHandlers()
@@ -90,12 +40,9 @@ namespace PlayStationGames.GameEngine.Editor
                 { GameFieldGroup.System, Editor.MainPanel.Footer }
             };
 
-
         protected override void AfterAlignLabels()
         {
             base.AfterAlignLabels();
-            trophiesControlsHelper.AlignLabels();
-
             Control licenseCheckBox = Layouter.PlacedControl(GameField.Licensed)!.Control;
             Control nameControl = Layouter.PlacedControl(GameField.Name)!.Control;
             licenseCheckBox.Left =
@@ -104,6 +51,7 @@ namespace PlayStationGames.GameEngine.Editor
                  licenseCheckBox.Width) / 2;
             licenseCheckBox.Top = nameControl.Top + (nameControl.Height - licenseCheckBox.Height) / 2;
             ((OxPictureContainer)Layouter.PlacedControl(GameField.Image)!.Control).HiddenBorder = true;
+            Builder[GameField.AvailablePlatinum].Text = "";
         }
 
         private void SetRelatedGamesFilter()
@@ -114,7 +62,7 @@ namespace PlayStationGames.GameEngine.Editor
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = Item;
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).AvailableTrophyset = 
                 AvailableTrophyset 
-                && Builder.Value<TrophysetType>(GameField.TrophysetType) != TrophysetType.NoSet;
+                && ((TrophysetPanel)Builder[GameField.Trophyset].Control).Type != TrophysetType.NoSet;
 
             Filter<GameField, Game> relatedGameFilter = new();
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);
@@ -137,21 +85,11 @@ namespace PlayStationGames.GameEngine.Editor
 
                     SyncOwnerWithControls(byUser);
                     break;
-                case GameField.TrophysetType:
-                case GameField.AvailablePlatinum:
-                case GameField.AvailableGold:
-                case GameField.AvailableSilver:
-                case GameField.AvailableBronze:
-                case GameField.AvailableFromDLC:
-                case GameField.EarnedGold:
-                case GameField.EarnedSilver:
-                case GameField.EarnedBronze:
-                case GameField.EarnedFromDLC:
-                    trophiesControlsHelper.CalcTrophiesControls();
-                    break;
                 case GameField.Licensed:
                     SyncOwnerWithControls(byUser);
-                    trophiesControlsHelper.CalcTrophiesControls();
+
+                    if (!AvailableTrophyset)
+                        ((TrophysetPanel)Builder[GameField.Trophyset].Control).Type = TrophysetType.NoSet;
                     break;
                 case GameField.Source:
                     SyncOwnerWithControls(byUser);
@@ -165,7 +103,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Licensed or
                 GameField.Platform or 
                 GameField.Format or
-                GameField.TrophysetType or
+                GameField.Trophyset or
                 GameField.Source or 
                 GameField.Verified => 
                     true,
@@ -181,8 +119,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
-            Editor.Groups[GameFieldGroup.Trophyset].Visible = 
-                Editor.Groups[GameFieldGroup.Trophyset].Visible = AvailableTrophyset;
+            Editor.Groups[GameFieldGroup.Trophyset].Visible = AvailableTrophyset;
             Editor.Groups[GameFieldGroup.Installations].Visible =
                 sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
 
@@ -194,29 +131,23 @@ namespace PlayStationGames.GameEngine.Editor
 
             Builder.SetVisible(GameField.EmulatorType, isEmulator);
 
-            bool withoutTrophyset = Builder.Value<TrophysetType>(GameField.TrophysetType) == TrophysetType.NoSet;
-
-            foreach (GameField field in fieldHelper.TrophiesFields)
-                Builder.SetVisible(field, !withoutTrophyset);
-
+            bool withoutTrophyset = 
+                ((TrophysetPanel)Builder[GameField.Trophyset].Control).Type == TrophysetType.NoSet;
             Builder.SetVisible(GameField.Difficult, !withoutTrophyset);
             Builder.SetVisible(GameField.CompleteTime, !withoutTrophyset);
-
-            if (earnedTrophiesLabel != null)
-                earnedTrophiesLabel.Visible = !withoutTrophyset;
-
-            if (availableTrophiesLabel != null)
-                availableTrophiesLabel.Visible = !withoutTrophyset;
 
             bool verified = Builder.Value<bool>(GameField.Verified);
             List<GameField> unverifiedFields = fieldHelper.UnverifiedFields();
 
             if (!verified)
+            {
                 foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                     foreach (GameField field in groupHelper.Fields(group))
                         Builder[field].ReadOnly = false;
 
-            trophiesControlsHelper.SetTrophiesControlsVisible(verified);
+                //TrophysetPanel.ReadOnly = false;
+            }
+
             bool editionVisible =
                 !isEmulator
                 && (!verified || !Builder[GameField.Edition].IsEmpty);
@@ -232,9 +163,13 @@ namespace PlayStationGames.GameEngine.Editor
                 + Generator!.Offset(GameField.Series);
 
             if (verified)
+            {
+                //TrophysetPanel.ReadOnly = true;
+
                 foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                     foreach (GameField field in groupHelper.Fields(group))
                         Builder[field].ReadOnly = !unverifiedFields.Contains(field);
+            }
 
             if (!verified)
                 Builder[GameField.Owner].Enabled = AccountAvailable();
@@ -244,7 +179,7 @@ namespace PlayStationGames.GameEngine.Editor
 
             Editor.Groups[GameFieldGroup.DLC].Visible = Builder.Value<bool>(GameField.Licensed) 
                 && (!verified || !Builder[GameField.Dlcs].IsEmpty);
-            return false;
+            return true;
         }
 
         private bool AvailableTrophyset =>
@@ -295,8 +230,6 @@ namespace PlayStationGames.GameEngine.Editor
 
             }.AccountAvailable;
 
-        protected readonly TrophiesControlsHelper trophiesControlsHelper;
-
         protected override List<List<GameField>> LabelGroups => new()
         {
             new List<GameField> {
@@ -311,16 +244,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Edition,
                 GameField.Series,
                 GameField.EmulatorType
-            },
-            new List<GameField> {
-                GameField.TrophysetType,
-                GameField.Difficult,
-                GameField.CompleteTime,
-                GameField.EarnedBronze,
-                GameField.EarnedSilver,
-                GameField.EarnedGold,
-                GameField.EarnedPlatinum,
-                GameField.EarnedFromDLC
             },
             new List<GameField> {
                 GameField.Developer,
@@ -343,10 +266,7 @@ namespace PlayStationGames.GameEngine.Editor
                 return;
 
             if (!AvailableTrophyset)
-            {
-                Builder[GameField.TrophysetType].Value = TrophysetType.NoSet;
-                trophiesControlsHelper.CalcTrophiesControls();
-            }
+                Builder[GameField.Trophyset].Clear();
 
             List<GameFieldGroup> invisibleGroups = new();
 

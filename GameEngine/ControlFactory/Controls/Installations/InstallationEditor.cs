@@ -14,6 +14,7 @@ using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxLibrary;
 using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
+using PlayStationGames.ConsoleEngine.ControlFactory.Controls;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -82,7 +83,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     storageInitializer.Filter = filter;
 
                 storageControl.RenewControl(true);
-                    
+                storageControl.Control.BackColor = consoleControl.Control.BackColor;
+
                 IFilteredInitializer<ConsoleField, PSConsole>? folderInitializer =
                     (IFilteredInitializer<ConsoleField, PSConsole>?)folderControl.Context.Initializer;
                 folderControl.Enabled = true;
@@ -91,6 +93,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     folderInitializer.Filter = filter;
 
                 folderControl.RenewControl(true);
+                folderControl.Control.BackColor = consoleControl.Control.BackColor;
                 sizeControl.Enabled = true;
             }
         }

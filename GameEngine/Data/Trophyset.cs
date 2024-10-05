@@ -1,5 +1,4 @@
 ﻿using OxDAOEngine.Data;
-using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.XML;
 using PlayStationGames.GameEngine.Data.Types;
@@ -29,11 +28,7 @@ namespace PlayStationGames.GameEngine.Data
             set => type = ModifyValue(type, value);
         }
 
-        public readonly TrophyList Earned = new()
-        {
-            XmlName = "Earned",
-            SaveEmptyList = false
-        };
+        public readonly EarnedTrophiesList EarnedTrophies = new();
 
         public TrophyList Available = new()
         {
@@ -47,20 +42,24 @@ namespace PlayStationGames.GameEngine.Data
             difficult = TypeHelper.DefaultValue<Difficult>();
             completeTime = TypeHelper.DefaultValue<CompleteTime>();
             Available.Clear();
-            Earned.Clear();
+            EarnedTrophies.Clear();
         }
 
         public override void Init() 
         {
             AddMember(Available);
-            AddMember(Earned);
+            AddMember(EarnedTrophies);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
             XmlHelper.AppendElement(element, XmlConsts.Type, Type);
-            XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
-            XmlHelper.AppendElement(element, XmlConsts.CompleteTime, CompleteTime);
+
+            if (Type != TrophysetType.NoSet)
+            {
+                XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
+                XmlHelper.AppendElement(element, XmlConsts.CompleteTime, CompleteTime);
+            }
        }
 
         protected override void LoadData(XmlElement element)
@@ -74,7 +73,7 @@ namespace PlayStationGames.GameEngine.Data
             obj is Trophyset otherTrophyset
             && Difficult.Equals(otherTrophyset.Difficult)
             && CompleteTime.Equals(otherTrophyset.CompleteTime)
-            && Earned.Equals(otherTrophyset.Earned)
+            && EarnedTrophies.Equals(otherTrophyset.EarnedTrophies)
             && Available.Equals(otherTrophyset.Available)
             && Type.Equals(otherTrophyset.Type);
 
@@ -116,7 +115,7 @@ namespace PlayStationGames.GameEngine.Data
             if (result != 0)
                 return result;
 
-            return Earned.CompareTo(otherTrophyset.Earned); ;
+            return EarnedTrophies.CompareTo(otherTrophyset.EarnedTrophies);
         }
     }
 }

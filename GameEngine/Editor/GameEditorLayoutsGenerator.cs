@@ -15,27 +15,23 @@ namespace PlayStationGames.GameEngine.Editor
         public override List<GameField> ControlsWithoutLabel() =>
             new()
             {
+                GameField.AvailablePlatinum,
                 GameField.Image,
                 GameField.RelatedGames,
                 GameField.Dlcs,
                 GameField.Links,
                 GameField.GameModes,
-                GameField.AvailablePlatinum,
-                GameField.AvailableGold,
-                GameField.AvailableSilver,
-                GameField.AvailableBronze,
-                GameField.AvailableFromDLC,
                 GameField.ReleasePlatforms,
                 GameField.Verified,
                 GameField.Licensed,
-                GameField.Tags
+                GameField.Tags,
+                GameField.Trophyset
             };
 
         public override List<GameField> AutoSizeFields() =>
             new()
             {
                 GameField.AvailablePlatinum,
-                GameField.EarnedPlatinum,
                 GameField.Verified,
                 GameField.Licensed
             };
@@ -62,14 +58,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Format,
                 GameField.CriticScore,
                 GameField.Series,
-                GameField.EarnedGold,
-                GameField.EarnedSilver,
-                GameField.EarnedBronze,
-                GameField.EarnedFromDLC,
-                GameField.AvailableGold,
-                GameField.AvailableSilver,
-                GameField.AvailableBronze,
-                GameField.AvailableFromDLC,
                 GameField.Difficult,
                 GameField.CompleteTime,
                 GameField.Genre,
@@ -101,8 +89,6 @@ namespace PlayStationGames.GameEngine.Editor
                     GroupFrames[GameFieldGroup.Base].BaseColor,
                 GameField.Verified or
                 GameField.Licensed or
-                GameField.AvailablePlatinum or
-                GameField.EarnedPlatinum or
                 GameField.ReleasePlatforms =>
                     Color.Transparent,
                 _ =>
@@ -114,13 +100,18 @@ namespace PlayStationGames.GameEngine.Editor
             {
                 GameField.Licensed =>
                     Layouter[GameField.Name]!.Top,
+                GameField.Trophyset =>
+                    0,
                 GameField.Owner =>
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
                     (Parent(field).Height - Height(field)) / 2,
-                GameField.AvailablePlatinum or
-                GameField.EarnedPlatinum =>
-                    140,
+                GameField.AvailablePlatinum =>
+                    124,
+                GameField.AvailableGold or
+                GameField.AvailableSilver or
+                GameField.AvailableBronze =>
+                    120,
                 GameField.EmulatorType =>
                     Layouter[GameField.Edition]!.Top,
                 GameField.Language or
@@ -152,23 +143,14 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.ScreenView or
                 GameField.Genre =>
                     60,
-                GameField.TrophysetType or 
-                GameField.EarnedGold or 
-                GameField.EarnedSilver or 
-                GameField.EarnedBronze or 
-                GameField.EarnedFromDLC or 
-                GameField.Difficult or
-                GameField.CompleteTime =>
-                    76,
-                GameField.EarnedPlatinum => 
-                    102,
                 GameField.AvailablePlatinum => 
-                    174,
-                GameField.AvailableGold or 
-                GameField.AvailableSilver or 
-                GameField.AvailableBronze or 
-                GameField.AvailableFromDLC =>
-                    148,
+                    84,
+                GameField.AvailableGold =>
+                    130,
+                GameField.AvailableSilver =>
+                    190,
+                GameField.AvailableBronze =>
+                    250,
                 GameField.Language =>
                     206,
                 GameField.Code =>
@@ -216,27 +198,14 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Developer or 
                 GameField.Publisher => 
                     362,
-                GameField.TrophysetType => 
-                    158,
-                GameField.AvailableGold or 
-                GameField.AvailableSilver or 
-                GameField.AvailableBronze or 
-                GameField.AvailableFromDLC or 
-                GameField.EarnedGold or 
-                GameField.EarnedSilver or 
-                GameField.EarnedBronze or 
-                GameField.EarnedFromDLC or 
-                GameField.Year or 
-                GameField.Pegi or 
-                GameField.CriticScore or
-                GameField.Difficult =>
+                GameField.Year or
+                GameField.Pegi or
+                GameField.CriticScore =>
                     64,
                 GameField.Region =>
                     52,
                 GameField.Language
                     => 80,
-                GameField.CompleteTime =>
-                    104,
                 GameField.Code =>
                     94,
                 GameField.Genre => 
@@ -250,9 +219,6 @@ namespace PlayStationGames.GameEngine.Editor
         public override int Offset(GameField field) => 
             field switch
             {
-                GameField.EarnedFromDLC or 
-                GameField.AvailableFromDLC =>
-                    12,
                 GameField.Image => 
                     8,
                 GameField.Edition => 
@@ -263,20 +229,11 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Format or 
                 GameField.CriticScore or 
                 GameField.Series or 
-                GameField.EarnedSilver or 
-                GameField.EarnedBronze or 
-                GameField.AvailableSilver or 
-                GameField.AvailableBronze or 
-                GameField.Difficult or
-                GameField.CompleteTime or
                 GameField.Genre or 
                 GameField.Publisher or 
                 GameField.Year or 
                 GameField.Pegi => 
                     2,
-                GameField.EarnedGold or 
-                GameField.AvailableGold => 
-                    10,
                 _ => 
                     0,
             };

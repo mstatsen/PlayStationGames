@@ -49,6 +49,15 @@ namespace PlayStationGames.AccountEngine.Data
                 new FieldSorting<AccountField, Account>(AccountField.Name, SortOrder.Ascending)
             };
 
+        protected override void BeforeLoad()
+        {
+            base.BeforeLoad();
+            OnAfterLoad += SortAfterLoad;
+        }
+
+        private void SortAfterLoad(object? sender, EventArgs e) => 
+            FullItemsList.Sort(DefaultSorting()?.SortingsList);
+
         public override bool AvailableSummary => false;
         public override bool AvailableCategories => false;
         public override bool AvailableQuickFilter => false;

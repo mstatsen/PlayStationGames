@@ -17,6 +17,7 @@ using PlayStationGames.GameEngine.View;
 using PlayStationGames.AccountEngine.ControlFactory.Accessors;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
 using PlayStationGames.GameEngine.ControlFactory.Initializers;
+using PlayStationGames.GameEngine.ControlFactory.Accessors;
 
 namespace PlayStationGames.GameEngine.ControlFactory
 {
@@ -24,8 +25,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
     {
         protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<GameField, Game> context) => 
             context switch
-            {
-                FieldContext<GameField, Game> accessorContext =>
+            {FieldContext<GameField, Game> accessorContext =>
                     accessorContext.Field switch
                     {
                         GameField.PlatformFamily => CreateEnumAccessor<PlatformFamily>(context),
@@ -38,7 +38,6 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         GameField.Pegi => CreateEnumAccessor<Pegi>(context),
                         GameField.CompleteTime => CreateEnumAccessor<CompleteTime>(context),
                         GameField.Difficult => CreateEnumAccessor<Difficult>(context),
-                        GameField.Status => CreateEnumAccessor<Status>(context),
                         GameField.TrophysetType => CreateEnumAccessor<TrophysetType>(context),
                         GameField.Year => new YearAccessor<GameField, Game>(context),
                         GameField.GameModes => CreateListAccessor<GameMode, ListDAO<GameMode>, GameModesControl>(context, ControlScope.Editor),
@@ -49,10 +48,14 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
                         GameField.Id => CreateLabelAccessor(context),
                         GameField.Owner => CreateAccountAccessor(context),
+                        GameField.Trophyset => CreateTrophysetAccessor(context),
                         _ => base.CreateOtherAccessor(context),
                     },
                 _ => null,
             };
+
+        private static IControlAccessor CreateTrophysetAccessor(IBuilderContext<GameField, Game> context) => 
+            new TrophysetAccessor(context);
 
         private static IControlAccessor CreateAccountAccessor(IBuilderContext<GameField, Game> context)
         {

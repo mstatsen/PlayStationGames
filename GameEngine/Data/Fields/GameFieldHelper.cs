@@ -1,5 +1,4 @@
 ﻿using OxDAOEngine.ControlFactory;
-using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
@@ -37,26 +36,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.CriticScore => "Critic Score",
                 GameField.Platform => "Platform",
                 GameField.Format => "Format",
-                GameField.EarnedPlatinum or
-                GameField.AvailablePlatinum or
-                GameField.FullPlatinum =>
-                    "Platinum",
-                GameField.EarnedGold or
-                GameField.AvailableGold or
-                GameField.FullGold => 
-                    "Gold",
-                GameField.EarnedSilver or
-                GameField.AvailableSilver or
-                GameField.FullSilver => 
-                    "Silver",
-                GameField.EarnedBronze or
-                GameField.AvailableBronze or
-                GameField.FullBronze => 
-                    "Bronze",
-                GameField.EarnedFromDLC or
-                GameField.AvailableFromDLC or
-                GameField.FullFromDLC => 
-                    "DLC",
+                GameField.AvailablePlatinum => "Platinum",
+                GameField.AvailableGold => "Gold",
+                GameField.AvailableSilver => "Silver",
+                GameField.AvailableBronze => "Bronze",
                 GameField.TrophysetType => "Type",
                 GameField.Source => "Source",
                 GameField.Developer => "Developer",
@@ -74,10 +57,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Links => "Links",
                 GameField.RelatedGames => "Related games",
                 GameField.FullGenre => "Genre",
-                GameField.Progress => "Progress",
-                GameField.EarnedPoints => "Earned Points",
-                GameField.EarnedPointsOld => "Earned Points (Old)",
-                GameField.Status => "Status",
                 GameField.Field => "Field",
                 GameField.StrategeLink => "Stratege",
                 GameField.PSNProfilesLink => "PSNProfiles",
@@ -88,22 +67,17 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Region => "Region",
                 GameField.Language => "Language",
                 GameField.Code => "Code",
+                GameField.Trophyset => "Trophyset",
                 _ => string.Empty,
             };
 
         public override string GetFullName(GameField value) => 
             value switch
             {
-                GameField.EarnedPlatinum => "Earned Platinum",
-                GameField.EarnedGold => "Earned Gold",
-                GameField.EarnedSilver => "Earned Silver",
-                GameField.EarnedBronze => "Earned Bronze",
-                GameField.EarnedFromDLC => "Earned From DLC",
                 GameField.AvailablePlatinum => "Available Platinum",
                 GameField.AvailableGold => "Available Gold",
                 GameField.AvailableSilver => "Available Silver",
                 GameField.AvailableBronze => "Available Bronze",
-                GameField.AvailableFromDLC => "Available From DLC",
                 GameField.TrophysetType => "Trophyset Accessibility",
                 GameField.EmulatorType => "Emulator Type",
                 GameField.EmulatorROMs => "Emulator ROMs",
@@ -153,7 +127,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Region,
                     GameField.Language,
                     GameField.Format,
-                    GameField.Status,
                     GameField.Edition,
                     GameField.Dlcs,
                     GameField.Series,
@@ -167,13 +140,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Difficult,
                     GameField.CompleteTime,
                     GameField.TrophysetType,
-                    GameField.Progress,
-                    GameField.FullPlatinum,
-                    GameField.FullGold,
-                    GameField.FullSilver,
-                    GameField.FullBronze,
-                    GameField.FullFromDLC,
-                    GameField.EarnedPoints,
                     GameField.Verified,
                     GameField.Tags,
                     GameField.Code
@@ -191,14 +157,11 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Owner,
                     GameField.Licensed,
                     GameField.Source,
-                    GameField.Status,
-                    GameField.Progress,
                     GameField.Platform,
                     GameField.Format,
                     GameField.ScreenView,
                     GameField.Genre,
                     GameField.TrophysetType,
-                    GameField.AvailablePlatinum,
                     GameField.Difficult,
                     GameField.CompleteTime,
                     GameField.Pegi,
@@ -209,8 +172,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Owner,
                     GameField.Licensed,
                     GameField.Source,
-                    GameField.Status,
-                    GameField.Progress,
                     GameField.Platform,
                     GameField.TrophysetType,
                     GameField.AvailablePlatinum,
@@ -219,7 +180,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 [FieldsFilling.Min] = new List<GameField>
                 {
                     GameField.Source,
-                    GameField.Status,
                     GameField.Platform
                 }
             },
@@ -250,7 +210,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Region,
                     GameField.Language,
                     GameField.Format,
-                    GameField.Status,
                     GameField.Edition,
                     GameField.Series,
                     GameField.CriticScore,
@@ -263,7 +222,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Difficult,
                     GameField.CompleteTime,
                     GameField.TrophysetType,
-                    GameField.Progress,
                     GameField.Tags
                 },
                 [FieldsFilling.Default] = new List<GameField>
@@ -273,7 +231,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Region,
                     GameField.Language,
                     GameField.Format,
-                    GameField.Status,
                     GameField.Pegi,
                     GameField.Year,
                     GameField.Developer,
@@ -289,7 +246,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Region,
                     GameField.Language,
                     GameField.Format,
-                    GameField.Status,
                     GameField.Difficult,
                     GameField.CompleteTime
                 },
@@ -323,14 +279,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.GameModes,
                     GameField.TrophysetType,
                     GameField.FullGenre,
-                    GameField.Progress,
-                    GameField.FullPlatinum,
-                    GameField.FullGold,
-                    GameField.FullSilver,
-                    GameField.FullBronze,
-                    GameField.FullFromDLC,
-                    GameField.Status,
-                    GameField.EarnedPoints,
                     GameField.StrategeLink,
                     GameField.PSNProfilesLink,
                     GameField.Verified,
@@ -352,11 +300,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Pegi,
                     GameField.Difficult,
                     GameField.CompleteTime,
-                    GameField.Progress,
-                    GameField.FullPlatinum,
-                    GameField.FullGold,
-                    GameField.FullSilver,
-                    GameField.FullBronze
                 },
                 [FieldsFilling.Min] = new List<GameField>
                 {
@@ -388,11 +331,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.ScreenView,
                     GameField.Series,
                     GameField.Source,
-                    GameField.AvailablePlatinum,
-                    GameField.AvailableGold,
-                    GameField.AvailableSilver,
-                    GameField.AvailableBronze,
-                    GameField.AvailableFromDLC,
                     GameField.TrophysetType,
                     GameField.Verified,
                     GameField.Owner,
@@ -436,7 +374,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Owner,
             GameField.Licensed,
             GameField.Format,
-            GameField.Status,
             GameField.AvailablePlatinum,
             GameField.Source,
             GameField.Developer,
@@ -457,15 +394,13 @@ namespace PlayStationGames.GameEngine.Data.Fields
         protected override List<GameField> GetCalcedFields() => new()
         {
             GameField.FullGenre,
-            GameField.Progress,
-            GameField.EarnedPoints,
-            GameField.EarnedPointsOld,
-            GameField.FullPlatinum,
-            GameField.FullGold,
-            GameField.FullSilver,
-            GameField.FullBronze,
-            GameField.FullFromDLC,
-            GameField.Status,
+            GameField.TrophysetType,
+            GameField.Difficult,
+            GameField.CompleteTime,
+            GameField.AvailableBronze,
+            GameField.AvailableSilver,
+            GameField.AvailableGold,
+            GameField.AvailablePlatinum,
             GameField.StrategeLink,
             GameField.PSNProfilesLink
         };
@@ -492,19 +427,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Language,
             GameField.Edition,
             GameField.Series,
-            GameField.TrophysetType,
-            GameField.Difficult,
-            GameField.CompleteTime,
-            GameField.EarnedPlatinum,
-            GameField.EarnedGold,
-            GameField.EarnedSilver,
-            GameField.EarnedBronze,
-            GameField.EarnedFromDLC,
-            GameField.AvailablePlatinum,
-            GameField.AvailableGold,
-            GameField.AvailableSilver,
-            GameField.AvailableBronze,
-            GameField.AvailableFromDLC,
+            GameField.Trophyset,
             GameField.Developer,
             GameField.Publisher,
             GameField.Year,
@@ -535,23 +458,13 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Image,
             GameField.Edition,
             GameField.Series,
+            GameField.Trophyset,
             GameField.Owner,
             GameField.Licensed,
             GameField.CriticScore,
             GameField.PlatformFamily,
             GameField.Platform,
             GameField.Format,
-            GameField.EarnedPlatinum,
-            GameField.EarnedGold,
-            GameField.EarnedSilver,
-            GameField.EarnedBronze,
-            GameField.EarnedFromDLC,
-            GameField.AvailablePlatinum,
-            GameField.AvailableGold,
-            GameField.AvailableSilver,
-            GameField.AvailableBronze,
-            GameField.AvailableFromDLC,
-            GameField.TrophysetType,
             GameField.Source,
             GameField.Developer,
             GameField.Publisher,
@@ -583,25 +496,14 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Platform,
             GameField.Owner,
             GameField.Licensed,
-            GameField.Status,
             GameField.Format,
-            GameField.EarnedPlatinum,
-            GameField.EarnedGold,
-            GameField.EarnedSilver,
-            GameField.EarnedBronze,
-            GameField.EarnedFromDLC,
+            GameField.TrophysetType,
+            GameField.Difficult,
+            GameField.CompleteTime,
             GameField.AvailablePlatinum,
             GameField.AvailableGold,
             GameField.AvailableSilver,
             GameField.AvailableBronze,
-            GameField.AvailableFromDLC,
-            GameField.TrophysetType,
-            GameField.FullBronze,
-            GameField.FullSilver,
-            GameField.FullGold,
-            GameField.FullPlatinum,
-            GameField.FullFromDLC,
-            GameField.Progress,
             GameField.Source,
             GameField.Developer,
             GameField.Publisher,
@@ -609,8 +511,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Pegi,
             GameField.ReleasePlatforms,
             GameField.Installations,
-            GameField.Difficult,
-            GameField.CompleteTime,
             GameField.FullGenre,
             GameField.Genre,
             GameField.ScreenView,
@@ -633,29 +533,20 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Platform,
             GameField.Format,
             GameField.TrophysetType,
+            GameField.Difficult,
+            GameField.CompleteTime,
             GameField.Source,
             GameField.Developer,
             GameField.Publisher,
             GameField.Year,
             GameField.Pegi,
             GameField.ReleasePlatforms,
-            GameField.Difficult,
-            GameField.CompleteTime,
             GameField.Links,
             GameField.Region,
             GameField.Language,
             GameField.Code,
 
-            GameField.FullGenre,
-            GameField.Progress,
-            GameField.EarnedPoints,
-            GameField.EarnedPointsOld,
-            GameField.FullPlatinum,
-            GameField.FullGold,
-            GameField.FullSilver,
-            GameField.FullBronze,
-            GameField.FullFromDLC,
-            GameField.Status
+            GameField.FullGenre
         };
 
         protected override FilterOperation GetDefaultFilterOperation(GameField field) => 
@@ -676,6 +567,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.FullGenre or
                 GameField.EmulatorType or
                 GameField.EmulatorROMs or
+                GameField.Trophyset or
                 GameField.Tags => 
                     FilterOperation.Contains,
                 GameField.Image or
@@ -700,16 +592,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.PlatformFamily] = FilterOperations.EnumOperations,
             [GameField.Platform] = FilterOperations.EnumOperations,
             [GameField.Format] = FilterOperations.EnumOperations,
-            [GameField.EarnedPlatinum] = FilterOperations.NumericOperations,
-            [GameField.EarnedGold] = FilterOperations.NumericOperations,
-            [GameField.EarnedSilver] = FilterOperations.NumericOperations,
-            [GameField.EarnedBronze] = FilterOperations.NumericOperations,
-            [GameField.EarnedFromDLC] = FilterOperations.NumericOperations,
             [GameField.AvailablePlatinum] = FilterOperations.NumericOperations,
             [GameField.AvailableGold] = FilterOperations.NumericOperations,
             [GameField.AvailableSilver] = FilterOperations.NumericOperations,
             [GameField.AvailableBronze] = FilterOperations.NumericOperations,
-            [GameField.AvailableFromDLC] = FilterOperations.NumericOperations,
             [GameField.TrophysetType] = FilterOperations.EnumOperations,
             [GameField.Source] = FilterOperations.EnumOperations,
             [GameField.Developer] = FilterOperations.StringOperations,
@@ -723,19 +609,11 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.ScreenView] = FilterOperations.EnumOperations,
             [GameField.GameModes] = FilterOperations.ObjectOperations,
             [GameField.Dlcs] = FilterOperations.ObjectOperations,
+            [GameField.Trophyset] = FilterOperations.ObjectOperations,
             [GameField.Links] = FilterOperations.ObjectOperations,
             [GameField.Installations] = FilterOperations.ObjectOperations,
             [GameField.RelatedGames] = FilterOperations.ObjectOperations,
             [GameField.FullGenre] = FilterOperations.StringOperations,
-            [GameField.Progress] = FilterOperations.NumericOperations,
-            [GameField.EarnedPoints] = FilterOperations.NumericOperations,
-            [GameField.EarnedPointsOld] = FilterOperations.NumericOperations,
-            [GameField.FullPlatinum] = FilterOperations.StringOperations,
-            [GameField.FullGold] = FilterOperations.StringOperations,
-            [GameField.FullSilver] = FilterOperations.StringOperations,
-            [GameField.FullBronze] = FilterOperations.StringOperations,
-            [GameField.FullFromDLC] = FilterOperations.StringOperations,
-            [GameField.Status] = FilterOperations.EnumOperations,
             [GameField.StrategeLink] = FilterOperations.UnaryOperations,
             [GameField.PSNProfilesLink] = FilterOperations.UnaryOperations,
             [GameField.Verified] = FilterOperations.BoolOperations,
@@ -750,16 +628,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public List<GameField> SameTrophysetFields = new()
         {
             GameField.TrophysetType,
-            GameField.EarnedPlatinum,
-            GameField.EarnedGold,
-            GameField.EarnedSilver,
-            GameField.EarnedBronze,
-            GameField.EarnedFromDLC,
             GameField.AvailablePlatinum,
             GameField.AvailableGold,
             GameField.AvailableSilver,
             GameField.AvailableBronze,
-            GameField.AvailableFromDLC,
             GameField.Difficult,
             GameField.CompleteTime
         };
@@ -802,12 +674,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.AvailablePlatinum,
             GameField.AvailableGold,
             GameField.AvailableSilver,
-            GameField.AvailableBronze,
-            GameField.AvailableFromDLC,
-            GameField.EarnedGold,
-            GameField.EarnedSilver,
-            GameField.EarnedBronze,
-            GameField.EarnedFromDLC
+            GameField.AvailableBronze
         };
 
         public override List<GameField> Depended(GameField field) => 
@@ -856,16 +723,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Developer or 
                 GameField.Publisher => 
                     120,
-                GameField.EarnedPlatinum or 
-                GameField.EarnedGold or 
-                GameField.EarnedSilver or 
-                GameField.EarnedBronze or 
-                GameField.EarnedFromDLC or 
                 GameField.AvailablePlatinum or 
                 GameField.AvailableGold or 
                 GameField.AvailableSilver or 
-                GameField.AvailableBronze or 
-                GameField.AvailableFromDLC => 
+                GameField.AvailableBronze => 
                     24,
                 GameField.Source => 
                     88,
@@ -874,21 +735,12 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Pegi => 
                     40,
                 GameField.Licensed or
-                GameField.Difficult or 
-                GameField.Progress or 
-                GameField.FullPlatinum or 
-                GameField.FullGold or 
-                GameField.FullSilver or 
-                GameField.FullBronze or 
-                GameField.FullFromDLC => 
+                GameField.Difficult =>
                     60,
                 GameField.CompleteTime or 
-                GameField.Status or 
                 GameField.Installations => 
                     80,
-                GameField.ScreenView or 
-                GameField.EarnedPoints or 
-                GameField.EarnedPointsOld => 
+                GameField.ScreenView =>
                     64,
                 _ => 
                     100,
@@ -919,33 +771,23 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Pegi or 
                 GameField.CompleteTime or 
                 GameField.Difficult or 
-                GameField.Status or 
                 GameField.TrophysetType or
                 GameField.Region or
                 GameField.Language =>
                     FieldType.Enum,
-                GameField.EarnedPlatinum or 
                 GameField.AvailablePlatinum or 
                 GameField.Verified or 
                 GameField.Licensed => 
                     FieldType.Boolean,
-                GameField.EarnedGold or 
-                GameField.EarnedSilver or 
-                GameField.EarnedBronze or 
-                GameField.EarnedFromDLC or 
-                GameField.AvailableGold or 
-                GameField.AvailableSilver or 
-                GameField.AvailableBronze or 
-                GameField.AvailableFromDLC or 
-                GameField.EarnedPoints or 
-                GameField.EarnedPointsOld or 
-                GameField.CriticScore or 
-                GameField.Progress => 
+                GameField.AvailableGold or
+                GameField.AvailableSilver or
+                GameField.AvailableBronze or
+                GameField.CriticScore => 
                     FieldType.Integer,
-                GameField.Id => 
+                GameField.Id =>
                     FieldType.Guid,
-                GameField.GameModes or 
-                GameField.Dlcs or 
+                GameField.GameModes or
+                GameField.Dlcs or
                 GameField.Installations or 
                 GameField.RelatedGames or 
                 GameField.ReleasePlatforms or
@@ -957,7 +799,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Links =>
                     FieldType.LinkList,
                 GameField.Year or 
-                GameField.Owner => 
+                GameField.Owner or
+                GameField.Trophyset => 
                     FieldType.Custom,
                 _ => 
                     FieldType.String,
@@ -977,18 +820,12 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.CompleteTime => TypeHelper.Helper<CompleteTimeHelper>(),
                 GameField.ScreenView => TypeHelper.Helper<ScreenViewHelper>(),
                 GameField.TrophysetType => TypeHelper.Helper<TrophysetTypeHelper>(),
-                GameField.Status => TypeHelper.Helper<StatusHelper>(),
                 _ => null
             };
 
-        public List<GameField> UnverifiedFields()
-            => new()
+        public List<GameField> UnverifiedFields() => 
+            new()
             {
-                GameField.EarnedBronze,
-                GameField.EarnedFromDLC,
-                GameField.EarnedGold,
-                GameField.EarnedPlatinum,
-                GameField.EarnedSilver,
                 GameField.Installations,
                 GameField.Links,
                 GameField.RelatedGames,

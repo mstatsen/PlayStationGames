@@ -23,13 +23,6 @@ namespace PlayStationGames.GameEngine.Summary
             return earnedPoints;
         }
 
-        private int GetEarnedPointsNew() =>
-            GetEarnedPoints(GameField.EarnedPoints);
-
-
-        private int GetEarnedPointsOld() =>
-            GetEarnedPoints(GameField.EarnedPointsOld);
-
         private static string GetPSNLevel(List<LevelInfo> levels, int earnedPoints)
         {
             int intLevel = 0;
@@ -58,34 +51,10 @@ namespace PlayStationGames.GameEngine.Summary
         public PSNLevelCalculator(RootListDAO<GameField, Game> games) =>
             Games = games;
 
-        private string TrophiesCount(TrophyType type) => 
-            new FieldExtractor<GameField, Game>(Games.Distinct(Game.CheckUniqueTrophyset))
-                .Sum(TypeHelper.Helper<TrophyTypeHelper>().EarnedGameField(type), null)
-                .ToString();
-
-        private string PSNLevel() =>
-            GetPSNLevel(LevelInfo.NewLevels, GetEarnedPointsNew());
-
-        private string PSNLevelOld() =>
-            GetPSNLevel(LevelInfo.OldLevels, GetEarnedPointsOld());
-
-        private string Progress()
-        {
-            if (Games.Count == 0)
-                return "N/A";
-
-            int progress = 0;
-
-            foreach (Game game in Games)
-                progress += DAO.IntValue(game[GameField.Progress]);
-
-            return $"{progress / Games.Count}%";
-
-        }
-
         public string Value(LevelValueType valueType) => 
             valueType switch
             {
+                /*
                 LevelValueType.Points => 
                     GetEarnedPointsNew().ToString(),
                 LevelValueType.Level => 
@@ -104,6 +73,7 @@ namespace PlayStationGames.GameEngine.Summary
                     TrophiesCount(TrophyType.FromDLC),
                 LevelValueType.Progress => 
                     Progress(),
+                */
                 _ => 
                     string.Empty,
             };

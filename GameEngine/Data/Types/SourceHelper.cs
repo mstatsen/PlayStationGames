@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.Data.Types;
+using OxLibrary;
 using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.Data.Types
@@ -31,18 +32,37 @@ namespace PlayStationGames.GameEngine.Data.Types
                 _ => "?",
             };
 
-        public override Color GetBaseColor(Source value) => 
-            value switch
-            {
-                Source.PSN => Color.FromArgb(245, 251, 232),
-                Source.PSPlus => Color.FromArgb(255, 240, 224),
-                Source.PlayAtHome => Color.FromArgb(240, 255, 255),
-                Source.Torrent => Color.FromArgb(250, 240, 255),
-                Source.PKGj => Color.FromArgb(245, 235, 250),
-                Source.Physical => Color.FromArgb(255, 250, 210),
-                Source.Lost => Color.FromArgb(246, 246, 246),
-                _ => Color.White,
-            };
+        private readonly Dictionary<Source, Color> ForeColors = new();
+
+        public override Color GetFontColor(Source value)
+        {
+            if (!ForeColors.ContainsKey(value))
+                ForeColors.Add(value, new OxColorHelper(BaseColor(value)).Darker(11));
+
+            return ForeColors[value];
+        }
+
+        private readonly Dictionary<Source, Color> BaseColors = new();
+
+        public override Color GetBaseColor(Source value)
+        {
+            if (!BaseColors.ContainsKey(value))
+                BaseColors.Add(value, 
+                    value switch
+                    {
+                        Source.PSN => Color.FromArgb(245, 251, 232),
+                        Source.PSPlus => Color.FromArgb(255, 240, 224),
+                        Source.PlayAtHome => Color.FromArgb(240, 255, 255),
+                        Source.Torrent => Color.FromArgb(250, 240, 255),
+                        Source.PKGj => Color.FromArgb(245, 235, 250),
+                        Source.Physical => Color.FromArgb(255, 250, 210),
+                        Source.Lost => Color.FromArgb(246, 246, 246),
+                        _ => Color.White,
+                    }
+                );
+
+            return BaseColors[value];
+        }
 
         public List<Source> ByLicense(bool licensed)
         {

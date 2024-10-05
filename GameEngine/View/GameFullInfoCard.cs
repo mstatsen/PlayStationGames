@@ -14,6 +14,8 @@ namespace PlayStationGames.GameEngine.View
     {
         private ControlLayouts<GameField> FillTrophiesLayouts()
         {
+            ControlLayouts<GameField> result = new();
+            /*
             ClearLayoutTemplate();
             Layouter.Template.Left = 75;
             Layouter.Template.Parent = TrophiesPanel;
@@ -23,31 +25,31 @@ namespace PlayStationGames.GameEngine.View
 
             ControlLayouts<GameField> result = new()
             {
-                Layouter.AddFromTemplate(GameField.Progress)
+                Layouter.AddFromTemplate(GameField.AvailableBronze)
             };
 
             if (AvailableTrophiesExist)
             {
-                Dictionary<GameField, GameField> trophiesFieldsMap = new()
+                List<GameField> trophiesFieldsMap = new()
                 {
-                    [GameField.AvailablePlatinum] = GameField.FullPlatinum,
-                    [GameField.AvailableGold] = GameField.FullGold,
-                    [GameField.AvailableSilver] = GameField.FullSilver,
-                    [GameField.AvailableBronze] = GameField.FullBronze,
-                    [GameField.AvailableFromDLC] = GameField.FullFromDLC
+                    GameField.AvailablePlatinum,
+                    GameField.AvailableGold,
+                    GameField.AvailableSilver,
+                    GameField.AvailableBronze
                 };
 
                 bool firstLayout = true;
 
                 foreach (var item in trophiesFieldsMap)
-                    if (DAO.IntValue(Item?[item.Key]) > 0)
+                    if (DAO.IntValue(Item?[item]) > 0)
                     { 
                         result.Add(
-                            Layouter.AddFromTemplate(item.Value, firstLayout ? 2 : -10)
+                            Layouter.AddFromTemplate(item, firstLayout ? 2 : -10)
                         );
                         firstLayout = false;
                     }
             }
+            */
 
             return result;
         }
@@ -106,19 +108,6 @@ namespace PlayStationGames.GameEngine.View
             WrapControl(GameField.GameModes);
             WrapControl(GameField.ReleasePlatforms);
         }
-        protected override void AlignControls()
-        {
-            OxLabel? fromDLCLabel = Layouter.PlacedControl(GameField.FullFromDLC)?.Label;
-
-            if (fromDLCLabel != null)
-            {
-                fromDLCLabel.Text = "DLC";
-                OxLabel? progressLabel = Layouter.PlacedControl(GameField.Progress)?.Label;
-
-                if (progressLabel != null)
-                    fromDLCLabel.Left = progressLabel.Left;
-            }
-        }
 
         protected override void PrepareLayouts()
         {
@@ -160,7 +149,6 @@ namespace PlayStationGames.GameEngine.View
                     Layouter.AddFromTemplate(GameField.Source),
                     Layouter.AddFromTemplate(GameField.Platform, -6),
                     Layouter.AddFromTemplate(GameField.Format, -6),
-                    Layouter.AddFromTemplate(GameField.Status, -6)
                 };
         }
 

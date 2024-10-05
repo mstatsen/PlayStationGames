@@ -49,19 +49,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override GameFieldGroup Group(GameField field) => 
             field switch
             {
-                GameField.Difficult or
-                GameField.CompleteTime or
-                GameField.EarnedPlatinum or 
-                GameField.EarnedGold or 
-                GameField.EarnedSilver or 
-                GameField.EarnedBronze or 
-                GameField.EarnedFromDLC or 
-                GameField.AvailablePlatinum or 
-                GameField.AvailableGold or 
-                GameField.AvailableSilver or 
-                GameField.AvailableBronze or 
-                GameField.AvailableFromDLC or 
-                GameField.TrophysetType => 
+                GameField.Trophyset => 
                     GameFieldGroup.Trophyset,
                 GameField.Developer or 
                 GameField.Publisher or 
@@ -108,9 +96,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.RelatedGames or
                 GameFieldGroup.Emulator =>
                     460,
-                GameFieldGroup.Trophyset or 
-                GameFieldGroup.Genre =>
-                    252,
+                GameFieldGroup.Genre or
+                GameFieldGroup.Trophyset =>
+                    284,
                 GameFieldGroup.GameMode or
                 GameFieldGroup.Link or 
                 GameFieldGroup.Installations or 

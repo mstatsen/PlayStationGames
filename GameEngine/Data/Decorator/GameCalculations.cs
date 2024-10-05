@@ -7,40 +7,13 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         public GameCalculations(Game game) =>
             Game = game;
 
-        public int GetEarnedPoints() =>
-            GetFullPoints(Game.Trophyset.Earned);
+        public int GetEarnedPoints() => 0;
+        //TODO: replace with game.EarnedTrophies
+        //GetFullPoints(Game.Trophyset.Earned);
 
-        public int GetEarnedOldPoints() =>
-            GetFullOldPoints(Game.Trophyset.Earned);
-
-        public Status GetGameStatus()
-        {
-            if (!AvailableTrophiesExist())
-                return Status.Unknown;
-            else
-            {
-                int earnedPoints = GetEarnedPoints();
-                return earnedPoints == 0
-                    ? Status.NotStarted
-                    : earnedPoints == GetAvailablePoints()
-                        ? Status.Completed
-                        : Status.Started;
-            }
-        }
-
-        public int GetGameProgress()
-        {
-            int availablePoints = GetAvailableSimplePoints();
-            int earnedPoints = GetEarnedSimplePoints();
-
-            if (availablePoints == 0)
-                return 0;
-            else
-            {
-                int progress = (earnedPoints * 100) / (availablePoints);
-                return (progress == 0) && (earnedPoints > 0) ? 1 : progress;
-            }
-        }
+        public int GetEarnedOldPoints() => 0;
+            //TODO: replace with game.EarnedTrophies
+            //GetFullOldPoints(Game.Trophyset.Earned);
 
         public bool AvailableTrophiesExist() =>
             GetAvailablePoints() > 0;
@@ -60,8 +33,9 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         private static int GetFullOldPoints(TrophyList trophyset) =>
             CalcPoints(trophyset, 180);
 
-        private int GetEarnedSimplePoints() =>
-            GetSimplePoints(Game.Trophyset.Earned);
+        private int GetEarnedSimplePoints() => 0;
+            //TODO: replace with game.EarnedTrophies
+            //GetSimplePoints(Game.Trophyset.Earned);
 
         private int GetAvailableSimplePoints() =>
             GetSimplePoints(Game.Trophyset.Available);

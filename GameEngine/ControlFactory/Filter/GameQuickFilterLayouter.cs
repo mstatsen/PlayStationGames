@@ -11,7 +11,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
         public int FieldWidth(GameField field) => 
             field switch
             {
-                GameField.Progress or 
                 GameField.Difficult or 
                 GameField.Pegi or 
                 GameField.AvailablePlatinum or 
@@ -32,7 +31,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
         public bool IsLastLayoutForOneRow(GameField field, GameField lastField) => 
             field switch
             {
-                GameField.Progress => lastField == GameField.Status,
                 GameField.Format => lastField == GameField.Platform,
                 GameField.Genre => lastField == GameField.ScreenView,
                 _ => false,

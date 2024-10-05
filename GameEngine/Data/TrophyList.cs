@@ -12,10 +12,10 @@ namespace PlayStationGames.GameEngine.Data
                 Count = count
             });
 
-        private Trophy? TrophyByType(TrophyType type) => 
+        public Trophy? TrophyByType(TrophyType type) => 
             Find(t => t.Type == type);
 
-        private int GetTrophyCount(TrophyType type)
+        public int GetTrophyCount(TrophyType type)
         {
             Trophy? trophy = TrophyByType(type);
             return trophy == null ? 0 : trophy.Count;
@@ -53,12 +53,6 @@ namespace PlayStationGames.GameEngine.Data
         {
             get => GetTrophyCount(TrophyType.Bronze);
             set => SetTrophyCount(TrophyType.Bronze, value);
-        }
-
-        public int FromDLC
-        {
-            get => GetTrophyCount(TrophyType.FromDLC);
-            set => SetTrophyCount(TrophyType.FromDLC, value);
         }
     }
 }

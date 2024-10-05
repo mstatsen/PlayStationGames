@@ -193,16 +193,10 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Verified:
                 case GameField.Licensed:
                     return BoolValue(this[field]).CompareTo(BoolValue(y[field]));
-                case GameField.EarnedPlatinum:
                 case GameField.AvailablePlatinum:
-                case GameField.EarnedGold:
-                case GameField.EarnedSilver:
-                case GameField.EarnedBronze:
-                case GameField.EarnedFromDLC:
                 case GameField.AvailableGold:
                 case GameField.AvailableSilver:
                 case GameField.AvailableBronze:
-                case GameField.AvailableFromDLC:
                 case GameField.Year:
                 case GameField.CriticScore:
                     return IntValue(this[field]).CompareTo(IntValue(y[field]));
@@ -228,10 +222,6 @@ namespace PlayStationGames.GameEngine.Data
                     GameField.Links => Links.CompareTo(yGame.Links),
                     GameField.Installations => Installations.CompareTo(yGame.Installations),
                     GameField.RelatedGames => RelatedGames.CompareTo(yGame.RelatedGames),
-                    GameField.Status => new GameCalculations(this).GetGameStatus().CompareTo(new GameCalculations(yGame).GetGameStatus()),
-                    GameField.Progress => new GameCalculations(this).GetGameProgress().CompareTo(new GameCalculations(yGame).GetGameProgress()),
-                    GameField.EarnedPoints => new GameCalculations(this).GetEarnedPoints().CompareTo(new GameCalculations(yGame).GetEarnedPoints()),
-                    GameField.EarnedPointsOld => new GameCalculations(this).GetEarnedOldPoints().CompareTo(new GameCalculations(yGame)),
                     _ => 0,
                 };
 
@@ -339,7 +329,6 @@ namespace PlayStationGames.GameEngine.Data
             return field switch
             {
                 GameField.AvailablePlatinum or
-                GameField.EarnedPlatinum or
                 GameField.Year or
                 GameField.CriticScore =>
                     IntValue(value),
@@ -389,21 +378,6 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.TrophysetType:
                     Trophyset.Type = TypeHelper.Value<TrophysetType>(value);
                     break;
-                case GameField.EarnedPlatinum:
-                    Trophyset.Earned.Platinum = IntValue(value);
-                    break;
-                case GameField.EarnedGold:
-                    Trophyset.Earned.Gold = IntValue(value);
-                    break;
-                case GameField.EarnedSilver:
-                    Trophyset.Earned.Silver = IntValue(value);
-                    break;
-                case GameField.EarnedBronze:
-                    Trophyset.Earned.Bronze = IntValue(value);
-                    break;
-                case GameField.EarnedFromDLC:
-                    Trophyset.Earned.FromDLC = IntValue(value);
-                    break;
                 case GameField.AvailablePlatinum:
                     Trophyset.Available.Platinum = IntValue(value);
                     break;
@@ -415,9 +389,6 @@ namespace PlayStationGames.GameEngine.Data
                     break;
                 case GameField.AvailableBronze:
                     Trophyset.Available.Bronze = IntValue(value);
-                    break;
-                case GameField.AvailableFromDLC:
-                    Trophyset.Available.FromDLC = IntValue(value);
                     break;
                 case GameField.Source:
                     SourceType = TypeHelper.Value<Source>(value);
@@ -485,6 +456,9 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.EmulatorROMs:
                     ROMs = StringValue(value);
                     break;
+                case GameField.Trophyset:
+                    Trophyset.CopyFrom((DAO?)value);
+                    break;
             }
 
             if (!RelaterGameUpdateProcess)
@@ -492,16 +466,10 @@ namespace PlayStationGames.GameEngine.Data
                 {
                     case GameField.Series:
                     case GameField.TrophysetType:
-                    case GameField.EarnedPlatinum:
-                    case GameField.EarnedGold:
-                    case GameField.EarnedSilver:
-                    case GameField.EarnedBronze:
-                    case GameField.EarnedFromDLC:
                     case GameField.AvailablePlatinum:
                     case GameField.AvailableGold:
                     case GameField.AvailableSilver:
                     case GameField.AvailableBronze:
-                    case GameField.AvailableFromDLC:
                     case GameField.Developer:
                     case GameField.Publisher:
                     case GameField.Year:
@@ -601,17 +569,14 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.PlatformFamily => PlatformFamily.Sony,
                 GameField.Platform => platformType,
                 GameField.Format => format,
+                GameField.Trophyset => Trophyset,
                 GameField.TrophysetType => Trophyset.Type,
-                GameField.EarnedPlatinum => Trophyset.Earned.Platinum,
-                GameField.EarnedGold => Trophyset.Earned.Gold,
-                GameField.EarnedSilver => Trophyset.Earned.Silver,
-                GameField.EarnedBronze => Trophyset.Earned.Bronze,
-                GameField.EarnedFromDLC => Trophyset.Earned.FromDLC,
+                GameField.Difficult => Trophyset.Difficult,
+                GameField.CompleteTime => Trophyset.CompleteTime,
                 GameField.AvailablePlatinum => Trophyset.Available.Platinum,
                 GameField.AvailableGold => Trophyset.Available.Gold,
                 GameField.AvailableSilver => Trophyset.Available.Silver,
                 GameField.AvailableBronze => Trophyset.Available.Bronze,
-                GameField.AvailableFromDLC => Trophyset.Available.FromDLC,
                 GameField.Source => sourceType,
                 GameField.Region => region,
                 GameField.Language => language,
@@ -626,8 +591,6 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Owner => Owner,
                 GameField.Licensed => Licensed,
                 GameField.Installations => Installations,
-                GameField.Difficult => Trophyset.Difficult,
-                GameField.CompleteTime => Trophyset.CompleteTime,
                 GameField.Genre => Genre,
                 GameField.ScreenView => ScreenView,
                 GameField.GameModes => GameModes,
@@ -637,10 +600,6 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.RelatedGames => RelatedGames,
                 GameField.EmulatorType => EmulatorType,
                 GameField.EmulatorROMs => ROMs,
-                GameField.Status => new GameCalculations(this).GetGameStatus(),
-                GameField.Progress => new GameCalculations(this).GetGameProgress(),
-                GameField.EarnedPoints => new GameCalculations(this).GetEarnedPoints(),
-                GameField.EarnedPointsOld => new GameCalculations(this).GetEarnedOldPoints(),
                 _ => new GameCardDecorator(this)[field],
             };
 
@@ -838,9 +797,7 @@ namespace PlayStationGames.GameEngine.Data
             field switch
             {
                 GameField.AvailablePlatinum or
-                GameField.EarnedPlatinum or 
-                GameField.Year or 
-                GameField.Progress => 
+                GameField.Year => 
                     int.Parse(value),
                 GameField.Region or
                 GameField.Language or
@@ -850,8 +807,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Pegi or
                 GameField.Difficult or
                 GameField.CompleteTime or
-                GameField.ScreenView or
-                GameField.Status =>
+                GameField.ScreenView =>
                     FieldHelper.GetHelper(field)!.Parse(value),
                 _ => value,
             };

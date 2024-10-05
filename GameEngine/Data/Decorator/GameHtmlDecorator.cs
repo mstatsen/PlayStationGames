@@ -38,19 +38,10 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     TrophysetAccessibility(),
                 GameField.FullGenre => 
                     CalcedGenre(),
-                GameField.Progress => 
-                    $"{base.Value(field)}%",
-                GameField.FullPlatinum or 
-                GameField.FullGold or 
-                GameField.FullSilver or 
-                GameField.FullBronze or 
-                GameField.FullFromDLC or 
                 GameField.Pegi => 
                     DecoratorHelper.NoWrap(
                         OtherDecorator(DecoratorType.Card)[field]?.ToString()
                     ),
-                GameField.Status => 
-                    CalcedStatus(),
                 GameField.StrategeLink or 
                 GameField.PSNProfilesLink or 
                 GameField.Verified =>
@@ -82,11 +73,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
 
             return DecoratorHelper.ListToString(attributesList, " ", false);
         }
-
-        private object CalcedStatus() =>
-            DecoratorHelper.NoWrap(
-                OtherDecorator(DecoratorType.Table)[GameField.Status]?.ToString()
-            );
 
         private object Links()
         {
@@ -136,16 +122,10 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.CriticScore or 
                 GameField.Platform or 
                 GameField.Format or 
-                GameField.EarnedPlatinum or 
-                GameField.EarnedGold or 
-                GameField.EarnedSilver or 
-                GameField.EarnedBronze or 
-                GameField.EarnedFromDLC or 
                 GameField.AvailablePlatinum or 
                 GameField.AvailableGold or 
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze or 
-                GameField.AvailableFromDLC or 
                 GameField.Source or 
                 GameField.Year or 
                 GameField.Pegi or 
@@ -155,15 +135,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Links or
                 GameField.Tags or
                 GameField.TrophysetType or 
-                GameField.Progress or 
-                GameField.FullPlatinum or 
-                GameField.FullGold or 
-                GameField.FullSilver or 
-                GameField.FullBronze or 
-                GameField.FullFromDLC or 
-                GameField.Status or 
-                GameField.EarnedPoints or 
-                GameField.EarnedPointsOld or 
                 GameField.StrategeLink or 
                 GameField.PSNProfilesLink => 
                     "center",

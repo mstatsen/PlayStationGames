@@ -52,6 +52,12 @@
     <Compile Update="GameEngine\ControlFactory\Controls\ReleasePlatforms\ReleasePlatformListControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Trophies\TrophiesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Trophies\TrophysetPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="GameEngine\Editor\GameEditor.cs">
       <SubType>Form</SubType>
     </Compile>

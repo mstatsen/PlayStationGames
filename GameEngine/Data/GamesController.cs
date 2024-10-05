@@ -39,7 +39,6 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<GameFieldHelper>();
             TypeHelper.Register<GameFieldGroupHelper>();
             TypeHelper.Register<GameFormatHelper>();
-            TypeHelper.Register<StatusHelper>();
             TypeHelper.Register<LevelValueTypeHelper>();
             TypeHelper.Register<LevelValueTypeGroupHelper>();
             TypeHelper.Register<PegiHelper>();

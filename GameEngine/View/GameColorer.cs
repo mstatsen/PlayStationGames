@@ -10,8 +10,5 @@ namespace PlayStationGames.GameEngine.View
     {
         public override Color BaseColor(Game? item) =>
             new OxColorHelper(TypeHelper.BackColor(item?.SourceType)).Darker(7);
-
-        public override Color ForeColor(Game? item) =>
-            TypeHelper.FontColor(item?[GameField.Status]);
     }
 }

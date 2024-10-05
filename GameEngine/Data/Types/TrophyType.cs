@@ -5,7 +5,6 @@
         Platinum,
         Gold,
         Silver,
-        Bronze,
-        FromDLC
+        Bronze
     }
 }

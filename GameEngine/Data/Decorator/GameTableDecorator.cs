@@ -19,11 +19,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Image => Image,
                 GameField.Source => SourceType,
                 GameField.CriticScore => CriticScore,
-                GameField.FullPlatinum => CalcedPlatinum,
-                GameField.FullGold => CalcedGold,
-                GameField.FullSilver => CalcedSilver,
-                GameField.FullBronze => CalcedBronze,
-                GameField.FullFromDLC => CalcedFromDLC,
                 GameField.Year => Year,
                 GameField.Pegi => Pegi,
                 GameField.Installations => Installations,
@@ -32,8 +27,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.FullGenre => CalcedGenre,
                 GameField.Format => Format,
                 GameField.Platform => PlatformType,
-                GameField.Progress => CalcedProgress,
-                GameField.Status => CalcedStatus,
                 GameField.StrategeLink => StrategeLink,
                 GameField.PSNProfilesLink => PSNProfilesLink,
                 GameField.RelatedGames => RelatedGames,
@@ -44,11 +37,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Owner => Owner,
                 _ => base.Value(field),
             };
-
-        private static string CalcedTrophies(int earned, int available) =>
-            available > 0
-                ? $"{earned} / {available}"
-                : string.Empty;
 
         private string Installations => 
             Dao.Installations.ToString();
@@ -90,21 +78,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         private object Image =>
             OxImageBoxer.BoxingImage(Dao.Image, new Size(70, 40));
 
-        private object CalcedFromDLC =>
-            CalcedTrophies(Dao.Trophyset.Earned.FromDLC, Dao.Trophyset.Available.FromDLC);
-
-        private object CalcedBronze =>
-            CalcedTrophies(Dao.Trophyset.Earned.Bronze, Dao.Trophyset.Available.Bronze);
-
-        private object CalcedSilver =>
-            CalcedTrophies(Dao.Trophyset.Earned.Silver, Dao.Trophyset.Available.Silver);
-
-        private object CalcedGold =>
-            CalcedTrophies(Dao.Trophyset.Earned.Gold, Dao.Trophyset.Available.Gold);
-
-        private object CalcedPlatinum =>
-            CalcedTrophies(Dao.Trophyset.Earned.Platinum, Dao.Trophyset.Available.Platinum);
-
         private object? Pegi =>
             Dao.Pegi == TypeHelper.EmptyValue<Pegi>()
                 ? string.Empty
@@ -112,9 +85,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
 
         private object? SourceType =>
             TypeHelper.Name(Dao.SourceType);
-
-        private object? CalcedStatus =>
-            TypeHelper.Name(new GameCalculations(Dao).GetGameStatus());
 
         private object? CompleteTime =>
             Dao.Trophyset.CompleteTime == TypeHelper.EmptyValue<CompleteTime>()
@@ -133,11 +103,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             Dao.Trophyset.Difficult == TypeHelper.EmptyValue<Difficult>()
                 ? string.Empty
                 : TypeHelper.FullName(Dao.Trophyset.Difficult);
-
-        private object CalcedProgress =>
-            Dao.Trophyset.Type == TrophysetType.NoSet
-                ? string.Empty
-                : $"{new GameCalculations(Dao).GetGameProgress()}%";
 
         private string CriticScore =>
             Dao.CriticScore == GameConsts.Empty_CriticScore

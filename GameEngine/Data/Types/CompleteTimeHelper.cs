@@ -6,7 +6,7 @@ namespace PlayStationGames.GameEngine.Data.Types
     public class CompleteTimeHelper
         : AbstractTypeHelper<CompleteTime>
     {
-        public override CompleteTime EmptyValue() => CompleteTime.ctUnknown;
+        public override CompleteTime EmptyValue() => CompleteTime.Unknown;
 
         public override string GetName(CompleteTime value) => 
             value switch
@@ -27,7 +27,7 @@ namespace PlayStationGames.GameEngine.Data.Types
         public override string GetFullName(CompleteTime value) =>
             value switch
             {
-                CompleteTime.ctUnknown =>
+                CompleteTime.Unknown =>
                     "Unknown time",
                 _ => $"roughy {GetShortName(value)} hours"
             };

@@ -2,7 +2,6 @@
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.Grid;
 using PlayStationGames.GameEngine.Data;
-using PlayStationGames.GameEngine.Data.Decorator;
 using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.Grid
@@ -32,11 +31,7 @@ namespace PlayStationGames.GameEngine.Grid
             style.Font = new Font(Styles.FontFamily, fontSize, fontStyle);
             style.BackColor = TypeHelper.BackColor(item?.SourceType);
             style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
-
-            if (item != null)
-                style.ForeColor = TypeHelper.FontColor(new GameCalculations(item).GetGameStatus());
-
-            style.SelectionForeColor = style.ForeColor;
+            style.SelectionForeColor = TypeHelper.FontColor(item?.SourceType);
             return style;
         }
     }

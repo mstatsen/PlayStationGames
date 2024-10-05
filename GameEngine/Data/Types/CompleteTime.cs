@@ -12,6 +12,6 @@
         ct425 = 425,
         ct750 = 750,
         ct1000 = 1000,
-        ctUnknown = -1
+        Unknown = -1
     }
 }

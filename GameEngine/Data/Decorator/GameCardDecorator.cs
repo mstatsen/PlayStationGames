@@ -15,7 +15,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             {
                 GameField.Image => Image(),
                 GameField.Platform => PlatformType(),
-                GameField.Progress => CalcedProgress(),
                 GameField.Installations => CalcedInstallation(),
                 GameField.Dlcs => Dlcs(),
                 _ => base.Value(field),
@@ -33,11 +32,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 + (Dao.Format == TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType)
                     ? string.Empty
                     : $" / {TypeHelper.ShortName(Dao.Format)}");
-
-        private object? CalcedProgress() =>
-            new GameCalculations(Dao).AvailableTrophiesExist()
-                ? base.Value(GameField.Progress)
-                : "Trophies\nunavailable";
 
         private object? Image() =>
             OxImageBoxer.BoxingImage(Dao.Image, new Size(140, 80));

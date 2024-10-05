@@ -40,12 +40,10 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Parent = trophiesPanel;
             Layouter.Template.AutoSize = true;
 
-            ControlLayout<GameField> progressLayout = Layouter.AddFromTemplate(GameField.Progress);
             AvailableTrophiesExist = Item != null && new GameCalculations(Item).AvailableTrophiesExist();
-
             trophiesLayouts.Clear();
-            trophiesLayouts.Add(progressLayout);
 
+            /*
             if (AvailableTrophiesExist && Item != null)
             {
                 Dictionary<GameField, GameField> trophiesFieldsMap = new()
@@ -63,12 +61,9 @@ namespace PlayStationGames.GameEngine.View
                             Layouter.AddFromTemplate(item.Value, -8)
                         );
             }
+            
             else
-            {
-                progressLayout.CaptionVariant = ControlCaptionVariant.None;
-                progressLayout.FontStyle = FontStyle.Bold;
-                progressLayout.Left = 0;
-            }
+            */
         }
 
         private void FillLinksLayout()

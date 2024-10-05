@@ -13,7 +13,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 .AddChild(Verifying())
                 .AddChild(BadFilling())
                 .AddChild(Availabitity())
-                .AddChild(Progress())
                 .AddChild(SeveralCopies())
                 .AddChild(GameModes())
                 .AddChild(ReleasedOn())
@@ -91,46 +90,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
         private static Category<GameField, Game> SeveralCopies() =>
             new Category<GameField, Game>("Several copies")
                 .AddFilterNotBlank(GameField.RelatedGames);
-
-        private static Category<GameField, Game> Progress() => 
-            new Category<GameField, Game>("Progress")
-                .AddChild(
-                    new Category<GameField, Game>(TypeHelper.Name(Status.NotStarted))
-                        .AddFilterEquals(GameField.Status, Status.NotStarted)
-                )
-                .AddChild(
-                    new Category<GameField, Game>(TypeHelper.Name(Status.Started))
-                        .AddFilterEquals(GameField.Status, Status.Started)
-                        .AddChild(
-                            new Category<GameField, Game>("1-25%", FiltrationType.IncludeParent)
-                                .AddFilterGreater(GameField.Progress, 0, FilterConcat.AND)
-                                .AddFilterLower(GameField.Progress, 26, FilterConcat.AND)
-                            )
-                        .AddChild(
-                            new Category<GameField, Game>("26-50%", FiltrationType.IncludeParent)
-                                .AddFilterGreater(GameField.Progress, 25, FilterConcat.AND)
-                                .AddFilterLower(GameField.Progress, 51, FilterConcat.AND)
-                            )
-                        .AddChild(
-                            new Category<GameField, Game>("51-75%", FiltrationType.IncludeParent)
-                                .AddFilterGreater(GameField.Progress, 50, FilterConcat.AND)
-                                .AddFilterLower(GameField.Progress, 76, FilterConcat.AND)
-                            )
-                        .AddChild(
-                            new Category<GameField, Game>("76-99%", FiltrationType.IncludeParent)
-                                .AddFilterGreater(GameField.Progress, 75, FilterConcat.AND)
-                                .AddFilterLower(GameField.Progress, 100, FilterConcat.AND)
-                            )
-                        .AddChild(
-                            new Category<GameField, Game>("Platinum, not 100%", FiltrationType.IncludeParent)
-                                .AddFilterEquals(GameField.EarnedPlatinum, 1, FilterConcat.AND)
-                                .AddFilterLower(GameField.Progress, 100, FilterConcat.AND)
-                            )
-                )
-                .AddChild(
-                    new Category<GameField, Game>(TypeHelper.Name(Status.Completed))
-                        .AddFilterEquals(GameField.Status, Status.Completed)
-                );
 
         private static Category<GameField, Game> Availabitity() => 
             new Category<GameField, Game>("Availability")
@@ -255,7 +214,7 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 )
                 .AddChild(
                     new Category<GameField, Game>("Comlete time not filled")
-                        .AddFilterEquals(GameField.CompleteTime, CompleteTime.ctUnknown)
+                        .AddFilterEquals(GameField.CompleteTime, CompleteTime.Unknown)
                 )
                 .AddChild(
                     new Category<GameField, Game>("Difficult not filled")

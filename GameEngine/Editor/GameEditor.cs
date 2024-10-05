@@ -30,10 +30,6 @@ namespace PlayStationGames.GameEngine.Editor
         {
             base.SetGroupCaptions();
             Account? defaultAccount = DataManager.ListController<AccountField, Account>().FullItemsList.Find((a) => a.DefaultAccount);
-            Groups[GameFieldGroup.Trophyset].Text =
-                defaultAccount != null
-                    ? $"Trohpyset ({defaultAccount!.Name})"
-                    : "Trohpyset";
         }
 
         protected override OxPane? GroupParent(GameFieldGroup group) => 

@@ -19,8 +19,7 @@ namespace PlayStationGames.GameEngine.Grid
             DataGridViewCellStyle style = new()
             {
                 BackColor = TypeHelper.BackColor(item?.SourceType),
-                SelectionBackColor = Color.Transparent,
-                ForeColor = TypeHelper.FontColor(item != null ? new GameCalculations(item).GetGameStatus() : null) 
+                SelectionBackColor = TypeHelper.FontColor(item?.SourceType)
             };
 
             FontStyle fontStyle = FontStyle.Regular;
@@ -37,10 +36,11 @@ namespace PlayStationGames.GameEngine.Grid
                     break;
                 case GameField.CriticScore:
                     style.ForeColor = Color.Black;
+                    style.BackColor = CriticScoreBackColor(item?.CriticScore);
 
-                    if (item != null)
-                        style.BackColor = CriticScoreBackColor(item.CriticScore);
-
+                    break;
+                default:
+                    style.ForeColor = TypeHelper.FontColor(item?.SourceType);
                     break;
             }
 
@@ -54,7 +54,7 @@ namespace PlayStationGames.GameEngine.Grid
             return style;
         }
 
-        private static Color CriticScoreBackColor(int criticScore) => 
+        private static Color CriticScoreBackColor(int? criticScore) => 
             criticScore > 74
                 ? Color.FromArgb(200, 255, 200)
                 : criticScore > 49
