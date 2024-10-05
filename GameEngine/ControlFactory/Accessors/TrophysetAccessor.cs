@@ -15,7 +15,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Accessors
         public override void Clear() =>
             TrophysetControl.ClearValues();
 
-        protected override Control CreateControl() => new TrophysetPanel();
+        protected override Control CreateControl() => new TrophysetPanel(Context.Key == "DLC:Trophyset");
 
         public TrophysetPanel TrophysetControl => (TrophysetPanel)Control;
 

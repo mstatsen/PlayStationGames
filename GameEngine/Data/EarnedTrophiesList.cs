@@ -13,12 +13,11 @@ namespace PlayStationGames.GameEngine.Data
         public EarnedTrophies GetTrophies(Guid accountId)
         {
             EarnedTrophies? found = Find(e => e.AccountId == accountId);
-            found ??= Add(
-                new() 
-                { 
+            found ??=
+                new()
+                {
                     AccountId = accountId
-                }
-            );
+                };
             return found;
         }
     }

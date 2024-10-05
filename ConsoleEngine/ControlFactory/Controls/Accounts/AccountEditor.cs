@@ -26,7 +26,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         protected override void CreateControls()
         {
             accountControl = 
-                Context.Builder.Accessor(
+                Context.Accessor(
                     "ConsoleAccount", 
                     FieldType.Custom, 
                     new AccountAccessorParameters() 

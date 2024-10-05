@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.Data;
+using OxDAOEngine.Data.Fields;
 using OxLibrary;
 using OxLibrary.Controls;
 using OxLibrary.Panels;
@@ -42,29 +43,21 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             accessor.Left = 112;
             accessor.Top = top + 4;
             accessor.Width = width;
-            accessor.ValueChangeHandler += TypeChangeHandler;
+            accessor.ValueChangeHandler += OnChangeHandler;
             label.Parent = this;
             OxControlHelper.AlignByBaseLine(accessor.Control, label);
         }
 
-        public TrophysetPanel()
+        public TrophysetPanel(bool forDLC)
         {
-            typeControl = builder[GameField.TrophysetType];
-            difficultControl = builder[GameField.Difficult];
-            completeTimeControl = builder[GameField.CompleteTime];
+            typeControl = forDLC ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) : builder[GameField.TrophysetType];
+            difficultControl = forDLC ? builder.Accessor("DLC:Difficult", FieldType.Enum) : builder[GameField.Difficult];
+            completeTimeControl = forDLC ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) : builder[GameField.CompleteTime];
             PrepareAccessor(typeControl, trophysetTypeLabel, 4, 152, TypeChangeHandler);
             PrepareAccessor(difficultControl, difficultLabel, typeControl.Bottom, 64, DifficultChangeHandler);
             PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 100, CompleteTimeChangeHandler);
-            CreateTrophiesPanels();
+            CreateTrophiesPanels(forDLC);
             SetMinimumSize();
-        }
-
-        private void CreateTrophiesPanels()
-        {
-            AvailableTrophiesPanel = CreateTrophiesPanel(null);
-
-            foreach (Account account in DataManager.FullItemsList<AccountField, Account>())
-                CreateTrophiesPanel(account);
         }
 
         private void CompleteTimeChangeHandler(object? sender, EventArgs e) =>
@@ -99,8 +92,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                     height = Math.Max(control.Bottom, height);
 
             MinimumSize = new Size(
-                trophiesPanels.Last().Right + 16,
-                height + 6
+                trophiesPanels.Last().Right + 8,
+                height + 12
             );
             MaximumSize = MinimumSize;
         }
@@ -120,9 +113,17 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             }
         }
 
-        private TrophiesPanel CreateTrophiesPanel(Account? account)
+        private void CreateTrophiesPanels(bool forDLC)
         {
-            TrophiesPanel result = new(account)
+            AvailableTrophiesPanel = CreateTrophiesPanel(null, forDLC);
+
+            foreach (Account account in DataManager.FullItemsList<AccountField, Account>())
+                CreateTrophiesPanel(account, forDLC);
+        }
+
+        private TrophiesPanel CreateTrophiesPanel(Account? account, bool forDLC)
+        {
+            TrophiesPanel result = new(account, forDLC)
             {
                 Parent = this,
                 Left = 8,
@@ -147,8 +148,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                     Type = typeControl.EnumValue<TrophysetType>(),
                     Difficult = difficultControl.EnumValue<Difficult>(),
                     CompleteTime = completeTimeControl.EnumValue<CompleteTime>(),
-                    Available = AvailableTrophiesPanel.Value
                 };
+
+                result.Available.CopyFrom(AvailableTrophiesPanel.Value);
 
                 foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
                 {

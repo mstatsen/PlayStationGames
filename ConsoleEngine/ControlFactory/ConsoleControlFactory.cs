@@ -31,11 +31,11 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                     _ => base.CreateOtherAccessor(context),
                 }
                 : 
-            context.Name == "AccessoryType"
+            context.Key == "Accessory:Type"
                 ? CreateEnumAccessor<AccessoryType>(context)
-                : context.Name == "JoystickType"
+                : context.Key == "Joystick:Type"
                     ? CreateEnumAccessor<JoystickType>(context)
-                    : context.Name == "ConsoleAccount"
+                    : context.Key == "ConsoleAccount"
                         ? CreateAccountAccessor(context)
                         : base.CreateOtherAccessor(context);
 

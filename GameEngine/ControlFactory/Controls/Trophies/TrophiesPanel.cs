@@ -19,19 +19,19 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         public readonly Account? Account;
 
-        public TrophiesPanel(Account? account = null)
+        public TrophiesPanel(Account? account, bool forDLC)
         {
             Account = account;
-            CreateControls();
+            CreateControls(forDLC);
         }
 
         public List<TrophiesPanel> DependedPanels { get; internal set; } = new();
 
-        private void ApplyConstraints(TrophyList constraints)
+        private void ApplyConstraints(TrophyList? constraints)
         {
             foreach (var item in controls)
             {
-                int maxValue = constraints.GetTrophyCount(item.Key);
+                int maxValue = constraints == null ? 200 : constraints.GetTrophyCount(item.Key);
                 item.Value.MaximumValue = maxValue;
                 item.Value.Enabled = maxValue > 0;
             }
@@ -80,13 +80,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             icons.Add(icon);
         }
 
-        private void CreateControls()
+        private void CreateControls(bool forDLC)
         {
             Text = Account == null ? "Available trophies": Account.Name;
             ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
             CreateIcon(TrophyType.Platinum, 8);
+            string forDLCPrefix = forDLC ? "DLC:" : string.Empty;
             CheckBoxAccessor<GameField, Game> platinumControl = new(
-                builder.Context($"{Text}_platinum", FieldType.Boolean, null)
+                builder.Context($"{forDLCPrefix}{Text}_platinum", FieldType.Boolean, null)
             )
             { 
                 Parent = this,
@@ -102,7 +103,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             {
                 CreateIcon(type, calcedLeft);
                 calcedLeft += 24;
-                NumericAccessor<GameField, Game> accessor = new(builder.Context($"{Text}_{type}", FieldType.Integer, null))
+                NumericAccessor<GameField, Game> accessor = new(builder.Context($"{forDLCPrefix}{Text}_{type}", FieldType.Integer, null))
                 {
                     Parent = this,
                     Left = calcedLeft,
@@ -127,7 +128,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         private void ApplyConstraintsToDependedPanelsHandler(object? sender, EventArgs e) => 
             ApplyConstraintsToDependedPanels();
 
-        public TrophyList Value
+        public TrophyList? Value
         {
             get => GetValue();
             set => SetValue(value);
@@ -135,12 +136,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private readonly TrophyTypeHelper trophyTypeHelper = TypeHelper.Helper<TrophyTypeHelper>();
 
-        private void SetValue(TrophyList value)
+        private void SetValue(TrophyList? value)
         {
-            controls[TrophyType.Platinum].Value = value.Platinum > 0;
+            controls[TrophyType.Platinum].Value = value != null && value.Platinum > 0;
 
             foreach(TrophyType type in trophyTypeHelper.CountingTrophies)
-                controls[type].Value = value.GetTrophyCount(type);
+                controls[type].Value = value == null ? 0 : value.GetTrophyCount(type);
 
             ApplyConstraintsToDependedPanels();
         }

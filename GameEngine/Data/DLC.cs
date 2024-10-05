@@ -1,23 +1,16 @@
 ﻿using System.Xml;
 using OxDAOEngine.Data;
 using OxDAOEngine.XML;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.Data
 {
-    public class DLC : DAO
+    public class DLC : RootDAO<GameField>
     {
         public DLC() : base() { }
             
-
-        private string name = string.Empty;
         private bool acquired = false;
         public readonly Trophyset Trophyset = new();
-
-        public string Name
-        {
-            get => name;
-            set => name = StringValue(ModifyValue(name, value));
-        }
 
         public bool Acquired
         {
@@ -27,27 +20,26 @@ namespace PlayStationGames.GameEngine.Data
 
         public override void Clear()
         {
-            name = string.Empty;
+            base.Clear();
             acquired = false;
             Trophyset.Clear();
         }
 
-        public override void Init() => 
+        public override void Init()
+        {
+            base.Init();
             AddMember(Trophyset);
+        }
 
         protected override void LoadData(XmlElement element)
         {
-            name = XmlHelper.Value(element, XmlConsts.Name);
-
-            if (name == string.Empty)
-                name = element.InnerText;
-
+            base.LoadData(element);
             acquired = XmlHelper.ValueBool(element, XmlConsts.Aqcuired);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
-            XmlHelper.AppendElement(element, XmlConsts.Name, Name);
+            base.SaveData(element, clearModified);
             XmlHelper.AppendElement(element, XmlConsts.Aqcuired, Acquired);
         }
 
@@ -55,9 +47,10 @@ namespace PlayStationGames.GameEngine.Data
             Name;
 
         public override bool Equals(object? obj) =>
-            obj is DLC otherDLC
-            && (base.Equals(obj)
-                || Name.Equals(otherDLC.Name));
+            base.Equals(obj)
+            && obj is DLC otherDLC
+            && Acquired.Equals(otherDLC.Acquired)
+            && Trophyset.Equals(otherDLC.Trophyset);
 
         public override int GetHashCode() => 
             539060726 + EqualityComparer<string>.Default.GetHashCode(Name);

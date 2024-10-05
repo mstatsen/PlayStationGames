@@ -71,7 +71,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 Text = "Game"
             };
 
-            GameControl = Context.Builder.Accessor("RelatedGameNae", FieldType.Memo, true);
+            GameControl = Context.Accessor("RelatedGame:Name", FieldType.Memo, true);
             GameControl.Parent = this;
             GameControl.Top = 8;
             GameControl.Left = GameLabel.Right + 8;
@@ -85,7 +85,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void CreateSameTrophysetControl()
         {
-            SameTrophysetControl = Context.Builder.Accessor("RelatedGameSameTrophyset", FieldType.Boolean);
+            SameTrophysetControl = Context.Accessor("RelatedGame:SameTrophyset", FieldType.Boolean);
             SameTrophysetControl.Parent = this;
             SameTrophysetControl.Top = GameControl!.Bottom + 8;
             SameTrophysetControl.Left = GameControl.Left;

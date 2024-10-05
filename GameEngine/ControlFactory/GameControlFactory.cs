@@ -23,10 +23,9 @@ namespace PlayStationGames.GameEngine.ControlFactory
 {
     public class GameControlFactory : ControlFactory<GameField, Game>
     {
-        protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<GameField, Game> context) => 
-            context switch
-            {FieldContext<GameField, Game> accessorContext =>
-                    accessorContext.Field switch
+        protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<GameField, Game> context) =>
+                context is FieldContext<GameField, Game> fieldContext
+                    ? fieldContext.Field switch
                     {
                         GameField.PlatformFamily => CreateEnumAccessor<PlatformFamily>(context),
                         GameField.Platform => CreateEnumAccessor<PlatformType>(context),
@@ -50,9 +49,16 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         GameField.Owner => CreateAccountAccessor(context),
                         GameField.Trophyset => CreateTrophysetAccessor(context),
                         _ => base.CreateOtherAccessor(context),
-                    },
-                _ => null,
-            };
+                    }
+                    : context.Key == "DLC:Trophyset"
+                        ? CreateTrophysetAccessor(context) 
+                        : context.Key == "DLC:TrophysetType"
+                            ? CreateEnumAccessor<TrophysetType>(context)
+                            : context.Key == "DLC:Difficult"
+                                ? CreateEnumAccessor<Difficult>(context)
+                                : context.Key == "DLC:CompleteTime"
+                                    ? CreateEnumAccessor<CompleteTime>(context)
+                                    : base.CreateOtherAccessor(context);
 
         private static IControlAccessor CreateTrophysetAccessor(IBuilderContext<GameField, Game> context) => 
             new TrophysetAccessor(context);

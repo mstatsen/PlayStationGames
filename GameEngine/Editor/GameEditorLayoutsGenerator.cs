@@ -106,12 +106,6 @@ namespace PlayStationGames.GameEngine.Editor
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
                     (Parent(field).Height - Height(field)) / 2,
-                GameField.AvailablePlatinum =>
-                    124,
-                GameField.AvailableGold or
-                GameField.AvailableSilver or
-                GameField.AvailableBronze =>
-                    120,
                 GameField.EmulatorType =>
                     Layouter[GameField.Edition]!.Top,
                 GameField.Language or
@@ -143,14 +137,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.ScreenView or
                 GameField.Genre =>
                     60,
-                GameField.AvailablePlatinum => 
-                    84,
-                GameField.AvailableGold =>
-                    130,
-                GameField.AvailableSilver =>
-                    190,
-                GameField.AvailableBronze =>
-                    250,
                 GameField.Language =>
                     206,
                 GameField.Code =>

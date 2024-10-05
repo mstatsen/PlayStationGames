@@ -24,12 +24,6 @@ namespace PlayStationGames.AccountEngine.ControlFactory
                 }
                 : base.CreateOtherAccessor(context);
 
-        protected override IInitializer? Initializer(IBuilderContext<AccountField, Account> context) => 
-            context.Name switch
-            {
-                _ => base.Initializer(context),
-            };
-
         public override IItemInfo<AccountField, Account> CreateInfoCard() =>
             new AccountFullInfoCard();
 
