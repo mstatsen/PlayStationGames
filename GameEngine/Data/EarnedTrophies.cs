@@ -35,5 +35,15 @@ namespace PlayStationGames.GameEngine.Data
             if (Trophies.Count != 0)
                 XmlHelper.AppendElement(element, XmlConsts.AccountId, accountId);
         }
+
+        public override bool IsEmpty => Trophies.Count == 0;
+
+        public override bool Equals(object? obj) => base.Equals(obj)
+            || (obj is EarnedTrophies otherEarnedTrophies
+                && accountId.Equals(otherEarnedTrophies.AccountId)
+                && Trophies.Equals(otherEarnedTrophies.Trophies));
+
+        public override int GetHashCode() => 
+            AccountId.GetHashCode();
     }
 }

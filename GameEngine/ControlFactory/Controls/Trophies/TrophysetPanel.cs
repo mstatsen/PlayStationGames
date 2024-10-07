@@ -21,6 +21,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         private readonly IControlAccessor completeTimeControl;
         private readonly List<TrophiesPanel> trophiesPanels = new();
         private TrophiesPanel AvailableTrophiesPanel = default!;
+        private readonly OxButton addButton = new("Add account", OxIcons.Plus)
+        { 
+            ToolTipText = "Add account for earn trophies"
+        };
         private readonly OxLabel trophysetTypeLabel = new()
         { 
             Left = 8,
@@ -57,8 +61,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             PrepareAccessor(difficultControl, difficultLabel, typeControl.Bottom, 64, DifficultChangeHandler);
             PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 100, CompleteTimeChangeHandler);
             CreateTrophiesPanels(forDLC);
+            AccountSelector = new(this);
             SetMinimumSize();
         }
+
+        public TrophysetAccountEditor AccountSelector;
 
         private void CompleteTimeChangeHandler(object? sender, EventArgs e) =>
             ValueChanged?.Invoke(this, e);
@@ -75,50 +82,86 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             completeTimeControl.Visible = Type != TrophysetType.NoSet;
             difficultLabel.Visible = Type != TrophysetType.NoSet;
             completeTimeLabel.Visible = Type != TrophysetType.NoSet;
-
-            foreach (TrophiesPanel trophiesPanel in trophiesPanels)
-                trophiesPanel.Visible = Type != TrophysetType.NoSet;
-
-            SetMinimumSize();
+            RecalcTrophiesPanels();
             ValueChanged?.Invoke(this, e);
         }
 
-        private void SetMinimumSize()
+        private void SetMinimumSize(int height = -1)
         {
-            int height = 0;
-
-            foreach (Control control in Controls)
-                if (control.Visible)
-                    height = Math.Max(control.Bottom, height);
+            if (height == -1)
+                height = VisiblePanels.Count > 0 ? VisiblePanels.Last().Bottom : addButton.Bottom;
 
             MinimumSize = new Size(
                 trophiesPanels.Last().Right + 8,
-                height + 12
+                height
             );
             MaximumSize = MinimumSize;
         }
 
-        protected override void OnBackColorChanged(EventArgs e)
+
+        protected override void PrepareColors()
         {
-            base.OnBackColorChanged(e);
+            base.PrepareColors();
 
             if (typeControl != null)
             {
                 ControlPainter.ColorizeControl(typeControl, Colors.Darker());
                 ControlPainter.ColorizeControl(difficultControl, Colors.Darker());
                 ControlPainter.ColorizeControl(completeTimeControl, Colors.Darker());
-             
+                ControlPainter.ColorizeControl(addButton, Colors.Darker());
+
                 foreach (TrophiesPanel panel in trophiesPanels)
                     panel.BaseColor = BaseColor;
+
+                AccountSelector.BaseColor = BaseColor;
             }
         }
-
         private void CreateTrophiesPanels(bool forDLC)
         {
             AvailableTrophiesPanel = CreateTrophiesPanel(null, forDLC);
+            addButton.Parent = this;
+            addButton.Left = AvailableTrophiesPanel.Right - addButton.Width;
+            addButton.Top = AvailableTrophiesPanel.Bottom + 6;
+            addButton.Click += AddButtonClickHandler;
 
             foreach (Account account in DataManager.FullItemsList<AccountField, Account>())
                 CreateTrophiesPanel(account, forDLC);
+        }
+
+        private void AddButtonClickHandler(object? sender, EventArgs e)
+        {
+            if (AccountSelector.ShowAsDialog(this) == DialogResult.OK
+                && AccountSelector.SelectedAccountId != Guid.Empty)
+            {
+                TrophiesPanel newPanel = AvailableTrophiesPanel.DependedPanels.Find(t =>
+                    t.Account!.Id == AccountSelector.SelectedAccountId)!;
+                newPanel.Value = new();
+                VisiblePanels.Add(newPanel);
+                RecalcTrophiesPanels();
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void RecalcTrophiesPanels()
+        {
+            AvailableTrophiesPanel.Visible = Type != TrophysetType.NoSet;
+
+            foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
+                trophiesPanel.Visible = Type != TrophysetType.NoSet
+                    && VisiblePanels.Contains(trophiesPanel);
+
+            int lastTop = addButton.Bottom - 2;
+
+            foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
+            {
+                if (!VisiblePanels.Contains(trophiesPanel))
+                    continue;
+
+                trophiesPanel.Top = lastTop + 8;
+                lastTop = trophiesPanel.Bottom + 4;
+            }
+
+            SetMinimumSize(VisiblePanels.Count > 0 ? lastTop : addButton.Bottom);
         }
 
         private TrophiesPanel CreateTrophiesPanel(Account? account, bool forDLC)
@@ -127,8 +170,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             {
                 Parent = this,
                 Left = 8,
-                Top = (trophiesPanels.Count > 0 ? trophiesPanels.Last().Bottom + 4 : 100) + 8
+                Top = (trophiesPanels.Count == 0 
+                        ? 100 
+                        : trophiesPanels.Count == 1 
+                            ? addButton.Bottom - 2
+                            : trophiesPanels.Last().Bottom + 4)
+                      + 8
             };
+            result.OnRemove += OnRemovePanelHandler;
 
             trophiesPanels.Add(result);
 
@@ -137,6 +186,16 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 AvailableTrophiesPanel.DependedPanels.Add(result);
 
             return result;
+        }
+
+        private void OnRemovePanelHandler(object? sender, EventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            VisiblePanels.Remove((TrophiesPanel)sender);
+            RecalcTrophiesPanels();
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public Trophyset? Value
@@ -152,7 +211,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
                 result.Available.CopyFrom(AvailableTrophiesPanel.Value);
 
-                foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
+                foreach (TrophiesPanel trophiesPanel in VisiblePanels)
                 {
                     EarnedTrophies earnedTrophies = new()
                     {
@@ -164,7 +223,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 
                 return result;
             }
-
             set
             {
                 if (value == null)
@@ -178,10 +236,22 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 completeTimeControl.Value = value.CompleteTime;
                 AvailableTrophiesPanel.Value = value.Available;
 
-                foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
-                    trophiesPanel.Value = value.EarnedTrophies.GetTrophies(trophiesPanel.Account!.Id).Trophies;
+                VisiblePanels.Clear();
+
+                foreach (EarnedTrophies trophies in value.EarnedTrophies)
+                {
+                    TrophiesPanel trophiesPanel = AvailableTrophiesPanel.DependedPanels.Find(t => 
+                        t.Account!.Id == trophies.AccountId
+                    )!;
+                    VisiblePanels.Add(trophiesPanel);
+                    trophiesPanel.Value = trophies.Trophies;
+                }
+
+                RecalcTrophiesPanels();
             }
         }
+
+        public readonly List<TrophiesPanel> VisiblePanels = new();
 
         public bool ReadOnly
         {

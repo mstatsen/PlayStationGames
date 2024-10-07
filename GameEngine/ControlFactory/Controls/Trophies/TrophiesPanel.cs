@@ -3,7 +3,9 @@ using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
+using OxLibrary;
 using OxLibrary.Controls;
+using OxLibrary.Dialogs;
 using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.GameEngine.Data;
@@ -16,13 +18,42 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
     {
         private readonly Dictionary<TrophyType, ControlAccessor<GameField, Game>> controls = new();
         private readonly List<OxPicture> icons = new();
+        private readonly OxIconButton removeButton = new(OxIcons.Minus, 20);
 
         public readonly Account? Account;
 
         public TrophiesPanel(Account? account, bool forDLC)
         {
             Account = account;
+            SetRemoveButtonVisible();
             CreateControls(forDLC);
+            Header.SetContentSize(1, 20);
+        }
+
+        private void SetRemoveButtonVisible()
+        {
+            if (Account != null)
+            {
+                removeButton.Visible = true;
+                removeButton.ToolTipText = $"Remove {Account.Name}'s earned trophies";
+            }
+            else
+                removeButton.Visible = false;
+        }
+
+        protected override void PrepareInnerControls()
+        {
+            base.PrepareInnerControls();
+            removeButton.Click += RemoveButtonClickHandler;
+            Header.AddToolButton(removeButton);
+        }
+
+        public EventHandler? OnRemove;
+
+        private void RemoveButtonClickHandler(object? sender, EventArgs e)
+        {
+            ClearValue();
+            OnRemove?.Invoke(this, EventArgs.Empty);
         }
 
         public List<TrophiesPanel> DependedPanels { get; internal set; } = new();
@@ -116,7 +147,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 calcedLeft += 40;
                 controls.Add(type, accessor);
             }
-            SetContentSize(256, 32);
+            SetContentSize(256, 26);
         }
 
         private void ApplyConstraintsToDependedPanels()

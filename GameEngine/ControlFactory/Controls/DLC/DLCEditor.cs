@@ -55,6 +55,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             ImageControl.Width = 208;
             ImageControl.Height = 112;
             ImageControl.Parent = BaseGroup;
+            ((OxPictureContainer)ImageControl.Control).HiddenBorder = true;
 
             AcquiredControl = Context.Accessor("DLC:Acquired", FieldType.Boolean);
             AcquiredControl.Top = ImageControl.Bottom + 8;

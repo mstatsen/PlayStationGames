@@ -54,5 +54,7 @@ namespace PlayStationGames.GameEngine.Data
 
         public override int GetHashCode() => 
             539060726 + EqualityComparer<string>.Default.GetHashCode(Name);
+
+        protected override bool AlwaysSaveImage => true;
     }
 }

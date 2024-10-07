@@ -39,10 +39,11 @@ namespace PlayStationGames.GameEngine.Data
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
-            XmlHelper.AppendElement(element, XmlConsts.Type, type);
-
             if (count > 0)
+            {
+                XmlHelper.AppendElement(element, XmlConsts.Type, type);
                 XmlHelper.AppendElement(element, XmlConsts.Count, count);
+            }
         }
 
         public override string ToString() => 
@@ -57,5 +58,7 @@ namespace PlayStationGames.GameEngine.Data
 
         public override int GetHashCode() => 
             Type.GetHashCode() ^ Count.GetHashCode();
+
+        public override bool IsEmpty => count == 0; 
     }
 }

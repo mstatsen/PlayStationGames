@@ -51,7 +51,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         protected override void SetPaddings() =>
             MainPanel.Paddings.SetSize(OxSize.Extra);
 
-
         public override void RenewData()
         {
             base.RenewData();

@@ -711,7 +711,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     350,
                 GameField.Platform => 
                     70,
-                GameField.Image or 
                 GameField.Format or 
                 GameField.ReleasePlatforms => 
                     70,
@@ -734,6 +733,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Year or 
                 GameField.Pegi => 
                     40,
+                GameField.Image or
                 GameField.Licensed or
                 GameField.Difficult =>
                     60,

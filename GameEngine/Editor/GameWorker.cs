@@ -115,7 +115,6 @@ namespace PlayStationGames.GameEngine.Editor
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
         private readonly GameFieldGroupHelper groupHelper = TypeHelper.Helper<GameFieldGroupHelper>();
         private readonly GameFormatHelper formatHelper = TypeHelper.Helper<GameFormatHelper>();
-        private readonly GameFieldHelper fieldHelper = TypeHelper.Helper<GameFieldHelper>();
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {

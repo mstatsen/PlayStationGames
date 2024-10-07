@@ -181,24 +181,23 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 GameField.AvailableBronze
             };
 
-            Category<GameField, Game> result = new Category<GameField, Game>("Bad trophyset")
-                .AddFilterEquals(GameField.TrophysetType,
-                    TrophysetType.NoSet,
-                    FilterConcat.AND);
+            Category<GameField, Game> result = new("Bad trophyset");
 
-            foreach (GameField field in trophyFields)
-                result.AddFilterGreater(field, 0);
+            SimpleFilter<GameField, Game> badTrophyset = new SimpleFilter<GameField, Game>(FilterConcat.AND)
+                .AddFilter(GameField.TrophysetType, FilterOperation.Equals, TrophysetType.NoSet);
 
-            Category<GameField, Game> badTrophyset2 = new Category<GameField, Game>()
-                .AddFilterEquals(GameField.TrophysetType,
-                    TrophysetType.Offline,
-                    FilterConcat.AND);
+            foreach (GameField @field in trophyFields)
+                badTrophyset.AddFilter(@field, FilterOperation.Greater, 0);
 
-            foreach (GameField field in trophyFields)
-                badTrophyset2.AddFilterEquals(field, 0);
+            SimpleFilter<GameField, Game> badTrophyset2 = new SimpleFilter<GameField, Game>(FilterConcat.AND)
+                .AddFilter(GameField.TrophysetType, FilterOperation.NotEquals,
+                    TrophysetType.NoSet);
 
-            result.Filter.Root.FilterConcat = FilterConcat.OR;
-            result.Filter.Root.Add(badTrophyset2);
+            foreach (GameField @field in trophyFields)
+                badTrophyset2.AddFilter(@field, FilterOperation.Equals, 0);
+
+            result.Filter.Root.AddFilter(badTrophyset, FilterConcat.OR);
+            result.Filter.Root.AddFilter(badTrophyset2, FilterConcat.OR);
             return result;
         }
 

@@ -55,6 +55,9 @@
     <Compile Update="GameEngine\ControlFactory\Controls\Trophies\TrophiesPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Trophies\TrophysetAccountEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="GameEngine\ControlFactory\Controls\Trophies\TrophysetPanel.cs">
       <SubType>Component</SubType>
     </Compile>

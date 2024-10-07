@@ -58,18 +58,20 @@ namespace PlayStationGames.GameEngine.ControlFactory
                                 ? CreateEnumAccessor<Difficult>(context)
                                 : context.Key == "DLC:CompleteTime"
                                     ? CreateEnumAccessor<CompleteTime>(context)
-                                    : base.CreateOtherAccessor(context);
+                                    : context.Key == "Trophyset:Account"
+                                        ? CreateAccountAccessor(context)
+                                        : base.CreateOtherAccessor(context);
 
         private static IControlAccessor CreateTrophysetAccessor(IBuilderContext<GameField, Game> context) => 
             new TrophysetAccessor(context);
 
         private static IControlAccessor CreateAccountAccessor(IBuilderContext<GameField, Game> context)
         {
-            context.AdditionalContext = new AccountAccessorParameters()
-            {
-                UseNullable = true,
-                OnlyNullable = true
-            };
+            context.AdditionalContext ??= new AccountAccessorParameters()
+                {
+                    UseNullable = true,
+                    OnlyNullable = true
+                };
             return new AccountAccessor<GameField, Game>(context);
         }
 
