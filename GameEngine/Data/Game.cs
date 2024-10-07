@@ -57,8 +57,6 @@ namespace PlayStationGames.GameEngine.Data
             SaveEmptyList = false
         };
 
-        public bool RelaterGameUpdateProcess { get; set; }
-
         public Guid Id
         {
             get => id;
@@ -339,11 +337,6 @@ namespace PlayStationGames.GameEngine.Data
         protected override void SetFieldValue(GameField field, object? value)
         {
             value = PrepareValueToSet(field, value);
-
-            if (!fieldHelper.AlwaysUpdateFields.Contains(field) &&
-                !CheckValueModified(this[field], value))
-                return;
-
             base.SetFieldValue(field, value);
 
             switch (field)
@@ -461,84 +454,7 @@ namespace PlayStationGames.GameEngine.Data
                     break;
             }
 
-            if (!RelaterGameUpdateProcess)
-                switch (field)
-                {
-                    case GameField.Series:
-                    case GameField.TrophysetType:
-                    case GameField.AvailablePlatinum:
-                    case GameField.AvailableGold:
-                    case GameField.AvailableSilver:
-                    case GameField.AvailableBronze:
-                    case GameField.Developer:
-                    case GameField.Publisher:
-                    case GameField.Year:
-                    case GameField.Pegi:
-                    case GameField.ReleasePlatforms:
-                    case GameField.Difficult:
-                    case GameField.CompleteTime:
-                    case GameField.Genre:
-                    case GameField.ScreenView:
-                    case GameField.RelatedGames:
-                        UpdateRelatedGames();
-                        break;
-                }
-
             Modified = true;
-        }
-
-        private static bool AvailableTrophyset(Game game) =>
-            game.Owner != Guid.Empty
-            && game.Licensed 
-            && TypeHelper.Helper<GameFormatHelper>().AvailableTrophies(game.Format)
-            && platformTypeHelper.PlatformWithTrophies(game.PlatformType);
-
-        private void UpdateRelatedGames()
-        {
-            for (int i = 0; i < RelatedGames.Count; i++)
-            {
-                RelatedGame relatedGame = RelatedGames[i];
-                Game? game = DataManager.Item<GameField, Game>(GameField.Id, relatedGame.GameId);
-
-                if (game == null)
-                    continue;
-
-                if (relatedGame.SameTrophyset && (!AvailableTrophyset(this) || !AvailableTrophyset(game)))
-                    relatedGame.SameTrophyset = false;
-
-                UpdateRelatedGame(game, relatedGame.SameTrophyset);
-            }
-        }
-
-        private void UpdateRelatedGame(Game game, bool sameTrophyset)
-        {
-            game.RelatedGames.Add(id, sameTrophyset);
-            game.RelaterGameUpdateProcess = true;
-            ReleasePlatforms.Add(game.PlatformType);
-
-            if (sameTrophyset)
-            {
-                foreach (GameField field in fieldHelper.SameTrophysetFields)
-                    game[field] = this[field];
-            }
-
-            foreach (GameField field in fieldHelper.SyncronizedRelatedFields)
-                game[field] = this[field];
-
-
-            if (ReleasePlatforms.Contains(game.PlatformType))
-            {
-                foreach (GameField field in fieldHelper.SyncronizedReleaseFields)
-                    game[field] = this[field];
-
-                if ((IntValue(game[GameField.Year]) == -1) || (IntValue(game[GameField.Year]) == 0))
-                    game[GameField.Year] = this[GameField.Year];
-
-                if (IntValue(game[GameField.CriticScore]) == -1)
-                    game[GameField.CriticScore] = this[GameField.CriticScore];
-            }
-
-            game.RelaterGameUpdateProcess = false;
         }
 
         private readonly GameFieldHelper fieldHelper = TypeHelper.Helper<GameFieldHelper>();
@@ -817,12 +733,8 @@ namespace PlayStationGames.GameEngine.Data
 
         public static bool CheckUniqueTrophyset(Game game, RootListDAO<GameField, Game> list)
         {
-            foreach (RelatedGame relGame in game.RelatedGames)
-                if (relGame.SameTrophyset
-                    && list.Contains(g => g.Id == relGame.GameId))
-                    return false;
-
-            return true;
+            //TODO: need implementation
+            return false;
         }
 
         public static IMatcher<ConsoleField> AvailableConsoleFilter(ControlBuilder<GameField, Game> gameControlBuilder)

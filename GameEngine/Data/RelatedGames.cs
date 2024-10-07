@@ -13,7 +13,7 @@ namespace PlayStationGames.GameEngine.Data
             return relatedGame != null && Remove(relatedGame);
         }
 
-        public RelatedGame? Add(Guid id, bool sameTrophyset)
+        public RelatedGame? Add(Guid id)
         {
             RelatedGame? relatedGame = GetById(id);
 
@@ -22,12 +22,8 @@ namespace PlayStationGames.GameEngine.Data
                 case null:
                     relatedGame = Add(new RelatedGame()
                     {
-                        GameId = id,
-                        SameTrophyset = sameTrophyset
+                        GameId = id
                     });
-                    break;
-                default:
-                    relatedGame.SameTrophyset = sameTrophyset;
                     break;
             }
 

@@ -10,17 +10,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
     public class RelatedGamesControl : ListItemsControl<RelatedGames, RelatedGame, 
         RelatedGameEditor, GameField, Game>
     {
-        private bool availableTrophies = true;
-        public bool AvailableTrophyset 
-        {
-            get => availableTrophies;
-            set => availableTrophies = value;
-        }
-
-        protected override void PrepareEditor(RelatedGameEditor editor) => 
-            editor.AvailableTrophies = availableTrophies;
-
-        protected override void InitButtons()
+    protected override void InitButtons()
         {
             base.InitButtons();
             OxIconButton viewButton = CreateButton(OxIcons.Eye);

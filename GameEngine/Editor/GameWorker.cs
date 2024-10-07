@@ -60,10 +60,6 @@ namespace PlayStationGames.GameEngine.Editor
                 return;
 
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = Item;
-            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).AvailableTrophyset = 
-                AvailableTrophyset 
-                && ((TrophysetPanel)Builder[GameField.Trophyset].Control).Type != TrophysetType.NoSet;
-
             Filter<GameField, Game> relatedGameFilter = new();
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);
 

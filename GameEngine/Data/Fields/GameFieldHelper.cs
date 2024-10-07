@@ -624,44 +624,12 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.Code] = FilterOperations.StringOperations
         };
 
-
-        public List<GameField> SameTrophysetFields = new()
-        {
-            GameField.TrophysetType,
-            GameField.AvailablePlatinum,
-            GameField.AvailableGold,
-            GameField.AvailableSilver,
-            GameField.AvailableBronze,
-            GameField.Difficult,
-            GameField.CompleteTime
-        };
-
-        public List<GameField> SyncronizedRelatedFields = new()
-        {
-            GameField.Series,
-            GameField.Genre,
-            GameField.ScreenView
-        };
-
-        public List<GameField> SyncronizedReleaseFields = new()
-        {
-            GameField.Developer,
-            GameField.Publisher,
-            GameField.Pegi,
-            GameField.ReleasePlatforms
-        };
-
         protected override List<GameField> GetSelectQuickFilterFields() => new()
         {
             GameField.Source,
             GameField.Platform,
             GameField.Format,
             GameField.Year
-        };
-
-        public List<GameField> AlwaysUpdateFields = new()
-        {
-            GameField.RelatedGames
         };
 
         public override GameField FieldMetaData => GameField.Field;
