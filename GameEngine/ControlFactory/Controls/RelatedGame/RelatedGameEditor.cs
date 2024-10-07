@@ -15,7 +15,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private OxLabel? GameLabel;
         private IControlAccessor? GameControl;
         private OxButton? GameSelectButton;
-        private OxButton? CopyDataButton;
+        private OxButton? SynchronizeButton;
 
         private Game? selectedGame;
         public Game? SelectedGame
@@ -26,7 +26,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 selectedGame = value;
                 SetGameControlValue();
                 firstSet = selectedGame == null;
-                CopyDataButton!.Enabled = selectedGame != null;
+                SynchronizeButton!.Enabled = selectedGame != null;
 
                 if (firstSet)
                 {
@@ -43,29 +43,40 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void CreateControls()
         {
             CreateGameControl();
-            GameSelectButton = CreateButton("Select...", GameControl!.Left, SelectGameHandler);
-            CopyDataButton = CreateButton("Copy data", GameSelectButton.Right + 4, CopyDataHandler);
+            GameSelectButton = CreateButton(
+                "Select...", 
+                OxIcons.Select, 
+                "Select game for relate", 
+                GameControl!.Left, 
+                SelectGameHandler);
+            SynchronizeButton = CreateButton(
+                "Synchronize", 
+                OxIcons.Synchronize, 
+                "Synchronize data between games",
+                GameSelectButton.Right + 4, 
+                SynchronizeHandler);
             GameSelectButton.SizeChanged += SelecButtonSizeChangedHandler;
         }
 
         private void SelecButtonSizeChangedHandler(object? sender, EventArgs e) => 
-            CopyDataButton!.Left = GameSelectButton!.Right + 4;
+            SynchronizeButton!.Left = GameSelectButton!.Right + 4;
 
-        private OxButton CreateButton(string text, int left, EventHandler clickHandler)
+        private OxButton CreateButton(string text, Bitmap icon, string toolTipText, int left, EventHandler clickHandler)
         {
-            OxButton button = new(text, null)
+            OxButton button = new(text, icon)
             {
                 Parent = this,
                 Top = GameControl!.Bottom + 4,
                 Left = left,
-                Font = new Font(Styles.FontFamily, Styles.DefaultFontSize, FontStyle.Bold)
+                Font = new Font(Styles.FontFamily, Styles.DefaultFontSize, FontStyle.Bold),
+                ToolTipText = toolTipText
             };
-            button.SetContentSize(100, 20);
+            button.SetContentSize(140, 20);
             button.Click += clickHandler;
             return button;
         }
 
-        private void CopyDataHandler(object? sender, EventArgs e)
+        private void SynchronizeHandler(object? sender, EventArgs e)
         {
             OxMessage.ShowInfo("Under construction", this);
         }
@@ -86,7 +97,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GameControl.ReadOnly = true;
             GameControl.Width = MainPanel.ContentContainer.Width - GameControl.Left - 8;
-            GameControl.Height *= 3;
+            GameControl.Height = 56;
             GameControl.Control.BackColor = MainPanel.BackColor;
             ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;
             OxControlHelper.AlignByBaseLine(GameControl.Control, GameLabel);
@@ -115,8 +126,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 : string.Empty;
         }
 
-        protected override int ContentWidth => 480;
-        protected override int ContentHeight => CopyDataButton!.Bottom + 8;
+        protected override int ContentWidth => 400;
+        protected override int ContentHeight => SynchronizeButton!.Bottom + 2;
 
         protected override RelatedGame CreateNewItem() => new();
 

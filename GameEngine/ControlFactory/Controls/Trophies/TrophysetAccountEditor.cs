@@ -61,9 +61,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         protected override void PrepareColors()
         {
             base.PrepareColors();
-            
+
             if (AccountAccessor != null)
-                ControlPainter.ColorizeControl(AccountAccessor, Colors.Darker());
+                AccountAccessor.Control.BackColor = BackColor;
         }
     }
 }

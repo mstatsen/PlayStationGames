@@ -113,7 +113,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 foreach (TrophiesPanel panel in trophiesPanels)
                     panel.BaseColor = BaseColor;
 
-                AccountSelector.BaseColor = BaseColor;
+                AccountSelector.BaseColor = Colors.Darker();
             }
         }
         private void CreateTrophiesPanels(bool forDLC)
