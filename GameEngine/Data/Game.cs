@@ -787,5 +787,7 @@ namespace PlayStationGames.GameEngine.Data
         public bool TrophysetAvailable =>
             formatHelper.AvailableTrophies(Format)
             && platformTypeHelper.PlatformWithTrophies(PlatformType);
+
+        public override Color BaseColor => sourceHelper.BaseColor(SourceType);
     }
 }

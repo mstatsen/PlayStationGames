@@ -2,8 +2,12 @@
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
+using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Types;
+using static System.Windows.Forms.DataFormats;
+using System.ComponentModel;
+using System.Security.Policy;
 
 namespace PlayStationGames.GameEngine.Data.Fields
 {
@@ -812,5 +816,32 @@ namespace PlayStationGames.GameEngine.Data.Fields
             field == GameField.Licensed;
 
         public override ILinkHelper<GameField>? GetLinkHelper() => TypeHelper.Helper<GameLinkTypeHelper>();
+
+        protected override List<GameField> GetSynchronizedFields() =>
+            new()
+            {
+                GameField.Name,
+                GameField.Image,
+                GameField.Licensed,
+                GameField.Region,
+                GameField.Language,
+                GameField.Code,
+                GameField.Edition,
+                GameField.Series,
+                GameField.EmulatorType,
+                GameField.EmulatorROMs,
+                GameField.Dlcs,
+                GameField.Genre,
+                GameField.ScreenView,
+                GameField.GameModes,
+                GameField.Tags,
+                GameField.Trophyset,
+                GameField.CriticScore,
+                GameField.Developer,
+                GameField.Publisher,
+                GameField.Year,
+                GameField.Pegi,
+                GameField.ReleasePlatforms,
+            };
     }
 }

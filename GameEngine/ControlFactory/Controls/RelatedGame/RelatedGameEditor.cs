@@ -7,6 +7,7 @@ using OxDAOEngine.Data;
 using OxDAOEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using OxDAOEngine.Grid;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -78,7 +79,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void SynchronizeHandler(object? sender, EventArgs e)
         {
-            OxMessage.ShowInfo("Under construction", this);
+            ItemsSynchronizer<GameField, Game>.SynchronizeItems(ParentItem!, SelectedGame!, MainPanel);
         }
 
         private void CreateGameControl()

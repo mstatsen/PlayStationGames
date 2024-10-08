@@ -11,7 +11,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             field switch
             {
                 GameField.Field => null,
-                _ => Dao[field],
+                _ => Dao[field]
             };
     }
 }

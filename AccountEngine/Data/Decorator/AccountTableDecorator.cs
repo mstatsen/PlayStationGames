@@ -20,7 +20,7 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
                 AccountField.Games => GamesCount(),
                 AccountField.StrategeLink => StrategeLink,
                 AccountField.PSNProfilesLink => PSNProfilesLink,
-                _ => base.Value(field),
+                _ => base.Value(field)
             };
         }
 

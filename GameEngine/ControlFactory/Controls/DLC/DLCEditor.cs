@@ -86,7 +86,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             TrophysetGroup.Left = BaseGroup.Right;
             TrophysetGroup.SetContentSize(
                 TrophysetControl.Width,
-                TrophysetControl.Height
+                TrophysetControl.Height + 12
             );
             SetContentSize(
                 TrophysetGroup.Right,
