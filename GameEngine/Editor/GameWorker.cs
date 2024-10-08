@@ -71,7 +71,7 @@ namespace PlayStationGames.GameEngine.Editor
             Builder.Control<RelatedGamesControl>(GameField.RelatedGames).Filter = relatedGameFilter;
         }
 
-        protected override bool SyncFieldValues(GameField field, bool byUser)
+        protected override bool SyncFieldValue(GameField field, bool byUser)
         {
             switch (field)
             {

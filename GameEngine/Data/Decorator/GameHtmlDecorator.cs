@@ -80,7 +80,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
 
             foreach (Link<GameField> link in Dao.Links)
             {
-                string fontColor = ColorTranslator.ToHtml(new OxColorHelper(link.LinkColor).HDarker(1).Bluer(2));
+                string fontColor = ColorTranslator.ToHtml(new OxColorHelper(link.LinkColor).HDarker().Bluer(2));
                 list.Add(
                     $"<a"+
                     $" style=\"color:{fontColor}; text-decoration:None;\"" +

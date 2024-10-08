@@ -22,7 +22,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             installationsWorker.BaseColor = Editor.MainPanel.BaseColor;
         }
 
-        protected override bool SyncFieldValues(ConsoleField field, bool byUser)
+        protected override bool SyncFieldValue(ConsoleField field, bool byUser)
         {
             if (field == ConsoleField.Firmware)
             {

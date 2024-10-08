@@ -25,7 +25,7 @@ namespace PlayStationGames.AccountEngine.Editor
             gamesWorker.BaseColor = Editor.MainPanel.BaseColor;
         }
 
-        protected override bool SyncFieldValues(AccountField field, bool byUser) => 
+        protected override bool SyncFieldValue(AccountField field, bool byUser) => 
             field == AccountField.Type;
 
         protected override EditorLayoutsGenerator<AccountField, Account, AccountFieldGroup> 
