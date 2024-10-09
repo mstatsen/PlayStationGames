@@ -27,7 +27,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.CoachMultiplayer,
                 GameField.OnlineMultiplayer,
                 GameField.Tags,
-                GameField.Trophyset
+                GameField.Trophyset,
+                GameField.Devices
             };
 
         public override List<GameField> AutoSizeFields() =>
@@ -49,7 +50,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Tags,
                 GameField.Links,
                 GameField.Installations,
-                GameField.EmulatorROMs
+                GameField.EmulatorROMs,
+                GameField.Devices
             };
 
         public override List<GameField> OffsettingFields() =>
@@ -61,7 +63,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Platform,
                 GameField.Format,
                 GameField.CriticScore,
-                GameField.Series,
+                GameField.Serieses,
                 GameField.Difficult,
                 GameField.CompleteTime,
                 GameField.Genre,
@@ -143,7 +145,7 @@ namespace PlayStationGames.GameEngine.Editor
                     302,
                 GameField.Name or 
                 GameField.Edition or 
-                GameField.Series or
+                GameField.Serieses or
                 GameField.Region or
                 GameField.EmulatorType =>
                     68,
@@ -179,7 +181,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.OnlineMultiplayer or
                 GameField.Licensed =>
                     20,
-                GameField.Series =>
+                GameField.Serieses =>
                     26,
                 _ =>
                     base.Height(field)
@@ -196,11 +198,11 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Format =>
                     140,
                 GameField.ScreenView => 
-                    142,
+                    95,
                 GameField.Name =>
                     272,
                 GameField.Edition or 
-                GameField.Series or 
+                GameField.Serieses or 
                 GameField.EmulatorType =>
                     374,
                 GameField.Developer or 
@@ -217,7 +219,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Code =>
                     94,
                 GameField.Genre => 
-                    174,
+                    216,
                 GameField.ReleasePlatforms => 
                     600,
                 _ => 
@@ -227,12 +229,13 @@ namespace PlayStationGames.GameEngine.Editor
         public override int Offset(GameField field) => 
             field switch
             {
-                GameField.Image => 
+                GameField.Image or
+                GameField.SinglePlayer => 
                     8,
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or
                 GameField.Edition or
-                GameField.Series =>
+                GameField.Serieses =>
                     4,
                 GameField.Platform or
                 GameField.Region or
@@ -242,7 +245,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Genre or 
                 GameField.Publisher or 
                 GameField.Year or
-                GameField.SinglePlayer or
                 GameField.Pegi => 
                     2,
                 _ => 

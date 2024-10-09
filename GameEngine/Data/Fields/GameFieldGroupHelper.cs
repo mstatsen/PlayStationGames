@@ -15,17 +15,18 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.DLC,
                 GameFieldGroup.Base,
 
-                GameFieldGroup.Link,
+                GameFieldGroup.Links,
                 GameFieldGroup.Trophyset,
 
                 GameFieldGroup.Tags,
                 GameFieldGroup.Installations,
+                GameFieldGroup.Devices,
                 GameFieldGroup.Genre,
 
                 GameFieldGroup.ReleaseBase
             };
 
-        public override string GetName(GameFieldGroup value) => 
+        public override string GetName(GameFieldGroup value) =>
             value switch
             {
                 GameFieldGroup.Base => "Game",
@@ -34,13 +35,14 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.DLC => "DLCs",
                 GameFieldGroup.Genre => "Genre",
                 GameFieldGroup.Installations => "Installations",
-                GameFieldGroup.Link => "Links",
+                GameFieldGroup.Links => "Links",
                 GameFieldGroup.Trophyset => "Trophyset",
                 GameFieldGroup.ReleaseBase => "Release",
                 GameFieldGroup.ReleasePlatforms => "Platforms",
                 GameFieldGroup.System => "System",
                 GameFieldGroup.Tags => "Tags",
                 GameFieldGroup.Emulator => "ROMs",
+                GameFieldGroup.Devices => "Used devices",
                 _ => string.Empty,
             };
 
@@ -68,7 +70,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Dlcs => 
                     GameFieldGroup.DLC,
                 GameField.Links => 
-                    GameFieldGroup.Link,
+                    GameFieldGroup.Links,
                 GameField.RelatedGames => 
                     GameFieldGroup.RelatedGames,
                 GameField.Tags => 
@@ -78,6 +80,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameFieldGroup.System,
                 GameField.EmulatorROMs => 
                     GameFieldGroup.Emulator,
+                GameField.Devices => 
+                    GameFieldGroup.Devices,
                 _ => 
                     GameFieldGroup.Base,
             };
@@ -95,10 +99,11 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.RelatedGames or
                 GameFieldGroup.Emulator =>
                     460,
-                GameFieldGroup.Genre or
+                GameFieldGroup.Links or
                 GameFieldGroup.Trophyset =>
                     284,
-                GameFieldGroup.Link or 
+                GameFieldGroup.Genre or
+                GameFieldGroup.Devices or
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Tags => 
                     294,
@@ -128,6 +133,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     200,
                 GameFieldGroup.Tags =>
                     69,
+                GameFieldGroup.Devices =>
+                    56,
                 _ =>
                     84,
             };
@@ -138,9 +145,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.Base,
                 GameFieldGroup.DLC,
                 GameFieldGroup.Genre,
-                GameFieldGroup.Link,
+                GameFieldGroup.Links,
                 GameFieldGroup.ReleaseBase,
                 GameFieldGroup.Trophyset,
+                GameFieldGroup.Devices,
                 GameFieldGroup.Emulator
             };
     }

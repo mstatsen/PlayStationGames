@@ -19,6 +19,7 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.GameEngine.ControlFactory.Controls;
 
 namespace PlayStationGames.GameEngine.Data
 {
@@ -51,6 +52,7 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<GameRegionHelper>();
             TypeHelper.Register<GameLanguageHelper>();
             TypeHelper.Register<GameLinkTypeHelper>();
+            TypeHelper.Register<DeviceTypeHelper>();
         }
 
         public override string ListName => "Games";

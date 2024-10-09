@@ -32,7 +32,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Tags => "Tags",
                 GameField.Image => "Image",
                 GameField.Edition => "Edition",
-                GameField.Series => "Serieses",
+                GameField.Serieses => "Serieses",
                 GameField.CriticScore => "Critic Score",
                 GameField.Platform => "Platform",
                 GameField.Format => "Format",
@@ -70,6 +70,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Language => "Language",
                 GameField.Code => "Code",
                 GameField.Trophyset => "Trophyset",
+                GameField.Devices => "Devices",
                 _ => string.Empty,
             };
 
@@ -83,14 +84,15 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.TrophysetType => "Trophyset Accessibility",
                 GameField.EmulatorType => "Emulator Type",
                 GameField.EmulatorROMs => "Emulator ROMs",
+                GameField.Devices => "Used devices",
                 _ => GetName(value),
             };
 
         private readonly GameFieldsVariantDictionary fieldDictionary = new()
         {
-            [FieldsVariant.Category] = new GameFieldsFillingDictionary()
+            [FieldsVariant.Category] = new()
             {
-                [FieldsFilling.Full] = new List<GameField>
+                [FieldsFilling.Full] = new()
                 {
                     GameField.Owner,
                     GameField.Licensed,
@@ -109,21 +111,21 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Publisher,
                     GameField.Year,
                     GameField.ScreenView,
-                    GameField.Series,
+                    GameField.Serieses,
                     GameField.Source,
                     GameField.TrophysetType,
                     GameField.Region,
                     GameField.Language,
                     GameField.Tags
                 },
-                [FieldsFilling.Default] = new List<GameField>
+                [FieldsFilling.Default] = new()
                 {
                     GameField.Tags
                 }
             },
-            [FieldsVariant.Inline] = new GameFieldsFillingDictionary()
+            [FieldsVariant.Inline] = new()
             {
-                [FieldsFilling.Full] = new List<GameField>
+                [FieldsFilling.Full] = new()
                 {
                     GameField.Owner,
                     GameField.Licensed,
@@ -134,7 +136,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Format,
                     GameField.Edition,
                     GameField.Dlcs,
-                    GameField.Series,
+                    GameField.Serieses,
                     GameField.CriticScore,
                     GameField.FullGenre,
                     GameField.SinglePlayer,
@@ -149,17 +151,18 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.TrophysetType,
                     GameField.Verified,
                     GameField.Tags,
-                    GameField.Code
+                    GameField.Code,
+                    GameField.Devices
                 },
-                [FieldsFilling.Default] = new List<GameField>
+                [FieldsFilling.Default] = new()
                 {
                     GameField.Platform,
                     GameField.Source
                 }
             },
-            [FieldsVariant.QuickFilter] = new GameFieldsFillingDictionary()
+            [FieldsVariant.QuickFilter] = new()
             {
-                [FieldsFilling.Full] = new List<GameField>
+                [FieldsFilling.Full] = new()
                 {
                     GameField.Owner,
                     GameField.Licensed,
@@ -177,7 +180,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Pegi,
                     GameField.Year
                 },
-                [FieldsFilling.Default] = new List<GameField>
+                [FieldsFilling.Default] = new()
                 {
                     GameField.Owner,
                     GameField.Licensed,
@@ -187,29 +190,29 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.AvailablePlatinum,
                     GameField.Year
                 },
-                [FieldsFilling.Min] = new List<GameField>
+                [FieldsFilling.Min] = new()
                 {
                     GameField.Source,
                     GameField.Platform
                 }
             },
-            [FieldsVariant.QuickFilterText] = new GameFieldsFillingDictionary()
+            [FieldsVariant.QuickFilterText] = new()
             {
-                [FieldsFilling.Full] = new List<GameField>
+                [FieldsFilling.Full] = new()
                 {
                     GameField.Developer,
                     GameField.Edition,
                     GameField.Name,
                     GameField.Publisher
                 },
-                [FieldsFilling.Default] = new List<GameField>
+                [FieldsFilling.Default] = new()
                 {
                     GameField.Name
                 }
             },
-            [FieldsVariant.Summary] = new GameFieldsFillingDictionary()
+            [FieldsVariant.Summary] = new()
             {
-                [FieldsFilling.Full] = new List<GameField>
+                [FieldsFilling.Full] = new()
                 {
                     GameField.Owner,
                     GameField.Licensed,
@@ -219,7 +222,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Language,
                     GameField.Format,
                     GameField.Edition,
-                    GameField.Series,
+                    GameField.Serieses,
                     GameField.CriticScore,
                     GameField.ScreenView,
                     GameField.Genre,
@@ -235,7 +238,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.TrophysetType,
                     GameField.Tags
                 },
-                [FieldsFilling.Default] = new List<GameField>
+                [FieldsFilling.Default] = new()
                 {
                     GameField.Platform,
                     GameField.Source,
@@ -250,7 +253,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.CompleteTime,
                     GameField.TrophysetType,
                 },
-                [FieldsFilling.Min] = new List<GameField>
+                [FieldsFilling.Min] = new()
                 {
                     GameField.Platform,
                     GameField.Source,
@@ -261,9 +264,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.CompleteTime
                 },
             },
-            [FieldsVariant.Table] = new GameFieldsFillingDictionary()
+            [FieldsVariant.Table] = new()
             {
-                [FieldsFilling.Full] = new List<GameField>
+                [FieldsFilling.Full] = new()
                 {
                     GameField.Image,
                     GameField.Name,
@@ -275,7 +278,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Code,
                     GameField.Source,
                     GameField.Edition,
-                    GameField.Series,
+                    GameField.Serieses,
                     GameField.CriticScore,
                     GameField.Format,
                     GameField.Developer,
@@ -295,9 +298,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.StrategeLink,
                     GameField.PSNProfilesLink,
                     GameField.Verified,
-                    GameField.Tags
+                    GameField.Tags,
+                    GameField.Devices
                 },
-                [FieldsFilling.Default] = new List<GameField>
+                [FieldsFilling.Default] = new()
                 {
                     GameField.Image,
                     GameField.Name,
@@ -314,7 +318,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Difficult,
                     GameField.CompleteTime,
                 },
-                [FieldsFilling.Min] = new List<GameField>
+                [FieldsFilling.Min] = new()
                 {
                     GameField.Image,
                     GameField.Name,
@@ -322,9 +326,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Platform
                 }
             },
-            [FieldsVariant.BatchUpdate] = new GameFieldsFillingDictionary()
+            [FieldsVariant.BatchUpdate] = new()
             {
-                [FieldsFilling.Full] = new List<GameField>
+                [FieldsFilling.Full] = new()
                 {
                     GameField.CompleteTime,
                     GameField.CriticScore,
@@ -344,7 +348,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.ReleasePlatforms,
                     GameField.Year,
                     GameField.ScreenView,
-                    GameField.Series,
+                    GameField.Serieses,
                     GameField.Source,
                     GameField.TrophysetType,
                     GameField.Verified,
@@ -354,7 +358,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.EmulatorType,
                     GameField.EmulatorROMs,
                     GameField.Region,
-                    GameField.Language
+                    GameField.Language,
+                    GameField.Devices,
                 }
             }
         };
@@ -444,7 +449,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Code,
             GameField.Language,
             GameField.Edition,
-            GameField.Series,
+            GameField.Serieses,
             GameField.Trophyset,
             GameField.Developer,
             GameField.Publisher,
@@ -465,7 +470,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.PlatformFamily,
             GameField.Tags,
             GameField.EmulatorType,
-            GameField.EmulatorROMs
+            GameField.EmulatorROMs,
+            GameField.Devices
         };
 
         protected override List<GameField> GetEditedFieldsExtended() => new()
@@ -477,7 +483,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Language,
             GameField.Image,
             GameField.Edition,
-            GameField.Series,
+            GameField.Serieses,
             GameField.Trophyset,
             GameField.Owner,
             GameField.Licensed,
@@ -505,7 +511,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Verified,
             GameField.Tags,
             GameField.EmulatorType,
-            GameField.EmulatorROMs
+            GameField.EmulatorROMs,
+            GameField.Devices
         };
 
         protected override List<GameField> GetFullInfoFields() => new()
@@ -513,7 +520,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Image,
             GameField.Name,
             GameField.Edition,
-            GameField.Series,
+            GameField.Serieses,
             GameField.CriticScore,
             GameField.Platform,
             GameField.Owner,
@@ -546,7 +553,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Tags,
             GameField.Region,
             GameField.Language,
-            GameField.Code
+            GameField.Code,
+            GameField.Devices
         };
 
         protected override List<GameField> GetCardFields() => new()
@@ -569,8 +577,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Region,
             GameField.Language,
             GameField.Code,
-
-            GameField.FullGenre
+            GameField.FullGenre,
+            GameField.Devices
         };
 
         protected override FilterOperation GetDefaultFilterOperation(GameField field) => 
@@ -578,7 +586,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 GameField.Name or
                 GameField.Edition or
-                GameField.Series or
+                GameField.Serieses or
                 GameField.Developer or
                 GameField.Publisher or
                 GameField.ReleasePlatforms or
@@ -591,7 +599,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.EmulatorType or
                 GameField.EmulatorROMs or
                 GameField.Trophyset or
-                GameField.Tags => 
+                GameField.Tags or
+                GameField.Devices => 
                     FilterOperation.Contains,
                 GameField.Image or
                 GameField.StrategeLink or
@@ -610,7 +619,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.Name] = FilterOperations.StringOperations,
             [GameField.Image] = FilterOperations.UnaryOperations,
             [GameField.Edition] = FilterOperations.StringOperations,
-            [GameField.Series] = FilterOperations.ObjectOperations,
+            [GameField.Serieses] = FilterOperations.ObjectOperations,
             [GameField.CriticScore] = FilterOperations.NumericOperations,
             [GameField.PlatformFamily] = FilterOperations.EnumOperations,
             [GameField.Platform] = FilterOperations.EnumOperations,
@@ -646,7 +655,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.EmulatorROMs] = FilterOperations.StringOperations,
             [GameField.Region] = FilterOperations.EnumOperations,
             [GameField.Language] = FilterOperations.EnumOperations,
-            [GameField.Code] = FilterOperations.StringOperations
+            [GameField.Code] = FilterOperations.StringOperations,
+            [GameField.Devices] = FilterOperations.ObjectOperations,
         };
 
         protected override List<GameField> GetSelectQuickFilterFields() => new()
@@ -708,7 +718,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.ReleasePlatforms => 
                     70,
                 GameField.Edition or 
-                GameField.Series or 
+                GameField.Serieses or 
                 GameField.Dlcs or 
                 GameField.FullGenre or 
                 GameField.Developer or 
@@ -788,7 +798,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.RelatedGames or 
                 GameField.ReleasePlatforms or
                 GameField.Tags or
-                GameField.Series => 
+                GameField.Serieses or
+                GameField.Devices => 
                     FieldType.List,
                 GameField.StrategeLink or
                 GameField.PSNProfilesLink =>
@@ -848,7 +859,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Language,
                 GameField.Code,
                 GameField.Edition,
-                GameField.Series,
+                GameField.Serieses,
                 GameField.EmulatorType,
                 GameField.EmulatorROMs,
                 GameField.Dlcs,
@@ -865,6 +876,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Year,
                 GameField.Pegi,
                 GameField.ReleasePlatforms,
+                GameField.Devices
             };
     }
 }

@@ -150,15 +150,15 @@ namespace PlayStationGames.GameEngine.Editor
                 !isEmulator
                 && (!verified || !Builder[GameField.Edition].IsEmpty);
             Builder.SetVisible(GameField.Edition, editionVisible);
-            Builder.SetVisible(GameField.Series, 
+            Builder.SetVisible(GameField.Serieses, 
                 !isEmulator 
-                && (!verified || !Builder[GameField.Series].IsEmpty)
+                && (!verified || !Builder[GameField.Serieses].IsEmpty)
             );
 
-            Builder[GameField.Series].Top = (editionVisible
+            Builder[GameField.Serieses].Top = (editionVisible
                 ? Builder[GameField.Edition].Bottom
                 : Builder[GameField.Edition].Top) 
-                + Generator!.Offset(GameField.Series);
+                + Generator!.Offset(GameField.Serieses);
 
             if (verified)
             {
@@ -240,7 +240,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Region,
                 GameField.Name,
                 GameField.Edition,
-                GameField.Series,
+                GameField.Serieses,
                 GameField.EmulatorType
             },
             new List<GameField> {
@@ -278,7 +278,7 @@ namespace PlayStationGames.GameEngine.Editor
                 invisibleGroups.Add(GameFieldGroup.ReleaseBase);
                 invisibleGroups.Add(GameFieldGroup.ReleasePlatforms);
                 Builder[GameField.Edition].Clear();
-                Builder[GameField.Series].Clear();
+                Builder[GameField.Serieses].Clear();
             }
             else
             {

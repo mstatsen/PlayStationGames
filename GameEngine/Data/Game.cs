@@ -44,6 +44,7 @@ namespace PlayStationGames.GameEngine.Data
         public readonly ListDAO<Installation> Installations = new();
         public readonly ListDAO<DLC> Dlcs = new();
         public readonly ListDAO<Tag> Tags = new();
+        public readonly ListDAO<Device> Devices = new();
         public readonly Links<GameField> Links = new();
         public readonly RelatedGames RelatedGames = new();
         public readonly Trophyset Trophyset = new();
@@ -233,7 +234,8 @@ namespace PlayStationGames.GameEngine.Data
                     GameField.Language => GameLanguage.CompareTo(yGame.GameLanguage),
                     GameField.Dlcs => Dlcs.CompareTo(yGame.Dlcs),
                     GameField.Tags => Tags.CompareTo(yGame.Tags),
-                    GameField.Series => Serieses.CompareTo(yGame.Serieses),
+                    GameField.Devices => Tags.CompareTo(yGame.Devices),
+                    GameField.Serieses => Serieses.CompareTo(yGame.Serieses),
                     GameField.Links => Links.CompareTo(yGame.Links),
                     GameField.Installations => Installations.CompareTo(yGame.Installations),
                     GameField.RelatedGames => RelatedGames.CompareTo(yGame.RelatedGames),
@@ -320,7 +322,14 @@ namespace PlayStationGames.GameEngine.Data
                             tag
                         };
                     break;
-                case GameField.Series:
+                case GameField.Devices:
+                    if (value is Device device)
+                        return new ListDAO<Device>()
+                        {
+                            device
+                        };
+                    break;
+                case GameField.Serieses:
                     if (value is Series series)
                         return new ListDAO<Series>()
                         {
@@ -454,7 +463,10 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Tags:
                     Tags.CopyFrom((DAO?)value);
                     break;
-                case GameField.Series:
+                case GameField.Devices:
+                    Devices.CopyFrom((DAO?)value);
+                    break;
+                case GameField.Serieses:
                     Serieses.CopyFrom((DAO?)value);
                     break;
                 case GameField.Links:
@@ -536,7 +548,8 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.OnlineMultiplayer => OnlineMultiplayer,
                 GameField.Dlcs => Dlcs,
                 GameField.Tags => Tags,
-                GameField.Series => Serieses,
+                GameField.Devices => Devices,
+                GameField.Serieses => Serieses,
                 GameField.Links => Links,
                 GameField.RelatedGames => RelatedGames,
                 GameField.EmulatorType => EmulatorType,
@@ -582,6 +595,13 @@ namespace PlayStationGames.GameEngine.Data
             Installations.Clear();
             Dlcs.Clear();
             Tags.Clear();
+            Devices.Clear();
+            Devices.Add(
+                new() 
+                { 
+                    Type = DeviceType.Dualshock 
+                }
+            );
             Serieses.Clear();
             Links.Clear();
             RelatedGames.Clear();
@@ -592,7 +612,8 @@ namespace PlayStationGames.GameEngine.Data
             AddMember(Trophyset);
             AddListMember(GameField.Dlcs, Dlcs);
             AddListMember(GameField.Tags, Tags);
-            AddListMember(GameField.Series, Serieses);
+            AddListMember(GameField.Devices, Devices);
+            AddListMember(GameField.Serieses, Serieses);
             AddListMember(GameField.Installations, Installations);
             AddListMember(GameField.Links, Links);
             AddListMember(GameField.RelatedGames, RelatedGames);
@@ -676,6 +697,15 @@ namespace PlayStationGames.GameEngine.Data
             criticScore = XmlHelper.ValueInt(element, XmlConsts.CriticScore);
         }
 
+        /*TODO: remove this comment with code after finish development
+         * This code need for change, replace and move values between xml tags
+         * For example: you create new part (member) of this DAO and want to move to it old values from current DAO
+        protected override void AfterLoad()
+        {
+            base.AfterLoad();
+        }
+        */
+
         public override int CompareTo(DAO? other)
         {
             if (Equals(other))
@@ -734,6 +764,7 @@ namespace PlayStationGames.GameEngine.Data
             && Installations.Equals(otherGame.Installations)
             && Dlcs.Equals(otherGame.Dlcs)
             && Tags.Equals(otherGame.Tags)
+            && Devices.Equals(otherGame.Devices)
             && Serieses.Equals(otherGame.Serieses)
             && Links.Equals(otherGame.Links)
             && RelatedGames.Equals(otherGame.RelatedGames)

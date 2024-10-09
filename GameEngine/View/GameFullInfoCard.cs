@@ -161,7 +161,7 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Top = (imageLayout != null ? imageLayout.Bottom : 0) + 8;
 
             return new ControlLayouts<GameField>() {
-                Layouter.AddFromTemplate(GameField.Series),
+                Layouter.AddFromTemplate(GameField.Serieses),
                 Layouter.AddFromTemplate(GameField.CriticScore, -10),
                 Layouter.AddFromTemplate(GameField.FullGenre, -2),
             };

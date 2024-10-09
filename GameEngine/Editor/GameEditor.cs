@@ -42,9 +42,10 @@ namespace PlayStationGames.GameEngine.Editor
                     PanelLeft,
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Genre or
+                GameFieldGroup.Devices or
                 GameFieldGroup.Tags => 
                     PanelMiddle,
-                GameFieldGroup.Link or
+                GameFieldGroup.Links or
                 GameFieldGroup.Trophyset =>
                     PanelRight,
                 GameFieldGroup.ReleaseBase => 
@@ -71,7 +72,7 @@ namespace PlayStationGames.GameEngine.Editor
             Groups[GameFieldGroup.ReleaseBase].Paddings.HorizontalOx = OxSize.Large;
             Groups[GameFieldGroup.DLC].Paddings.RightOx = OxSize.Medium;
             Groups[GameFieldGroup.RelatedGames].Paddings.RightOx = OxSize.Medium;
-            Groups[GameFieldGroup.Link].Paddings.RightOx = OxSize.Medium;
+            Groups[GameFieldGroup.Links].Paddings.RightOx = OxSize.Medium;
             Groups[GameFieldGroup.Installations].Paddings.RightOx = OxSize.Medium;
         }
 

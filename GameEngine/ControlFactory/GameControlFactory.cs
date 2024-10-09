@@ -41,26 +41,32 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         GameField.Year => new YearAccessor<GameField, Game>(context),
                         GameField.Dlcs => CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
                         GameField.Tags => CreateListAccessor<Tag, ListDAO<Tag>, TagListControl>(context, ControlScope.Editor),
-                        GameField.Series => CreateButtonEditAccessor<Series, ListDAO<Series>, SeriesListControl>(context),
+                        GameField.Serieses => CreateButtonEditAccessor<Series, ListDAO<Series>, SeriesListControl>(context),
                         GameField.Installations => CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),
                         GameField.RelatedGames => CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context),
                         GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
                         GameField.Id => CreateLabelAccessor(context),
                         GameField.Owner => CreateAccountAccessor(context),
                         GameField.Trophyset => CreateTrophysetAccessor(context),
+                        GameField.Devices => CreateListAccessor<Device, ListDAO<Device>, DeviceListControl>(context),
                         _ => base.CreateOtherAccessor(context),
                     }
-                    : context.Key == "DLC:Trophyset"
-                        ? CreateTrophysetAccessor(context) 
-                        : context.Key == "DLC:TrophysetType"
-                            ? CreateEnumAccessor<TrophysetType>(context)
-                            : context.Key == "DLC:Difficult"
-                                ? CreateEnumAccessor<Difficult>(context)
-                                : context.Key == "DLC:CompleteTime"
-                                    ? CreateEnumAccessor<CompleteTime>(context)
-                                    : context.Key == "Trophyset:Account"
-                                        ? CreateAccountAccessor(context)
-                                        : base.CreateOtherAccessor(context);
+                    : context.Key switch
+                    {
+                        "DLC:Trophyset" =>
+                            CreateTrophysetAccessor(context),
+                        "DLC:TrophysetType" =>
+                            CreateEnumAccessor<TrophysetType>(context),
+                        "DLC:Difficult" =>
+                            CreateEnumAccessor<Difficult>(context),
+                        "DLC:CompleteTime" =>
+                            CreateEnumAccessor<CompleteTime>(context),
+                        "Trophyset:Account" =>
+                            CreateAccountAccessor(context),
+                        "Device:Type" =>
+                            CreateEnumAccessor<DeviceType>(context),
+                        _ => base.CreateOtherAccessor(context)
+                    };
 
         private static IControlAccessor CreateTrophysetAccessor(IBuilderContext<GameField, Game> context) => 
             new TrophysetAccessor(context);

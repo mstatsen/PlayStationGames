@@ -40,6 +40,12 @@
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Accounts\AccountsControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Devices\DeviceEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\Devices\DeviceListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="GameEngine\ControlFactory\Controls\Tags\TagEditor.cs">
       <SubType>Form</SubType>
     </Compile>

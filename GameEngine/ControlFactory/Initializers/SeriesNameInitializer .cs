@@ -28,7 +28,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
             ComboBox.Items.Clear();
 
             List<object> seriesNames = new FieldExtractor<GameField, Game>(
-                DataManager.FullItemsList<GameField, Game>()).Extract(GameField.Series, true);
+                DataManager.FullItemsList<GameField, Game>()).Extract(GameField.Serieses, true);
 
             foreach (object tagName in seriesNames)
                 AddSeriesNameToComboBox(tagName.ToString());
