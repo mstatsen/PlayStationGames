@@ -32,7 +32,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.RelatedGames => RelatedGames,
                 GameField.ReleasePlatforms => ReleasePlatforms,
                 GameField.Dlcs => DLC,
-                GameField.GameModes => GameModes,
                 GameField.TrophysetType => TrophysetAccesibility,
                 GameField.Owner => Owner,
                 _ => base.Value(field),
@@ -45,7 +44,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             get
             {
-                string genre = Dao.Genre;
+                string genre = Dao.GenreName;
 
                 if (genre.Trim() == string.Empty)
                     genre = Consts.Short_Unknown;
@@ -53,9 +52,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 return $"{TypeHelper.ShortName(Dao.ScreenView)} {genre}";
             }
         }
-
-        private object GameModes =>
-            Dao.GameModes.ToString();
 
         private object? TrophysetAccesibility =>
             TypeHelper.Name(Dao.Trophyset.Type);

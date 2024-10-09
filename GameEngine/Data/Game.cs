@@ -33,7 +33,10 @@ namespace PlayStationGames.GameEngine.Data
         private bool licensed = true;
         private string emulatorType = string.Empty;
         private string roms = string.Empty;
-        private string genre = string.Empty;
+        private string genreName = string.Empty;
+        private bool singlePlayer = true;
+        private bool coachMultiplayer = false;
+        private bool onlineMultiplayer = false;
         private string developer = string.Empty;
         private string publisher = string.Empty;
         private int year;
@@ -44,11 +47,6 @@ namespace PlayStationGames.GameEngine.Data
         public readonly ListDAO<Tag> Tags = new();
         public readonly Links<GameField> Links = new();
         public readonly RelatedGames RelatedGames = new();
-        public readonly ListDAO<GameMode> GameModes = new()
-        {
-            XmlName = "Modes",
-            SaveEmptyList = false
-        };
         public readonly Trophyset Trophyset = new();
 
         public readonly Platforms ReleasePlatforms = new() 
@@ -75,10 +73,28 @@ namespace PlayStationGames.GameEngine.Data
             set => ModifyValue(GameField.EmulatorROMs, roms, value, n => roms = StringValue(n));
         }
 
-        public string Genre
+        public string GenreName
         {
-            get => genre;
-            set => ModifyValue(GameField.Genre, genre, value,n => genre = StringValue(n));
+            get => genreName;
+            set => ModifyValue(GameField.Genre, genreName, value,n => genreName = StringValue(n));
+        }
+
+        public bool SinglePlayer
+        {
+            get => singlePlayer;
+            set => ModifyValue(GameField.SinglePlayer, singlePlayer, value, n => singlePlayer = BoolValue(n));
+        }
+
+        public bool CoachMultiplayer
+        {
+            get => coachMultiplayer;
+            set => ModifyValue(GameField.CoachMultiplayer, coachMultiplayer, value, n => coachMultiplayer = BoolValue(n));
+        }
+
+        public bool OnlineMultiplayer
+        {
+            get => onlineMultiplayer;
+            set => ModifyValue(GameField.OnlineMultiplayer, onlineMultiplayer, value, n => onlineMultiplayer = BoolValue(n));
         }
 
         public ScreenView ScreenView
@@ -182,14 +198,17 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Owner:
                 case GameField.Edition:
                 case GameField.Series:
+                case GameField.Genre:
                 case GameField.Developer:
                 case GameField.Publisher:
-                case GameField.Genre:
                 case GameField.EmulatorType:
                 case GameField.EmulatorROMs:
                     return StringValue(this[field]).CompareTo(StringValue(y[field]));
                 case GameField.Verified:
                 case GameField.Licensed:
+                case GameField.SinglePlayer:
+                case GameField.CoachMultiplayer:
+                case GameField.OnlineMultiplayer:
                     return BoolValue(this[field]).CompareTo(BoolValue(y[field]));
                 case GameField.AvailablePlatinum:
                 case GameField.AvailableGold:
@@ -214,7 +233,6 @@ namespace PlayStationGames.GameEngine.Data
                     GameField.ScreenView => ScreenView.CompareTo(yGame.ScreenView),
                     GameField.Region => GameRegion.CompareTo(yGame.GameRegion),
                     GameField.Language => GameLanguage.CompareTo(yGame.GameLanguage),
-                    GameField.GameModes => GameModes.CompareTo(yGame.GameModes),
                     GameField.Dlcs => Dlcs.CompareTo(yGame.Dlcs),
                     GameField.Tags => Tags.CompareTo(yGame.Tags),
                     GameField.Links => Links.CompareTo(yGame.Links),
@@ -294,13 +312,6 @@ namespace PlayStationGames.GameEngine.Data
                         return new RelatedGames()
                         {
                             relatedGame
-                        };
-                    break;
-                case GameField.GameModes:
-                    if (value is GameMode gameMode)
-                        return new ListDAO<GameMode>()
-                        {
-                            gameMode
                         };
                     break;
                 case GameField.Tags:
@@ -386,6 +397,9 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Source:
                     SourceType = TypeHelper.Value<Source>(value);
                     break;
+                case GameField.Genre:
+                    GenreName = StringValue(value);
+                    break;
                 case GameField.Developer:
                     Developer = StringValue(value);
                     break;
@@ -410,6 +424,15 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Licensed:
                     Licensed = BoolValue(value);
                     break;
+                case GameField.SinglePlayer:
+                    SinglePlayer = BoolValue(value);
+                    break;
+                case GameField.CoachMultiplayer:
+                    CoachMultiplayer = BoolValue(value);
+                    break;
+                case GameField.OnlineMultiplayer:
+                    OnlineMultiplayer = BoolValue(value);
+                    break;
                 case GameField.Owner:
                     Owner = value is Account account ? account.Id : GuidValue(value);
                     break;
@@ -419,14 +442,8 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.CompleteTime:
                     Trophyset.CompleteTime = TypeHelper.Value<CompleteTime>(value);
                     break;
-                case GameField.Genre:
-                    Genre = StringValue(value);
-                    break;
                 case GameField.ScreenView:
                     ScreenView = TypeHelper.Value<ScreenView>(value);
-                    break;
-                case GameField.GameModes:
-                    GameModes.CopyFrom((DAO?)value);
                     break;
                 case GameField.Dlcs:
                     Dlcs.CopyFrom((DAO?)value);
@@ -507,9 +524,11 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Owner => Owner,
                 GameField.Licensed => Licensed,
                 GameField.Installations => Installations,
-                GameField.Genre => Genre,
+                GameField.Genre => GenreName,
                 GameField.ScreenView => ScreenView,
-                GameField.GameModes => GameModes,
+                GameField.SinglePlayer => SinglePlayer,
+                GameField.CoachMultiplayer => CoachMultiplayer,
+                GameField.OnlineMultiplayer => OnlineMultiplayer,
                 GameField.Dlcs => Dlcs,
                 GameField.Tags => Tags,
                 GameField.Links => Links,
@@ -535,7 +554,10 @@ namespace PlayStationGames.GameEngine.Data
             owner = Guid.Empty;
             roms = string.Empty;
             emulatorType = string.Empty;
-            genre = string.Empty;
+            genreName = string.Empty;
+            singlePlayer = true;
+            coachMultiplayer = false;
+            onlineMultiplayer = false;
             developer = string.Empty;
             publisher = string.Empty;
             code = string.Empty;
@@ -551,7 +573,6 @@ namespace PlayStationGames.GameEngine.Data
             pegi = TypeHelper.DefaultValue<Pegi>();
             
             ReleasePlatforms.Clear();
-            GameModes.Clear();
             Trophyset.Clear();
             Installations.Clear();
             Dlcs.Clear();
@@ -563,7 +584,6 @@ namespace PlayStationGames.GameEngine.Data
         public override void Init()
         {
             AddMember(Trophyset);
-            AddListMember(GameField.GameModes, GameModes);
             AddListMember(GameField.Dlcs, Dlcs);
             AddListMember(GameField.Tags, Tags);
             AddListMember(GameField.Installations, Installations);
@@ -586,17 +606,31 @@ namespace PlayStationGames.GameEngine.Data
             if (SourceType != TypeHelper.DefaultValue<Source>())
                 XmlHelper.AppendElement(element, XmlConsts.Source, SourceType);
 
+            XmlHelper.AppendElement(element, XmlConsts.Genre, GenreName, true);
+            XmlHelper.AppendElement(element, XmlConsts.Screen, ScreenView);
+
+            if (SinglePlayer)
+                XmlHelper.AppendElement(element, XmlConsts.SinglePlayer, SinglePlayer);
+
+            if (CoachMultiplayer)
+                XmlHelper.AppendElement(element, XmlConsts.CoachMultiplayer, CoachMultiplayer);
+
+            if (OnlineMultiplayer)
+                XmlHelper.AppendElement(element, XmlConsts.OnlineMultiplayer, OnlineMultiplayer);
+
             XmlHelper.AppendElement(element, XmlConsts.Region, GameRegion);
             XmlHelper.AppendElement(element, XmlConsts.Language, GameLanguage);
             XmlHelper.AppendElement(element, XmlConsts.Code, Code, true);
             XmlHelper.AppendElement(element, XmlConsts.Platform, PlatformType);
             XmlHelper.AppendElement(element, XmlConsts.Format, Format);
-            XmlHelper.AppendElement(element, XmlConsts.Verified, Verified);
+
+            if (Verified)
+                XmlHelper.AppendElement(element, XmlConsts.Verified, Verified);
+
             XmlHelper.AppendElement(element, XmlConsts.Licensed, Licensed);
             XmlHelper.AppendElement(element, XmlConsts.EmulatorType, EmulatorType, true);
             XmlHelper.AppendElement(element, XmlConsts.ROMs, ROMs, true);
             XmlHelper.AppendElement(element, XmlConsts.Screen, ScreenView);
-            XmlHelper.AppendElement(element, XmlConsts.Genre, Genre, true);
             XmlHelper.AppendElement(element, XmlConsts.Developer, Developer, true);
             XmlHelper.AppendElement(element, XmlConsts.Publisher, Publisher, true);
             XmlHelper.AppendElement(element, XmlConsts.Year, Year);
@@ -626,7 +660,10 @@ namespace PlayStationGames.GameEngine.Data
             emulatorType = XmlHelper.Value(element, XmlConsts.EmulatorType);
             roms = XmlHelper.Value(element, XmlConsts.ROMs);
             screenView = XmlHelper.Value<ScreenView>(element, XmlConsts.Screen);
-            genre = XmlHelper.Value(element, XmlConsts.Genre);
+            genreName = XmlHelper.Value(element, XmlConsts.Genre);
+            singlePlayer = XmlHelper.ValueBool(element, XmlConsts.SinglePlayer);
+            coachMultiplayer = XmlHelper.ValueBool(element, XmlConsts.CoachMultiplayer);
+            onlineMultiplayer = XmlHelper.ValueBool(element, XmlConsts.OnlineMultiplayer);
             developer = XmlHelper.Value(element, XmlConsts.Developer);
             publisher = XmlHelper.Value(element, XmlConsts.Publisher);
             year = XmlHelper.ValueInt(element, XmlConsts.Year);
@@ -685,8 +722,10 @@ namespace PlayStationGames.GameEngine.Data
             && EmulatorType.Equals(otherGame.EmulatorType)
             && ROMs.Equals(otherGame.ROMs)
             && ScreenView.Equals(otherGame.ScreenView)
-            && Genre.Equals(otherGame.Genre)
-            && GameModes.Equals(otherGame.GameModes)
+            && GenreName.Equals(otherGame.GenreName)
+            && SinglePlayer.Equals(otherGame.SinglePlayer)
+            && CoachMultiplayer.Equals(otherGame.CoachMultiplayer)
+            && OnlineMultiplayer.Equals(otherGame.OnlineMultiplayer)
             && Trophyset.Equals(otherGame.Trophyset)
             && Installations.Equals(otherGame.Installations)
             && Dlcs.Equals(otherGame.Dlcs)

@@ -20,10 +20,12 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.RelatedGames,
                 GameField.Dlcs,
                 GameField.Links,
-                GameField.GameModes,
                 GameField.ReleasePlatforms,
                 GameField.Verified,
                 GameField.Licensed,
+                GameField.SinglePlayer,
+                GameField.CoachMultiplayer,
+                GameField.OnlineMultiplayer,
                 GameField.Tags,
                 GameField.Trophyset
             };
@@ -33,7 +35,10 @@ namespace PlayStationGames.GameEngine.Editor
             {
                 GameField.AvailablePlatinum,
                 GameField.Verified,
-                GameField.Licensed
+                GameField.Licensed,
+                GameField.SinglePlayer,
+                GameField.CoachMultiplayer,
+                GameField.OnlineMultiplayer
             };
 
         public override List<GameField> FillDockFields() =>
@@ -44,7 +49,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Tags,
                 GameField.Links,
                 GameField.Installations,
-                GameField.GameModes,
                 GameField.EmulatorROMs
             };
 
@@ -64,7 +68,10 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Publisher,
                 GameField.Year,
                 GameField.Pegi,
-                GameField.Region
+                GameField.Region,
+                GameField.SinglePlayer,
+                GameField.CoachMultiplayer,
+                GameField.OnlineMultiplayer
             };
 
 
@@ -89,6 +96,9 @@ namespace PlayStationGames.GameEngine.Editor
                     GroupFrames[GameFieldGroup.Base].BaseColor,
                 GameField.Verified or
                 GameField.Licensed or
+                GameField.SinglePlayer or
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer or
                 GameField.ReleasePlatforms =>
                     Color.Transparent,
                 _ =>
@@ -119,7 +129,10 @@ namespace PlayStationGames.GameEngine.Editor
             field switch
             {
                 GameField.Image or 
-                GameField.Verified => 
+                GameField.Verified or
+                GameField.SinglePlayer or
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer => 
                     8,
                 GameField.Licensed =>
                     390,
@@ -154,14 +167,21 @@ namespace PlayStationGames.GameEngine.Editor
             };
 
         public override int Height(GameField field) =>
-            field == GameField.Image
-                ? 110
-                : field == GameField.Name 
-                    ? 42 
-                    : field == GameField.Verified ||
-                        field == GameField.Licensed
-                        ? 20
-                        : base.Height(field);
+            field switch
+            {
+                GameField.Image =>
+                    110,
+                GameField.Name =>
+                    42,
+                GameField.Verified or
+                GameField.SinglePlayer or
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer or
+                GameField.Licensed =>
+                    20,
+                _ =>
+                    base.Height(field)
+            };
 
         public override int Width(GameField field) => 
             field switch
@@ -174,7 +194,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Format =>
                     140,
                 GameField.ScreenView => 
-                    112,
+                    142,
                 GameField.Name =>
                     272,
                 GameField.Edition or 
@@ -207,6 +227,8 @@ namespace PlayStationGames.GameEngine.Editor
             {
                 GameField.Image => 
                     8,
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer or
                 GameField.Edition or
                 GameField.Series =>
                     4,
@@ -217,7 +239,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.CriticScore or 
                 GameField.Genre or 
                 GameField.Publisher or 
-                GameField.Year or 
+                GameField.Year or
+                GameField.SinglePlayer or
                 GameField.Pegi => 
                     2,
                 _ => 

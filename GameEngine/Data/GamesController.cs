@@ -44,8 +44,6 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<PegiHelper>();
             TypeHelper.Register<PlatformFamilyHelper>();
             TypeHelper.Register<PlatformTypeHelper>();
-            TypeHelper.Register<PlayModeGroupHelper>();
-            TypeHelper.Register<PlayModeHelper>();
             TypeHelper.Register<ScreenViewHelper>();
             TypeHelper.Register<SourceHelper>();
             TypeHelper.Register<TrophysetTypeHelper>();

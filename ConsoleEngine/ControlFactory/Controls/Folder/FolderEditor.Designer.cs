@@ -31,7 +31,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             this.SuspendLayout();
             // 
-            // GameModeEditor
+            // FolderEditor
             // 
             this.ClientSize = new System.Drawing.Size(404, 327);
             this.MaximumSize = new System.Drawing.Size(404, 327);

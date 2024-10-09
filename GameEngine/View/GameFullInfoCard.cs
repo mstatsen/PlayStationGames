@@ -105,7 +105,6 @@ namespace PlayStationGames.GameEngine.View
 
         protected override void WrapTextControls()
         {
-            WrapControl(GameField.GameModes);
             WrapControl(GameField.ReleasePlatforms);
         }
 
@@ -165,7 +164,6 @@ namespace PlayStationGames.GameEngine.View
                 Layouter.AddFromTemplate(GameField.Series),
                 Layouter.AddFromTemplate(GameField.CriticScore, -10),
                 Layouter.AddFromTemplate(GameField.FullGenre, -2),
-                Layouter.AddFromTemplate(GameField.GameModes, -10)
             };
         }
 

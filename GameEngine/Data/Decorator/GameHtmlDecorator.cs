@@ -32,8 +32,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     Links(),
                 GameField.RelatedGames => 
                     ListToHtmlColumn(Dao.RelatedGames.StringList),
-                GameField.GameModes => 
-                    ListToHtmlColumn(Dao.GameModes.StringList),
                 GameField.TrophysetType => 
                     TrophysetAccessibility(),
                 GameField.FullGenre => 
@@ -105,7 +103,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             DecoratorHelper.NoWrap(TypeHelper.Name(Dao.ScreenView));
 
         private object CalcedGenre() =>
-            DecoratorHelper.NoWrap($"{ScreenView()} {Dao.Genre}");
+            DecoratorHelper.NoWrap($"{ScreenView()} {Dao.GenreName}");
 
         private object Image()
         {

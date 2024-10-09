@@ -59,8 +59,6 @@
     </Compile>
     <Compile Update="GameEngine\ControlFactory\Controls\DLC\DLCEditor.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\DLC\DLCListControl.cs" />
-    <Compile Update="GameEngine\ControlFactory\Controls\GameMode\GameModeEditor.cs" />
-    <Compile Update="GameEngine\ControlFactory\Controls\GameMode\GameModesControl.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationEditor.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationsControl.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\RelatedGame\RelatedGameEditor.cs" />

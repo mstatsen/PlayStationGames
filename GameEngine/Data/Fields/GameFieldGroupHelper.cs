@@ -20,7 +20,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
 
                 GameFieldGroup.Tags,
                 GameFieldGroup.Installations,
-                GameFieldGroup.GameMode,
                 GameFieldGroup.Genre,
 
                 GameFieldGroup.ReleaseBase
@@ -34,7 +33,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.RelatedGames => "Related Games",
                 GameFieldGroup.DLC => "DLCs",
                 GameFieldGroup.Genre => "Genre",
-                GameFieldGroup.GameMode => "Play Modes",
                 GameFieldGroup.Installations => "Installations",
                 GameFieldGroup.Link => "Links",
                 GameFieldGroup.Trophyset => "Trophyset",
@@ -62,10 +60,11 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Installations => 
                     GameFieldGroup.Installations,
                 GameField.Genre or 
-                GameField.ScreenView => 
+                GameField.ScreenView or
+                GameField.SinglePlayer or
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer => 
                     GameFieldGroup.Genre,
-                GameField.GameModes => 
-                    GameFieldGroup.GameMode,
                 GameField.Dlcs => 
                     GameFieldGroup.DLC,
                 GameField.Links => 
@@ -99,7 +98,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.Genre or
                 GameFieldGroup.Trophyset =>
                     284,
-                GameFieldGroup.GameMode or
                 GameFieldGroup.Link or 
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Tags => 
@@ -139,7 +137,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             {
                 GameFieldGroup.Base,
                 GameFieldGroup.DLC,
-                GameFieldGroup.GameMode,
                 GameFieldGroup.Genre,
                 GameFieldGroup.Link,
                 GameFieldGroup.ReleaseBase,

@@ -10,7 +10,6 @@
         Emulator,
         Installations,
         Genre,
-        GameMode,
         Link,
         ReleaseBase,
         ReleasePlatforms,

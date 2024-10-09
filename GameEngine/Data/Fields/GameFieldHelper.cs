@@ -2,12 +2,8 @@
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
-using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Types;
-using static System.Windows.Forms.DataFormats;
-using System.ComponentModel;
-using System.Security.Policy;
 
 namespace PlayStationGames.GameEngine.Data.Fields
 {
@@ -56,7 +52,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.CompleteTime => "Full Time",
                 GameField.Genre => "Genre",
                 GameField.ScreenView => "Screen",
-                GameField.GameModes => "Play Modes",
+                GameField.SinglePlayer => "Single player",
+                GameField.CoachMultiplayer => "Coach multiplayer",
+                GameField.OnlineMultiplayer => "Online multiplayer",
                 GameField.Dlcs => "DLCs",
                 GameField.Links => "Links",
                 GameField.RelatedGames => "Related games",
@@ -103,6 +101,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Edition,
                     GameField.Format,
                     GameField.Genre,
+                    GameField.SinglePlayer,
+                    GameField.CoachMultiplayer,
+                    GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Platform,
                     GameField.Publisher,
@@ -136,7 +137,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Series,
                     GameField.CriticScore,
                     GameField.FullGenre,
-                    GameField.GameModes,
+                    GameField.SinglePlayer,
+                    GameField.CoachMultiplayer,
+                    GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Year,
                     GameField.Developer,
@@ -165,6 +168,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Format,
                     GameField.ScreenView,
                     GameField.Genre,
+                    GameField.SinglePlayer,
+                    GameField.CoachMultiplayer,
+                    GameField.OnlineMultiplayer,
                     GameField.TrophysetType,
                     GameField.Difficult,
                     GameField.CompleteTime,
@@ -219,6 +225,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.CriticScore,
                     GameField.ScreenView,
                     GameField.Genre,
+                    GameField.SinglePlayer,
+                    GameField.CoachMultiplayer,
+                    GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Year,
                     GameField.Developer,
@@ -280,9 +289,11 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.CompleteTime,
                     GameField.Dlcs,
                     GameField.RelatedGames,
-                    GameField.GameModes,
                     GameField.TrophysetType,
                     GameField.FullGenre,
+                    GameField.SinglePlayer,
+                    GameField.CoachMultiplayer,
+                    GameField.OnlineMultiplayer,
                     GameField.StrategeLink,
                     GameField.PSNProfilesLink,
                     GameField.Verified,
@@ -325,8 +336,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Installations,
                     GameField.Edition,
                     GameField.Format,
-                    GameField.GameModes,
                     GameField.Genre,
+                    GameField.SinglePlayer,
+                    GameField.CoachMultiplayer,
+                    GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Platform,
                     GameField.Publisher,
@@ -388,6 +401,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.CompleteTime,
             GameField.Genre,
             GameField.ScreenView,
+            GameField.SinglePlayer,
+            GameField.CoachMultiplayer,
+            GameField.OnlineMultiplayer,
             GameField.TrophysetType,
             GameField.Verified,
             GameField.Tags,
@@ -441,7 +457,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Installations,
             GameField.ScreenView,
             GameField.Genre,
-            GameField.GameModes,
+            GameField.SinglePlayer,
+            GameField.CoachMultiplayer,
+            GameField.OnlineMultiplayer,
             GameField.Dlcs,
             GameField.Links,
             GameField.RelatedGames,
@@ -479,8 +497,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Difficult,
             GameField.CompleteTime,
             GameField.Genre,
+            GameField.SinglePlayer,
+            GameField.CoachMultiplayer,
+            GameField.OnlineMultiplayer,
             GameField.ScreenView,
-            GameField.GameModes,
             GameField.Dlcs,
             GameField.Links,
             GameField.RelatedGames,
@@ -518,7 +538,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.FullGenre,
             GameField.Genre,
             GameField.ScreenView,
-            GameField.GameModes,
+            GameField.SinglePlayer,
+            GameField.CoachMultiplayer,
+            GameField.OnlineMultiplayer,
             GameField.Dlcs,
             GameField.Links,
             GameField.RelatedGames,
@@ -563,7 +585,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Publisher or
                 GameField.ReleasePlatforms or
                 GameField.Genre or
-                GameField.GameModes or
                 GameField.Dlcs or
                 GameField.Links or
                 GameField.Installations or
@@ -611,7 +632,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.CompleteTime] = FilterOperations.EnumOperations,
             [GameField.Genre] = FilterOperations.StringOperations,
             [GameField.ScreenView] = FilterOperations.EnumOperations,
-            [GameField.GameModes] = FilterOperations.ObjectOperations,
             [GameField.Dlcs] = FilterOperations.ObjectOperations,
             [GameField.Trophyset] = FilterOperations.ObjectOperations,
             [GameField.Links] = FilterOperations.ObjectOperations,
@@ -621,6 +641,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.StrategeLink] = FilterOperations.UnaryOperations,
             [GameField.PSNProfilesLink] = FilterOperations.UnaryOperations,
             [GameField.Verified] = FilterOperations.BoolOperations,
+            [GameField.SinglePlayer] = FilterOperations.BoolOperations,
+            [GameField.CoachMultiplayer] = FilterOperations.BoolOperations,
+            [GameField.OnlineMultiplayer] = FilterOperations.BoolOperations,
             [GameField.EmulatorType] = FilterOperations.StringOperations,
             [GameField.EmulatorROMs] = FilterOperations.StringOperations,
             [GameField.Region] = FilterOperations.EnumOperations,
@@ -689,7 +712,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Edition or 
                 GameField.Series or 
                 GameField.Dlcs or 
-                GameField.GameModes or 
                 GameField.FullGenre or 
                 GameField.Developer or 
                 GameField.Publisher => 
@@ -707,6 +729,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     40,
                 GameField.Image or
                 GameField.Licensed or
+                GameField.SinglePlayer or
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer or
                 GameField.Difficult =>
                     60,
                 GameField.CompleteTime or 
@@ -749,7 +774,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     FieldType.Enum,
                 GameField.AvailablePlatinum or 
                 GameField.Verified or 
-                GameField.Licensed => 
+                GameField.Licensed or
+                GameField.SinglePlayer or
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer => 
                     FieldType.Boolean,
                 GameField.AvailableGold or
                 GameField.AvailableSilver or
@@ -758,7 +786,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     FieldType.Integer,
                 GameField.Id =>
                     FieldType.Guid,
-                GameField.GameModes or
                 GameField.Dlcs or
                 GameField.Installations or 
                 GameField.RelatedGames or 
@@ -833,7 +860,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Dlcs,
                 GameField.Genre,
                 GameField.ScreenView,
-                GameField.GameModes,
+                GameField.SinglePlayer,
+                GameField.CoachMultiplayer,
+                GameField.OnlineMultiplayer,
                 GameField.Tags,
                 GameField.Trophyset,
                 GameField.CriticScore,

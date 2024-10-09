@@ -14,7 +14,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 .AddChild(BadFilling())
                 .AddChild(Availabitity())
                 .AddChild(SeveralCopies())
-                .AddChild(GameModes())
                 .AddChild(ReleasedOn())
                 .AddChild(Critic());
 
@@ -54,38 +53,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                     new Category<GameField, Game>("0-49")
                         .AddFilterLower(GameField.CriticScore, 50)
                 );
-
-        private static Category<GameField, Game> GameModes()
-        {
-            Category<GameField, Game> modesCategory = new("Games modes");
-            Category<GameField, Game> multiplayerCategory = new ("Multiplayer", FiltrationType.BaseOnChilds);
-            PlayModeHelper playModeHelper = TypeHelper.Helper<PlayModeHelper>();
-            PlayModeGroupHelper playModeGroupHelper = TypeHelper.Helper<PlayModeGroupHelper>();
-
-            foreach (PlayModeGroup group in TypeHelper.All<PlayModeGroup>())
-            {
-                PlayModeList modes = playModeGroupHelper.Modes(group);
-                Category<GameField, Game> groupCategory = new(
-                    playModeGroupHelper.Name(group),
-                    modes.Count == 1 ? FiltrationType.StandAlone : FiltrationType.BaseOnChilds);
-
-                Category<GameField, Game> parentCategory = playModeGroupHelper.IsMultiplayer(group)
-                    ? multiplayerCategory
-                    : modesCategory;
-                parentCategory.AddChild(groupCategory);
-
-                if (modes.Count == 1)
-                    groupCategory.AddFilter(GameField.GameModes, new ListDAO<GameMode> { new(modes[0])});
-                else
-                    foreach (PlayMode mode in modes)
-                        groupCategory.AddChild(
-                            new Category<GameField, Game>(playModeHelper.ShortName(mode))
-                                .AddFilter(GameField.GameModes, new ListDAO<GameMode> { new(mode) })
-                        );
-            }
-            modesCategory.AddChild(multiplayerCategory);
-            return modesCategory;
-        }
 
         private static Category<GameField, Game> SeveralCopies() =>
             new Category<GameField, Game>("Several copies")
@@ -227,10 +194,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 .AddChild(
                     new Category<GameField, Game>("Image is Empty")
                         .AddFilterBlank(GameField.Image))
-                .AddChild(
-                    new Category<GameField, Game>("Play Mode Empty")
-                        .AddFilterBlank(GameField.GameModes)
-                )
                 .AddChild(
                     new Category<GameField, Game>("Release Info not filled")
                         .AddFilterBlank(GameField.Developer)

@@ -39,7 +39,6 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         GameField.Difficult => CreateEnumAccessor<Difficult>(context),
                         GameField.TrophysetType => CreateEnumAccessor<TrophysetType>(context),
                         GameField.Year => new YearAccessor<GameField, Game>(context),
-                        GameField.GameModes => CreateListAccessor<GameMode, ListDAO<GameMode>, GameModesControl>(context, ControlScope.Editor),
                         GameField.Dlcs => CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
                         GameField.Tags => CreateListAccessor<Tag, ListDAO<Tag>, TagListControl>(context, ControlScope.Editor),
                         GameField.Installations => CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),

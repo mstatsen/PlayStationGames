@@ -31,12 +31,6 @@
     <Compile Update="GameEngine\ControlFactory\Controls\DLC\DLCListControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="GameEngine\ControlFactory\Controls\GameMode\GameModeEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="GameEngine\ControlFactory\Controls\GameMode\GameModesControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="GameEngine\ControlFactory\Controls\Installations\InstallationEditor.cs">
       <SubType>Form</SubType>
     </Compile>
