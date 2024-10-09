@@ -41,6 +41,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         GameField.Year => new YearAccessor<GameField, Game>(context),
                         GameField.Dlcs => CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
                         GameField.Tags => CreateListAccessor<Tag, ListDAO<Tag>, TagListControl>(context, ControlScope.Editor),
+                        GameField.Series => CreateButtonEditAccessor<Series, ListDAO<Series>, SeriesListControl>(context),
                         GameField.Installations => CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),
                         GameField.RelatedGames => CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context),
                         GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
@@ -94,10 +95,15 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     return new OwnerInitializer();
             }
 
-            if (context.Name == "TagName")
-                return new TagNameInitializer(null);
-
-            return base.Initializer(context);
+            return context.Key switch
+            {
+                "Tag:Name" => 
+                    new TagNameInitializer(null),
+                "Series:Name" => 
+                    new SeriesNameInitializer(null),
+                _ => 
+                    base.Initializer(context),
+            };
         }
 
         public override IItemInfo<GameField, Game> CreateInfoCard() =>

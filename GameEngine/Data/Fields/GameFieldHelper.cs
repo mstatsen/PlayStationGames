@@ -32,7 +32,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Tags => "Tags",
                 GameField.Image => "Image",
                 GameField.Edition => "Edition",
-                GameField.Series => "Series",
+                GameField.Series => "Serieses",
                 GameField.CriticScore => "Critic Score",
                 GameField.Platform => "Platform",
                 GameField.Format => "Format",
@@ -200,13 +200,11 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Developer,
                     GameField.Edition,
                     GameField.Name,
-                    GameField.Publisher,
-                    GameField.Series
+                    GameField.Publisher
                 },
                 [FieldsFilling.Default] = new List<GameField>
                 {
-                    GameField.Name,
-                    GameField.Series
+                    GameField.Name
                 }
             },
             [FieldsVariant.Summary] = new GameFieldsFillingDictionary()
@@ -612,7 +610,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.Name] = FilterOperations.StringOperations,
             [GameField.Image] = FilterOperations.UnaryOperations,
             [GameField.Edition] = FilterOperations.StringOperations,
-            [GameField.Series] = FilterOperations.StringOperations,
+            [GameField.Series] = FilterOperations.ObjectOperations,
             [GameField.CriticScore] = FilterOperations.NumericOperations,
             [GameField.PlatformFamily] = FilterOperations.EnumOperations,
             [GameField.Platform] = FilterOperations.EnumOperations,
@@ -753,7 +751,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Image => 
                     FieldType.Image,
                 GameField.Edition or 
-                GameField.Series or 
                 GameField.Developer or 
                 GameField.Publisher or 
                 GameField.Genre or 
@@ -790,7 +787,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Installations or 
                 GameField.RelatedGames or 
                 GameField.ReleasePlatforms or
-                GameField.Tags => 
+                GameField.Tags or
+                GameField.Series => 
                     FieldType.List,
                 GameField.StrategeLink or
                 GameField.PSNProfilesLink =>
@@ -837,10 +835,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 field == GameField.Name)
                 context.AdditionalContext = true;
         }
-
-        public override bool IsImageColumn(GameField field) => 
-            base.IsImageColumn(field) || 
-            field == GameField.Licensed;
 
         public override ILinkHelper<GameField>? GetLinkHelper() => TypeHelper.Helper<GameLinkTypeHelper>();
 

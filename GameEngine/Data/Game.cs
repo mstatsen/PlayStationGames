@@ -20,7 +20,6 @@ namespace PlayStationGames.GameEngine.Data
     {
         private Guid id = Guid.NewGuid();
         private string edition = string.Empty;
-        private string series = string.Empty;
         private Guid owner = Guid.Empty;
         private PlatformType platformType = TypeHelper.DefaultValue<PlatformType>();
         private GameFormat format = TypeHelper.DefaultValue<GameFormat>();
@@ -48,6 +47,12 @@ namespace PlayStationGames.GameEngine.Data
         public readonly Links<GameField> Links = new();
         public readonly RelatedGames RelatedGames = new();
         public readonly Trophyset Trophyset = new();
+
+        public readonly ListDAO<Series> Serieses = new()
+        {
+            XmlName = "Serieses"
+        };
+
 
         public readonly Platforms ReleasePlatforms = new() 
         { 
@@ -142,12 +147,6 @@ namespace PlayStationGames.GameEngine.Data
             set => ModifyValue(GameField.Edition, edition, value, n => edition = StringValue(n));
         }
 
-        public string Series
-        {
-            get => series;
-            set => ModifyValue(GameField.Series, series, value, n => series = StringValue(n));
-        }
-
         public bool Verified
         {
             get => verified;
@@ -197,7 +196,6 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Id:
                 case GameField.Owner:
                 case GameField.Edition:
-                case GameField.Series:
                 case GameField.Genre:
                 case GameField.Developer:
                 case GameField.Publisher:
@@ -235,6 +233,7 @@ namespace PlayStationGames.GameEngine.Data
                     GameField.Language => GameLanguage.CompareTo(yGame.GameLanguage),
                     GameField.Dlcs => Dlcs.CompareTo(yGame.Dlcs),
                     GameField.Tags => Tags.CompareTo(yGame.Tags),
+                    GameField.Series => Serieses.CompareTo(yGame.Serieses),
                     GameField.Links => Links.CompareTo(yGame.Links),
                     GameField.Installations => Installations.CompareTo(yGame.Installations),
                     GameField.RelatedGames => RelatedGames.CompareTo(yGame.RelatedGames),
@@ -321,6 +320,13 @@ namespace PlayStationGames.GameEngine.Data
                             tag
                         };
                     break;
+                case GameField.Series:
+                    if (value is Series series)
+                        return new ListDAO<Series>()
+                        {
+                            series
+                        };
+                    break;
                 case GameField.ReleasePlatforms:
                     if (value is Platform platform)
                         return new Platforms()
@@ -357,9 +363,6 @@ namespace PlayStationGames.GameEngine.Data
                     break;
                 case GameField.Edition:
                     Edition = StringValue(value);
-                    break;
-                case GameField.Series:
-                    Series = StringValue(value);
                     break;
                 case GameField.CriticScore:
                     CriticScore = IntValue(value);
@@ -451,6 +454,9 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Tags:
                     Tags.CopyFrom((DAO?)value);
                     break;
+                case GameField.Series:
+                    Serieses.CopyFrom((DAO?)value);
+                    break;
                 case GameField.Links:
                     Links.CopyFrom((DAO?)value);
                     break;
@@ -498,7 +504,6 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Name or GameField.Image => 
                     base.GetFieldValue(field),
                 GameField.Edition => edition,
-                GameField.Series => series,
                 GameField.PlatformFamily => PlatformFamily.Sony,
                 GameField.Platform => platformType,
                 GameField.Format => format,
@@ -531,6 +536,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.OnlineMultiplayer => OnlineMultiplayer,
                 GameField.Dlcs => Dlcs,
                 GameField.Tags => Tags,
+                GameField.Series => Serieses,
                 GameField.Links => Links,
                 GameField.RelatedGames => RelatedGames,
                 GameField.EmulatorType => EmulatorType,
@@ -548,7 +554,6 @@ namespace PlayStationGames.GameEngine.Data
             base.Clear();
             id = Guid.NewGuid();
             edition = string.Empty;
-            series = string.Empty;
             verified = false;
             licensed = true;
             owner = Guid.Empty;
@@ -577,6 +582,7 @@ namespace PlayStationGames.GameEngine.Data
             Installations.Clear();
             Dlcs.Clear();
             Tags.Clear();
+            Serieses.Clear();
             Links.Clear();
             RelatedGames.Clear();
         }
@@ -586,6 +592,7 @@ namespace PlayStationGames.GameEngine.Data
             AddMember(Trophyset);
             AddListMember(GameField.Dlcs, Dlcs);
             AddListMember(GameField.Tags, Tags);
+            AddListMember(GameField.Series, Serieses);
             AddListMember(GameField.Installations, Installations);
             AddListMember(GameField.Links, Links);
             AddListMember(GameField.RelatedGames, RelatedGames);
@@ -601,7 +608,6 @@ namespace PlayStationGames.GameEngine.Data
                 XmlHelper.AppendElement(element, XmlConsts.Owner, Owner);
 
             XmlHelper.AppendElement(element, XmlConsts.Edition, Edition, true);
-            XmlHelper.AppendElement(element, XmlConsts.Series, Series, true);
 
             if (SourceType != TypeHelper.DefaultValue<Source>())
                 XmlHelper.AppendElement(element, XmlConsts.Source, SourceType);
@@ -645,7 +651,6 @@ namespace PlayStationGames.GameEngine.Data
             base.LoadData(element);
             id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
             edition = XmlHelper.Value(element, XmlConsts.Edition);
-            series = XmlHelper.Value(element, XmlConsts.Series);
             platformType = XmlHelper.Value<PlatformType>(element, XmlConsts.Platform);
             format = XmlHelper.Value<GameFormat>(element, XmlConsts.Format);
             verified = XmlHelper.ValueBool(element, XmlConsts.Verified);
@@ -712,7 +717,6 @@ namespace PlayStationGames.GameEngine.Data
             && obj is Game otherGame
             && Id.Equals(otherGame.Id)
             && Edition.Equals(otherGame.Edition)
-            && Series.Equals(otherGame.Series)
             && PlatformType.Equals(otherGame.PlatformType)
             && Format.Equals(otherGame.Format)
             && Licensed.Equals(otherGame.Licensed)
@@ -730,6 +734,7 @@ namespace PlayStationGames.GameEngine.Data
             && Installations.Equals(otherGame.Installations)
             && Dlcs.Equals(otherGame.Dlcs)
             && Tags.Equals(otherGame.Tags)
+            && Serieses.Equals(otherGame.Serieses)
             && Links.Equals(otherGame.Links)
             && RelatedGames.Equals(otherGame.RelatedGames)
             && Developer.Equals(otherGame.Developer)

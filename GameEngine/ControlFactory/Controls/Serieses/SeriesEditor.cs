@@ -6,7 +6,7 @@ using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public partial class TagEditor : ListItemEditor<Tag, GameField, Game>
+    public partial class SeriesEditor : ListItemEditor<Series, GameField, Game>
     {
         private ComboBoxAccessor<GameField, Game> NameControl = default!;
 
@@ -21,13 +21,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private void CreateNameControl()
         {
             NameControl = (ComboBoxAccessor<GameField, Game>)Context.Builder
-                .Accessor("Tag:Name", FieldType.Extract, true);
+                .Accessor("Series:Name", FieldType.Extract, true);
             NameControl.Parent = this;
             NameControl.Left = 8;
             NameControl.Top = 8;
             NameControl.Width = MainPanel.ContentContainer.Width - NameControl.Left - 8;
             NameControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             NameControl.Height = 24;
+            NameControl.RenewControl();
         }
 
         protected override void CreateControls() =>
@@ -35,7 +36,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         protected override int ContentHeight => NameControl.Bottom + 8;
 
-        protected override void FillControls(Tag item)
+        protected override void FillControls(Series item)
         {
             if (item.Name != string.Empty &&
                 NameControl.ComboBox.Items.IndexOf(item.Name) < 0)
@@ -44,12 +45,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             NameControl.Value = item.Name;
         }
 
-        protected override void GrabControls(Tag item) =>
+        protected override void GrabControls(Series item) =>
             item.Name = NameControl.StringValue;
 
         protected override string EmptyMandatoryField() =>
             NameControl.IsEmpty
-                ? "Tag"
+                ? "Series"
                 : base.EmptyMandatoryField();
     }
 }

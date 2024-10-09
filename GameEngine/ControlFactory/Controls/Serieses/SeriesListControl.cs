@@ -5,9 +5,9 @@ using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public class TagListControl : ListItemsControl<ListDAO<Tag>, Tag, TagEditor, GameField, Game> 
+    public class SeriesListControl : ListItemsControl<ListDAO<Series>, Series, SeriesEditor, GameField, Game> 
     {
-        protected override string GetText() => "Tags";
-        protected override string ItemName() => "Tag";
+        protected override string GetText() => "Serieses";
+        protected override string ItemName() => "Series";
     }
 }
