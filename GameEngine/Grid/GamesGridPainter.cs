@@ -45,7 +45,7 @@ namespace PlayStationGames.GameEngine.Grid
             if (selected)
                 fontStyle |= FontStyle.Bold;
 
-            style.Font = new Font(Styles.FontFamily, fontSize, fontStyle);
+            style.Font = Styles.Font(fontSize, fontStyle);
             style.SelectionForeColor = style.ForeColor;
             return style;
         }

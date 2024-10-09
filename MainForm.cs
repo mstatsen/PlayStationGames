@@ -2,7 +2,6 @@
 using OxLibrary.Controls;
 using OxLibrary.Dialogs;
 using OxLibrary.Panels;
-using OxDAOEngine;
 using OxDAOEngine.Data;
 using OxDAOEngine.Settings;
 using PlayStationGames.ConsoleEngine.Data;
@@ -32,7 +31,7 @@ namespace PlayStationGames
             {
                 Dock = DockStyle.Fill,
                 Parent = this,
-                Font = EngineStyles.DefaultFont,
+                Font = Styles.DefaultFont,
                 BaseColor = MainPanel.BaseColor,
                 TabHeaderSize = new Size(140, 32),
                 TabPosition = OxDock.Top
@@ -132,11 +131,6 @@ namespace PlayStationGames
 
                 loadingPanel.EndLoading();
             }
-        }
-
-        private void MainFormLoad(object? sender, EventArgs e)
-        {
-            
         }
 
         public override Size WantedMinimumSize => new(1240, 720);

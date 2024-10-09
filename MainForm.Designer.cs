@@ -45,7 +45,6 @@ namespace PlayStationGames
             MinimumSize = new Size(700, 462);
             Name = "MainForm";
             Text = "Playstation Games";
-            Load += MainFormLoad;
             Shown += MainFormShow;
             ResumeLayout(false);
         }

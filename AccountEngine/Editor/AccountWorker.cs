@@ -143,25 +143,25 @@ namespace PlayStationGames.AccountEngine.Editor
         private readonly OxButton consolesButton = new("Consoles", OxIcons.Share)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-            Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
+            Font = Styles.DefaultFont
         };
 
         private readonly OxButton gamesButton = new("Games", OxIcons.LinkedItems)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-            Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
+            Font = Styles.DefaultFont
         };
 
         private readonly OxLabel consolesLabel = new()
         {
             Text = "Consoles count",
-            Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
+            Font = Styles.DefaultFont
         };
 
         private readonly OxLabel gamesLabel = new()
         {
             Text = "Games count",
-            Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
+            Font = Styles.DefaultFont
         };
 
         protected override FieldGroupFrames<AccountField, AccountFieldGroup> GetFieldGroupFrames() =>

@@ -62,7 +62,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                     AutoSize = true,
                     Left = 8,
                     Text = caption,
-                    Font = new Font(EngineStyles.DefaultFont, FontStyle.Regular)
+                    Font = Styles.DefaultFont
                 }
             )!;
 

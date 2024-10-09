@@ -28,7 +28,7 @@ namespace PlayStationGames.GameEngine.Grid
             if (selected)
                 fontStyle |= FontStyle.Bold;
 
-            style.Font = new Font(Styles.FontFamily, fontSize, fontStyle);
+            style.Font = Styles.Font(fontSize, fontStyle);
             style.BackColor = TypeHelper.BackColor(item?.SourceType);
             style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
             style.SelectionForeColor = TypeHelper.FontColor(item?.SourceType);

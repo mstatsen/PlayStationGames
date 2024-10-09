@@ -69,7 +69,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 Parent = this,
                 Top = GameControl!.Bottom + 4,
                 Left = left,
-                Font = new Font(Styles.FontFamily, Styles.DefaultFontSize, FontStyle.Bold),
+                Font = Styles.Font(FontStyle.Bold),
                 ToolTipText = toolTipText
             };
             button.SetContentSize(140, 20);

@@ -39,7 +39,7 @@ namespace PlayStationGames.GameEngine.Summary
                 Left = left,
                 Top = top,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font(Styles.FontFamily, Styles.DefaultFontSize + 1, fontStyle),
+                Font = Styles.Font(Styles.DefaultFontSize + 1, fontStyle),
                 AutoSize = true
             };
 

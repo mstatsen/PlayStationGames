@@ -63,13 +63,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
         private readonly OxButton installationsButton = new("Install / uninstall", OxIcons.Install)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-            Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
+            Font = Styles.DefaultFont
         };
 
         private readonly OxLabel installedGamesLabel = new()
         {
             Text = "Installed games count",
-            Font = new Font(Styles.FontFamily, Styles.DefaultFontSize)
+            Font = Styles.DefaultFont
         };
 
         protected override void AfterLayoutControls()
