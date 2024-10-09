@@ -7,6 +7,8 @@ namespace PlayStationGames.GameEngine.Data
 {
     public class RelatedGame : DAO
     {
+        public RelatedGame() => WithoutXmlNode = true;
+        
         private Guid gameId;
 
         public override void Clear() => 
@@ -20,12 +22,11 @@ namespace PlayStationGames.GameEngine.Data
             set => gameId = ModifyValue(gameId, value);
         }
 
-
         protected override void LoadData(XmlElement element) => 
-            gameId = XmlHelper.ValueGuid(element, XmlConsts.GameId);
+            gameId = GuidValue(element.InnerText);
 
-        protected override void SaveData(XmlElement element, bool clearModified = true) => 
-            XmlHelper.AppendElement(element, XmlConsts.GameId, GameId);
+        protected override void SaveData(XmlElement element, bool clearModified = true) =>
+            XmlHelper.AppendElement(element, XmlConsts.RelatedGame, GameId);
 
         public override string ToString()
         {
