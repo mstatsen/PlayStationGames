@@ -30,7 +30,6 @@ namespace PlayStationGames.GameEngine.Data.Types
             {
                 GameFormat.PS5 => "PS5",
                 GameFormat.PS4 => "PS4",
-                GameFormat.PS4VR => "PS4VR",
                 GameFormat.PS3 => "PS3",
                 GameFormat.PS2 => "PS2",
                 GameFormat.PSOne => "PSOne",
@@ -60,11 +59,9 @@ namespace PlayStationGames.GameEngine.Data.Types
                             case PlatformType.PS5:
                                 result.Add(GameFormat.PS5);
                                 result.Add(GameFormat.PS4);
-                                result.Add(GameFormat.PS4VR);
                                 break;
                             case PlatformType.PS4:
                                 result.Add(GameFormat.PS4);
-                                result.Add(GameFormat.PS4VR);
                                 result.Add(GameFormat.Emulator);
                                 break;
                             case PlatformType.PS3:

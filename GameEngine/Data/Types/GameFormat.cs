@@ -4,7 +4,6 @@
     {
         PS5,
         PS4,
-        PS4VR,
         PS3,
         PSVita,
         PS2,
