@@ -179,6 +179,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.OnlineMultiplayer or
                 GameField.Licensed =>
                     20,
+                GameField.Series =>
+                    26,
                 _ =>
                     base.Height(field)
             };
