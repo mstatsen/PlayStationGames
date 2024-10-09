@@ -70,6 +70,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             {
                 ConsoleGeneration.PS5 =>
                     type is JoystickType.Dualsense5 or
+                    JoystickType.Dualshock4 or
                     JoystickType.DS5Replica or
                     JoystickType.MoveController or
                     JoystickType.NavigationController,
@@ -82,6 +83,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                     type is JoystickType.Dualshock4 or
                     JoystickType.Dualshock3 or
                     JoystickType.DS3Replica or
+                    JoystickType.Dualsense5 or
+                    JoystickType.Dualshock4 or
                     JoystickType.Sixaxis or
                     JoystickType.MoveController or
                     JoystickType.NavigationController,
