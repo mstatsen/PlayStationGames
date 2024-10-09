@@ -77,10 +77,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             return button;
         }
 
-        private void SynchronizeHandler(object? sender, EventArgs e)
-        {
+        private void SynchronizeHandler(object? sender, EventArgs e) => 
             ItemsSynchronizer<GameField, Game>.SynchronizeItems(ParentItem!, SelectedGame!, MainPanel);
-        }
 
         private void CreateGameControl()
         {

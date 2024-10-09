@@ -88,7 +88,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             installationsButton.Click += InstallationsClickHandler;
             installationsWorker.Renew(Item);
             RenewInstalledGamesLabel();
-            Builder.Control<AccessoriesControl>(ConsoleField.Accessories).ParentItem = Item;
+            Builder.Control<AccessoriesControl>(ConsoleField.Accessories).ParentItem = CurrentItem;
         }
 
         private void RenewInstalledGamesLabel() => 

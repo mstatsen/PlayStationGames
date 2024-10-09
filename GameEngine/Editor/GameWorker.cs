@@ -59,7 +59,7 @@ namespace PlayStationGames.GameEngine.Editor
             if (Item == null)
                 return;
 
-            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = Item;
+            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = CurrentItem;
             Filter<GameField, Game> relatedGameFilter = new();
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);
 
@@ -75,6 +75,9 @@ namespace PlayStationGames.GameEngine.Editor
         {
             switch (field)
             {
+                case GameField.RelatedGames:
+                    FillControls();
+                    break;
                 case GameField.Platform:
                     if (byUser)
                         SyncFormatWithPlatform();
