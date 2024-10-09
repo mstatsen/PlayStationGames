@@ -11,17 +11,17 @@ namespace PlayStationGames.GameEngine.Data.Fields
             new()
             {
                 GameFieldGroup.Emulator,
-                GameFieldGroup.DLC,
                 GameFieldGroup.RelatedGames,
+                GameFieldGroup.DLC,
                 GameFieldGroup.Base,
 
-                GameFieldGroup.Genre,
+                GameFieldGroup.Link,
                 GameFieldGroup.Trophyset,
 
                 GameFieldGroup.Tags,
-                GameFieldGroup.Link,
                 GameFieldGroup.Installations,
                 GameFieldGroup.GameMode,
+                GameFieldGroup.Genre,
 
                 GameFieldGroup.ReleaseBase
             };

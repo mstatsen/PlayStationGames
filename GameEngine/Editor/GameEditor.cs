@@ -41,13 +41,13 @@ namespace PlayStationGames.GameEngine.Editor
                 GameFieldGroup.Emulator => 
                     PanelLeft,
                 GameFieldGroup.Installations or 
-                GameFieldGroup.Link or 
+                GameFieldGroup.Genre or
                 GameFieldGroup.GameMode or 
                 GameFieldGroup.Tags => 
-                    PanelRight,
-                GameFieldGroup.Genre or 
-                GameFieldGroup.Trophyset => 
                     PanelMiddle,
+                GameFieldGroup.Link or
+                GameFieldGroup.Trophyset =>
+                    PanelRight,
                 GameFieldGroup.ReleaseBase => 
                     MainPanel,
                 _ => null,

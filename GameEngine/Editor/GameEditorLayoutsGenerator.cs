@@ -207,14 +207,14 @@ namespace PlayStationGames.GameEngine.Editor
             {
                 GameField.Image => 
                     8,
-                GameField.Edition => 
+                GameField.Edition or
+                GameField.Series =>
                     4,
                 GameField.Platform or
                 GameField.Region or
                 GameField.Source or
                 GameField.Format or 
                 GameField.CriticScore or 
-                GameField.Series or 
                 GameField.Genre or 
                 GameField.Publisher or 
                 GameField.Year or 
