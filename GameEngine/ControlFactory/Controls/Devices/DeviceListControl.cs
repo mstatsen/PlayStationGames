@@ -1,7 +1,10 @@
 ﻿using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data;
+using OxDAOEngine.Data.Types;
+using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -9,5 +12,16 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
     {
         protected override string GetText() => "Devices";
         protected override string ItemName() => "Device";
+
+        public DeviceListControl() : base()
+        {
+            GetMaximumCount += GetMaximumCountHandler;
+        }
+
+        private int GetMaximumCountHandler() => 
+            ParentItem == null 
+                ? -1 
+                : TypeHelper.Helper<DeviceTypeHelper>().
+                    Available(ParentItem.PlatformType).Count;
     }
 }

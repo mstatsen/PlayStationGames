@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
+using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
@@ -15,14 +16,22 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             base.RenewData();
 
-            if (ExistingItems != null)
-                TypeControl.Context.InitControl(TypeControl);
+            if (TypeControl.Context.Initializer is DeviceTypeInitializer deviceTypeInitializer)
+            {
+                deviceTypeInitializer.Game = ParentItem;
+                deviceTypeInitializer.ExistingTypes.Clear();
+
+                if (ExistingItems != null)
+                    deviceTypeInitializer.ExistingTypes.AddRange(ExistingItems.Cast<Device>());
+
+                TypeControl.RenewControl(true);
+            }
         }
 
         private void CreateTypeControl()
         {
             TypeControl = (EnumAccessor<GameField, Game, DeviceType>)Context.Builder
-                .Accessor("Device:Type", FieldType.Enum, true);
+                .Accessor("Device:Type", FieldType.Enum);
             TypeControl.Parent = this;
             TypeControl.Left = 8;
             TypeControl.Top = 8;

@@ -107,6 +107,8 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     new TagNameInitializer(),
                 "Series:Name" => 
                     new SeriesNameInitializer(),
+                "Device:Type" =>
+                    new DeviceTypeInitializer(),
                 _ => 
                     base.Initializer(context),
             };

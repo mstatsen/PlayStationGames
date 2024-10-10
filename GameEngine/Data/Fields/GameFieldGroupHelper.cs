@@ -101,7 +101,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     460,
                 GameFieldGroup.Links or
                 GameFieldGroup.Trophyset =>
-                    284,
+                    292,
                 GameFieldGroup.Genre or
                 GameFieldGroup.Devices or
                 GameFieldGroup.Installations or 

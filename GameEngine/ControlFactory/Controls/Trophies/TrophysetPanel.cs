@@ -57,9 +57,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             typeControl = forDLC ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) : builder[GameField.TrophysetType];
             difficultControl = forDLC ? builder.Accessor("DLC:Difficult", FieldType.Enum) : builder[GameField.Difficult];
             completeTimeControl = forDLC ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) : builder[GameField.CompleteTime];
-            PrepareAccessor(typeControl, trophysetTypeLabel, 4, 152, TypeChangeHandler);
+            PrepareAccessor(typeControl, trophysetTypeLabel, 4, 154, TypeChangeHandler);
             PrepareAccessor(difficultControl, difficultLabel, typeControl.Bottom, 64, DifficultChangeHandler);
-            PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 100, CompleteTimeChangeHandler);
+            PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 88, CompleteTimeChangeHandler);
             CreateTrophiesPanels(forDLC);
             AccountSelector = new(this);
             SetMinimumSize();

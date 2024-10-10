@@ -6,8 +6,6 @@ using OxDAOEngine.Data.Types;
 using OxDAOEngine.Data;
 using OxLibrary.Controls;
 using OxLibrary;
-using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 
@@ -22,9 +20,11 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             GetMaximumCount += GetMaximumCountHandler;
 
         private int GetMaximumCountHandler() => 
-            TypeHelper.Helper<ConsoleGenerationHelper>().MaxAccountsCount(
-                Context.Builder[ConsoleField.Generation].EnumValue<ConsoleGeneration>(),
-                Context.Builder[ConsoleField.Firmware].EnumValue<FirmwareType>());
+            ParentItem == null
+                ? -1
+                : TypeHelper.Helper<ConsoleGenerationHelper>().MaxAccountsCount(
+                    ParentItem.Generation,
+                    ParentItem.Firmware);
 
         protected override void InitButtons()
         {

@@ -74,6 +74,8 @@ namespace PlayStationGames.GameEngine.Editor
             Groups[GameFieldGroup.RelatedGames].Paddings.RightOx = OxSize.Medium;
             Groups[GameFieldGroup.Links].Paddings.RightOx = OxSize.Medium;
             Groups[GameFieldGroup.Installations].Paddings.RightOx = OxSize.Medium;
+            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.Medium;
+            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.Medium;
         }
 
         protected override void RecalcPanels()
