@@ -41,14 +41,14 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         GameField.Year => new YearAccessor<GameField, Game>(context),
                         GameField.Dlcs => CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
                         GameField.Tags => CreateListAccessor<Tag, ListDAO<Tag>, TagListControl>(context, ControlScope.Editor),
-                        GameField.Serieses => CreateButtonEditAccessor<Series, ListDAO<Series>, SeriesListControl>(context),
                         GameField.Installations => CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),
                         GameField.RelatedGames => CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context),
                         GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
+                        GameField.Devices => CreateListAccessor<Device, ListDAO<Device>, DeviceListControl>(context),
+                        GameField.Serieses => CreateButtonEditAccessor<Series, ListDAO<Series>, SeriesListControl>(context),
                         GameField.Id => CreateLabelAccessor(context),
                         GameField.Owner => CreateAccountAccessor(context),
                         GameField.Trophyset => CreateTrophysetAccessor(context),
-                        GameField.Devices => CreateListAccessor<Device, ListDAO<Device>, DeviceListControl>(context),
                         _ => base.CreateOtherAccessor(context),
                     }
                     : context.Key switch
