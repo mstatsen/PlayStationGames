@@ -1,4 +1,5 @@
-﻿using OxDAOEngine.ControlFactory;
+﻿using Microsoft.VisualBasic.FileIO;
+using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.ControlFactory.Initializers;
@@ -30,14 +31,26 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                     ConsoleField.Accounts => CreateListAccessor<ConsoleAccount, ConsoleAccounts, AccountsControl>(context),
                     _ => base.CreateOtherAccessor(context),
                 }
-                : 
-            context.Key == "Accessory:Type"
-                ? CreateEnumAccessor<AccessoryType>(context)
-                : context.Key == "Joystick:Type"
-                    ? CreateEnumAccessor<JoystickType>(context)
-                    : context.Key == "ConsoleAccount"
-                        ? CreateAccountAccessor(context)
-                        : base.CreateOtherAccessor(context);
+                :
+            context.Key switch
+            {
+                "Storage:Name" or
+                "Storage:Size" or
+                "Storage:FreeSize" =>
+                    CreateTextBoxAccessor(context),
+                "Storage:Placement" =>
+                    CreateEnumAccessor<StoragePlacement>(context),
+                "Folder:Name" =>
+                    CreateTextBoxAccessor(context),
+                "Accessory:Type" =>
+                    CreateEnumAccessor<AccessoryType>(context),
+                "Joystick:Type" =>
+                    CreateEnumAccessor<JoystickType>(context),
+                "ConsoleAccount" =>
+                    CreateAccountAccessor(context),
+                _ =>
+                    base.CreateOtherAccessor(context)
+            };
 
         private static IControlAccessor CreateAccountAccessor(IBuilderContext<ConsoleField, PSConsole> context) =>
             new AccountAccessor<ConsoleField, PSConsole>(context);
@@ -51,21 +64,18 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
                         return new ConsoleInitializer(ConsoleField.Console, false, true, true);
                 }
 
-
-            return context.Name switch
+            return context.Key switch
             {
-                "StorageSelector" => new ExtractInitializer<ConsoleField, PSConsole>(
-                    ConsoleField.Storages,
-                    fullExtract: true,
-                    fixedExtract: true
-                ),
-                "FolderSelector" => new ExtractInitializer<ConsoleField, PSConsole>(
-                    ConsoleField.Folders,
-                    fullExtract: true,
-                    fixedExtract: true),
-                "AccessoryType" => new AccessoryTypeInitializer((PSConsole)context.AdditionalContext!),
-                "JoystickType" => new JoystickTypeInitializer((PSConsole)context.AdditionalContext!),
-                _ => base.Initializer(context),
+                "Installation:Storage" => 
+                    CreateExtractInitializer(ConsoleField.Storages),
+                "Installation:Folder" =>
+                    CreateExtractInitializer(ConsoleField.Folders),
+                "Accessory:Type" => 
+                    new AccessoryTypeInitializer((PSConsole)context.AdditionalContext!),
+                "Joystick:Type" => 
+                    new JoystickTypeInitializer((PSConsole)context.AdditionalContext!),
+                _ => 
+                    base.Initializer(context),
             };
         }
 

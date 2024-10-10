@@ -132,11 +132,12 @@ namespace PlayStationGames.GameEngine.Editor
             field switch
             {
                 GameField.Image or 
-                GameField.Verified or
+                GameField.Verified =>
+                    8,
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer => 
-                    8,
+                    6,
                 GameField.MaximumPlayers =>
                     164,
                 GameField.Licensed =>

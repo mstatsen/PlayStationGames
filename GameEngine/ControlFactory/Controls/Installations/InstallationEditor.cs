@@ -1,20 +1,19 @@
-﻿using OxLibrary.Controls;
+﻿using OxLibrary;
+using OxLibrary.Controls;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.ControlFactory.Initializers;
 using OxDAOEngine.Data;
+using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Types;
-using OxDAOEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
-using OxLibrary;
 using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
-using PlayStationGames.ConsoleEngine.ControlFactory.Controls;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -35,15 +34,15 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void CreateControls()
         {
             consoleControl = (ExtractAccessor<ConsoleField, PSConsole>)ConsoleBuilder[ConsoleField.Console];
-            storageControl = ConsoleBuilder.Accessor("StorageSelector", FieldType.Extract);
-            folderControl = ConsoleBuilder.Accessor("FolderSelector", FieldType.Extract);
+            storageControl = ConsoleBuilder.Accessor("Installation:Storage", FieldType.Extract);
+            folderControl = ConsoleBuilder.Accessor("Installation:Folder", FieldType.Extract);
             consoleControl.ValueChangeHandler += (s, e) => SetConsoleValueInControl();
-            sizeControl = ConsoleBuilder.Accessor("InstallationSize", FieldType.Integer);
+            sizeControl = ConsoleBuilder.Accessor("Installation:Size", FieldType.Integer);
 
             int lastBottom = PrepareControl(consoleControl);
-            lastBottom = PrepareControl(storageControl, lastBottom);
-            lastBottom = PrepareControl(folderControl, lastBottom);
-            PrepareControl(sizeControl, lastBottom, false);
+            lastBottom = PrepareControl(storageControl, lastBottom, 110);
+            lastBottom = PrepareControl(folderControl, lastBottom, 110);
+            PrepareControl(sizeControl, lastBottom, 110, false);
             SetConsoleValueInControl();
 
             CreateLabel("Console", consoleControl);
@@ -52,12 +51,16 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             sizeLabel = CreateLabel("Size", sizeControl);
             sizeLabel2 = CreateLabel("Mb", sizeControl, true);
 
-            ((NumericAccessor<ConsoleField, PSConsole>)sizeControl).MaximumValue = 1000000;
+            storageLabel.Left = 38;
+            folderLabel.Left = 38;
+            sizeLabel.Left = 38;
+            sizeControl.MaximumValue = 1000000;
 
             SetKeyUpHandler(consoleControl.Control);
             SetKeyUpHandler(storageControl.Control);
             SetKeyUpHandler(folderControl.Control);
             SetKeyUpHandler(sizeControl.Control);
+
             FirstFocusControl = consoleControl.Control;
         }
 
@@ -140,10 +143,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             item.Size = sizeControl.IntValue;
         }
 
-        private int PrepareControl(IControlAccessor accessor, int lastBottom = -1, bool fullRow = true)
+        private int PrepareControl(IControlAccessor accessor, int lastBottom = -1, int left = 80, bool fullRow = true)
         {
             accessor.Parent = this;
-            accessor.Left = 80;
+            accessor.Left = left;
             accessor.Top = lastBottom == -1 ? 8 : lastBottom + 4;
             accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
@@ -194,15 +197,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             folderControl.Visible = folderAvailable;
             folderLabel.Visible = folderAvailable;
 
-            int lastBottom = consoleControl!.Bottom;
+            int lastBottom = 
+                folderControl.Visible 
+                    ? folderControl.Bottom
+                    : storageControl.Visible
+                        ? storageControl.Bottom
+                        : consoleControl!.Bottom;
 
-            if (folderControl.Visible)
-                lastBottom = folderControl.Bottom;
-            else
-            if (storageControl.Visible)
-                lastBottom = storageControl.Bottom;
-
-            PrepareControl(sizeControl, lastBottom, false);
+            PrepareControl(sizeControl, lastBottom, 110, false);
             OxControlHelper.AlignByBaseLine(sizeControl.Control, sizeLabel);
             OxControlHelper.AlignByBaseLine(sizeControl.Control, sizeLabel2);
         }

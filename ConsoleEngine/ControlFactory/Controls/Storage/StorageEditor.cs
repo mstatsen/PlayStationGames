@@ -1,5 +1,6 @@
 ﻿using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
+using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
@@ -32,11 +33,10 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         protected override void CreateControls()
         {
-            //TODO: replace with builder.Accessor
-            nameControl = new TextAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Storages));
-            sizeControl = new TextAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Storages));
-            freeSizeControl = new TextAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Storages));
-            placementControl = new EnumAccessor<ConsoleField, PSConsole, StoragePlacement>(Context.Builder.Context(ConsoleField.Storages));
+            nameControl = Builder.Accessor("Storage:Name", FieldType.String);
+            sizeControl = Builder.Accessor("Storage:Size", FieldType.String);
+            freeSizeControl = Builder.Accessor("Storage:FreeSize", FieldType.String);
+            placementControl = Builder.Accessor<StoragePlacement>("Storage:Placement", FieldType.Enum);
 
             int lastBottom = PrepareControl(nameControl, "Name");
             lastBottom = PrepareControl(placementControl, "Placement", lastBottom);

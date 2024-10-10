@@ -24,8 +24,8 @@ namespace PlayStationGames.GameEngine.Editor
         protected override void AfterColorizeControls()
         {
             base.AfterColorizeControls();
-            ((OxPictureContainer)Builder[GameField.Image].Control).BaseColor = Editor.MainPanel.Colors.Lighter();
-            ((TrophysetPanel)Builder[GameField.Trophyset].Control).BaseColor = Editor.MainPanel.Colors.Lighter();
+            Builder.Control<OxPictureContainer>(GameField.Image).BaseColor = Editor.MainPanel.Colors.Lighter();
+            Builder.Control<TrophysetPanel>(GameField.Trophyset).BaseColor = Editor.MainPanel.Colors.Lighter();
         }
 
         protected override void AfterFillControlsAndSetHandlers()
@@ -65,14 +65,14 @@ namespace PlayStationGames.GameEngine.Editor
         protected override void AfterAlignLabels()
         {
             base.AfterAlignLabels();
-            Control licenseCheckBox = Layouter.PlacedControl(GameField.Licensed)!.Control;
-            Control nameControl = Layouter.PlacedControl(GameField.Name)!.Control;
+            Control licenseCheckBox = Builder.Control<CheckBox>(GameField.Licensed);
+            Control nameControl = Builder.Control<OxTextBox>(GameField.Name);
             licenseCheckBox.Left =
                 (Layouter.PlacedControl(GameField.Source)!.Control.Right +
                  nameControl.Right -
                  licenseCheckBox.Width) / 2;
             licenseCheckBox.Top = nameControl.Top + (nameControl.Height - licenseCheckBox.Height) / 2;
-            ((OxPictureContainer)Layouter.PlacedControl(GameField.Image)!.Control).HiddenBorder = true;
+            Builder.Control<OxPictureContainer>(GameField.Image).HiddenBorder = true;
             Builder[GameField.AvailablePlatinum].Text = "";
         }
 
@@ -112,7 +112,7 @@ namespace PlayStationGames.GameEngine.Editor
                     SyncOwnerWithControls(byUser);
 
                     if (!AvailableTrophyset)
-                        ((TrophysetPanel)Builder[GameField.Trophyset].Control).Type = TrophysetType.NoSet;
+                        Builder.Control<TrophysetPanel>(GameField.Trophyset).Type = TrophysetType.NoSet;
                     break;
                 case GameField.Source:
                     SyncOwnerWithControls(byUser);
@@ -192,7 +192,7 @@ namespace PlayStationGames.GameEngine.Editor
                 Available(Builder.Value<PlatformType>(GameField.Platform)).Count > 0;
 
             bool withoutTrophyset = 
-                ((TrophysetPanel)Builder[GameField.Trophyset].Control).Type == TrophysetType.NoSet;
+                Builder.Control<TrophysetPanel>(GameField.Trophyset).Type == TrophysetType.NoSet;
             Builder.SetVisible(GameField.Difficult, !withoutTrophyset);
             Builder.SetVisible(GameField.CompleteTime, !withoutTrophyset);
 

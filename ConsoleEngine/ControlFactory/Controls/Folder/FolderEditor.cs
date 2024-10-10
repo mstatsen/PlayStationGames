@@ -3,6 +3,7 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
+using OxDAOEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {
@@ -18,19 +19,19 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         protected override void CreateControls()
         {
-            folderControl = new TextAccessor<ConsoleField, PSConsole>(Context.Builder.Context(ConsoleField.Folders))
-            {
-                Parent = this,
-                Dock = DockStyle.Fill
-            };
+            folderControl = Builder.Accessor("Folder:Name", FieldType.String);
+            folderControl.Parent = this;
+            folderControl.Dock = DockStyle.Fill;
         }
 
         protected override void SetPaddings() => 
             MainPanel.Paddings.SetSize(OxSize.Large);
 
         protected override string EmptyMandatoryField() =>
-            folderControl!.IsEmpty ? "Folder name" : base.EmptyMandatoryField();
+            folderControl!.IsEmpty 
+                ? "Folder name" 
+                : base.EmptyMandatoryField();
 
-        private TextAccessor<ConsoleField, PSConsole>? folderControl;
+        private IControlAccessor? folderControl;
     }
 }

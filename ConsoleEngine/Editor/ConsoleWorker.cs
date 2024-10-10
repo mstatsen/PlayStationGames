@@ -4,7 +4,6 @@ using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.Editor;
-using PlayStationGames.ConsoleEngine.ControlFactory.Controls;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -78,7 +77,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             Editor.Groups[ConsoleFieldGroup.Games].SizeChanged -= GamesGroupSizeChangedHandler;
             Editor.Groups[ConsoleFieldGroup.Games].SizeChanged += GamesGroupSizeChangedHandler;
-            Control? firmwareVersionControl = Layouter.PlacedControl(ConsoleField.FirmwareVersion)?.Control;
+            Control firmwareVersionControl = Builder.Control<OxTextBox>(ConsoleField.FirmwareVersion);
             installedGamesLabel.Parent = Editor.Groups[ConsoleFieldGroup.Games];
             installedGamesLabel.Left = 8;
             installationsButton.Parent = Editor.Groups[ConsoleFieldGroup.Games];
