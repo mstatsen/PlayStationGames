@@ -189,5 +189,8 @@ namespace PlayStationGames.GameEngine.Data.Types
 
         public override bool UseShortNameForControl => true;
         public override bool UseToolTipForControl => true;
+
+        public bool SupportCoachMultiplayer(PlatformType platform) => 
+            platform is not PlatformType.PSP and not PlatformType.PSVita;
     }
 }

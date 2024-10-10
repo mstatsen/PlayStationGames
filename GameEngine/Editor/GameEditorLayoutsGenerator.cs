@@ -73,6 +73,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Region,
                 GameField.SinglePlayer,
                 GameField.CoachMultiplayer,
+                GameField.MaximumPlayers,
                 GameField.OnlineMultiplayer
             };
 
@@ -136,6 +137,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer => 
                     8,
+                GameField.MaximumPlayers =>
+                    164,
                 GameField.Licensed =>
                     390,
                 GameField.Owner or
@@ -181,7 +184,9 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.OnlineMultiplayer or
                 GameField.Licensed =>
                     20,
-                GameField.Serieses =>
+                GameField.Serieses or
+                GameField.CriticScore or
+                GameField.MaximumPlayers =>
                     26,
                 _ =>
                     base.Height(field)
@@ -208,6 +213,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Developer or 
                 GameField.Publisher => 
                     362,
+                GameField.MaximumPlayers or
                 GameField.Year or
                 GameField.Pegi or
                 GameField.CriticScore =>
@@ -237,6 +243,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Edition or
                 GameField.Serieses =>
                     4,
+                GameField.MaximumPlayers =>
+                    6,
                 GameField.Platform or
                 GameField.Region or
                 GameField.Source or

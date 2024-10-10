@@ -35,6 +35,7 @@ namespace PlayStationGames.GameEngine.Data
         private string genreName = string.Empty;
         private bool singlePlayer = true;
         private bool coachMultiplayer = false;
+        private int maximumPlayers = 2;
         private bool onlineMultiplayer = false;
         private string developer = string.Empty;
         private string publisher = string.Empty;
@@ -95,6 +96,12 @@ namespace PlayStationGames.GameEngine.Data
         {
             get => coachMultiplayer;
             set => ModifyValue(GameField.CoachMultiplayer, coachMultiplayer, value, n => coachMultiplayer = BoolValue(n));
+        }
+
+        public int MaximumPlayers
+        {
+            get => maximumPlayers;
+            set => ModifyValue(GameField.MaximumPlayers, maximumPlayers, value, n => maximumPlayers = IntValue(n));
         }
 
         public bool OnlineMultiplayer
@@ -215,6 +222,7 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.AvailableBronze:
                 case GameField.Year:
                 case GameField.CriticScore:
+                case GameField.MaximumPlayers:
                     return IntValue(this[field]).CompareTo(IntValue(y[field]));
             }
 
@@ -442,6 +450,9 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.CoachMultiplayer:
                     CoachMultiplayer = BoolValue(value);
                     break;
+                case GameField.MaximumPlayers:
+                    MaximumPlayers = IntValue(value);
+                    break;
                 case GameField.OnlineMultiplayer:
                     OnlineMultiplayer = BoolValue(value);
                     break;
@@ -545,6 +556,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.ScreenView => ScreenView,
                 GameField.SinglePlayer => SinglePlayer,
                 GameField.CoachMultiplayer => CoachMultiplayer,
+                GameField.MaximumPlayers => MaximumPlayers,
                 GameField.OnlineMultiplayer => OnlineMultiplayer,
                 GameField.Dlcs => Dlcs,
                 GameField.Tags => Tags,
@@ -575,6 +587,7 @@ namespace PlayStationGames.GameEngine.Data
             genreName = string.Empty;
             singlePlayer = true;
             coachMultiplayer = false;
+            maximumPlayers = 2;
             onlineMultiplayer = false;
             developer = string.Empty;
             publisher = string.Empty;
@@ -634,7 +647,12 @@ namespace PlayStationGames.GameEngine.Data
                 XmlHelper.AppendElement(element, XmlConsts.SinglePlayer, SinglePlayer);
 
             if (CoachMultiplayer)
+            {
                 XmlHelper.AppendElement(element, XmlConsts.CoachMultiplayer, CoachMultiplayer);
+
+                if (maximumPlayers > 2)
+                    XmlHelper.AppendElement(element, XmlConsts.MaximumPlayers, MaximumPlayers);
+            }
 
             if (OnlineMultiplayer)
                 XmlHelper.AppendElement(element, XmlConsts.OnlineMultiplayer, OnlineMultiplayer);
@@ -683,6 +701,7 @@ namespace PlayStationGames.GameEngine.Data
             genreName = XmlHelper.Value(element, XmlConsts.Genre);
             singlePlayer = XmlHelper.ValueBool(element, XmlConsts.SinglePlayer);
             coachMultiplayer = XmlHelper.ValueBool(element, XmlConsts.CoachMultiplayer);
+            maximumPlayers = Math.Max(XmlHelper.ValueInt(element, XmlConsts.MaximumPlayers), 2);
             onlineMultiplayer = XmlHelper.ValueBool(element, XmlConsts.OnlineMultiplayer);
             developer = XmlHelper.Value(element, XmlConsts.Developer);
             publisher = XmlHelper.Value(element, XmlConsts.Publisher);
@@ -753,6 +772,7 @@ namespace PlayStationGames.GameEngine.Data
             && GenreName.Equals(otherGame.GenreName)
             && SinglePlayer.Equals(otherGame.SinglePlayer)
             && CoachMultiplayer.Equals(otherGame.CoachMultiplayer)
+            && MaximumPlayers.Equals(otherGame.MaximumPlayers)
             && OnlineMultiplayer.Equals(otherGame.OnlineMultiplayer)
             && Trophyset.Equals(otherGame.Trophyset)
             && Installations.Equals(otherGame.Installations)

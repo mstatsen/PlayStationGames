@@ -13,6 +13,7 @@ using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
+using OxDAOEngine.ControlFactory.Accessors;
 
 namespace PlayStationGames.GameEngine.Editor
 {
@@ -31,6 +32,27 @@ namespace PlayStationGames.GameEngine.Editor
         {
             base.AfterFillControlsAndSetHandlers();
             SetRelatedGamesFilter();
+        }
+
+        protected override void AfterLayoutControls()
+        {
+            base.AfterLayoutControls();
+            SetMaximumPlayersConstraints();
+        }
+
+        private void SetMaximumPlayersConstraints()
+        {
+            Builder[GameField.MaximumPlayers].MinimumValue = 2;
+            Builder[GameField.MaximumPlayers].MaximumValue =
+                Builder[GameField.Platform].EnumValue<PlatformType>() switch
+                {
+                    PlatformType.PS3 =>
+                        7,
+                    PlatformType.PS2 =>
+                        8,
+                    _ =>
+                        4
+                };
         }
 
         protected override FieldGroupFrames<GameField, GameFieldGroup> GetFieldGroupFrames() =>
@@ -82,6 +104,9 @@ namespace PlayStationGames.GameEngine.Editor
                         SyncFormatWithPlatform();
 
                     SyncOwnerWithControls(byUser);
+                    SetCoachMultiplayerVisible();
+                    ShowMaximumPlayersControl();
+                    SetMaximumPlayersConstraints();
                     break;
                 case GameField.Licensed:
                     SyncOwnerWithControls(byUser);
@@ -91,6 +116,9 @@ namespace PlayStationGames.GameEngine.Editor
                     break;
                 case GameField.Source:
                     SyncOwnerWithControls(byUser);
+                    break;
+                case GameField.CoachMultiplayer:
+                    ShowMaximumPlayersControl();
                     break;
             }
 
@@ -102,7 +130,44 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Format or
                 GameField.Trophyset or
                 GameField.Source or
-                GameField.Verified;
+                GameField.Verified or
+                GameField.CoachMultiplayer;
+        }
+
+        private bool SupportCoathMultiplayer =>
+            TypeHelper.Helper<PlatformTypeHelper>().SupportCoachMultiplayer(
+                Builder[GameField.Platform].EnumValue<PlatformType>());
+
+        private void SetCoachMultiplayerVisible()
+        {
+            Builder[GameField.CoachMultiplayer].Visible = SupportCoathMultiplayer;
+
+            if (!SupportCoathMultiplayer)
+                Builder[GameField.CoachMultiplayer].Value = false;
+        }
+
+        private void ShowMaximumPlayersControl()
+        {
+            OxLabel label = Layouter.PlacedControl(GameField.MaximumPlayers)!.Label!;
+            IControlAccessor coachMultiplayer = Builder[GameField.CoachMultiplayer];
+            IControlAccessor onlineMultiplayer = Builder[GameField.OnlineMultiplayer];
+            IControlAccessor maximumPlayers = Builder[GameField.MaximumPlayers];
+
+            if (coachMultiplayer.BoolValue)
+            {
+                maximumPlayers.Visible = true;
+                label.Visible = true;
+                onlineMultiplayer.Top = maximumPlayers.Bottom + 2;
+            }
+            else
+            {
+                maximumPlayers.Visible = false;
+                label.Visible = false;
+                onlineMultiplayer.Top = 
+                    SupportCoathMultiplayer 
+                    ? label.Top - 4
+                    : coachMultiplayer.Top;
+            }
         }
 
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();

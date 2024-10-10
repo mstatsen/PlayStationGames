@@ -65,6 +65,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.ScreenView or
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
+                GameField.MaximumPlayers or
                 GameField.OnlineMultiplayer => 
                     GameFieldGroup.Genre,
                 GameField.Dlcs => 

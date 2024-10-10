@@ -26,6 +26,7 @@
         ScreenView,
         SinglePlayer,
         CoachMultiplayer,
+        MaximumPlayers,
         OnlineMultiplayer,
         Dlcs,
         Links,

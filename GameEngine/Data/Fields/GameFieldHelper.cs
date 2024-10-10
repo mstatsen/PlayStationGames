@@ -54,6 +54,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.ScreenView => "Screen",
                 GameField.SinglePlayer => "Single player",
                 GameField.CoachMultiplayer => "Coach multiplayer",
+                GameField.MaximumPlayers => "Maximum players",
                 GameField.OnlineMultiplayer => "Online multiplayer",
                 GameField.Dlcs => "DLCs",
                 GameField.Links => "Links",
@@ -105,6 +106,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Genre,
                     GameField.SinglePlayer,
                     GameField.CoachMultiplayer,
+                    GameField.MaximumPlayers,
                     GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Platform,
@@ -141,6 +143,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.FullGenre,
                     GameField.SinglePlayer,
                     GameField.CoachMultiplayer,
+                    GameField.MaximumPlayers,
                     GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Year,
@@ -228,6 +231,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Genre,
                     GameField.SinglePlayer,
                     GameField.CoachMultiplayer,
+                    GameField.MaximumPlayers,
                     GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Year,
@@ -294,6 +298,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.FullGenre,
                     GameField.SinglePlayer,
                     GameField.CoachMultiplayer,
+                    GameField.MaximumPlayers,
                     GameField.OnlineMultiplayer,
                     GameField.StrategeLink,
                     GameField.PSNProfilesLink,
@@ -341,6 +346,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Genre,
                     GameField.SinglePlayer,
                     GameField.CoachMultiplayer,
+                    GameField.MaximumPlayers,
                     GameField.OnlineMultiplayer,
                     GameField.Pegi,
                     GameField.Platform,
@@ -406,6 +412,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.ScreenView,
             GameField.SinglePlayer,
             GameField.CoachMultiplayer,
+            GameField.MaximumPlayers,
             GameField.OnlineMultiplayer,
             GameField.TrophysetType,
             GameField.Verified,
@@ -462,6 +469,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Genre,
             GameField.SinglePlayer,
             GameField.CoachMultiplayer,
+            GameField.MaximumPlayers,
             GameField.OnlineMultiplayer,
             GameField.Dlcs,
             GameField.Links,
@@ -503,6 +511,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Genre,
             GameField.SinglePlayer,
             GameField.CoachMultiplayer,
+            GameField.MaximumPlayers,
             GameField.OnlineMultiplayer,
             GameField.ScreenView,
             GameField.Dlcs,
@@ -545,6 +554,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.ScreenView,
             GameField.SinglePlayer,
             GameField.CoachMultiplayer,
+            GameField.MaximumPlayers,
             GameField.OnlineMultiplayer,
             GameField.Dlcs,
             GameField.Links,
@@ -650,6 +660,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.Verified] = FilterOperations.BoolOperations,
             [GameField.SinglePlayer] = FilterOperations.BoolOperations,
             [GameField.CoachMultiplayer] = FilterOperations.BoolOperations,
+            [GameField.MaximumPlayers] = FilterOperations.StringOperations,
             [GameField.OnlineMultiplayer] = FilterOperations.BoolOperations,
             [GameField.EmulatorType] = FilterOperations.StringOperations,
             [GameField.EmulatorROMs] = FilterOperations.StringOperations,
@@ -732,7 +743,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Source => 
                     88,
                 GameField.CriticScore or 
-                GameField.Year or 
+                GameField.Year or
+                GameField.MaximumPlayers or
                 GameField.Pegi => 
                     40,
                 GameField.Image or
@@ -789,6 +801,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.AvailableGold or
                 GameField.AvailableSilver or
                 GameField.AvailableBronze or
+                GameField.MaximumPlayers or
                 GameField.CriticScore => 
                     FieldType.Integer,
                 GameField.Id =>
@@ -867,6 +880,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.ScreenView,
                 GameField.SinglePlayer,
                 GameField.CoachMultiplayer,
+                GameField.MaximumPlayers,
                 GameField.OnlineMultiplayer,
                 GameField.Tags,
                 GameField.Trophyset,
