@@ -53,6 +53,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             sizeLabel2 = CreateLabel("Mb", sizeControl, true);
 
             ((NumericAccessor<ConsoleField, PSConsole>)sizeControl).MaximumValue = 1000000;
+
+            SetKeyUpHandler(consoleControl.Control);
+            SetKeyUpHandler(storageControl.Control);
+            SetKeyUpHandler(folderControl.Control);
+            SetKeyUpHandler(sizeControl.Control);
+            FirstFocusControl = consoleControl.Control;
         }
 
         private void SetConsoleValueInControl()

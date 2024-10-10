@@ -29,6 +29,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             TypeControl.Width = MainPanel.ContentContainer.Width - TypeControl.Left - 8;
             TypeControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             TypeControl.Height = 24;
+            SetKeyUpHandler(TypeControl.Control);
+            FirstFocusControl = TypeControl.Control;
         }
 
         protected override void CreateControls() =>

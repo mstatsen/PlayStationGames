@@ -9,13 +9,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
 {
     public class TagNameInitializer : EmptyControlInitializer
     {
-        private readonly ListDAO<Tag>? ExistingTags;
+        public readonly ListDAO<Tag> ExistingTags = new();
 
         private void AddTagNameToComboBox(string? tagName)
         {
             if (ComboBox!.Items.IndexOf(tagName) < 0
-                && (ExistingTags == null ||
-                        !ExistingTags.Contains(l => l.Name == tagName)))
+                && (ExistingTags.Count == 0 ||
+                    !ExistingTags.Contains(l => l.Name == tagName)))
                 ComboBox!.Items.Add(tagName);
         }
 
@@ -37,7 +37,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
                 ComboBox.SelectedIndex = 0;
         }
 
-        public TagNameInitializer(ListDAO<Tag>? existingTags) =>
-            ExistingTags = existingTags;
+        public TagNameInitializer() { }
     }
 }

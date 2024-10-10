@@ -1,6 +1,8 @@
 ﻿using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
+using OxLibrary.Dialogs;
+using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 
@@ -14,8 +16,15 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             base.RenewData();
 
-            if (ExistingItems != null)
+            if (NameControl.Context.Initializer is SeriesNameInitializer seriesInitalizer)
+            {
+                seriesInitalizer.ExistingSeries.Clear();
+
+                if (ExistingItems != null)
+                    seriesInitalizer.ExistingSeries.AddRange(ExistingItems.Cast<Series>());
+
                 NameControl.Context.InitControl(NameControl);
+            }
         }
 
         private void CreateNameControl()
@@ -29,6 +38,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             NameControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             NameControl.Height = 24;
             NameControl.RenewControl();
+            SetKeyUpHandler(NameControl.Control);
+            FirstFocusControl = NameControl.Control;
+            
         }
 
         protected override void CreateControls() =>
@@ -52,5 +64,20 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             NameControl.IsEmpty
                 ? "Series"
                 : base.EmptyMandatoryField();
+
+        public override bool CanOKClose()
+        {
+            if (ExistingItems == null)
+                return true;
+
+            if (NameControl.Value != null &&
+                ExistingItems.Find(t => ((Series)t).Name == NameControl.Value.ToString()) != null)
+            {
+                OxMessage.ShowError("Game already contains this series.", this);
+                return false;
+            }
+
+            return base.CanOKClose();
+        }
     }
 }

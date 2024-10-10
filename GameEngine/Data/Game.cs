@@ -596,12 +596,6 @@ namespace PlayStationGames.GameEngine.Data
             Dlcs.Clear();
             Tags.Clear();
             Devices.Clear();
-            Devices.Add(
-                new() 
-                { 
-                    Type = DeviceType.Dualshock 
-                }
-            );
             Serieses.Clear();
             Links.Clear();
             RelatedGames.Clear();

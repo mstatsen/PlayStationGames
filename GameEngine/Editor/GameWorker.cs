@@ -59,7 +59,6 @@ namespace PlayStationGames.GameEngine.Editor
             if (Item == null)
                 return;
 
-            Builder.Control<RelatedGamesControl>(GameField.RelatedGames).ParentItem = CurrentItem;
             Filter<GameField, Game> relatedGameFilter = new();
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);
 
@@ -97,18 +96,13 @@ namespace PlayStationGames.GameEngine.Editor
 
             SetRelatedGamesFilter();
 
-            return field switch
-            {
+            return field is 
                 GameField.Licensed or
-                GameField.Platform or 
+                GameField.Platform or
                 GameField.Format or
                 GameField.Trophyset or
-                GameField.Source or 
-                GameField.Verified => 
-                    true,
-                _ =>
-                    false,
-            };
+                GameField.Source or
+                GameField.Verified;
         }
 
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
@@ -128,6 +122,9 @@ namespace PlayStationGames.GameEngine.Editor
             Editor.Groups[GameFieldGroup.ReleaseBase].Visible = !isEmulator;
 
             Builder.SetVisible(GameField.EmulatorType, isEmulator);
+
+            Editor.Groups[GameFieldGroup.Devices].Visible = TypeHelper.Helper<DeviceTypeHelper>().
+                Available(Builder.Value<PlatformType>(GameField.Platform)).Count > 0;
 
             bool withoutTrophyset = 
                 ((TrophysetPanel)Builder[GameField.Trophyset].Control).Type == TrophysetType.NoSet;

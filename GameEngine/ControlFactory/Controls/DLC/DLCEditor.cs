@@ -48,6 +48,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     Text = "Name",
                     Font = new(Styles.DefaultFont, FontStyle.Bold)
                 });
+            SetKeyUpHandler(NameControl.Control);
+            FirstFocusControl = NameControl.Control;
 
             ImageControl = Context.Accessor("DLC:Image", FieldType.Image);
             ImageControl.Top = NameControl.Bottom + 8;
@@ -56,6 +58,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             ImageControl.Height = 112;
             ImageControl.Parent = BaseGroup;
             ((OxPictureContainer)ImageControl.Control).HiddenBorder = true;
+            SetKeyUpHandler(ImageControl.Control);
 
             AcquiredControl = Context.Accessor("DLC:Acquired", FieldType.Boolean);
             AcquiredControl.Top = ImageControl.Bottom + 8;
@@ -63,11 +66,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             ((OxCheckBox)AcquiredControl.Control).AutoSize = true;
             AcquiredControl.Parent = BaseGroup;
             AcquiredControl.RenewControl();
+            SetKeyUpHandler(AcquiredControl.Control);
 
             TrophysetControl = (TrophysetAccessor)Context.Accessor("DLC:Trophyset", FieldType.Custom);
             TrophysetControl.Parent = TrophysetGroup;
             TrophysetControl.ValueChangeHandler += TrophysetValueChange;
-
             TrophysetGroup.Parent = this;
             TrophysetGroup.Margins.SetSize(OxSize.Extra);
             TrophysetGroup.Margins.LeftOx = OxSize.None;

@@ -6,12 +6,11 @@ namespace PlayStationGames.GameEngine.Data.Types
     public class DeviceTypeHelper : FieldAccordingHelper<GameField, DeviceType>
     {
         public override DeviceType EmptyValue() =>
-            DeviceType.Dualshock;
+            default!;
 
         public override string GetName(DeviceType value) =>
             value switch
             {
-                DeviceType.Dualshock => "Dualshock",
                 DeviceType.Camera => "Camera",
                 DeviceType.MoveController => "Move Controller",
                 DeviceType.NavigationController => "Navigation Controller",
@@ -24,7 +23,6 @@ namespace PlayStationGames.GameEngine.Data.Types
         public override string GetShortName(DeviceType value) =>
             value switch
             {
-                DeviceType.Dualshock => "DS",
                 DeviceType.Camera => "Camera",
                 DeviceType.MoveController => "Move",
                 DeviceType.NavigationController => "Navigation",
@@ -33,5 +31,34 @@ namespace PlayStationGames.GameEngine.Data.Types
                 DeviceType.Wonderbook => "Wonderbook",
                 _ => string.Empty,
             };
+
+        public List<DeviceType> Available(PlatformType platform)
+        {
+            List<DeviceType> result = new();
+
+            switch (platform)
+            { 
+                case PlatformType.PS3:
+                    result.Add(DeviceType.Camera);
+                    result.Add(DeviceType.MoveController);
+                    result.Add(DeviceType.NavigationController);
+                    result.Add(DeviceType.Wonderbook);
+                    break;
+                case PlatformType.PS4:
+                case PlatformType.PS5:
+                    result.Add(DeviceType.Camera);
+                    result.Add(DeviceType.MoveController);
+                    result.Add(DeviceType.VR);
+                    break;
+                case PlatformType.PSP:
+                    result.Add(DeviceType.Camera);
+                    break;
+                case PlatformType.PSVita:
+                    result.Add(DeviceType.VRCards);
+                    break;
+            }
+
+            return result;
+        }
     }
 }

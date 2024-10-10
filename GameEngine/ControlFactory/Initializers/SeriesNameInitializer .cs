@@ -9,13 +9,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
 {
     public class SeriesNameInitializer : EmptyControlInitializer
     {
-        private readonly ListDAO<Tag>? ExistingSeries;
+        public readonly ListDAO<Series> ExistingSeries = new();
 
         private void AddSeriesNameToComboBox(string? seriesName)
         {
             if (ComboBox!.Items.IndexOf(seriesName) < 0
-                && (ExistingSeries == null ||
-                        !ExistingSeries.Contains(l => l.Name == seriesName)))
+                && (ExistingSeries.Count == 0 ||
+                    !ExistingSeries.Contains(l => l.Name == seriesName)))
                 ComboBox!.Items.Add(seriesName);
         }
 
@@ -30,14 +30,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
             List<object> seriesNames = new FieldExtractor<GameField, Game>(
                 DataManager.FullItemsList<GameField, Game>()).Extract(GameField.Serieses, true);
 
-            foreach (object tagName in seriesNames)
-                AddSeriesNameToComboBox(tagName.ToString());
+            foreach (object seriesName in seriesNames)
+                AddSeriesNameToComboBox(seriesName.ToString());
 
             if (ComboBox.Items.Count > 0)
                 ComboBox.SelectedIndex = 0;
         }
 
-        public SeriesNameInitializer(ListDAO<Tag>? existingSeries) =>
-            ExistingSeries = existingSeries;
+        public SeriesNameInitializer() { }
     }
 }

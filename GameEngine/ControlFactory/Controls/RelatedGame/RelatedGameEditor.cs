@@ -100,6 +100,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameControl.Control.BackColor = MainPanel.BackColor;
             ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;
             OxControlHelper.AlignByBaseLine(GameControl.Control, GameLabel);
+            SetKeyUpHandler(GameControl.Control);
+            FirstFocusControl = GameControl.Control;
         }
 
         private void SelectGameHandler(object? sender, EventArgs e) => SelectGame();

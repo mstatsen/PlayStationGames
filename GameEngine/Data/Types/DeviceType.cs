@@ -2,7 +2,6 @@
 {
     public enum DeviceType
     {
-        Dualshock,
         Camera,
         MoveController,
         NavigationController,

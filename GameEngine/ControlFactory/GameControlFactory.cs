@@ -104,9 +104,9 @@ namespace PlayStationGames.GameEngine.ControlFactory
             return context.Key switch
             {
                 "Tag:Name" => 
-                    new TagNameInitializer(null),
+                    new TagNameInitializer(),
                 "Series:Name" => 
-                    new SeriesNameInitializer(null),
+                    new SeriesNameInitializer(),
                 _ => 
                     base.Initializer(context),
             };
