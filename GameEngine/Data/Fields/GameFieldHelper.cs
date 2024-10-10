@@ -440,7 +440,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Image,
             GameField.Name,
             GameField.Platform,
-            GameField.Source
+            GameField.Source,
+            GameField.Region
         };
 
         protected override List<GameField> GetEditingFields() => new()
