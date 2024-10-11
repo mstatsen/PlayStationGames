@@ -10,6 +10,8 @@ namespace PlayStationGames.AccountEngine.Editor
     {
         public AccountEditor() : base() { }
 
+        public override Bitmap? FormIcon => OxIcons.Account;
+
         protected override OxPane? GroupParent(AccountFieldGroup group) => MainPanel;
 
         protected override void RecalcPanels()

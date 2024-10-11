@@ -12,6 +12,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
     {
         public ConsoleEditor() : base() { }
 
+        public override Bitmap? FormIcon => OxIcons.Console;
+
         public OxPanel PanelLeft = new();
         public OxPanel PanelRight = new();
 

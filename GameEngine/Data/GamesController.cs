@@ -19,11 +19,10 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.GameEngine.ControlFactory.Controls;
+using OxLibrary;
 
 namespace PlayStationGames.GameEngine.Data
 {
-
     public class GamesController
         : ListController<GameField, Game, GameFieldGroup, GamesController>
     {
@@ -110,5 +109,7 @@ namespace PlayStationGames.GameEngine.Data
             foreach (Game game in gamesInstalledOnCurrentConsole)
                 game.Installations.RemoveAll((i) => i.ConsoleId == dao.Id);
         }
+
+        protected override Bitmap? GetIcon() => OxIcons.Game;
     }
 }

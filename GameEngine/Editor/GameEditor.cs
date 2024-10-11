@@ -13,6 +13,8 @@ namespace PlayStationGames.GameEngine.Editor
     {
         public GameEditor() : base() { }
 
+        public override Bitmap? FormIcon => OxIcons.Game;
+
         public OxPanel PanelTop = new();
         public OxPanel PanelLeft = new();
         public OxPanel PanelMiddle = new();

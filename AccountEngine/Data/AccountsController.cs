@@ -10,6 +10,7 @@ using PlayStationGames.AccountEngine.Editor;
 using PlayStationGames.AccountEngine.Data.Decorator;
 using PlayStationGames.AccountEngine.ControlFactory;
 using PlayStationGames.AccountEngine.Data.Types;
+using OxLibrary;
 
 namespace PlayStationGames.AccountEngine.Data
 {
@@ -58,6 +59,7 @@ namespace PlayStationGames.AccountEngine.Data
         private void SortAfterLoad(object? sender, EventArgs e) => 
             FullItemsList.Sort(DefaultSorting()?.SortingsList);
 
+        protected override Bitmap? GetIcon() => OxIcons.Account;
         public override bool AvailableSummary => false;
         public override bool AvailableCategories => false;
         public override bool AvailableQuickFilter => false;

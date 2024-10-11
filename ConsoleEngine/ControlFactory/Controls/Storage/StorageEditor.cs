@@ -2,6 +2,7 @@
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
+using OxLibrary;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -10,6 +11,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {
     public partial class StorageEditor : ListItemEditor<Storage, ConsoleField, PSConsole>
     {
+        public override Bitmap? FormIcon => OxIcons.Storage;
+
         private int PrepareControl(IControlAccessor accessor, 
             string caption, int lastBottom = -1, bool fullRow = true)
         {

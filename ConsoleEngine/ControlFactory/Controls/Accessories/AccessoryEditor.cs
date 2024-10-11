@@ -14,6 +14,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {
     public partial class AccessoryEditor : ListItemEditor<Accessory, ConsoleField, PSConsole>
     {
+        public override Bitmap? FormIcon => OxIcons.Dualshock;
+
         private int PrepareControl(IControlAccessor accessor, 
             string caption = "", int lastBottom = -1, bool fullRow = false)
         {

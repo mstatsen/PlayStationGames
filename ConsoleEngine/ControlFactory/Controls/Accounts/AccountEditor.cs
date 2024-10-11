@@ -15,6 +15,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         protected override void FillControls(ConsoleAccount item) =>
             accountControl!.Value = item.Id;
 
+        public override Bitmap? FormIcon => OxIcons.Account;
+
         protected override int ContentHeight => 
             accountControl == null 
                 ? 36 
