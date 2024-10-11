@@ -7,7 +7,6 @@
         RelatedGames,
         DLC,
         Trophyset,
-        Devices,
         Emulator,
         Installations,
         Genre,

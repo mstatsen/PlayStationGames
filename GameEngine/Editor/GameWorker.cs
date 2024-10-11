@@ -152,12 +152,13 @@ namespace PlayStationGames.GameEngine.Editor
             IControlAccessor coachMultiplayer = Builder[GameField.CoachMultiplayer];
             IControlAccessor onlineMultiplayer = Builder[GameField.OnlineMultiplayer];
             IControlAccessor maximumPlayers = Builder[GameField.MaximumPlayers];
+            IControlAccessor devices = Builder[GameField.Devices];
 
             if (coachMultiplayer.BoolValue)
             {
                 maximumPlayers.Visible = true;
                 label.Visible = true;
-                onlineMultiplayer.Top = maximumPlayers.Bottom + 2;
+                onlineMultiplayer.Top = maximumPlayers.Bottom + 4;
             }
             else
             {
@@ -165,9 +166,11 @@ namespace PlayStationGames.GameEngine.Editor
                 label.Visible = false;
                 onlineMultiplayer.Top = 
                     SupportCoathMultiplayer 
-                    ? label.Top - 4
+                    ? label.Top - 2
                     : coachMultiplayer.Top;
             }
+
+            devices.Top = onlineMultiplayer.Bottom + 4;
         }
 
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
@@ -186,10 +189,13 @@ namespace PlayStationGames.GameEngine.Editor
             Editor.Groups[GameFieldGroup.RelatedGames].Visible = !isEmulator;
             Editor.Groups[GameFieldGroup.ReleaseBase].Visible = !isEmulator;
 
+            Builder.SetVisible(GameField.Region, !isEmulator);
+            Builder.SetVisible(GameField.Language, !isEmulator);
+            Builder.SetVisible(GameField.Code, !isEmulator);
             Builder.SetVisible(GameField.EmulatorType, isEmulator);
-
-            Editor.Groups[GameFieldGroup.Devices].Visible = TypeHelper.Helper<DeviceTypeHelper>().
-                Available(Builder.Value<PlatformType>(GameField.Platform)).Count > 0;
+            Builder.SetVisible(GameField.Devices, TypeHelper.Helper<DeviceTypeHelper>().
+                Available(Builder.Value<PlatformType>(GameField.Platform)).Count > 0
+            );
 
             bool withoutTrophyset = 
                 Builder.Control<TrophysetPanel>(GameField.Trophyset).Type == TrophysetType.NoSet;
@@ -292,29 +298,30 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override List<List<GameField>> LabelGroups => new()
         {
-            new List<GameField> {
+            new() {
                 GameField.Owner,
                 GameField.Source,
                 GameField.Platform,
                 GameField.Format
             },
-            new List<GameField> {
+            new() {
                 GameField.Region,
                 GameField.Name,
                 GameField.Edition,
                 GameField.Serieses,
                 GameField.EmulatorType
             },
-            new List<GameField> {
+            new() {
                 GameField.Developer,
                 GameField.Publisher,
                 GameField.Year,
                 GameField.Pegi,
                 GameField.CriticScore
             },
-            new List<GameField> {
+            new() {
                 GameField.Genre,
-                GameField.ScreenView
+                GameField.ScreenView,
+                GameField.Devices
             }
         };
 

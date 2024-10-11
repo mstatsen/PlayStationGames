@@ -45,5 +45,7 @@ namespace PlayStationGames.GameEngine.Data
             other is Device otherDevice 
                 ? Type.CompareTo(otherDevice.Type) 
                 : -1;
+
+        public override string ShortString => TypeHelper.ShortName(type);
     }
 }

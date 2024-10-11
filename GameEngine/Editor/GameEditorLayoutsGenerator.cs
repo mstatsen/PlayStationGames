@@ -27,8 +27,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.CoachMultiplayer,
                 GameField.OnlineMultiplayer,
                 GameField.Tags,
-                GameField.Trophyset,
-                GameField.Devices
+                GameField.Trophyset
             };
 
         public override List<GameField> AutoSizeFields() =>
@@ -50,8 +49,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Tags,
                 GameField.Links,
                 GameField.Installations,
-                GameField.EmulatorROMs,
-                GameField.Devices
+                GameField.EmulatorROMs
             };
 
         public override List<GameField> OffsettingFields() =>
@@ -74,7 +72,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.SinglePlayer,
                 GameField.CoachMultiplayer,
                 GameField.MaximumPlayers,
-                GameField.OnlineMultiplayer
+                GameField.OnlineMultiplayer,
+                GameField.Devices
             };
 
 
@@ -119,8 +118,8 @@ namespace PlayStationGames.GameEngine.Editor
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
                     (Parent(field).Height - Height(field)) / 2,
-                GameField.EmulatorType =>
-                    Layouter[GameField.Edition]!.Top,
+                GameField.EmulatorType => 
+                    Layouter[GameField.Region]!.Top,
                 GameField.Language or
                 GameField.Code =>
                     Layouter[GameField.Region]!.Top,
@@ -154,8 +153,9 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EmulatorType =>
                     68,
                 GameField.ScreenView or
-                GameField.Genre =>
-                    60,
+                GameField.Genre or
+                GameField.Devices =>
+                    66,
                 GameField.Language =>
                     206,
                 GameField.Code =>
@@ -177,7 +177,8 @@ namespace PlayStationGames.GameEngine.Editor
             {
                 GameField.Image =>
                     110,
-                GameField.Name =>
+                GameField.Name or
+                GameField.Devices =>
                     42,
                 GameField.Verified or
                 GameField.SinglePlayer or
@@ -225,8 +226,9 @@ namespace PlayStationGames.GameEngine.Editor
                     => 80,
                 GameField.Code =>
                     94,
-                GameField.Genre => 
-                    216,
+                GameField.Genre or
+                GameField.Devices => 
+                    210,
                 GameField.ReleasePlatforms => 
                     600,
                 _ => 
@@ -239,11 +241,12 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Image or
                 GameField.SinglePlayer => 
                     8,
+                GameField.Edition or
+                GameField.Serieses or
+                GameField.Devices =>
+                    4,
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or
-                GameField.Edition or
-                GameField.Serieses =>
-                    4,
                 GameField.MaximumPlayers =>
                     6,
                 GameField.Platform or

@@ -19,6 +19,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private IControlAccessor ImageControl = default!;
         private TrophysetAccessor TrophysetControl = default!;
 
+        public override Bitmap FormIcon => OxIcons.Dlc;
+
         private readonly OxFrameWithHeader BaseGroup = new()
         { 
             Text = "Information"
@@ -48,7 +50,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     Text = "Name",
                     Font = new(Styles.DefaultFont, FontStyle.Bold)
                 });
-            SetKeyUpHandler(NameControl.Control);
             FirstFocusControl = NameControl.Control;
 
             ImageControl = Context.Accessor("DLC:Image", FieldType.Image);

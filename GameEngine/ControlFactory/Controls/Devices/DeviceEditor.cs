@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
+using OxLibrary;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
@@ -11,6 +12,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
     public partial class DeviceEditor : ListItemEditor<Device, GameField, Game>
     {
         private EnumAccessor<GameField, Game, DeviceType> TypeControl = default!;
+
+        public override Bitmap FormIcon => OxIcons.Dualshock;
 
         public override void RenewData()
         {

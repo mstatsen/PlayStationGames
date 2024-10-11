@@ -42,7 +42,6 @@ namespace PlayStationGames.GameEngine.Editor
                     PanelLeft,
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Genre or
-                GameFieldGroup.Devices or
                 GameFieldGroup.Tags => 
                     PanelMiddle,
                 GameFieldGroup.Links or

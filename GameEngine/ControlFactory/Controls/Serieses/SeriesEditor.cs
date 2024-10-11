@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
+using OxLibrary;
 using OxLibrary.Dialogs;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
 using PlayStationGames.GameEngine.Data;
@@ -11,6 +12,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
     public partial class SeriesEditor : ListItemEditor<Series, GameField, Game>
     {
         private ComboBoxAccessor<GameField, Game> NameControl = default!;
+
+        public override Bitmap FormIcon => OxIcons.Series;
 
         public override void RenewData()
         {

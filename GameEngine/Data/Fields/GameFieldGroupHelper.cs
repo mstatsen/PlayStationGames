@@ -20,7 +20,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
 
                 GameFieldGroup.Tags,
                 GameFieldGroup.Installations,
-                GameFieldGroup.Devices,
                 GameFieldGroup.Genre,
 
                 GameFieldGroup.ReleaseBase
@@ -42,7 +41,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.System => "System",
                 GameFieldGroup.Tags => "Tags",
                 GameFieldGroup.Emulator => "ROMs",
-                GameFieldGroup.Devices => "Used devices",
                 _ => string.Empty,
             };
 
@@ -66,7 +64,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
                 GameField.MaximumPlayers or
-                GameField.OnlineMultiplayer => 
+                GameField.OnlineMultiplayer or
+                GameField.Devices => 
                     GameFieldGroup.Genre,
                 GameField.Dlcs => 
                     GameFieldGroup.DLC,
@@ -81,8 +80,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameFieldGroup.System,
                 GameField.EmulatorROMs => 
                     GameFieldGroup.Emulator,
-                GameField.Devices => 
-                    GameFieldGroup.Devices,
                 _ => 
                     GameFieldGroup.Base,
             };
@@ -104,7 +101,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.Trophyset =>
                     292,
                 GameFieldGroup.Genre or
-                GameFieldGroup.Devices or
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Tags => 
                     294,
@@ -134,8 +130,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     200,
                 GameFieldGroup.Tags =>
                     69,
-                GameFieldGroup.Devices =>
-                    56,
                 _ =>
                     84,
             };
@@ -149,7 +143,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameFieldGroup.Links,
                 GameFieldGroup.ReleaseBase,
                 GameFieldGroup.Trophyset,
-                GameFieldGroup.Devices,
                 GameFieldGroup.Emulator
             };
     }

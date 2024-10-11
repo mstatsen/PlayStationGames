@@ -17,6 +17,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private IControlAccessor? GameControl;
         private OxButton? GameSelectButton;
         private OxButton? SynchronizeButton;
+        public override Bitmap FormIcon => OxIcons.Related;
 
         private Game? selectedGame;
         public Game? SelectedGame

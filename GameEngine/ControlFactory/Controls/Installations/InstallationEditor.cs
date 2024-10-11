@@ -27,6 +27,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private OxLabel folderLabel = default!;
         private OxLabel sizeLabel = default!;
         private OxLabel sizeLabel2 = default!;
+        public override Bitmap FormIcon => OxIcons.Installation;
 
         private static ControlBuilder<ConsoleField, PSConsole> ConsoleBuilder =>
             DataManager.Builder<ConsoleField, PSConsole>(ControlScope.Editor);
@@ -38,13 +39,25 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             folderControl = ConsoleBuilder.Accessor("Installation:Folder", FieldType.Extract);
             consoleControl.ValueChangeHandler += (s, e) => SetConsoleValueInControl();
             sizeControl = ConsoleBuilder.Accessor("Installation:Size", FieldType.Integer);
+            PrepareControlColors();
 
             int lastBottom = PrepareControl(consoleControl);
             lastBottom = PrepareControl(storageControl, lastBottom, 110);
             lastBottom = PrepareControl(folderControl, lastBottom, 110);
             PrepareControl(sizeControl, lastBottom, 110, false);
+            CreateLabels();
+            sizeControl.MaximumValue = 1000000;
             SetConsoleValueInControl();
+            SetKeyUpHandler(consoleControl.Control);
+            SetKeyUpHandler(storageControl.Control);
+            SetKeyUpHandler(folderControl.Control);
+            SetKeyUpHandler(sizeControl.Control);
 
+            FirstFocusControl = consoleControl.Control;
+        }
+
+        private void CreateLabels()
+        {
             CreateLabel("Console", consoleControl);
             storageLabel = CreateLabel("Storage", storageControl);
             folderLabel = CreateLabel("Folder", folderControl);
@@ -54,14 +67,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             storageLabel.Left = 38;
             folderLabel.Left = 38;
             sizeLabel.Left = 38;
-            sizeControl.MaximumValue = 1000000;
-
-            SetKeyUpHandler(consoleControl.Control);
-            SetKeyUpHandler(storageControl.Control);
-            SetKeyUpHandler(folderControl.Control);
-            SetKeyUpHandler(sizeControl.Control);
-
-            FirstFocusControl = consoleControl.Control;
         }
 
         private void SetConsoleValueInControl()
@@ -74,10 +79,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             {
                 storageControl.Value = null;
                 storageControl.Enabled = false;
+                storageLabel.Enabled = false;
                 folderControl.Value = null;
                 folderControl.Enabled = false;
+                folderLabel.Enabled = false;
                 sizeControl.Value = null;
                 sizeControl.Enabled = false;
+                sizeLabel.Enabled = false;
             }
             else
             {
@@ -85,6 +93,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     new(ConsoleField.Id, FilterOperation.Equals, console.Id);
 
                 storageControl.Enabled = true;
+                storageLabel.Enabled = true;
                 IFilteredInitializer<ConsoleField, PSConsole>? storageInitializer =
                     (IFilteredInitializer<ConsoleField, PSConsole>?)storageControl.Context.Initializer;
 
@@ -97,6 +106,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 IFilteredInitializer<ConsoleField, PSConsole>? folderInitializer =
                     (IFilteredInitializer<ConsoleField, PSConsole>?)folderControl.Context.Initializer;
                 folderControl.Enabled = true;
+                folderLabel.Enabled = true;
 
                 if (folderInitializer != null)
                     folderInitializer.Filter = filter;
@@ -104,6 +114,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 folderControl.RenewControl(true);
                 folderControl.Control.BackColor = consoleControl.Control.BackColor;
                 sizeControl.Enabled = true;
+                sizeLabel.Enabled = true;
             }
         }
 
