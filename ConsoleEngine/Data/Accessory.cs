@@ -145,7 +145,8 @@ namespace PlayStationGames.ConsoleEngine.Data
             string countStr = Count > 1 
                 ? Count.ToString() + " " 
                 : string.Empty;
-            string colorStr = Color != string.Empty
+            string colorStr = Type == AccessoryType.Joystick && 
+                Color != string.Empty
                 ? Color + " "
                 : string.Empty;
             bool named = accessoryTypeHelper.Named(type, joystickType);

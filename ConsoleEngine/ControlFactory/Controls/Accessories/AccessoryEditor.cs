@@ -48,21 +48,17 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
             IBuilderContext<ConsoleField, PSConsole> context = Context.Builder.Context(ConsoleField.Accessories);
 
-            colorControl = new(context);
-            withCoverControl = new(context)
-            {
-                Text = "With cover",
-                CheckAlign = ContentAlignment.MiddleLeft
-            };
+            colorControl = Context.Accessor("Accessory:Color", FieldType.Color);
+            withCoverControl = Context.Accessor("Accessory:WithCover", FieldType.Boolean);
+            withCoverControl.Text = "With cover";
+            ((OxCheckBox)withCoverControl.Control).CheckAlign = ContentAlignment.MiddleLeft;
             nameControl = Context.Accessor("Accessory:Name", FieldType.String);
             modelCodeControl = Context.Accessor("Accessory:ModelCode", FieldType.String); ;
             coverColorControl = Context.Accessor("Accessory:CoverColor", FieldType.Color);
-            withStickCoversControl = new(context)
-            {
-                Text = "With stick covers",
-                CheckAlign = ContentAlignment.MiddleLeft
-            };
-            countControl = new(context);
+            withStickCoversControl = Context.Accessor("Accessory:WithStickCovers", FieldType.Boolean);
+            withStickCoversControl.Text = "With stick covers";
+            ((OxCheckBox)withStickCoversControl.Control).CheckAlign = ContentAlignment.MiddleLeft;
+            countControl = Context.Accessor("Accessory:Count", FieldType.Integer);
             descriptionControl = Context.Accessor("Accessory:Description", FieldType.Memo, true);
 
             int lastBottom = PrepareControl(typeControl, "Type", fullRow: true);
@@ -236,11 +232,11 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         private IControlAccessor joystickTypeControl = default!;
         private IControlAccessor nameControl = default!;
         private IControlAccessor modelCodeControl = default!;
-        private ColorComboBoxAccessor<ConsoleField, PSConsole> colorControl = default!;
-        private NumericAccessor<ConsoleField, PSConsole> countControl = default!;
+        private IControlAccessor colorControl = default!;
+        private IControlAccessor countControl = default!;
         private IControlAccessor descriptionControl = default!;
-        private CheckBoxAccessor<ConsoleField, PSConsole> withCoverControl = default!;
+        private IControlAccessor withCoverControl = default!;
         private IControlAccessor coverColorControl = default!;
-        private CheckBoxAccessor<ConsoleField, PSConsole> withStickCoversControl = default!;
+        private IControlAccessor withStickCoversControl = default!;
     }
 }
