@@ -72,6 +72,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Code => "Code",
                 GameField.Trophyset => "Trophyset",
                 GameField.Devices => "Devices",
+                GameField.AppliesTo => "Applies to",
                 _ => string.Empty,
             };
 
@@ -155,7 +156,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Verified,
                     GameField.Tags,
                     GameField.Code,
-                    GameField.Devices
+                    GameField.Devices,
+                    GameField.AppliesTo
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -304,7 +306,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.PSNProfilesLink,
                     GameField.Verified,
                     GameField.Tags,
-                    GameField.Devices
+                    GameField.Devices,
+                    GameField.AppliesTo
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -425,6 +428,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             GameField.FullGenre,
             GameField.TrophysetType,
+            GameField.AppliesTo,
             GameField.Difficult,
             GameField.CompleteTime,
             GameField.AvailableBronze,
@@ -432,7 +436,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.AvailableGold,
             GameField.AvailablePlatinum,
             GameField.StrategeLink,
-            GameField.PSNProfilesLink
+            GameField.PSNProfilesLink,
         };
 
         protected override List<GameField> GetIconFields() => new()
@@ -576,6 +580,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Platform,
             GameField.Format,
             GameField.TrophysetType,
+            GameField.AppliesTo,
             GameField.Difficult,
             GameField.CompleteTime,
             GameField.Source,
@@ -611,7 +616,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.EmulatorROMs or
                 GameField.Trophyset or
                 GameField.Tags or
-                GameField.Devices => 
+                GameField.Devices or
+                GameField.AppliesTo => 
                     FilterOperation.Contains,
                 GameField.Image or
                 GameField.StrategeLink or
@@ -669,6 +675,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.Language] = FilterOperations.EnumOperations,
             [GameField.Code] = FilterOperations.StringOperations,
             [GameField.Devices] = FilterOperations.ObjectOperations,
+            [GameField.AppliesTo] = FilterOperations.ObjectOperations,
         };
 
         protected override List<GameField> GetSelectQuickFilterFields() => new()
@@ -813,7 +820,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.ReleasePlatforms or
                 GameField.Tags or
                 GameField.Serieses or
-                GameField.Devices => 
+                GameField.Devices or
+                GameField.AppliesTo => 
                     FieldType.List,
                 GameField.StrategeLink or
                 GameField.PSNProfilesLink =>
@@ -891,7 +899,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Year,
                 GameField.Pegi,
                 GameField.ReleasePlatforms,
-                GameField.Devices
+                GameField.Devices,
+                GameField.AppliesTo
             };
     }
 }

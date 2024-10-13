@@ -25,6 +25,9 @@
     <Compile Update="ConsoleEngine\View\ConsoleFullInfoCard.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="GameEngine\ControlFactory\Controls\AppliesTo\AppliesToListControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="GameEngine\ControlFactory\Controls\DLC\DLCEditor.cs">
       <SubType>Form</SubType>
     </Compile>

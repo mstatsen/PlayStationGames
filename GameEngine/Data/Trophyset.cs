@@ -10,12 +10,14 @@ namespace PlayStationGames.GameEngine.Data
     {
         private TrophysetType type;
         private Difficult difficult = TypeHelper.DefaultValue<Difficult>();
+
         private CompleteTime completeTime = TypeHelper.DefaultValue<CompleteTime>();
         public Difficult Difficult
         {
             get => difficult;
             set => difficult = ModifyValue(difficult, value);
         }
+
         public CompleteTime CompleteTime
         {
             get => completeTime;
@@ -27,6 +29,12 @@ namespace PlayStationGames.GameEngine.Data
             get => type;
             set => type = ModifyValue(type, value);
         }
+
+        public readonly Platforms AppliesTo = new()
+        {
+            XmlName = "AppliesTo",
+            SaveEmptyList = false
+        };
 
         public readonly EarnedTrophiesList EarnedTrophies = new();
 
@@ -43,12 +51,14 @@ namespace PlayStationGames.GameEngine.Data
             completeTime = TypeHelper.DefaultValue<CompleteTime>();
             Available.Clear();
             EarnedTrophies.Clear();
+            AppliesTo.Clear();
         }
 
         public override void Init() 
         {
             AddMember(Available);
             AddMember(EarnedTrophies);
+            AddMember(AppliesTo);
         }
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
@@ -75,7 +85,8 @@ namespace PlayStationGames.GameEngine.Data
             && CompleteTime.Equals(otherTrophyset.CompleteTime)
             && EarnedTrophies.Equals(otherTrophyset.EarnedTrophies)
             && Available.Equals(otherTrophyset.Available)
-            && Type.Equals(otherTrophyset.Type);
+            && Type.Equals(otherTrophyset.Type)
+            && AppliesTo.Equals(otherTrophyset.AppliesTo);
 
         public override int GetHashCode() => 
             2049151605 + Type.GetHashCode();
@@ -115,7 +126,12 @@ namespace PlayStationGames.GameEngine.Data
             if (result != 0)
                 return result;
 
-            return EarnedTrophies.CompareTo(otherTrophyset.EarnedTrophies);
+            result = EarnedTrophies.CompareTo(otherTrophyset.EarnedTrophies);
+
+            if (result != 0)
+                return result;
+
+            return AppliesTo.CompareTo(otherTrophyset.AppliesTo);
         }
     }
 }

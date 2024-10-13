@@ -21,36 +21,37 @@ namespace PlayStationGames.GameEngine.Data.Types
                 || type == PlatformType.PS5
                 || type == PlatformType.PSVita;
 
-        public override object DependsOnValue(PlatformType value) => value switch
-        {
-            PlatformType.PS5 or 
-            PlatformType.PS4 or 
-            PlatformType.PS3 or 
-            PlatformType.PSVita or 
-            PlatformType.PS2 or 
-            PlatformType.PSP or 
-            PlatformType.PSOne => 
-                PlatformFamily.Sony,
-            PlatformType.XBoxXS or 
-            PlatformType.XBoxOne or 
-            PlatformType.XBox360 or 
-            PlatformType.XBox or 
-            PlatformType.Win => 
-                PlatformFamily.Microsoft,
-            PlatformType.NSwitch or 
-            PlatformType.NWiiU or 
-            PlatformType.NWii or 
-            PlatformType.N3DS or
-            PlatformType.NGB or
-            PlatformType.NGBC or
-            PlatformType.NGBA =>
-                PlatformFamily.Nintendo,
-            PlatformType.iOS or 
-            PlatformType.Android => 
-                PlatformFamily.Mobile,
-            _ => 
-                (object)PlatformFamily.Other,
-        };
+        public override object DependsOnValue(PlatformType value) => 
+            value switch
+            {
+                PlatformType.PS5 or 
+                PlatformType.PS4 or 
+                PlatformType.PS3 or 
+                PlatformType.PSVita or 
+                PlatformType.PS2 or 
+                PlatformType.PSP or 
+                PlatformType.PSOne => 
+                    PlatformFamily.Sony,
+                PlatformType.XBoxXS or 
+                PlatformType.XBoxOne or 
+                PlatformType.XBox360 or 
+                PlatformType.XBox or 
+                PlatformType.Win => 
+                    PlatformFamily.Microsoft,
+                PlatformType.NSwitch or 
+                PlatformType.NWiiU or 
+                PlatformType.NWii or 
+                PlatformType.N3DS or
+                PlatformType.NGB or
+                PlatformType.NGBC or
+                PlatformType.NGBA =>
+                    PlatformFamily.Nintendo,
+                PlatformType.iOS or 
+                PlatformType.Android => 
+                    PlatformFamily.Mobile,
+                _ => 
+                    (object)PlatformFamily.Other,
+            };
 
         public override string GetName(PlatformType value) => 
             value switch
@@ -192,5 +193,16 @@ namespace PlayStationGames.GameEngine.Data.Types
 
         public bool SupportCoachMultiplayer(PlatformType platform) => 
             platform is not PlatformType.PSP and not PlatformType.PSVita;
+
+        public int MaximumPlayersCount(PlatformType platfrom) =>
+            platfrom switch
+            {
+                PlatformType.PS3 =>
+                        7,
+                PlatformType.PS2 =>
+                    8,
+                _ =>
+                    4
+            };
     }
 }

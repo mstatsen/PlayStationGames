@@ -21,6 +21,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.StickCover => "Reserve stick cover",
                 AccessoryType.Other => "Other",
                 AccessoryType.Documents => "Documents",
+                AccessoryType.Wonderbook => "Wonderbook",
+                AccessoryType.VR => "VR System",
+                AccessoryType.VRCards => "VR Cards",
                 _ => string.Empty,
             };
 
@@ -40,6 +43,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.StickCover => "StickCover",
                 AccessoryType.Other => "Other",
                 AccessoryType.Documents => "Documents",
+                AccessoryType.Wonderbook => "Wonderbook",
+                AccessoryType.VR => "VR",
+                AccessoryType.VRCards => "VRCards",
                 _ => string.Empty,
             };
 
@@ -66,7 +72,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         public bool SupportModelCode(AccessoryType type, JoystickType joystickType) =>
             type == AccessoryType.Joystick
                 ? TypeHelper.Helper<JoystickTypeHelper>().IsOficial(joystickType)
-                : type is AccessoryType.Camera or
+                : type is 
+                    AccessoryType.VR or
+                    AccessoryType.Camera or
                     AccessoryType.Earphones;
 
         public bool SupportByGeneration(ConsoleGeneration generation, AccessoryType type) => 
@@ -79,6 +87,13 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.Cover => 
                     generation is ConsoleGeneration.PSP or 
                     ConsoleGeneration.PSVita,
+                AccessoryType.VR =>
+                    generation is ConsoleGeneration.PS4 or
+                        ConsoleGeneration.PS5,
+                AccessoryType.Wonderbook =>
+                    generation is ConsoleGeneration.PS3,
+                AccessoryType.VRCards =>
+                    generation is ConsoleGeneration.PSVita,
                 AccessoryType.RemoteControl => 
                     generation is not ConsoleGeneration.PSP and 
                     not ConsoleGeneration.PSVita,

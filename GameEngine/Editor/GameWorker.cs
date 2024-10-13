@@ -14,6 +14,7 @@ using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 using OxDAOEngine.ControlFactory.Accessors;
+using OxDAOEngine.ControlFactory.Controls;
 
 namespace PlayStationGames.GameEngine.Editor
 {
@@ -44,15 +45,8 @@ namespace PlayStationGames.GameEngine.Editor
         {
             Builder[GameField.MaximumPlayers].MinimumValue = 2;
             Builder[GameField.MaximumPlayers].MaximumValue =
-                Builder[GameField.Platform].EnumValue<PlatformType>() switch
-                {
-                    PlatformType.PS3 =>
-                        7,
-                    PlatformType.PS2 =>
-                        8,
-                    _ =>
-                        4
-                };
+                TypeHelper.Helper<PlatformTypeHelper>().
+                    MaximumPlayersCount(Builder[GameField.Platform].EnumValue<PlatformType>());
         }
 
         protected override FieldGroupFrames<GameField, GameFieldGroup> GetFieldGroupFrames() =>
@@ -100,9 +94,16 @@ namespace PlayStationGames.GameEngine.Editor
                     FillControls();
                     break;
                 case GameField.Platform:
+                    GenerateCurrentPlatformAsList();
+
                     if (byUser)
                         SyncFormatWithPlatform();
 
+                    RemoveUnavailableDevices();
+                    RemoveUnavailableAppliesTo(field, byUser);
+                    FixReleasePlatform();
+                    FixAppliesTo();
+                    AddCurrentPlatformToAppliesTo();
                     SyncOwnerWithControls(byUser);
                     SetCoachMultiplayerVisible();
                     ShowMaximumPlayersControl();
@@ -110,15 +111,16 @@ namespace PlayStationGames.GameEngine.Editor
                     break;
                 case GameField.Licensed:
                     SyncOwnerWithControls(byUser);
-
-                    if (!AvailableTrophyset)
-                        Builder.Control<TrophysetPanel>(GameField.Trophyset).Type = TrophysetType.NoSet;
+                    SetTrophysetAvailability();
                     break;
                 case GameField.Source:
                     SyncOwnerWithControls(byUser);
                     break;
                 case GameField.CoachMultiplayer:
                     ShowMaximumPlayersControl();
+                    break;
+                case GameField.ReleasePlatforms:
+                    RemoveUnavailableAppliesTo(field, byUser);
                     break;
             }
 
@@ -132,6 +134,76 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Source or
                 GameField.Verified or
                 GameField.CoachMultiplayer;
+        }
+
+        private void FixAppliesTo()
+        {
+            ((ICustomListControl<Platform, Platforms>)
+                Builder[GameField.AppliesTo].Control).FixedItems = 
+                CurrentPlatformAsList;
+        }
+
+        private Platforms? CurrentPlatformAsList;
+
+        private void GenerateCurrentPlatformAsList()
+        {
+            CurrentPlatformAsList ??= new Platforms();
+            CurrentPlatformAsList.Clear();
+            CurrentPlatformAsList.Add(
+                new Platform()
+                {
+                    Type = Builder.Value<PlatformType>(GameField.Platform)
+                }
+            );
+        }
+
+        private void FixReleasePlatform() =>
+            ((ICustomListControl<Platform, Platforms>)
+                Builder[GameField.ReleasePlatforms].Control).FixedItems =
+                CurrentPlatformAsList;
+
+        private void RemoveUnavailableDevices()
+        {
+            ListDAO<Device> devices = new();
+            DeviceTypeHelper deviceTypeHelper = TypeHelper.Helper<DeviceTypeHelper>();
+
+            foreach(Device device in (ListDAO<Device>)Builder[GameField.Devices].Value!)
+                if (deviceTypeHelper.Available(
+                        Builder.Value<PlatformType>(GameField.Platform)
+                    ).Contains(device.Type))
+                    devices.Add(device);
+
+            Builder[GameField.Devices].Value = devices;
+        }
+
+        private void SetTrophysetAvailability()
+        {
+            if (!AvailableTrophyset)
+                Builder.Control<TrophysetPanel>(GameField.Trophyset).Type = TrophysetType.NoSet;
+        }
+
+        private void RemoveUnavailableAppliesTo(GameField field, bool byUser)
+        {
+            Platforms appliesTo = (Platforms)Builder[GameField.AppliesTo].Value!;
+            
+            if (field == GameField.Platform && byUser)
+                appliesTo.Remove(p => p.Type == CurrentItem.PlatformType);
+
+            appliesTo.Remove(
+                p => p.Type != CurrentItem.PlatformType 
+                    && !Builder[GameField.ReleasePlatforms].DAOValue<Platforms>()!.Contains(
+                        p2 => p2.Type == p.Type 
+                )
+            );
+
+            Builder[GameField.AppliesTo].Value = appliesTo;
+        }
+
+        private void AddCurrentPlatformToAppliesTo()
+        {
+            Platforms appliesTo = (Platforms)Builder[GameField.AppliesTo].Value!;
+            appliesTo.Add(Builder[GameField.Platform].EnumValue<PlatformType>());
+            Builder[GameField.AppliesTo].Value = appliesTo;
         }
 
         private bool SupportCoathMultiplayer =>

@@ -54,9 +54,9 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 Text = "With cover",
                 CheckAlign = ContentAlignment.MiddleLeft
             };
-            nameControl = new TextAccessor<ConsoleField, PSConsole>(context);
-            modelCodeControl = new TextAccessor<ConsoleField, PSConsole>(context);
-            coverColorControl = new(context);
+            nameControl = Context.Accessor("Accessory:Name", FieldType.String);
+            modelCodeControl = Context.Accessor("Accessory:ModelCode", FieldType.String); ;
+            coverColorControl = Context.Accessor("Accessory:CoverColor", FieldType.Color);
             withStickCoversControl = new(context)
             {
                 Text = "With stick covers",
@@ -240,7 +240,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         private NumericAccessor<ConsoleField, PSConsole> countControl = default!;
         private IControlAccessor descriptionControl = default!;
         private CheckBoxAccessor<ConsoleField, PSConsole> withCoverControl = default!;
-        private ColorComboBoxAccessor<ConsoleField, PSConsole> coverColorControl = default!;
+        private IControlAccessor coverColorControl = default!;
         private CheckBoxAccessor<ConsoleField, PSConsole> withStickCoversControl = default!;
     }
 }

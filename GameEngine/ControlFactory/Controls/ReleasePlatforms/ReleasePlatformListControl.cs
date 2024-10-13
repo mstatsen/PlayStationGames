@@ -75,6 +75,27 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             return new Size(calcedWidth + 12, calcedHeight);
         }
 
+
+        protected override void OnSetFixedItems() 
+        {
+            foreach (OxCheckBox checkBox in CheckBoxes.Values)
+            {
+                checkBox.Enabled = true;
+                checkBox.Font = new Font(checkBox.Font, FontStyle.Regular);
+            }
+
+            if (FixedItems == null)
+                return;
+
+            foreach (Platform platform in FixedItems)
+            {
+                OxCheckBox checkBox = CheckBoxes[platform.Type];
+                checkBox.Checked = true;
+                checkBox.Enabled = false;
+                checkBox.Font = new Font(checkBox.Font, FontStyle.Bold);
+            }
+        }
+
         private void PrepareMainPanel()
         {
             mainPanel.Parent = this;
@@ -93,9 +114,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 AutoSize = true
             };
 
+            checkBox.CheckedChanged += CheckBoxCheckedChangedHandler;
+
             CheckBoxes.Add(platformType, checkBox);
             return checkBox;
         }
+
+        private void CheckBoxCheckedChangedHandler(object? sender, EventArgs e) => 
+            ValueChangeHandler?.Invoke(this, EventArgs.Empty);
 
         protected override void SetValuePart(Platform valuePart) => 
             CheckBoxes[valuePart.Type].Checked = true;

@@ -42,6 +42,7 @@
         //calced fields
 
         TrophysetType,
+        AppliesTo,
         Difficult,
         CompleteTime,
         AvailablePlatinum,

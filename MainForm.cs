@@ -15,7 +15,7 @@ namespace PlayStationGames
         public void DataModifiedHandler(DAO dao, DAOModifyEventArgs e) =>
             toolBar.Actions[OxToolbarAction.Save].Enabled |= e.Modified;
 
-        public override Bitmap FormIcon =>
+        public override Bitmap? FormIcon =>
             Resources.PS.ToBitmap();
 
         public MainForm()

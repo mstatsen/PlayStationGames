@@ -345,6 +345,7 @@ namespace PlayStationGames.GameEngine.Data
                         };
                     break;
                 case GameField.ReleasePlatforms:
+                case GameField.AppliesTo:
                     if (value is Platform platform)
                         return new Platforms()
                         {
@@ -498,6 +499,9 @@ namespace PlayStationGames.GameEngine.Data
                 case GameField.Trophyset:
                     Trophyset.CopyFrom((DAO?)value);
                     break;
+                case GameField.AppliesTo:
+                    Trophyset.AppliesTo.CopyFrom((DAO?)value);
+                    break;
             }
 
             Modified = true;
@@ -566,6 +570,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.RelatedGames => RelatedGames,
                 GameField.EmulatorType => EmulatorType,
                 GameField.EmulatorROMs => ROMs,
+                GameField.AppliesTo => Trophyset.AppliesTo,
                 _ => new GameCardDecorator(this)[field],
             };
 
@@ -710,14 +715,38 @@ namespace PlayStationGames.GameEngine.Data
             criticScore = XmlHelper.ValueInt(element, XmlConsts.CriticScore);
         }
 
-        /*TODO: remove this comment with code after finish development
-         * This code need for change, replace and move values between xml tags
-         * For example: you create new part (member) of this DAO and want to move to it old values from current DAO
+        private void CheckAppliesTo()
+        {
+            Trophyset.AppliesTo.Remove(p => !ReleasePlatforms.Contains(p2 => p2.Type == p.Type));
+            Trophyset.AppliesTo.Add(PlatformType);
+        }
+
+        private void CheckReleasePlatforms()
+        {
+            ReleasePlatforms.Add(PlatformType);
+        }
+
+        private void CheckDevices()
+        {
+            Devices.Remove(d =>
+                !TypeHelper.Helper<DeviceTypeHelper>().Available(PlatformType).Contains(d.Type));
+        }
+
+        protected override void BeforeSave()
+        {
+            base.BeforeSave();
+            CheckAppliesTo();
+            CheckReleasePlatforms();
+            CheckDevices();
+        }
+
         protected override void AfterLoad()
         {
             base.AfterLoad();
+            CheckAppliesTo();
+            CheckReleasePlatforms();
+            CheckDevices();
         }
-        */
 
         public override int CompareTo(DAO? other)
         {

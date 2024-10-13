@@ -10,8 +10,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override List<GameFieldGroup> EditedList() => 
             new()
             {
-                GameFieldGroup.Emulator,
-                GameFieldGroup.RelatedGames,
+                GameFieldGroup.Emulator,GameFieldGroup.RelatedGames,
                 GameFieldGroup.DLC,
                 GameFieldGroup.Base,
 

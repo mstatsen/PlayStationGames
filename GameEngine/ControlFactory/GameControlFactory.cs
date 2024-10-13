@@ -24,49 +24,84 @@ namespace PlayStationGames.GameEngine.ControlFactory
     public class GameControlFactory : ControlFactory<GameField, Game>
     {
         protected override IControlAccessor? CreateOtherAccessor(IBuilderContext<GameField, Game> context) =>
-                context is FieldContext<GameField, Game> fieldContext
-                    ? fieldContext.Field switch
-                    {
-                        GameField.PlatformFamily => CreateEnumAccessor<PlatformFamily>(context),
-                        GameField.Platform => CreateEnumAccessor<PlatformType>(context),
-                        GameField.ScreenView => CreateEnumAccessor<ScreenView>(context),
-                        GameField.Format => CreateEnumAccessor<GameFormat>(context),
-                        GameField.Source => CreateEnumAccessor<Source>(context),
-                        GameField.Region => CreateEnumAccessor<GameRegion>(context),
-                        GameField.Language => CreateEnumAccessor<GameLanguage>(context),
-                        GameField.Pegi => CreateEnumAccessor<Pegi>(context),
-                        GameField.CompleteTime => CreateEnumAccessor<CompleteTime>(context),
-                        GameField.Difficult => CreateEnumAccessor<Difficult>(context),
-                        GameField.TrophysetType => CreateEnumAccessor<TrophysetType>(context),
-                        GameField.Year => new YearAccessor<GameField, Game>(context),
-                        GameField.Dlcs => CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
-                        GameField.Tags => CreateListAccessor<Tag, ListDAO<Tag>, TagListControl>(context, ControlScope.Editor),
-                        GameField.Installations => CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),
-                        GameField.RelatedGames => CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context),
-                        GameField.ReleasePlatforms => CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
-                        GameField.Devices => CreateButtonEditAccessor<Device, ListDAO<Device>, DeviceListControl>(context),
-                        GameField.Serieses => CreateButtonEditAccessor<Series, ListDAO<Series>, SeriesListControl>(context),
-                        GameField.Id => CreateLabelAccessor(context),
-                        GameField.Owner => CreateAccountAccessor(context),
-                        GameField.Trophyset => CreateTrophysetAccessor(context),
-                        _ => base.CreateOtherAccessor(context),
-                    }
-                    : context.Key switch
-                    {
-                        "DLC:Trophyset" =>
-                            CreateTrophysetAccessor(context),
-                        "DLC:TrophysetType" =>
-                            CreateEnumAccessor<TrophysetType>(context),
-                        "DLC:Difficult" =>
-                            CreateEnumAccessor<Difficult>(context),
-                        "DLC:CompleteTime" =>
-                            CreateEnumAccessor<CompleteTime>(context),
-                        "Trophyset:Account" =>
-                            CreateAccountAccessor(context),
-                        "Device:Type" =>
-                            CreateEnumAccessor<DeviceType>(context),
-                        _ => base.CreateOtherAccessor(context)
-                    };
+            context is FieldContext<GameField, Game> fieldContext
+                ? fieldContext.Field switch
+                {
+                    GameField.PlatformFamily =>
+                        CreateEnumAccessor<PlatformFamily>(context),
+                    GameField.Platform =>
+                        CreateEnumAccessor<PlatformType>(context),
+                    GameField.ScreenView =>
+                        CreateEnumAccessor<ScreenView>(context),
+                    GameField.Format =>
+                        CreateEnumAccessor<GameFormat>(context),
+                    GameField.Source =>
+                        CreateEnumAccessor<Source>(context),
+                    GameField.Region =>
+                        CreateEnumAccessor<GameRegion>(context),
+                    GameField.Language =>
+                        CreateEnumAccessor<GameLanguage>(context),
+                    GameField.Pegi =>
+                        CreateEnumAccessor<Pegi>(context),
+                    GameField.CompleteTime =>
+                        CreateEnumAccessor<CompleteTime>(context),
+                    GameField.Difficult =>
+                        CreateEnumAccessor<Difficult>(context),
+                    GameField.TrophysetType =>
+                        CreateEnumAccessor<TrophysetType>(context),
+                    GameField.Year =>
+                        CreateYearAccessor(context),
+                    GameField.Dlcs =>
+                        CreateListAccessor<DLC, ListDAO<DLC>, DLCListControl>(context, ControlScope.Editor),
+                    GameField.Tags =>
+                        CreateListAccessor<Tag, ListDAO<Tag>, TagListControl>(context, ControlScope.Editor),
+                    GameField.Installations =>
+                        CreateListAccessor<Installation, ListDAO<Installation>, InstallationsControl>(context, ControlScope.Editor),
+                    GameField.RelatedGames =>
+                        CreateListAccessor<RelatedGame, RelatedGames, RelatedGamesControl>(context),
+                    GameField.ReleasePlatforms =>
+                        CreateListAccessor<Platform, Platforms, ReleasePlatformListControl>(context),
+                    GameField.Devices =>
+                        CreateButtonEditAccessor<Device, ListDAO<Device>, DeviceListControl>(context),
+                    GameField.Serieses =>
+                        CreateButtonEditAccessor<Series, ListDAO<Series>, SeriesListControl>(context),
+                    GameField.Id =>
+                        CreateLabelAccessor(context),
+                    GameField.Owner =>
+                        CreateAccountAccessor(context),
+                    GameField.Trophyset =>
+                        CreateTrophysetAccessor(context),
+                    GameField.AppliesTo =>
+                        CreateAppliesToAccessor(context),
+                    _ => 
+                        base.CreateOtherAccessor(context),
+                }
+                : context.Key switch
+                {
+                    "DLC:Trophyset" =>
+                        CreateTrophysetAccessor(context),
+                    "DLC:TrophysetType" =>
+                        CreateEnumAccessor<TrophysetType>(context),
+                    "DLC:Difficult" =>
+                        CreateEnumAccessor<Difficult>(context),
+                    "DLC:CompleteTime" =>
+                        CreateEnumAccessor<CompleteTime>(context),
+                    "Trophyset:Account" =>
+                        CreateAccountAccessor(context),
+                    "Device:Type" =>
+                        CreateEnumAccessor<DeviceType>(context),
+                    "AppliesTo:Type" =>
+                        CreateEnumAccessor<PlatformType>(context),
+                    "DLC:TrophysetAppliesTo" =>
+                        CreateAppliesToAccessor(context),
+                    _ => base.CreateOtherAccessor(context)
+                };
+
+        private IControlAccessor CreateYearAccessor(IBuilderContext<GameField, Game> context) =>
+            new YearAccessor<GameField, Game>(context);
+
+        private IControlAccessor CreateAppliesToAccessor(IBuilderContext<GameField, Game> context) => 
+            CreateButtonEditAccessor<Platform, Platforms, AppliesToListControl>(context);
 
         private static IControlAccessor CreateTrophysetAccessor(IBuilderContext<GameField, Game> context) => 
             new TrophysetAccessor(context);
@@ -109,6 +144,8 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     new SeriesNameInitializer(),
                 "Device:Type" =>
                     new DeviceTypeInitializer(),
+                "AppliesTo:Type" =>
+                    new PlaystationPlatformTypeInitializer(),
                 _ => 
                     base.Initializer(context),
             };

@@ -213,7 +213,7 @@ namespace PlayStationGames.GameEngine.View
 
         protected override string GetTitle() =>
             Item != null
-                ? $"{Item.Name} ({TypeHelper.ShortName(Item.PlatformType)})"
+                ? $"{Item.FullTitle()})"
                 : "Game";
 
         private readonly OxFrame trophiesPanel;

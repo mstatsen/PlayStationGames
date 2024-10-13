@@ -17,6 +17,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
     {
         private readonly ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
         private readonly IControlAccessor typeControl;
+        private readonly IControlAccessor appliesToControl;
         private readonly IControlAccessor difficultControl;
         private readonly IControlAccessor completeTimeControl;
         private readonly List<TrophiesPanel> trophiesPanels = new();
@@ -29,6 +30,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         { 
             Left = 8,
             Text = "Type"
+        };
+        private readonly OxLabel trophysetAppliesToLabel = new()
+        {
+            Left = 8,
+            Text = "Applies to"
         };
         private readonly OxLabel difficultLabel = new()
         {
@@ -55,15 +61,20 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         public TrophysetPanel(bool forDLC)
         {
             typeControl = forDLC ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) : builder[GameField.TrophysetType];
+            appliesToControl = forDLC ? builder.Accessor("DLC:TrophysetAppliesTo", FieldType.Enum) : builder[GameField.AppliesTo];
             difficultControl = forDLC ? builder.Accessor("DLC:Difficult", FieldType.Enum) : builder[GameField.Difficult];
             completeTimeControl = forDLC ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) : builder[GameField.CompleteTime];
             PrepareAccessor(typeControl, trophysetTypeLabel, 4, 154, TypeChangeHandler);
-            PrepareAccessor(difficultControl, difficultLabel, typeControl.Bottom, 64, DifficultChangeHandler);
+            PrepareAccessor(appliesToControl, trophysetAppliesToLabel, typeControl.Bottom, 154, AppliesToChandeHandler);
+            PrepareAccessor(difficultControl, difficultLabel, appliesToControl.Bottom, 64, DifficultChangeHandler);
             PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 88, CompleteTimeChangeHandler);
             CreateTrophiesPanels(forDLC);
             AccountSelector = new(this);
             SetMinimumSize();
         }
+
+        private void AppliesToChandeHandler(object? sender, EventArgs e) =>
+            ValueChanged?.Invoke(this, e);
 
         public TrophysetAccountEditor AccountSelector;
 
@@ -106,6 +117,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             if (typeControl != null)
             {
                 ControlPainter.ColorizeControl(typeControl, Colors.Darker());
+                ControlPainter.ColorizeControl(appliesToControl, Colors.Darker());
                 ControlPainter.ColorizeControl(difficultControl, Colors.Darker());
                 ControlPainter.ColorizeControl(completeTimeControl, Colors.Darker());
                 ControlPainter.ColorizeControl(addButton, Colors.Darker());
@@ -171,7 +183,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 Parent = this,
                 Left = 8,
                 Top = (trophiesPanels.Count == 0 
-                        ? 100 
+                        ? 132 
                         : trophiesPanels.Count == 1 
                             ? addButton.Bottom - 2
                             : trophiesPanels.Last().Bottom + 4)
@@ -209,6 +221,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                     CompleteTime = completeTimeControl.EnumValue<CompleteTime>(),
                 };
 
+                result.AppliesTo.CopyFrom(appliesToControl.DAOValue<ListDAO<Platform>>());
                 result.Available.CopyFrom(AvailableTrophiesPanel.Value);
 
                 foreach (TrophiesPanel trophiesPanel in VisiblePanels)
@@ -232,6 +245,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 }
 
                 typeControl.Value = value.Type;
+                appliesToControl.Value = value.AppliesTo;
                 difficultControl.Value = value.Difficult;
                 completeTimeControl.Value = value.CompleteTime;
                 AvailableTrophiesPanel.Value = value.Available;
@@ -259,6 +273,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             set
             {
                 typeControl.ReadOnly = value;
+                appliesToControl.ReadOnly = value;
                 difficultControl.ReadOnly = value;
                 completeTimeControl.ReadOnly = value;
                 AvailableTrophiesPanel!.ReadOnly = value;
@@ -274,6 +289,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         public void ClearValues()
         {
             typeControl.Value = TrophysetType.NoSet;
+            appliesToControl.Clear();
             difficultControl.Value = Difficult.Unknown;
             completeTimeControl.Value = CompleteTime.Unknown;
 
