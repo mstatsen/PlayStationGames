@@ -50,16 +50,16 @@ namespace PlayStationGames.ConsoleEngine.Editor
             ConsoleGeneration generation = ((ConsoleWorker)Worker).Generation;
             FirmwareType firmware = ((ConsoleWorker)Worker).Firmware;
 
-            if (generationHelper.FolderSupport(generation))
-            {
-                Groups[ConsoleFieldGroup.Games].Dock = DockStyle.Bottom;
-                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Bottom;
-            }
-            else
-            {
-                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Fill;
-                Groups[ConsoleFieldGroup.Games].Dock = DockStyle.Top;
-            }
+            DockStyle gamesDock = generationHelper.FolderSupport(generation)
+                ? DockStyle.Bottom
+                : DockStyle.Top;
+
+            DockStyle accessoriesDock = generationHelper.FolderSupport(generation)
+                ? DockStyle.Bottom
+                : DockStyle.Fill;
+
+            Groups[ConsoleFieldGroup.Accessories].Dock = accessoriesDock;
+            Groups[ConsoleFieldGroup.Games].Dock = gamesDock;
 
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
             SetFrameMargin(ConsoleFieldGroup.Games, Groups[ConsoleFieldGroup.Games]);
