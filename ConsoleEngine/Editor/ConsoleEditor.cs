@@ -44,27 +44,32 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         protected override void RecalcPanels()
         {
+            if (CreatingProcess)
+                return;
+            
             MinimumSize = new Size(0, 0);
             MaximumSize = new Size(0, 0);
             PanelLeft.Width = CalcedWidth(PanelLeft);
             ConsoleGeneration generation = ((ConsoleWorker)Worker).Generation;
             FirmwareType firmware = ((ConsoleWorker)Worker).Firmware;
 
-            DockStyle gamesDock = generationHelper.FolderSupport(generation)
-                ? DockStyle.Bottom
-                : DockStyle.Top;
-
-            DockStyle accessoriesDock = generationHelper.FolderSupport(generation)
-                ? DockStyle.Bottom
-                : DockStyle.Fill;
-
-            Groups[ConsoleFieldGroup.Accessories].Dock = accessoriesDock;
-            Groups[ConsoleFieldGroup.Games].Dock = gamesDock;
+            if (generationHelper.FolderSupport(generation))
+            {
+                Groups[ConsoleFieldGroup.Games].Dock = DockStyle.Bottom;
+                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Bottom;
+            }
+            else
+            {
+                Groups[ConsoleFieldGroup.Accessories].Dock = DockStyle.Fill;
+                Groups[ConsoleFieldGroup.Games].Dock = DockStyle.Top;
+            }
 
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
             SetFrameMargin(ConsoleFieldGroup.Games, Groups[ConsoleFieldGroup.Games]);
             MainPanel.SetContentSize(
-                PanelLeft.Width + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders),
+                PanelLeft.Width 
+                    + TypeHelper.Helper<ConsoleFieldGroupHelper>().
+                        GroupWidth(ConsoleFieldGroup.Folders),
                 (generationHelper.StorageSupport(generation)
                     ? Groups[ConsoleFieldGroup.Storages].Bottom
                     : generationHelper.MaxAccountsCount(generation, firmware) > 0 &&

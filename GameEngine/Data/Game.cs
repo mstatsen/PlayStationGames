@@ -718,26 +718,42 @@ namespace PlayStationGames.GameEngine.Data
         private void CheckAppliesTo()
         {
             Trophyset.AppliesTo.Remove(p => !ReleasePlatforms.Contains(p2 => p2.Type == p.Type));
-            Trophyset.AppliesTo.Add(PlatformType);
+
+            if (Format != GameFormat.Emulator)
+                Trophyset.AppliesTo.Add(PlatformType);
         }
 
         private void CheckReleasePlatforms()
         {
-            ReleasePlatforms.Add(PlatformType);
+            if (Format == GameFormat.Emulator)
+                ReleasePlatforms.Clear();
+            else
+                ReleasePlatforms.Add(PlatformType);
         }
 
-        private void CheckDevices()
-        {
+        private void CheckDevices() => 
             Devices.Remove(d =>
-                !TypeHelper.Helper<DeviceTypeHelper>().Available(PlatformType).Contains(d.Type));
-        }
+                !TypeHelper.Helper<DeviceTypeHelper>().Available(PlatformType).Contains(d.Type)
+            );
 
         protected override void BeforeSave()
         {
             base.BeforeSave();
-            CheckAppliesTo();
             CheckReleasePlatforms();
+            CheckAppliesTo();
             CheckDevices();
+            CheckRelease();
+        }
+
+        private void CheckRelease()
+        {
+            if (Format == GameFormat.Emulator)
+            {
+                Developer = string.Empty;
+                Publisher = string.Empty;
+                Pegi = Pegi.Unknown;
+                Year = -1;
+            }
         }
 
         protected override void AfterLoad()

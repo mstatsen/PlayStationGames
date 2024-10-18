@@ -91,6 +91,8 @@ namespace PlayStationGames.GameEngine.Editor
             switch (field)
             {
                 case GameField.RelatedGames:
+                    CurrentItem[GameField.RelatedGames] = Builder.Value(GameField.RelatedGames);
+                    SetRelatedGamesFilter();
                     FillControls();
                     break;
                 case GameField.Platform:
@@ -106,7 +108,8 @@ namespace PlayStationGames.GameEngine.Editor
                     AddCurrentPlatformToAppliesTo();
                     SyncOwnerWithControls(byUser);
                     SetCoachMultiplayerVisible();
-                    ShowMaximumPlayersControl();
+                    //ShowMaximumPlayersControl();
+                    SetGenreControlsVisible();
                     SetMaximumPlayersConstraints();
                     break;
                 case GameField.Licensed:
@@ -117,14 +120,13 @@ namespace PlayStationGames.GameEngine.Editor
                     SyncOwnerWithControls(byUser);
                     break;
                 case GameField.CoachMultiplayer:
-                    ShowMaximumPlayersControl();
+                    SetGenreControlsVisible(); 
+                    //ShowMaximumPlayersControl();
                     break;
                 case GameField.ReleasePlatforms:
                     RemoveUnavailableAppliesTo(field, byUser);
                     break;
             }
-
-            SetRelatedGamesFilter();
 
             return field is 
                 GameField.Licensed or
@@ -255,19 +257,7 @@ namespace PlayStationGames.GameEngine.Editor
             Editor.Groups[GameFieldGroup.Installations].Visible =
                 sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
 
-            bool isEmulator = Builder.Value<GameFormat>(GameField.Format) == GameFormat.Emulator;
-            Editor.Groups[GameFieldGroup.Emulator].Visible = isEmulator;
-            Editor.Groups[GameFieldGroup.Genre].Visible = !isEmulator;
-            Editor.Groups[GameFieldGroup.RelatedGames].Visible = !isEmulator;
-            Editor.Groups[GameFieldGroup.ReleaseBase].Visible = !isEmulator;
-
-            Builder.SetVisible(GameField.Region, !isEmulator);
-            Builder.SetVisible(GameField.Language, !isEmulator);
-            Builder.SetVisible(GameField.Code, !isEmulator);
-            Builder.SetVisible(GameField.EmulatorType, isEmulator);
-            Builder.SetVisible(GameField.Devices, TypeHelper.Helper<DeviceTypeHelper>().
-                Available(Builder.Value<PlatformType>(GameField.Platform)).Count > 0
-            );
+            SetAsEmulatorVisible();
 
             bool withoutTrophyset = 
                 Builder.Control<TrophysetPanel>(GameField.Trophyset).Type == TrophysetType.NoSet;
@@ -278,36 +268,17 @@ namespace PlayStationGames.GameEngine.Editor
             List<GameField> unverifiedFields = GameFieldHelper.UnverifiedFields();
 
             if (!verified)
-            {
                 foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                     foreach (GameField field in groupHelper.Fields(group))
                         Builder[field].ReadOnly = false;
 
-                //TrophysetPanel.ReadOnly = false;
-            }
-
-            bool editionVisible =
-                !isEmulator
-                && (!verified || !Builder[GameField.Edition].IsEmpty);
-            Builder.SetVisible(GameField.Edition, editionVisible);
-            Builder.SetVisible(GameField.Serieses, 
-                !isEmulator 
-                && (!verified || !Builder[GameField.Serieses].IsEmpty)
-            );
-
-            Builder[GameField.Serieses].Top = (editionVisible
-                ? Builder[GameField.Edition].Bottom
-                : Builder[GameField.Edition].Top) 
-                + Generator!.Offset(GameField.Serieses);
+            SetEditionAndSeriesesVisible();
+            SetGenreControlsVisible();
 
             if (verified)
-            {
-                //TrophysetPanel.ReadOnly = true;
-
                 foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                     foreach (GameField field in groupHelper.Fields(group))
                         Builder[field].ReadOnly = !unverifiedFields.Contains(field);
-            }
 
             if (!verified)
                 Builder[GameField.Owner].Enabled = AccountAvailable();
@@ -318,6 +289,80 @@ namespace PlayStationGames.GameEngine.Editor
             Editor.Groups[GameFieldGroup.DLC].Visible = Builder.Value<bool>(GameField.Licensed) 
                 && (!verified || !Builder[GameField.Dlcs].IsEmpty);
             return true;
+        }
+
+        private void SetGenreControlsVisible()
+        {
+            bool verified = Builder.Value<bool>(GameField.Verified);
+            bool singlePlayerVisible = !verified
+                || Builder[GameField.SinglePlayer].BoolValue;
+            bool coachMultiplayerVisible = !verified
+                || Builder[GameField.CoachMultiplayer].BoolValue;
+            bool maxPlayersVisible = coachMultiplayerVisible &&
+                Builder[GameField.CoachMultiplayer].BoolValue;
+            bool onlineMultiplayerVisible = !verified
+                || Builder[GameField.OnlineMultiplayer].BoolValue;
+
+            int lastBottom = singlePlayerVisible
+                ? Builder[GameField.SinglePlayer].Bottom
+                : Builder[GameField.Genre].Bottom;
+
+            Builder.SetVisible(GameField.SinglePlayer, singlePlayerVisible);
+            Builder.SetVisible(GameField.CoachMultiplayer, coachMultiplayerVisible);
+            Builder[GameField.CoachMultiplayer].Top = lastBottom + 4;
+            Builder.SetVisible(GameField.MaximumPlayers, maxPlayersVisible);
+
+            if (coachMultiplayerVisible)
+                lastBottom = Builder[GameField.CoachMultiplayer].Bottom;
+
+            Builder[GameField.MaximumPlayers].Top = lastBottom + 4;
+
+            if (maxPlayersVisible)
+                lastBottom = Builder[GameField.MaximumPlayers].Bottom;
+
+            Builder.SetVisible(GameField.OnlineMultiplayer, onlineMultiplayerVisible);
+            Builder[GameField.OnlineMultiplayer].Top = lastBottom + 4;
+
+            if (onlineMultiplayerVisible)
+                lastBottom = Builder[GameField.OnlineMultiplayer].Bottom;
+
+            Builder.SetVisible(GameField.Devices,
+                TypeHelper.Helper<DeviceTypeHelper>().
+                    Available(Builder.Value<PlatformType>(GameField.Platform)).Count > 0
+                    && !verified || !Builder[GameField.Devices].IsEmpty);
+            Builder[GameField.Devices].Top = lastBottom + 4;
+        }
+
+        private void SetEditionAndSeriesesVisible()
+        {
+            bool isEmulator = GameFormat.Emulator.Equals(Builder.Value(GameField.Format));
+            bool verified = Builder.Value<bool>(GameField.Verified);
+            bool editionVisible =
+                !isEmulator
+                && (!verified || !Builder[GameField.Edition].IsEmpty);
+            Builder.SetVisible(GameField.Edition, editionVisible);
+            Builder.SetVisible(GameField.Serieses,
+                !isEmulator
+                && (!verified || !Builder[GameField.Serieses].IsEmpty)
+            );
+            Builder[GameField.Serieses].Top = (editionVisible
+                ? Builder[GameField.Edition].Bottom
+                : Builder[GameField.Edition].Top)
+                + Generator!.Offset(GameField.Serieses);
+        }
+
+        private void SetAsEmulatorVisible()
+        {
+            bool isEmulator = GameFormat.Emulator.Equals(Builder.Value(GameField.Format));
+            Editor.Groups[GameFieldGroup.Emulator].Visible = isEmulator;
+            Editor.Groups[GameFieldGroup.Genre].Visible = !isEmulator;
+            Editor.Groups[GameFieldGroup.RelatedGames].Visible = !isEmulator;
+            Editor.Groups[GameFieldGroup.ReleaseBase].Visible = !isEmulator;
+
+            Builder.SetVisible(GameField.Region, !isEmulator);
+            Builder.SetVisible(GameField.Language, !isEmulator);
+            Builder.SetVisible(GameField.Code, !isEmulator);
+            Builder.SetVisible(GameField.EmulatorType, isEmulator);
         }
 
         private bool AvailableTrophyset =>

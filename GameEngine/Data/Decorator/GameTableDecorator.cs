@@ -34,6 +34,8 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Dlcs => DLC,
                 GameField.TrophysetType => TrophysetAccesibility,
                 GameField.Owner => Owner,
+                GameField.Devices => Dao.Devices.ShortString,
+                GameField.MaximumPlayers => Dao.CoachMultiplayer ? Dao.MaximumPlayers : string.Empty,
                 _ => base.Value(field),
             };
 
@@ -85,7 +87,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         private object? CompleteTime =>
             Dao.Trophyset.CompleteTime == TypeHelper.EmptyValue<CompleteTime>()
                 ? string.Empty
-                : TypeHelper.FullName(Dao.Trophyset.CompleteTime);
+                : TypeHelper.Name(Dao.Trophyset.CompleteTime);
 
         private object? Format =>
             Dao.Format != TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType)
@@ -98,7 +100,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         private object? Difficult =>
             Dao.Trophyset.Difficult == TypeHelper.EmptyValue<Difficult>()
                 ? string.Empty
-                : TypeHelper.FullName(Dao.Trophyset.Difficult);
+                : TypeHelper.Name(Dao.Trophyset.Difficult);
 
         private string CriticScore =>
             Dao.CriticScore == GameConsts.Empty_CriticScore

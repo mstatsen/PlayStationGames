@@ -3,7 +3,6 @@ using OxDAOEngine.Data.Decorator;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxDAOEngine.Data.Links;
-using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {

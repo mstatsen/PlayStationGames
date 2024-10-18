@@ -17,6 +17,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override string ColumnCaption(GameField field) => 
             field switch
             {
+                GameField.Verified => "Verified",
                 GameField.TrophysetType => "Trophyset",
                 GameField.ReleasePlatforms => "Released on",
                 _ => base.ColumnCaption(field),
@@ -703,19 +704,19 @@ namespace PlayStationGames.GameEngine.Data.Fields
             field switch
             {
                 GameField.Source => new List<GameField>()
-                        {
-                            GameField.Licensed,
-                            GameField.Platform
-                        },
+                    {
+                        GameField.Licensed,
+                        GameField.Platform
+                    },
                 GameField.Platform => new List<GameField>()
-                        {
-                            GameField.PlatformFamily
-                        },
+                    {
+                        GameField.PlatformFamily
+                    },
                 GameField.Format => new List<GameField>()
-                        {
-                            GameField.Licensed,
-                            GameField.Platform
-                        },
+                    {
+                        GameField.Licensed,
+                        GameField.Platform
+                    },
                 _ => base.Depended(field),
             };
 
@@ -728,17 +729,13 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override int ColumnWidth(GameField field) => 
             field switch
             {
-                GameField.Name or
-                GameField.RelatedGames => 
+                GameField.Name => 
                     350,
-                GameField.Platform => 
-                    70,
                 GameField.Format or 
                 GameField.ReleasePlatforms => 
                     70,
                 GameField.Edition or 
                 GameField.Serieses or 
-                GameField.Dlcs or 
                 GameField.FullGenre or 
                 GameField.Developer or 
                 GameField.Publisher => 
@@ -748,15 +745,19 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.AvailableSilver or 
                 GameField.AvailableBronze => 
                     24,
+                GameField.RelatedGames or
                 GameField.Source => 
-                    88,
+                    70,
+                GameField.Dlcs or
                 GameField.CriticScore or 
                 GameField.Year or
                 GameField.MaximumPlayers or
                 GameField.Pegi => 
                     40,
-                GameField.Image or
                 GameField.Licensed or
+                GameField.Verified or
+                GameField.Platform or
+                GameField.Image or
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or

@@ -31,7 +31,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             Left = 8,
             Text = "Type"
         };
-        private readonly OxLabel trophysetAppliesToLabel = new()
+        private readonly OxLabel appliesToLabel = new()
         {
             Left = 8,
             Text = "Applies to"
@@ -65,7 +65,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             difficultControl = forDLC ? builder.Accessor("DLC:Difficult", FieldType.Enum) : builder[GameField.Difficult];
             completeTimeControl = forDLC ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) : builder[GameField.CompleteTime];
             PrepareAccessor(typeControl, trophysetTypeLabel, 4, 154, TypeChangeHandler);
-            PrepareAccessor(appliesToControl, trophysetAppliesToLabel, typeControl.Bottom, 154, AppliesToChandeHandler);
+            PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 154, AppliesToChandeHandler);
             PrepareAccessor(difficultControl, difficultLabel, appliesToControl.Bottom, 64, DifficultChangeHandler);
             PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 88, CompleteTimeChangeHandler);
             CreateTrophiesPanels(forDLC);
@@ -89,18 +89,39 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             if (Type == TrophysetType.NoSet)
                 ClearValues();
 
+            appliesToControl.Visible = Type != TrophysetType.NoSet;
+            AddCurrentPlatformToAppliesTo();
+            appliesToLabel.Visible = Type != TrophysetType.NoSet;
             difficultControl.Visible = Type != TrophysetType.NoSet;
             completeTimeControl.Visible = Type != TrophysetType.NoSet;
             difficultLabel.Visible = Type != TrophysetType.NoSet;
             completeTimeLabel.Visible = Type != TrophysetType.NoSet;
+            addButton.Visible = Type != TrophysetType.NoSet;
             RecalcTrophiesPanels();
             ValueChanged?.Invoke(this, e);
         }
 
-        private void SetMinimumSize(int height = -1)
+        private void AddCurrentPlatformToAppliesTo()
         {
-            if (height == -1)
-                height = VisiblePanels.Count > 0 ? VisiblePanels.Last().Bottom : addButton.Bottom;
+            if (Type != TrophysetType.NoSet)
+            {
+                appliesToControl.Value = new Platforms
+                {
+                    new Platform(
+                        builder.Value<PlatformType>(GameField.Platform)
+                    )
+                };
+            }
+        }
+
+        private void SetMinimumSize()
+        {
+            int height = 
+                Type == TrophysetType.NoSet 
+                    ? typeControl.Bottom 
+                    : VisiblePanels.Count > 0 
+                        ? VisiblePanels.Last().Bottom 
+                        : addButton.Bottom;
 
             MinimumSize = new Size(
                 trophiesPanels.Last().Right + 8,
@@ -173,7 +194,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 lastTop = trophiesPanel.Bottom + 4;
             }
 
-            SetMinimumSize(VisiblePanels.Count > 0 ? lastTop : addButton.Bottom);
+            SetMinimumSize();
         }
 
         private TrophiesPanel CreateTrophiesPanel(Account? account, bool forDLC)
