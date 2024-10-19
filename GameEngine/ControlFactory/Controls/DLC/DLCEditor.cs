@@ -22,7 +22,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         public override Bitmap FormIcon => OxIcons.Dlc;
 
         private readonly OxFrameWithHeader BaseGroup = new()
-        { 
+        {
             Text = "Information"
         };
 
@@ -78,7 +78,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             RecalcSize();
         }
 
-        private void TrophysetValueChange(object? sender, EventArgs e) => 
+        private void TrophysetValueChange(object? sender, EventArgs e) =>
             RecalcSize();
 
         protected override void RecalcSize()
@@ -96,6 +96,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 TrophysetGroup.Right,
                 Math.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
             );
+        }
+
+        protected override void PrepareReadonly()
+        {
+            NameControl.ReadOnly = ReadOnly;
+            AcquiredControl.ReadOnly = ReadOnly;
+            ImageControl.ReadOnly = ReadOnly;
+            TrophysetControl.ReadOnly = ReadOnly;
         }
 
         protected override void PrepareControlColors()

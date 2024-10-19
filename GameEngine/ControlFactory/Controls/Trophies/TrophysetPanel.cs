@@ -70,6 +70,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 88, CompleteTimeChangeHandler);
             CreateTrophiesPanels(forDLC);
             AccountSelector = new(this);
+
+            if (forDLC)
+                appliesToControl.ReadOnly = true;
+
             SetMinimumSize();
         }
 
@@ -294,7 +298,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             set
             {
                 typeControl.ReadOnly = value;
-                appliesToControl.ReadOnly = value;
+                appliesToControl.ReadOnly = appliesToControl.ReadOnly || value;
                 difficultControl.ReadOnly = value;
                 completeTimeControl.ReadOnly = value;
                 AvailableTrophiesPanel!.ReadOnly = value;

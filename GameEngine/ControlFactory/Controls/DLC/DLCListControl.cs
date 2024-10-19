@@ -11,5 +11,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             "DLC List";
 
         protected override string ItemName() => "DLC";
+
+        public override ReadonlyMode ReadonlyMode => ReadonlyMode.EditAsReadonly;
     }
 }
