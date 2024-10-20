@@ -30,7 +30,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     NormalizeIfEmpty(Dao.Trophyset.AppliesTo),
                 GameField.Devices =>
                     NormalizeIfEmpty(Dao.Devices.OneColumnText()),
-                GameField.FullGenre => 
+                GameField.Genre => 
                     FullGenre,
                 GameField.AvailablePlatinum when Dao.Trophyset.Available.Platinum > 0 =>
                     "Yes",

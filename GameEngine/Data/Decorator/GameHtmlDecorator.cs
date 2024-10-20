@@ -33,7 +33,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     ListToHtmlColumn(Dao.RelatedGames.StringList),
                 GameField.TrophysetType => 
                     TrophysetAccessibility(),
-                GameField.FullGenre => 
+                GameField.Genre => 
                     CalcedGenre(),
                 GameField.Pegi => 
                     DecoratorHelper.NoWrap(
@@ -58,7 +58,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 case GameField.ReleasePlatforms:
                     attributesList.Add(string.Format(Attr_Width, 120));
                     break;
-                case GameField.FullGenre:
+                case GameField.Genre:
                     attributesList.Add(string.Format(Attr_Width, 160));
                     break;
             }

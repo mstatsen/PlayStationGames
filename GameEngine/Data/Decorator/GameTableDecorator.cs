@@ -24,7 +24,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Installations => Installations,
                 GameField.Difficult => Difficult,
                 GameField.CompleteTime => CompleteTime,
-                GameField.FullGenre => CalcedGenre,
+                GameField.Genre => CalcedGenre,
                 GameField.Format => Format,
                 GameField.Platform => PlatformType,
                 GameField.StrategeLink => StrategeLink,

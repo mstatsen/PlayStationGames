@@ -13,7 +13,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
             {
                 GameField.Difficult or 
                 GameField.Pegi or 
-                GameField.AvailablePlatinum or 
+                GameField.AvailablePlatinum or
+                GameField.Licensed or
+                GameField.SinglePlayer or
+                GameField.Multiplayer or
+                GameField.Installed or
                 GameField.Year => 
                     56,
                 GameField.Format => 
@@ -22,8 +26,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                     160,
                 GameField.CompleteTime => 
                     80,
+                GameField.Owner =>
+                    138,
                 GameField.TrophysetType => 
-                    148,
+                    118,
                 _ => 
                     100,
             };
@@ -51,6 +57,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                         return "Genre";
                     break;
 
+                case GameField.SinglePlayer:
+                    return "Single";
+
                 case GameField.CompleteTime:
                     if (variant == QuickFilterVariant.Export ||
                         (variant == QuickFilterVariant.Base &&
@@ -64,6 +73,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                         quickFilterFields.Contains(GameField.TrophysetType)))
                         return "Trophyset";
                     break;
+
+                case GameField.AvailablePlatinum:
+                    return "Platinum";
             }
 
             return string.Empty;

@@ -161,7 +161,7 @@ namespace PlayStationGames.GameEngine.View
             ControlLayouts<GameField> result = new();
             Layouter.Template.Left = 82;
             releaseLayouts.Clear();
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.FullGenre))
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Genre))
                 .OffsetVertical(Layouter[GameField.CompleteTime], 2);
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.CriticScore, -8));
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Developer, -2));

@@ -572,6 +572,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.EmulatorROMs => ROMs,
                 GameField.AppliesTo => Trophyset.AppliesTo,
                 GameField.Installed => Installations.Count > 0,
+                GameField.Multiplayer => CoachMultiplayer || OnlineMultiplayer,
                 _ => new GameCardDecorator(this)[field],
             };
 

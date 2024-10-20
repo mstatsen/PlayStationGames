@@ -45,7 +45,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         public override string ToString() => 
-            $"{Name}{(Trophyset.Type != TrophysetType.NoSet ? " (trophyset)" : string.Empty)}";
+            Name;
 
         public override bool Equals(object? obj) =>
             base.Equals(obj)

@@ -50,8 +50,8 @@
         AvailableSilver,
         AvailableBronze,
 
-        FullGenre,
         Installed,
+        Multiplayer,
 
         //Links
         StrategeLink,

@@ -124,7 +124,8 @@ namespace PlayStationGames.GameEngine.View
             return new ControlLayouts<GameField>()
             {
                 Layouter.AddFromTemplate(GameField.Licensed),
-                Layouter.AddFromTemplate(GameField.Source, -18),
+                Layouter.AddFromTemplate(GameField.Owner, -6),
+                Layouter.AddFromTemplate(GameField.Source, -6),
                 Layouter.AddFromTemplate(GameField.Platform, -6),
                 Layouter.AddFromTemplate(GameField.Format, -6)
             };
@@ -137,13 +138,14 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Left = 92;
             ControlLayout<GameField>? imageLayout = Layouter[GameField.Image];
 
-            Layouter.Template.Top = (imageLayout != null ? imageLayout.Bottom : 0) + 8;
+            //Layouter.Template.Top = (imageLayout != null ? imageLayout.Bottom : 0) + 8;
 
             return new ControlLayouts<GameField>() {
                 Layouter.AddFromTemplate(GameField.Region),
-                Layouter.AddFromTemplate(GameField.Serieses),
+                Layouter.AddFromTemplate(GameField.Code, -6),
+                Layouter.AddFromTemplate(GameField.Serieses, -6),
                 Layouter.AddFromTemplate(GameField.CriticScore, -6),
-                Layouter.AddFromTemplate(GameField.FullGenre, -6),
+                Layouter.AddFromTemplate(GameField.Genre, -6),
                 Layouter.AddFromTemplate(GameField.Devices, -6),
                 Layouter.AddFromTemplate(GameField.Tags, -6),
             };
@@ -179,7 +181,7 @@ namespace PlayStationGames.GameEngine.View
             PreparePanel(ReleasePanel, "Release");
             PreparePanel(TrophysetPanel, "Trophyset");
             PreparePanel(StockPanel, "Stock");
-            PreparePanel(BasePanel2, string.Empty);
+            PreparePanel(BasePanel2, "Info");
             PreparePanel(BasePanel, string.Empty);
         }
 
