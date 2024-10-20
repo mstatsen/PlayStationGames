@@ -1,6 +1,8 @@
 ﻿using OxLibrary;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
+using OxDAOEngine;
+using System.Threading.Tasks.Dataflow;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
@@ -11,27 +13,42 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         public override object Value(GameField field) => 
             field switch
             {
-                GameField.Image => Image(),
-                GameField.Format => Format(),
-                GameField.Platform => PlatformType(),
-                GameField.Installations => CalcedInstallation(),
-                GameField.RelatedGames => RelatedGames(),
+                GameField.Image =>
+                    OxImageBoxer.BoxingImage(Dao.Image, new Size(200, 97)),
+                GameField.Format =>
+                    TypeHelper.ShortName(Dao.Format),
+                GameField.Platform =>
+                    TypeHelper.Name(Dao.PlatformType),
+                GameField.Installations => 
+                    NormalizeIfEmpty(Dao.Installations.OneColumnText()),
+                GameField.RelatedGames =>
+                    NormalizeIfEmpty(Dao.RelatedGames.OneColumnText()),
+                GameField.Devices =>
+                    NormalizeIfEmpty(Dao.Devices.OneColumnText()),
+                GameField.FullGenre => 
+                    FullGenre,
                 _ => NormalizeIfEmpty(base.Value(field)),
             };
 
-        private object CalcedInstallation() =>
-            NormalizeIfEmpty(Dao.Installations.OneColumnText());
+        private object FullGenre
+        {
+            get
+            {
+                string genre = Dao.GenreName;
 
-        private object RelatedGames() =>
-            NormalizeIfEmpty(Dao.RelatedGames.OneColumnText());
+                if (genre.Trim() == string.Empty)
+                    genre = Consts.Short_Unknown;
 
-        private object PlatformType() =>
-            TypeHelper.Name(Dao.PlatformType);
+                string player =
+                    $"{(Dao.SinglePlayer ? "single, " : string.Empty)}{(Dao.CoachMultiplayer ? $"multiplayler, " : string.Empty)}{(Dao.OnlineMultiplayer ? $"online, " : string.Empty)}";
 
-        private object Format() =>
-            TypeHelper.ShortName(Dao.Format);
+                if (player != string.Empty)
+                    player = player.Remove(player.Length - 2);
 
-        private object Image() => 
-            OxImageBoxer.BoxingImage(Dao.Image, new Size(200, 97));
+                player = player != string.Empty ? "(" + player + ")" : string.Empty;
+
+                return $"{TypeHelper.ShortName(Dao.ScreenView)} {genre} {player}";
+            }
+        }
     }
 }

@@ -12,8 +12,24 @@ namespace PlayStationGames.GameEngine.View
     {
         private ControlLayouts<GameField> FillTrophiesLayouts()
         {
-            ControlLayouts<GameField> result = new();
+            ClearLayoutTemplate();
+            Layouter.Template.Left = 75;
+            Layouter.Template.Parent = TrophysetPanel;
+
+            Layouter.Template.Left = 95;
+            Layouter.Template.Parent = TrophysetPanel;
+            Layouter.Template.MaximumLabelWidth = 200;
+
+            return new ControlLayouts<GameField>()
+                {
+                Layouter.AddFromTemplate(GameField.TrophysetType),
+                Layouter.AddFromTemplate(GameField.AppliesTo, -6),
+                Layouter.AddFromTemplate(GameField.Difficult, -6),
+                Layouter.AddFromTemplate(GameField.CompleteTime, -6)
+            };
+
             /*
+             * 
             ClearLayoutTemplate();
             Layouter.Template.Left = 75;
             Layouter.Template.Parent = TrophiesPanel;
@@ -47,23 +63,8 @@ namespace PlayStationGames.GameEngine.View
                         firstLayout = false;
                     }
             }
-            */
-
             return result;
-        }
-
-        private ControlLayouts<GameField> FillDifficultLayouts()
-        {
-            ClearLayoutTemplate();
-            Layouter.Template.Left = 300;
-            Layouter.Template.Parent = TrophiesPanel;
-            Layouter.Template.MaximumLabelWidth = 200;
-
-            return new ControlLayouts<GameField>()
-                {
-                Layouter.AddFromTemplate(GameField.Difficult),
-                Layouter.AddFromTemplate(GameField.CompleteTime, -10)
-            };
+            */
         }
 
         private ControlLayouts<GameField> FillReleaseLayouts()
@@ -73,32 +74,27 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Parent = ReleasePanel;
             Layouter.Template.MaximumLabelWidth = 200;
 
-            ControlLayout<GameField> developerLayout = Layouter.AddFromTemplate(GameField.Developer);
-            ControlLayout<GameField> publisherLayout = Layouter.AddFromTemplate(GameField.Publisher, -10);
-            ControlLayout<GameField> yearLayout = Layouter.AddFromTemplate(GameField.Year, -10);
-            ControlLayout<GameField> platformsLayout = Layouter.AddFromTemplate(GameField.ReleasePlatforms, -10);
-
-            ControlLayout<GameField> pegiLayout = Layouter.AddFromTemplate(GameField.Pegi);
-            pegiLayout.Left = yearLayout.Right + 40;
-            pegiLayout.Top = yearLayout.Top;
-
             return new ControlLayouts<GameField>()
                 {
-                    developerLayout,
-                    publisherLayout,
-                    yearLayout,
-                    platformsLayout
+                    Layouter.AddFromTemplate(GameField.Developer),
+                    Layouter.AddFromTemplate(GameField.Publisher, -10),
+                    Layouter.AddFromTemplate(GameField.Year, -10),
+                    Layouter.AddFromTemplate(GameField.Pegi),
+                    Layouter.AddFromTemplate(GameField.ReleasePlatforms, -10)
                 };
         }
 
-        private void FillLinksLayout()
+        private ControlLayouts<GameField> FillLinksLayout()
         {
             ClearLayoutTemplate();
             Layouter.Template.Dock = DockStyle.Top;
             Layouter.Template.BackColor = BaseColor;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.Parent = LinksPanel;
-            Layouter.AddFromTemplate(GameField.Links);
+            return new ControlLayouts<GameField>()
+            {
+                Layouter.AddFromTemplate(GameField.Links)
+            };
         }
 
         protected override void WrapTextControls()
@@ -109,13 +105,12 @@ namespace PlayStationGames.GameEngine.View
         protected override void PrepareLayouts()
         {
             FillImageLayout();
-            LayoutsLists.Add(FillBaseLayouts1());
-            LayoutsLists.Add(FillBaseLayouts2());
-            LayoutsLists.Add(FillStockLayouts());
-            LayoutsLists.Add(FillTrophiesLayouts());
-            LayoutsLists.Add(FillDifficultLayouts());
-            LayoutsLists.Add(FillReleaseLayouts());
-            FillLinksLayout();
+            LayoutsLists.Add(BasePanel, FillBaseLayouts1());
+            LayoutsLists.Add(BasePanel2, FillBaseLayouts2());
+            LayoutsLists.Add(StockPanel, FillStockLayouts());
+            LayoutsLists.Add(TrophysetPanel, FillTrophiesLayouts());
+            LayoutsLists.Add(ReleasePanel, FillReleaseLayouts());
+            LayoutsLists.Add(LinksPanel, FillLinksLayout());
         }
 
         private ControlLayouts<GameField> FillStockLayouts()
@@ -152,7 +147,7 @@ namespace PlayStationGames.GameEngine.View
         private ControlLayouts<GameField> FillBaseLayouts2()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Parent = BasePanel;
+            Layouter.Template.Parent = BasePanel2;
             Layouter.Template.Left = 92;
             ControlLayout<GameField>? imageLayout = Layouter[GameField.Image];
 
@@ -160,8 +155,10 @@ namespace PlayStationGames.GameEngine.View
 
             return new ControlLayouts<GameField>() {
                 Layouter.AddFromTemplate(GameField.Serieses),
-                Layouter.AddFromTemplate(GameField.CriticScore, -10),
-                Layouter.AddFromTemplate(GameField.FullGenre, -2),
+                Layouter.AddFromTemplate(GameField.CriticScore, -6),
+                Layouter.AddFromTemplate(GameField.FullGenre, -6),
+                Layouter.AddFromTemplate(GameField.Devices, -6),
+                Layouter.AddFromTemplate(GameField.Tags, -6),
             };
         }
 
@@ -193,14 +190,16 @@ namespace PlayStationGames.GameEngine.View
         {
             PreparePanel(LinksPanel, "Links");
             PreparePanel(ReleasePanel, "Release");
-            PreparePanel(TrophiesPanel, "Trophies");
+            PreparePanel(TrophysetPanel, "Trophies");
             PreparePanel(StockPanel, "Stock");
+            PreparePanel(BasePanel2, string.Empty);
             PreparePanel(BasePanel, string.Empty);
         }
 
         private readonly OxPanel BasePanel = new(new Size(200, 216));
+        private readonly OxPanel BasePanel2 = new(new Size(200, 216));
         private readonly OxPanel StockPanel = new(new Size(200, 160));
-        private readonly OxPanel TrophiesPanel = new(new Size(200, 156));
+        private readonly OxPanel TrophysetPanel = new(new Size(200, 156));
         private readonly OxPanel ReleasePanel = new(new Size(200, 140));
         private readonly OxPanel LinksPanel = new(new Size(200, 48));
 

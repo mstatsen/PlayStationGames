@@ -107,6 +107,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
 
         protected override List<AccountField> GetMandatoryFields() => new()
         {
+            AccountField.Avatar,
             AccountField.Name,
             AccountField.Type,
             AccountField.Country

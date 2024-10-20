@@ -74,6 +74,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Trophyset => "Trophyset",
                 GameField.Devices => "Devices",
                 GameField.AppliesTo => "Applies to",
+                GameField.Installed => "Installed",
                 _ => string.Empty,
             };
 
@@ -120,7 +121,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.TrophysetType,
                     GameField.Region,
                     GameField.Language,
-                    GameField.Tags
+                    GameField.Tags,
+                    GameField.Installed,
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -184,7 +186,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Difficult,
                     GameField.CompleteTime,
                     GameField.Pegi,
-                    GameField.Year
+                    GameField.Year,
+                    GameField.Installed,
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -243,7 +246,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Difficult,
                     GameField.CompleteTime,
                     GameField.TrophysetType,
-                    GameField.Tags
+                    GameField.Tags,
+                    GameField.Installed,
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -308,7 +312,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Verified,
                     GameField.Tags,
                     GameField.Devices,
-                    GameField.AppliesTo
+                    GameField.AppliesTo,
+                    GameField.Installed,
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -422,7 +427,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Verified,
             GameField.Tags,
             GameField.Region,
-            GameField.Language
+            GameField.Language,
+            GameField.Installed,
         };
 
         protected override List<GameField> GetCalcedFields() => new()
@@ -438,6 +444,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.AvailablePlatinum,
             GameField.StrategeLink,
             GameField.PSNProfilesLink,
+            GameField.Installed,
         };
 
         protected override List<GameField> GetIconFields() => new()
@@ -595,7 +602,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Language,
             GameField.Code,
             GameField.FullGenre,
-            GameField.Devices
+            GameField.Devices,
+            GameField.Installed,
         };
 
         protected override FilterOperation GetDefaultFilterOperation(GameField field) => 
@@ -677,6 +685,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.Code] = FilterOperations.StringOperations,
             [GameField.Devices] = FilterOperations.ObjectOperations,
             [GameField.AppliesTo] = FilterOperations.ObjectOperations,
+            [GameField.Installed] = FilterOperations.BoolOperations,
         };
 
         protected override List<GameField> GetSelectQuickFilterFields() => new()
@@ -756,6 +765,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     40,
                 GameField.Licensed or
                 GameField.Verified or
+                GameField.Installed or
                 GameField.Platform or
                 GameField.Image or
                 GameField.SinglePlayer or
@@ -803,6 +813,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.AvailablePlatinum or 
                 GameField.Verified or 
                 GameField.Licensed or
+                GameField.Installed or
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer => 

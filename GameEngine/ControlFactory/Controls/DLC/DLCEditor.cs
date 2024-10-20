@@ -101,7 +101,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void PrepareReadonly()
         {
             NameControl.ReadOnly = ReadOnly;
-            AcquiredControl.ReadOnly = ReadOnly;
+            AcquiredControl.ReadOnly = false;
             ImageControl.ReadOnly = ReadOnly;
             TrophysetControl.ReadOnly = ReadOnly;
         }

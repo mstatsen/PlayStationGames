@@ -571,6 +571,7 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.EmulatorType => EmulatorType,
                 GameField.EmulatorROMs => ROMs,
                 GameField.AppliesTo => Trophyset.AppliesTo,
+                GameField.Installed => Installations.Count > 0,
                 _ => new GameCardDecorator(this)[field],
             };
 

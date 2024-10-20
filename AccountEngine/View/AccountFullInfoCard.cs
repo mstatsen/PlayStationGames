@@ -33,10 +33,10 @@ namespace PlayStationGames.AccountEngine.View
 
         protected override void PrepareLayouts()
         {
-            LayoutsLists.Add(FillAccountLayout());
-            LayoutsLists.Add(FillAuthLayout());
-            LayoutsLists.Add(FillLinksLayout());
-            LayoutsLists.Add(FillPropertyLayout());
+            LayoutsLists.Add(AccountPanel, FillAccountLayout());
+            LayoutsLists.Add(AuthPanel, FillAuthLayout());
+            LayoutsLists.Add(LinksPanel, FillLinksLayout());
+            LayoutsLists.Add(PropertyPanel, FillPropertyLayout());
         }
 
         private ControlLayouts<AccountField> FillPropertyLayout()

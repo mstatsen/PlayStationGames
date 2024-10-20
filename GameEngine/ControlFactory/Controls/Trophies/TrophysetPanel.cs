@@ -58,6 +58,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             OxControlHelper.AlignByBaseLine(accessor.Control, label);
         }
 
+        private readonly bool IsDLCTrophyset;
+
         public TrophysetPanel(bool forDLC)
         {
             typeControl = forDLC ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) : builder[GameField.TrophysetType];
@@ -270,7 +272,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 }
 
                 typeControl.Value = value.Type;
-                appliesToControl.Value = value.AppliesTo;
+
+                if (IsDLCTrophyset)
+                    AddCurrentPlatformToAppliesTo();
+                else
+                    appliesToControl.Value = value.AppliesTo;
+
                 difficultControl.Value = value.Difficult;
                 completeTimeControl.Value = value.CompleteTime;
                 AvailableTrophiesPanel.Value = value.Available;

@@ -74,7 +74,7 @@ namespace PlayStationGames.ConsoleEngine.View
 
         protected override void PrepareLayouts()
         {
-            LayoutsLists.Add(FillConsoleLayout());
+            LayoutsLists.Add(ConsolePanel, FillConsoleLayout());
 
             if (Item != null && generationHelper.StorageSupport(Item.Generation))
             {

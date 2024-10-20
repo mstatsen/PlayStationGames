@@ -15,17 +15,11 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             {
                 GameField.Image => Image(),
                 GameField.Platform => PlatformType(),
-                GameField.Installations => CalcedInstallation(),
-                GameField.Dlcs => Dlcs(),
+                GameField.Installations => Dao.Installations.OneColumnText(),
+                GameField.Dlcs => Dao.Dlcs.OneColumnText(),
                 _ => base.Value(field),
             };
         }
-
-        private object Dlcs() =>
-            Dao.Dlcs.ToString();
-
-        private object CalcedInstallation() => 
-            Dao.Installations.ToString();
 
         private object PlatformType() =>
             TypeHelper.ShortName(Dao.PlatformType)

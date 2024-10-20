@@ -51,6 +51,7 @@
         AvailableBronze,
 
         FullGenre,
+        Installed,
 
         //Links
         StrategeLink,
