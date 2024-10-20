@@ -2,7 +2,6 @@
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxDAOEngine;
-using System.Threading.Tasks.Dataflow;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
@@ -15,18 +14,26 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             {
                 GameField.Image =>
                     OxImageBoxer.BoxingImage(Dao.Image, new Size(200, 97)),
+                GameField.Licensed =>
+                    Dao.Licensed ? "Yes" : "No",
                 GameField.Format =>
                     TypeHelper.ShortName(Dao.Format),
                 GameField.Platform =>
                     TypeHelper.Name(Dao.PlatformType),
+                GameField.Region =>
+                    $"{TypeHelper.Name(Dao.GameRegion)} ({TypeHelper.Name(Dao.GameLanguage)})",
                 GameField.Installations => 
                     NormalizeIfEmpty(Dao.Installations.OneColumnText()),
                 GameField.RelatedGames =>
                     NormalizeIfEmpty(Dao.RelatedGames.OneColumnText()),
+                GameField.AppliesTo =>
+                    NormalizeIfEmpty(Dao.Trophyset.AppliesTo),
                 GameField.Devices =>
                     NormalizeIfEmpty(Dao.Devices.OneColumnText()),
                 GameField.FullGenre => 
                     FullGenre,
+                GameField.AvailablePlatinum when Dao.Trophyset.Available.Platinum > 0 =>
+                    "Yes",
                 _ => NormalizeIfEmpty(base.Value(field)),
             };
 

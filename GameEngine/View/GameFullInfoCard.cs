@@ -5,6 +5,8 @@ using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxLibrary;
+using OxDAOEngine.Data;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.View
 {
@@ -13,58 +15,42 @@ namespace PlayStationGames.GameEngine.View
         private ControlLayouts<GameField> FillTrophiesLayouts()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Left = 75;
-            Layouter.Template.Parent = TrophysetPanel;
-
-            Layouter.Template.Left = 95;
+            Layouter.Template.Left = 125;
             Layouter.Template.Parent = TrophysetPanel;
             Layouter.Template.MaximumLabelWidth = 200;
 
-            return new ControlLayouts<GameField>()
-                {
-                Layouter.AddFromTemplate(GameField.TrophysetType),
-                Layouter.AddFromTemplate(GameField.AppliesTo, -6),
-                Layouter.AddFromTemplate(GameField.Difficult, -6),
-                Layouter.AddFromTemplate(GameField.CompleteTime, -6)
-            };
+            ControlLayouts<GameField> result = new();
 
-            /*
-             * 
-            ClearLayoutTemplate();
-            Layouter.Template.Left = 75;
-            Layouter.Template.Parent = TrophiesPanel;
-
-            bool AvailableTrophiesExist = Item != null 
-                && new GameCalculations(Item).AvailableTrophiesExist();
-
-            ControlLayouts<GameField> result = new()
+            if (Item != null && Item.TrophysetAvailable)
             {
-                Layouter.AddFromTemplate(GameField.AvailableBronze)
-            };
+                result.Add(Layouter.AddFromTemplate(GameField.TrophysetType, -6));
+                result.Add(Layouter.AddFromTemplate(GameField.AppliesTo, -6));
+                result.Add(Layouter.AddFromTemplate(GameField.Difficult, -6));
+                result.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -6));
 
-            if (AvailableTrophiesExist)
-            {
-                List<GameField> trophiesFieldsMap = new()
+                if (Item.Trophyset.Type != TrophysetType.NoSet)
                 {
-                    GameField.AvailablePlatinum,
-                    GameField.AvailableGold,
-                    GameField.AvailableSilver,
-                    GameField.AvailableBronze
-                };
+                    List<GameField> trophiesFieldsMap = new()
+                    {
+                        GameField.AvailablePlatinum,
+                        GameField.AvailableGold,
+                        GameField.AvailableSilver,
+                        GameField.AvailableBronze
+                    };
 
-                bool firstLayout = true;
+                    bool firstLayout = true;
 
-                foreach (var item in trophiesFieldsMap)
-                    if (DAO.IntValue(Item?[item]) > 0)
-                    { 
-                        result.Add(
-                            Layouter.AddFromTemplate(item, firstLayout ? 2 : -10)
-                        );
-                        firstLayout = false;
-                    }
+                    foreach (var item in trophiesFieldsMap)
+                        if (DAO.IntValue(Item?[item]) > 0)
+                        {
+                            result.Add(
+                                Layouter.AddFromTemplate(item, firstLayout ? 2 : -10)
+                            );
+                            firstLayout = false;
+                        }
+                }
             }
             return result;
-            */
         }
 
         private ControlLayouts<GameField> FillReleaseLayouts()
@@ -135,13 +121,13 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Top = 4;
             ControlLayout<GameField>? imageLayout = Layouter[GameField.Image];
             Layouter.Template.Left = (imageLayout != null ? imageLayout.Right : 0) + 72;
-
             return new ControlLayouts<GameField>()
-                {
-                    Layouter.AddFromTemplate(GameField.Source),
-                    Layouter.AddFromTemplate(GameField.Platform, -6),
-                    Layouter.AddFromTemplate(GameField.Format, -6),
-                };
+            {
+                Layouter.AddFromTemplate(GameField.Licensed),
+                Layouter.AddFromTemplate(GameField.Source, -18),
+                Layouter.AddFromTemplate(GameField.Platform, -6),
+                Layouter.AddFromTemplate(GameField.Format, -6)
+            };
         }
 
         private ControlLayouts<GameField> FillBaseLayouts2()
@@ -154,6 +140,7 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Top = (imageLayout != null ? imageLayout.Bottom : 0) + 8;
 
             return new ControlLayouts<GameField>() {
+                Layouter.AddFromTemplate(GameField.Region),
                 Layouter.AddFromTemplate(GameField.Serieses),
                 Layouter.AddFromTemplate(GameField.CriticScore, -6),
                 Layouter.AddFromTemplate(GameField.FullGenre, -6),
@@ -190,18 +177,18 @@ namespace PlayStationGames.GameEngine.View
         {
             PreparePanel(LinksPanel, "Links");
             PreparePanel(ReleasePanel, "Release");
-            PreparePanel(TrophysetPanel, "Trophies");
+            PreparePanel(TrophysetPanel, "Trophyset");
             PreparePanel(StockPanel, "Stock");
             PreparePanel(BasePanel2, string.Empty);
             PreparePanel(BasePanel, string.Empty);
         }
 
-        private readonly OxPanel BasePanel = new(new Size(200, 216));
-        private readonly OxPanel BasePanel2 = new(new Size(200, 216));
-        private readonly OxPanel StockPanel = new(new Size(200, 160));
-        private readonly OxPanel TrophysetPanel = new(new Size(200, 156));
-        private readonly OxPanel ReleasePanel = new(new Size(200, 140));
-        private readonly OxPanel LinksPanel = new(new Size(200, 48));
+        private readonly OxPanel BasePanel = new();
+        private readonly OxPanel BasePanel2 = new();
+        private readonly OxPanel StockPanel = new();
+        private readonly OxPanel TrophysetPanel = new();
+        private readonly OxPanel ReleasePanel = new();
+        private readonly OxPanel LinksPanel = new();
 
         public GameFullInfoCard() : base() { }
     }

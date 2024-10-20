@@ -37,10 +37,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.CriticScore => "Critic Score",
                 GameField.Platform => "Platform",
                 GameField.Format => "Format",
-                GameField.AvailablePlatinum => "Platinum",
-                GameField.AvailableGold => "Gold",
-                GameField.AvailableSilver => "Silver",
-                GameField.AvailableBronze => "Bronze",
+                GameField.AvailablePlatinum => "Available Platinum",
+                GameField.AvailableGold => "Available Gold",
+                GameField.AvailableSilver => "Available Silver",
+                GameField.AvailableBronze => "Available Bronze",
                 GameField.TrophysetType => "Type",
                 GameField.Source => "Source",
                 GameField.Developer => "Developer",
@@ -81,10 +81,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
         public override string GetFullName(GameField value) => 
             value switch
             {
-                GameField.AvailablePlatinum => "Available Platinum",
-                GameField.AvailableGold => "Available Gold",
-                GameField.AvailableSilver => "Available Silver",
-                GameField.AvailableBronze => "Available Bronze",
                 GameField.TrophysetType => "Trophyset Accessibility",
                 GameField.EmulatorType => "Emulator Type",
                 GameField.EmulatorROMs => "Emulator ROMs",
@@ -563,21 +559,15 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.ReleasePlatforms,
             GameField.Installations,
             GameField.FullGenre,
-            GameField.Genre,
-            GameField.ScreenView,
-            GameField.SinglePlayer,
-            GameField.CoachMultiplayer,
-            GameField.MaximumPlayers,
-            GameField.OnlineMultiplayer,
             GameField.Dlcs,
             GameField.Links,
             GameField.RelatedGames,
-            GameField.Verified,
             GameField.Tags,
             GameField.Region,
             GameField.Language,
             GameField.Code,
-            GameField.Devices
+            GameField.Devices,
+            GameField.AppliesTo
         };
 
         protected override List<GameField> GetCardFields() => new()

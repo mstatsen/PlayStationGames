@@ -2,6 +2,7 @@
 using OxDAOEngine.Data;
 using OxDAOEngine.XML;
 using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data
 {
@@ -44,7 +45,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         public override string ToString() => 
-            Name;
+            $"{Name}{(Trophyset.Type != TrophysetType.NoSet ? " (trophyset)" : string.Empty)}";
 
         public override bool Equals(object? obj) =>
             base.Equals(obj)
