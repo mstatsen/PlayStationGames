@@ -20,6 +20,8 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using OxLibrary;
+using OxDAOEngine.Data.Links;
+using OxDAOEngine.Grid;
 
 namespace PlayStationGames.GameEngine.Data
 {
@@ -111,5 +113,18 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         protected override Bitmap? GetIcon() => OxIcons.Game;
+
+        public override List<ToolStripMenuItem>? MenuItems(Game? item)
+        {
+            if (item == null)
+                return null;
+
+            List<ToolStripMenuItem> result = new();
+
+            foreach (Link<GameField> link in item.Links)
+                result.Add(new ItemsRootGridLinkToolStripMenuItem<GameField>(link));
+
+            return result;
+        }
     }
 }

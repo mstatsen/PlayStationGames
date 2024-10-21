@@ -11,6 +11,10 @@ using PlayStationGames.AccountEngine.Data.Decorator;
 using PlayStationGames.AccountEngine.ControlFactory;
 using PlayStationGames.AccountEngine.Data.Types;
 using OxLibrary;
+using OxDAOEngine.Data.Links;
+using OxDAOEngine.Grid;
+using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames.AccountEngine.Data
 {
@@ -68,5 +72,18 @@ namespace PlayStationGames.AccountEngine.Data
         public override bool AvailableBatchUpdate => false;
         public override bool AvailableCopyItems => false;
         public override bool UseImageList => true;
+
+        public override List<ToolStripMenuItem>? MenuItems(Account? item)
+        {
+            if (item == null)
+                return null;
+
+            List<ToolStripMenuItem> result = new();
+
+            foreach (Link<AccountField> link in item.Links)
+                result.Add(new ItemsRootGridLinkToolStripMenuItem<AccountField>(link));
+
+            return result;
+        }
     }
 }
