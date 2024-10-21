@@ -120,10 +120,12 @@ namespace PlayStationGames.GameEngine.Data
                 return null;
 
             List<ToolStripMenuItem> result = new();
+            ToolStripMenuItem goToItem = new("Go to", OxIcons.Go);
 
             foreach (Link<GameField> link in item.Links)
-                result.Add(new ItemsRootGridLinkToolStripMenuItem<GameField>(link));
+                goToItem.DropDownItems.Add(new ItemsRootGridLinkToolStripMenuItem<GameField>(link));
 
+            result.Add(goToItem);
             return result;
         }
     }

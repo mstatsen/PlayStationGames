@@ -1,7 +1,9 @@
-﻿using OxDAOEngine.ControlFactory;
+﻿using Microsoft.VisualBasic.FileIO;
+using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Decorator;
 using OxDAOEngine.Data.Fields;
+using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Sorting;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.Editor;
@@ -13,6 +15,8 @@ using PlayStationGames.ConsoleEngine.Data.Decorator;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Editor;
+using PlayStationGames.GameEngine.Data;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.Data
 {
@@ -76,5 +80,22 @@ namespace PlayStationGames.ConsoleEngine.Data
         }
 
         protected override Bitmap? GetIcon() => OxIcons.Console;
+
+        public override List<ToolStripMenuItem>? MenuItems(PSConsole? item)
+        {
+            if (item == null || 
+                !TypeHelper.Helper<ConsoleGenerationHelper>().StorageSupport(item.Generation))
+                return null;
+            List<ToolStripMenuItem> result = new();
+
+            ToolStripMenuItem showGamesItem = new(
+                "Show installed games", 
+                OxIcons.Install,
+                (s, e) => DataManager.ViewItems<GameField, Game>(
+                    g => g.Installations.Contains(i => i.ConsoleId == item.Id), $"Games, installed on {item}")
+            );
+            result.Add(showGamesItem);
+            return result;
+        }
     }
 }

@@ -124,7 +124,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         private FirmwareType firmware;
 
         public List<Game> Games() =>
-            DataManager.FullItemsList<GameField, Game>().List.FindAll(
+            DataManager.FullItemsList<GameField, Game>().FindAll(
                 (g) => g.Installations.Contains(
                     (i) => i.ConsoleId == Id
                 )
