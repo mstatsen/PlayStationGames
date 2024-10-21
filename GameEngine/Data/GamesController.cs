@@ -80,11 +80,6 @@ namespace PlayStationGames.GameEngine.Data
         public override Categories<GameField, Game> SystemCategories =>
             GameSystemCategories.Categories;
 
-        public override List<ISummaryPanel>? GeneralSummaries => new()
-        {
-            new GamesSummary()
-        };
-
         public override bool UseImageList => true;
 
         protected override void SetHandlers()

@@ -9,7 +9,6 @@
         CountPlatinum,
         CountGold,
         CountSilver,
-        CountBronze,
-        CountFromDLC
+        CountBronze
     }
 }

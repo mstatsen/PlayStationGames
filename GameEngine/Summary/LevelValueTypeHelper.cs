@@ -14,7 +14,6 @@ namespace PlayStationGames.GameEngine.Summary
                 LevelValueType.CountGold => "Gold",
                 LevelValueType.CountSilver => "Silver",
                 LevelValueType.CountBronze => "Bronze",
-                LevelValueType.CountFromDLC => "From DLC",
                 LevelValueType.Progress => "Progress",
                 _ => string.Empty,
             };
@@ -28,8 +27,7 @@ namespace PlayStationGames.GameEngine.Summary
                 LevelValueType.CountPlatinum or 
                 LevelValueType.CountGold or 
                 LevelValueType.CountSilver or 
-                LevelValueType.CountBronze or 
-                LevelValueType.CountFromDLC => 
+                LevelValueType.CountBronze => 
                     LevelValueTypeGroup.Trophies,
                 _ => 
                     LevelValueTypeGroup.Points,

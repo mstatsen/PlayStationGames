@@ -67,9 +67,6 @@
     <Compile Update="GameEngine\Editor\GameEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="GameEngine\Summary\GamesSummary.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="GameEngine\View\GameCard.cs">
       <SubType>Component</SubType>
     </Compile>

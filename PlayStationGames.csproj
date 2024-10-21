@@ -75,7 +75,6 @@
     <Compile Update="GameEngine\ControlFactory\Controls\RelatedGame\RelatedGamesControl.cs" />
     <Compile Update="GameEngine\ControlFactory\Controls\ReleasePlatforms\ReleasePlatformListControl.cs" />
     <Compile Update="GameEngine\Editor\GameEditor.cs" />
-    <Compile Update="GameEngine\Summary\GamesSummary.cs" />
     <Compile Update="GameEngine\View\GameCard.cs" />
     <Compile Update="GameEngine\View\GameFullInfoCard.cs" />
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Folder\FolderEditor.cs" />
