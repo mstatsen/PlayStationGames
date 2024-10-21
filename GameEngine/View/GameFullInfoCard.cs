@@ -15,7 +15,7 @@ namespace PlayStationGames.GameEngine.View
         private ControlLayouts<GameField> FillTrophiesLayouts()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Left = 125;
+            Layouter.Template.Left = 92;
             Layouter.Template.Parent = TrophysetPanel;
             Layouter.Template.MaximumLabelWidth = 200;
 
@@ -127,7 +127,6 @@ namespace PlayStationGames.GameEngine.View
                 Layouter.AddFromTemplate(GameField.Owner, -6),
                 Layouter.AddFromTemplate(GameField.Source, -6),
                 Layouter.AddFromTemplate(GameField.Platform, -6),
-                Layouter.AddFromTemplate(GameField.Format, -6)
             };
         }
 
@@ -136,9 +135,6 @@ namespace PlayStationGames.GameEngine.View
             ClearLayoutTemplate();
             Layouter.Template.Parent = BasePanel2;
             Layouter.Template.Left = 92;
-            ControlLayout<GameField>? imageLayout = Layouter[GameField.Image];
-
-            //Layouter.Template.Top = (imageLayout != null ? imageLayout.Bottom : 0) + 8;
 
             return new ControlLayouts<GameField>() {
                 Layouter.AddFromTemplate(GameField.Region),

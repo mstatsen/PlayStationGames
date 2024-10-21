@@ -8,20 +8,23 @@ using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Decorator;
 using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.View
 {
     public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
     {
         protected override int CardWidth => 440;
-        protected override int CardHeight => 240;
+        protected override int CardHeight => 350;
 
         public GameCard(ItemViewMode viewMode) : base(viewMode)
         {
-            trophiesPanel = new OxFrame
+            trophiesPanel = new OxFrameWithHeader()
             {
-                Parent = this
+                Parent = this,
+                Text = "Trophyset"
             };
+            trophiesPanel.Header.SetContentSize(1, 18);
             trophiesPanel.Paddings.SetSize(OxSize.Large);
             PrepareColors();
         }
@@ -29,7 +32,7 @@ namespace PlayStationGames.GameEngine.View
         protected override void PrepareColors()
         {
             base.PrepareColors();
-            SetPaneBaseColor(trophiesPanel, BaseColor);
+            SetPaneBaseColor(trophiesPanel, Colors.Darker());
         }
 
         private void FillTrophiesLayouts()
@@ -41,29 +44,51 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.AutoSize = true;
 
             AvailableTrophiesExist = Item != null && new GameCalculations(Item).AvailableTrophiesExist();
+
             trophiesLayouts.Clear();
 
-            /*
-            if (AvailableTrophiesExist && Item != null)
-            {
-                Dictionary<GameField, GameField> trophiesFieldsMap = new()
-                {
-                    [GameField.AvailablePlatinum] = GameField.FullPlatinum,
-                    [GameField.AvailableGold] = GameField.FullGold,
-                    [GameField.AvailableSilver] = GameField.FullSilver,
-                    [GameField.AvailableBronze] = GameField.FullBronze,
-                    [GameField.AvailableFromDLC] = GameField.FullFromDLC
-                };
+            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.TrophysetType));
+            Layouter.AddFromTemplate(GameField.AppliesTo, -6);
+            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -12));
 
-                foreach (var item in trophiesFieldsMap)
-                    if (DAO.IntValue(Item[item.Key]) > 0)
-                        trophiesLayouts.Add(
-                            Layouter.AddFromTemplate(item.Value, -8)
-                        );
+            Layouter[GameField.TrophysetType]!.Left = 8;
+            Layouter[GameField.TrophysetType]!.CaptionVariant = ControlCaptionVariant.None;
+
+            if (!Item!.TrophysetAvailable || Item!.Trophyset.Type == TrophysetType.NoSet)
+                return;
+
+            Layouter[GameField.AppliesTo]!.Left = 12;
+            Layouter[GameField.AppliesTo]!.FontSize = Layouter[GameField.AppliesTo]!.FontSize - 2;
+            Layouter[GameField.AppliesTo]!.FontStyle = FontStyle.Regular;
+            Layouter[GameField.AppliesTo]!.CaptionVariant = ControlCaptionVariant.None;
+            Layouter[GameField.CompleteTime]!.CaptionVariant = ControlCaptionVariant.None;
+
+            bool firstTrophy = true;
+            foreach (GameField field in TypeHelper.Helper<GameFieldHelper>().TrophiesFields)
+            {
+                if (DAO.IntValue(Item![field]) > 0)
+                {
+                    ControlLayout<GameField> trophyLayout = trophiesLayouts.Add(
+                        Layouter.AddFromTemplate(field), firstTrophy ? 2 : - 8
+                    );
+
+                    if (field == GameField.AvailablePlatinum)
+                    {
+                        trophyLayout.CaptionVariant = ControlCaptionVariant.None;
+                        trophyLayout.Left = 8;
+                    }
+
+                    firstTrophy = false;
+                }
             }
-            
-            else
-            */
+
+            if (Item.ExistsDLCsWithTrophyset)
+            {
+                ControlLayout<GameField> withDLCLayout = trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.ExistsDLCsWithTrophyset, -8));
+                withDLCLayout.CaptionVariant = ControlCaptionVariant.None;
+                withDLCLayout.Left = 8;
+            }
         }
 
         private void FillLinksLayout()
@@ -160,36 +185,49 @@ namespace PlayStationGames.GameEngine.View
             ClearLayoutTemplate();
             ControlLayouts<GameField> result = new();
             Layouter.Template.Left = 82;
+            Layouter.Template.Top = Layouter[GameField.Image]!.Bottom + 8;
             releaseLayouts.Clear();
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Genre))
-                .OffsetVertical(Layouter[GameField.CompleteTime], 2);
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.CriticScore, -8));
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Developer, -2));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Platform));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Source, -8));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Region, -8));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Genre, 8));
+
+            if (Item!.Devices.Count > 0)
+                releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Devices, -8));
+
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Developer, 8));
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Publisher, -8));
             ControlLayout<GameField> yearLayout = result.Add(Layouter.AddFromTemplate(GameField.Year, -8));
             ControlLayout<GameField> pegiLayout = Layouter.AddFromTemplate(GameField.Pegi);
             pegiLayout.Top = yearLayout.Top;
             pegiLayout.Left += 88;
-            result.Add(Layouter.AddFromTemplate(GameField.ReleasePlatforms, -8));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.CriticScore, -8));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.ReleasePlatforms, -8));
         }
 
         private void FillBaseLayouts()
         {
             ClearLayoutTemplate();
             baseLayouts.Clear();
-            Layouter.Template.Left = Layouter[GameField.Image]!.Right + 72;
-            baseLayouts.Add(Layouter.AddFromTemplate(GameField.Platform));
-            baseLayouts.Add(Layouter.AddFromTemplate(GameField.Source, -12));
-            //TODO: result.Add(layouts.AddFromTemplate(GameField.Installation, -12));
-            baseLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, -6));
-            baseLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -12));
-            Layouter[GameField.CompleteTime]!.CaptionVariant = ControlCaptionVariant.None;
-            Layouter[GameField.Difficult]!.Visible = Item!.Licensed;
-            Layouter[GameField.CompleteTime]!.Visible = Item!.Licensed;
-            Layouter[GameField.Source]!.CaptionVariant = ControlCaptionVariant.None;
-            Layouter[GameField.Source]!.FontStyle = FontStyle.Regular;
-            //TODO: layouts[GameField.Installation].CaptionVariant = ControlCaptionVariant.None;
-            //TODO: layouts[GameField.Installation].FontStyle = FontStyle.Regular;
+            Layouter.Template.Left = Layouter[GameField.Image]!.Right + 86;
+
+            if (Item!.Licensed )
+            {
+                ControlLayout<GameField> licensedLayout = baseLayouts.Add(Layouter.AddFromTemplate(GameField.Licensed));
+                licensedLayout.CaptionVariant = ControlCaptionVariant.None;
+                licensedLayout.Left = Layouter[GameField.Image]!.Right + 12;
+            }
+            else
+            if (Item!.Owner != Guid.Empty)
+                baseLayouts.Add(Layouter.AddFromTemplate(GameField.Owner));
+
+            if (Item!.Installed)
+            {
+                ControlLayout<GameField> installedLayout = baseLayouts.Add(Layouter.AddFromTemplate(GameField.Installed, -8));
+                installedLayout.CaptionVariant = ControlCaptionVariant.None;
+                installedLayout.Left = Layouter[GameField.Image]!.Right + 12;
+            }
+            
         }
 
         private void FillImageLayout()
@@ -216,7 +254,7 @@ namespace PlayStationGames.GameEngine.View
                 ? $"{Item.FullTitle()})"
                 : "Game";
 
-        private readonly OxFrame trophiesPanel;
+        private readonly OxFrameWithHeader trophiesPanel;
         private readonly ControlLayouts<GameField> trophiesLayouts = new();
         private readonly ControlLayouts<GameField> baseLayouts = new();
         private readonly ControlLayouts<GameField> releaseLayouts = new();

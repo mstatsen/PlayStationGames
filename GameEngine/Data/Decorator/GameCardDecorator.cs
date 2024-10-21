@@ -2,6 +2,10 @@
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxDAOEngine;
+using OxDAOEngine.Data;
+using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.AccountEngine.Data;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
@@ -13,15 +17,37 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             return field switch
             {
-                GameField.Image => Image(),
-                GameField.Platform => PlatformType(),
-                GameField.Installations => Dao.Installations.OneColumnText(),
-                GameField.Dlcs => Dao.Dlcs.OneColumnText(),
+                GameField.Image =>
+                    Image(),
+                GameField.Platform =>
+                    PlatformAndFormat,
+                GameField.Installations =>
+                    Dao.Installations.OneColumnText(),
+                GameField.Dlcs =>
+                    Dao.Dlcs.OneColumnText(),
+                GameField.Genre =>
+                    FullGenre,
+                GameField.Licensed =>
+                    Licensed,
+                GameField.Installed =>
+                    Dao.Licensed
+                        ? "Installed"
+                        : string.Empty,
+                GameField.AvailablePlatinum =>
+                    Dao.Trophyset.Available.Platinum > 0
+                        ? "Platinum"
+                        : string.Empty,
+                GameField.Region =>
+                    RegionAndLanguage,
+                GameField.ExistsDLCsWithTrophyset =>
+                    Dao.ExistsDLCsWithTrophyset
+                        ? "+DLCs trophies"
+                        : string.Empty,
                 _ => base.Value(field),
             };
         }
 
-        private object PlatformType() =>
+        private object PlatformAndFormat =>
             TypeHelper.ShortName(Dao.PlatformType)
                 + (Dao.Format == TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType)
                     ? string.Empty
@@ -29,5 +55,57 @@ namespace PlayStationGames.GameEngine.Data.Decorator
 
         private object? Image() =>
             OxImageBoxer.BoxingImage(Dao.Image, new Size(140, 80));
+
+        private object FullGenre
+        {
+            get
+            {
+                string genre = Dao.GenreName;
+
+                if (genre.Trim() == string.Empty)
+                    genre = Consts.Short_Unknown;
+
+                string player =
+                    $"{(Dao.SinglePlayer ? "single, " : string.Empty)}{(Dao.Multiplayer ? $"multiplayler, " : string.Empty)}";
+
+                if (player != string.Empty)
+                    player = player.Remove(player.Length - 2);
+
+                player = player != string.Empty ? "(" + player + ")" : string.Empty;
+
+                return $"{TypeHelper.ShortName(Dao.ScreenView)} {genre} {player}";
+            }
+        }
+
+        private string RegionAndLanguage
+        {
+            get
+            {
+                string result = $"{TypeHelper.Name(Dao.GameRegion)} ({TypeHelper.Name(Dao.GameLanguage)})";
+                
+                if (Dao.Code.Trim() != string.Empty)
+                        result += $", {Dao.Code}";
+
+                return result;
+            }
+        }
+
+        public object Licensed 
+        {
+            get
+            {
+                string result = string.Empty;
+
+                if (Dao.Licensed)
+                {
+                    result += "Linesed";
+
+                    if (Dao.Owner != Guid.Empty)
+                        result += $" ({DataManager.Item<AccountField, Account>(AccountField.Id, Dao.Owner)})";
+                }
+
+                return result;
+            }
+        }
     }
 }

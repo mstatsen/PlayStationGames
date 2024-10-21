@@ -37,10 +37,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.CriticScore => "Critic Score",
                 GameField.Platform => "Platform",
                 GameField.Format => "Format",
-                GameField.AvailablePlatinum => "Available Platinum",
-                GameField.AvailableGold => "Available Gold",
-                GameField.AvailableSilver => "Available Silver",
-                GameField.AvailableBronze => "Available Bronze",
+                GameField.AvailablePlatinum => "Platinum",
+                GameField.AvailableGold => "Gold",
+                GameField.AvailableSilver => "Silver",
+                GameField.AvailableBronze => "Bronze",
                 GameField.TrophysetType => "Type",
                 GameField.Source => "Source",
                 GameField.Developer => "Developer",
@@ -75,6 +75,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.AppliesTo => "Applies to",
                 GameField.Installed => "Installed",
                 GameField.Multiplayer => "Multiplayer",
+                GameField.ExistsDLCsWithTrophyset => "+DLCs trophies",
                 _ => string.Empty,
             };
 
@@ -119,7 +120,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Language,
                     GameField.Tags,
                     GameField.Installed,
-                    GameField.Multiplayer
+                    GameField.Multiplayer,
+                    GameField.ExistsDLCsWithTrophyset
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -296,6 +298,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Difficult,
                     GameField.CompleteTime,
                     GameField.Dlcs,
+                    GameField.ExistsDLCsWithTrophyset,
                     GameField.RelatedGames,
                     GameField.TrophysetType,
                     GameField.Genre,
@@ -442,7 +445,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.StrategeLink,
             GameField.PSNProfilesLink,
             GameField.Installed,
-            GameField.Multiplayer
+            GameField.Multiplayer,
+            GameField.ExistsDLCsWithTrophyset,
         };
 
         protected override List<GameField> GetIconFields() => new()
@@ -576,26 +580,31 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             GameField.Image,
             GameField.Name,
-            GameField.CriticScore,
-            GameField.Platform,
-            GameField.Format,
-            GameField.TrophysetType,
-            GameField.AppliesTo,
-            GameField.Difficult,
-            GameField.CompleteTime,
+            GameField.Licensed,
+            GameField.Installed,
+            GameField.Owner,
             GameField.Source,
+            GameField.Platform,
+            GameField.Region,
+            GameField.Code,
+            GameField.Genre,
+            GameField.ExistsDLCsWithTrophyset,
             GameField.Developer,
             GameField.Publisher,
             GameField.Year,
             GameField.Pegi,
             GameField.ReleasePlatforms,
+            GameField.CriticScore,
             GameField.Links,
-            GameField.Region,
-            GameField.Language,
-            GameField.Code,
-            GameField.Genre,
             GameField.Devices,
-            GameField.Installed,
+            GameField.TrophysetType,
+            GameField.AppliesTo,
+            GameField.Difficult,
+            GameField.CompleteTime,
+            GameField.AvailablePlatinum,
+            GameField.AvailableGold,
+            GameField.AvailableSilver,
+            GameField.AvailableBronze,
         };
 
         protected override FilterOperation GetDefaultFilterOperation(GameField field) => 
@@ -677,6 +686,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.AppliesTo] = FilterOperations.ObjectOperations,
             [GameField.Installed] = FilterOperations.BoolOperations,
             [GameField.Multiplayer] = FilterOperations.BoolOperations,
+            [GameField.ExistsDLCsWithTrophyset] = FilterOperations.BoolOperations,
         };
 
         protected override List<GameField> GetSelectQuickFilterFields() => new()
@@ -763,6 +773,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Multiplayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or
+                GameField.ExistsDLCsWithTrophyset or
                 GameField.Difficult =>
                     60,
                 GameField.CompleteTime or 
@@ -808,7 +819,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Multiplayer or
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
-                GameField.OnlineMultiplayer => 
+                GameField.OnlineMultiplayer or
+                GameField.ExistsDLCsWithTrophyset => 
                     FieldType.Boolean,
                 GameField.AvailableGold or
                 GameField.AvailableSilver or

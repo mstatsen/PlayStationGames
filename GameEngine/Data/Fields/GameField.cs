@@ -51,6 +51,7 @@
         AvailableBronze,
 
         Installed,
+        ExistsDLCsWithTrophyset,
         Multiplayer,
 
         //Links

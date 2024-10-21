@@ -571,10 +571,17 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.EmulatorType => EmulatorType,
                 GameField.EmulatorROMs => ROMs,
                 GameField.AppliesTo => Trophyset.AppliesTo,
-                GameField.Installed => Installations.Count > 0,
-                GameField.Multiplayer => CoachMultiplayer || OnlineMultiplayer,
+                GameField.Installed => Installed,
+                GameField.Multiplayer => Multiplayer,
+                GameField.ExistsDLCsWithTrophyset => ExistsDLCsWithTrophyset,
                 _ => new GameCardDecorator(this)[field],
             };
+
+        public bool Installed => Installations.Count > 0;
+        public bool Multiplayer => CoachMultiplayer || OnlineMultiplayer;
+
+        public bool ExistsDLCsWithTrophyset => 
+            Dlcs.Contains(d => d.Trophyset.Type != TrophysetType.NoSet);
 
         public override void Clear()
         {
@@ -925,5 +932,6 @@ namespace PlayStationGames.GameEngine.Data
             && platformTypeHelper.PlatformWithTrophies(PlatformType);
 
         public override Color BaseColor => sourceHelper.BaseColor(SourceType);
+
     }
 }
