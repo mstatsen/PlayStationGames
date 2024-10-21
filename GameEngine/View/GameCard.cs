@@ -6,7 +6,6 @@ using OxDAOEngine.Data;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
-using PlayStationGames.GameEngine.Data.Decorator;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 
@@ -15,7 +14,7 @@ namespace PlayStationGames.GameEngine.View
     public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
     {
         protected override int CardWidth => 440;
-        protected override int CardHeight => 350;
+        protected override int CardHeight => 358;
 
         public GameCard(ItemViewMode viewMode) : base(viewMode)
         {
@@ -43,26 +42,24 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Parent = trophiesPanel;
             Layouter.Template.AutoSize = true;
 
-            AvailableTrophiesExist = Item != null && new GameCalculations(Item).AvailableTrophiesExist();
-
             trophiesLayouts.Clear();
 
             trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.TrophysetType));
             Layouter.AddFromTemplate(GameField.AppliesTo, -6);
             trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -12));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -8));
 
             Layouter[GameField.TrophysetType]!.Left = 8;
             Layouter[GameField.TrophysetType]!.CaptionVariant = ControlCaptionVariant.None;
 
-            if (!Item!.TrophysetAvailable || Item!.Trophyset.Type == TrophysetType.NoSet)
+            if (!Item!.TrophysetAvailable 
+                || Item!.Trophyset.Type == TrophysetType.NoSet)
                 return;
 
             Layouter[GameField.AppliesTo]!.Left = 12;
             Layouter[GameField.AppliesTo]!.FontSize = Layouter[GameField.AppliesTo]!.FontSize - 2;
             Layouter[GameField.AppliesTo]!.FontStyle = FontStyle.Regular;
             Layouter[GameField.AppliesTo]!.CaptionVariant = ControlCaptionVariant.None;
-            Layouter[GameField.CompleteTime]!.CaptionVariant = ControlCaptionVariant.None;
 
             bool firstTrophy = true;
             foreach (GameField field in TypeHelper.Helper<GameFieldHelper>().TrophiesFields)
@@ -74,10 +71,7 @@ namespace PlayStationGames.GameEngine.View
                     );
 
                     if (field == GameField.AvailablePlatinum)
-                    {
                         trophyLayout.CaptionVariant = ControlCaptionVariant.None;
-                        trophyLayout.Left = 8;
-                    }
 
                     firstTrophy = false;
                 }
@@ -150,6 +144,16 @@ namespace PlayStationGames.GameEngine.View
 
         private void CalcTrophiesPanelSize()
         {
+            Layouter.PlacedControl(GameField.TrophysetType)!.Control.Left =
+                Layouter.PlacedControl(GameField.Difficult)!.LabelLeft;
+
+            PlacedControl<GameField>? platinumControl = 
+                Layouter.PlacedControl(GameField.AvailablePlatinum);
+
+            if (platinumControl != null)
+                platinumControl.Control.Left =
+                    Layouter.PlacedControl(GameField.Difficult)!.LabelLeft;
+
             int maximumTrophiesLabelRight = 0;
 
             foreach (GameField field in trophiesLayouts.Fields)
@@ -190,7 +194,14 @@ namespace PlayStationGames.GameEngine.View
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Platform));
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Source, -8));
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Region, -8));
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Genre, 8));
+
+            if (Item!.Edition != string.Empty)
+                releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Edition, -8));
+
+            if (Item!.Serieses.Count != 0)
+                releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Serieses, 8));
+
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Genre, Item!.Serieses.Count != 0 ? -8 : 8));
 
             if (Item!.Devices.Count > 0)
                 releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Devices, -8));
@@ -258,6 +269,5 @@ namespace PlayStationGames.GameEngine.View
         private readonly ControlLayouts<GameField> trophiesLayouts = new();
         private readonly ControlLayouts<GameField> baseLayouts = new();
         private readonly ControlLayouts<GameField> releaseLayouts = new();
-        private bool AvailableTrophiesExist;
     }
 }

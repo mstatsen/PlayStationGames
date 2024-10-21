@@ -586,8 +586,10 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Source,
             GameField.Platform,
             GameField.Region,
-            GameField.Code,
+            GameField.Serieses,
+            GameField.Edition,
             GameField.Genre,
+            GameField.Devices,
             GameField.ExistsDLCsWithTrophyset,
             GameField.Developer,
             GameField.Publisher,
@@ -595,8 +597,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Pegi,
             GameField.ReleasePlatforms,
             GameField.CriticScore,
-            GameField.Links,
-            GameField.Devices,
             GameField.TrophysetType,
             GameField.AppliesTo,
             GameField.Difficult,
@@ -605,6 +605,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.AvailableGold,
             GameField.AvailableSilver,
             GameField.AvailableBronze,
+            GameField.Links,
         };
 
         protected override FilterOperation GetDefaultFilterOperation(GameField field) => 
