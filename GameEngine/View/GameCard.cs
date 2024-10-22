@@ -238,7 +238,6 @@ namespace PlayStationGames.GameEngine.View
                 installedLayout.CaptionVariant = ControlCaptionVariant.None;
                 installedLayout.Left = Layouter[GameField.Image]!.Right + 12;
             }
-            
         }
 
         private void FillImageLayout()

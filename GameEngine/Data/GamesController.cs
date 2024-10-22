@@ -123,5 +123,42 @@ namespace PlayStationGames.GameEngine.Data
             result.Add(goToItem);
             return result;
         }
+
+        public override string GetExtractItemCaption(GameField field, object? value)
+        {
+            if (field == GameField.Owner && value is Guid guidValue)
+            {
+                Account? account = DataManager.Item<AccountField, Account>(AccountField.Id, guidValue);
+                return account != null ? account.Name : "Blank";
+            }
+
+            return field switch
+            {
+                GameField.Installed => 
+                    value is bool boolValue && boolValue
+                        ? "Installed" 
+                        : "Not installed",
+                GameField.Licensed => 
+                    value is bool boolValue && boolValue
+                        ? "Licensed" 
+                        : "Unlicense",
+                GameField.ExistsDLCsWithTrophyset =>
+                    "Games with additional trophies",
+                GameField.Verified =>
+                    "Verified",
+                GameField.AvailablePlatinum =>
+                    "Platinum Availble",
+                GameField.SinglePlayer =>
+                    "Single player",
+                GameField.CoachMultiplayer =>
+                    "Coach multiplayer",
+                GameField.OnlineMultiplayer =>
+                    "Online multiplayer",
+                GameField.Multiplayer =>
+                    "Multiplayer",
+                _ => 
+                    base.GetExtractItemCaption(field, value),
+            };
+        }
     }
 }

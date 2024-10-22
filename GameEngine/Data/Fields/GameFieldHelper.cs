@@ -217,62 +217,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Name
                 }
             },
-            [FieldsVariant.Summary] = new()
-            {
-                [FieldsFilling.Full] = new()
-                {
-                    GameField.Owner,
-                    GameField.Licensed,
-                    GameField.Platform,
-                    GameField.Source,
-                    GameField.Region,
-                    GameField.Language,
-                    GameField.Format,
-                    GameField.Edition,
-                    GameField.Serieses,
-                    GameField.CriticScore,
-                    GameField.ScreenView,
-                    GameField.Genre,
-                    GameField.SinglePlayer,
-                    GameField.CoachMultiplayer,
-                    GameField.MaximumPlayers,
-                    GameField.OnlineMultiplayer,
-                    GameField.Pegi,
-                    GameField.Year,
-                    GameField.Developer,
-                    GameField.Publisher,
-                    GameField.Difficult,
-                    GameField.CompleteTime,
-                    GameField.TrophysetType,
-                    GameField.Tags,
-                    GameField.Installed,
-                },
-                [FieldsFilling.Default] = new()
-                {
-                    GameField.Platform,
-                    GameField.Source,
-                    GameField.Region,
-                    GameField.Language,
-                    GameField.Format,
-                    GameField.Pegi,
-                    GameField.Year,
-                    GameField.Developer,
-                    GameField.Publisher,
-                    GameField.Difficult,
-                    GameField.CompleteTime,
-                    GameField.TrophysetType,
-                },
-                [FieldsFilling.Min] = new()
-                {
-                    GameField.Platform,
-                    GameField.Source,
-                    GameField.Region,
-                    GameField.Language,
-                    GameField.Format,
-                    GameField.Difficult,
-                    GameField.CompleteTime
-                },
-            },
             [FieldsVariant.Table] = new()
             {
                 [FieldsFilling.Full] = new()
@@ -377,6 +321,35 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Devices,
                 }
             }
+        };
+
+        protected override List<GameField> GetSummaryFields() => new()
+        {
+            GameField.Verified,
+            GameField.Licensed,
+            GameField.Installed,
+            GameField.AvailablePlatinum,
+            GameField.SinglePlayer,
+            GameField.Multiplayer,
+            GameField.Tags,
+            GameField.CriticScore,
+            GameField.Pegi,
+            GameField.Year,
+            GameField.Publisher,
+            GameField.Developer,
+            GameField.CompleteTime,
+            GameField.Difficult,
+            GameField.TrophysetType,
+            GameField.Genre,
+            GameField.ScreenView,
+            GameField.Serieses,
+            GameField.Edition,
+            GameField.Language,
+            GameField.Region,
+            GameField.Source,
+            GameField.Format,
+            GameField.Platform,
+            GameField.Owner,
         };
 
         public override List<GameField> GetFieldsInternal(FieldsVariant variant, FieldsFilling filling)

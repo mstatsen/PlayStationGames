@@ -37,7 +37,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             [FieldsVariant.QuickFilter] = new AccountFieldsFillingDictionary(),
             [FieldsVariant.QuickFilterText] = new AccountFieldsFillingDictionary(),
             [FieldsVariant.Category] = new AccountFieldsFillingDictionary(),
-            [FieldsVariant.Summary] = new AccountFieldsFillingDictionary(),
             [FieldsVariant.Inline] = new AccountFieldsFillingDictionary()
             {
                 [FieldsFilling.Full] = new List<AccountField>

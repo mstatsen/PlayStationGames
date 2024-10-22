@@ -107,7 +107,6 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 [FieldsVariant.Category] = new ConsoleFieldsFillingDictionary(),
                 [FieldsVariant.QuickFilter] = new ConsoleFieldsFillingDictionary(),
                 [FieldsVariant.QuickFilterText] = new ConsoleFieldsFillingDictionary(),
-                [FieldsVariant.Summary] = new ConsoleFieldsFillingDictionary(),
                 [FieldsVariant.BatchUpdate] = new ConsoleFieldsFillingDictionary()
             };
 
