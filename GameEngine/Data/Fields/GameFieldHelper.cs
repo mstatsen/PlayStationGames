@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.Data.Fields;
+using OxDAOEngine.Data.Fields.Types;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Filter.Types;
 using OxDAOEngine.Data.Types;
@@ -421,15 +422,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Installed,
             GameField.Multiplayer,
             GameField.ExistsDLCsWithTrophyset,
-        };
-
-        protected override List<GameField> GetIconFields() => new()
-        {
-            GameField.Image,
-            GameField.Name,
-            GameField.Platform,
-            GameField.Source,
-            GameField.Region
         };
 
         protected override List<GameField> GetEditingFields() => new()

@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.Data.Fields;
+using OxDAOEngine.Data.Fields.Types;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Filter.Types;
 using OxDAOEngine.Data.Types;
@@ -120,8 +121,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.StrategeLink,
             AccountField.PSNProfilesLink
         };
-
-        protected override List<AccountField> GetIconFields() => new() { };
 
         protected override List<AccountField> GetEditingFields() => new()
         {

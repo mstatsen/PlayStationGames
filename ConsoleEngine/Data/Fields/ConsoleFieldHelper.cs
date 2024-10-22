@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.Data.Fields;
+using OxDAOEngine.Data.Fields.Types;
 using OxDAOEngine.Data.Filter.Types;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -131,16 +132,6 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         }
 
         protected override List<ConsoleField> GetCalcedFields() => new();
-
-        protected override List<ConsoleField> GetIconFields() =>
-            new()
-            {
-                ConsoleField.Icon,
-                ConsoleField.Name,
-                ConsoleField.Generation,
-                ConsoleField.Model,
-                ConsoleField.Firmware
-            };
 
         protected override List<ConsoleField> GetEditedFieldsExtended() =>
             EditingFields;
