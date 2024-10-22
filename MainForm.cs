@@ -7,6 +7,7 @@ using OxDAOEngine.Settings;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.AccountEngine.Data;
+using OxDAOEngine.Settings.Part;
 
 namespace PlayStationGames
 {

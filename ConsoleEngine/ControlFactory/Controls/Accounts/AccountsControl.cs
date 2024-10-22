@@ -9,17 +9,17 @@ using OxLibrary;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 
-namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
+namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls.Accounts
 {
-    public class AccountsControl : ListItemsControl<ConsoleAccounts, ConsoleAccount, AccountEditor, ConsoleField, PSConsole> 
+    public class AccountsControl : ListItemsControl<ConsoleAccounts, ConsoleAccount, AccountEditor, ConsoleField, PSConsole>
     {
         protected override string GetText() => "Accounts";
         protected override string ItemName() => "Account";
 
-        public AccountsControl() => 
+        public AccountsControl() =>
             GetMaximumCount += GetMaximumCountHandler;
 
-        private int GetMaximumCountHandler() => 
+        private int GetMaximumCountHandler() =>
             ParentItem == null
                 ? -1
                 : TypeHelper.Helper<ConsoleGenerationHelper>().MaxAccountsCount(

@@ -62,6 +62,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         public TrophysetPanel(bool forDLC)
         {
+            IsDLCTrophyset = forDLC;
             typeControl = forDLC ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) : builder[GameField.TrophysetType];
             appliesToControl = forDLC ? builder.Accessor("DLC:TrophysetAppliesTo", FieldType.Enum) : builder[GameField.AppliesTo];
             difficultControl = forDLC ? builder.Accessor("DLC:Difficult", FieldType.Enum) : builder[GameField.Difficult];

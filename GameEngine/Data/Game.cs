@@ -2,6 +2,7 @@
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Filter;
+using OxDAOEngine.Data.Filter.Types;
 using OxDAOEngine.Data.Links;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.XML;

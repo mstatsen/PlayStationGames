@@ -14,6 +14,7 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
+using OxDAOEngine.Data.Filter.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {

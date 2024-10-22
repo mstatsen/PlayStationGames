@@ -2,6 +2,7 @@
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Filter;
+using OxDAOEngine.Data.Filter.Types;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Types;
 

@@ -11,7 +11,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
         public readonly ListDAO<Device> ExistingTypes = new();
         public Game? Game { get; set; }
 
-        private DeviceTypeHelper deviceTypeHelper = TypeHelper.Helper<DeviceTypeHelper>();
+        private readonly DeviceTypeHelper deviceTypeHelper = TypeHelper.Helper<DeviceTypeHelper>();
 
         public override bool AvailableValue(DeviceType value) => 
             base.AvailableValue(value)

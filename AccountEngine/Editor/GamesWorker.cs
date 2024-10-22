@@ -8,6 +8,7 @@ using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.AccountEngine.Data.Types;
+using OxDAOEngine.Data.Filter.Types;
 
 namespace PlayStationGames.AccountEngine.Editor
 {

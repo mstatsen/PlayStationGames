@@ -15,6 +15,7 @@ using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
+using OxDAOEngine.Data.Filter.Types;
 
 namespace PlayStationGames.GameEngine.Editor
 {
