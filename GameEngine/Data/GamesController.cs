@@ -54,6 +54,7 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<GameLanguageHelper>();
             TypeHelper.Register<GameLinkTypeHelper>();
             TypeHelper.Register<DeviceTypeHelper>();
+            TypeHelper.Register<CriticRangeHelper>();
         }
 
         public override string ListName => "Games";
@@ -134,28 +135,20 @@ namespace PlayStationGames.GameEngine.Data
 
             return field switch
             {
-                GameField.Installed => 
-                    value is bool boolValue && boolValue
-                        ? "Installed" 
-                        : "Not installed",
-                GameField.Licensed => 
-                    value is bool boolValue && boolValue
-                        ? "Licensed" 
-                        : "Unlicense",
-                GameField.ExistsDLCsWithTrophyset =>
-                    "Games with additional trophies",
-                GameField.Verified =>
-                    "Verified",
+                GameField.Installed or
+                GameField.Licensed or
+                GameField.Verified or
+                GameField.SinglePlayer or
+                GameField.CoachMultiplayer or
+                GameField.OnlineMultiplayer or
+                GameField.Multiplayer or
+                GameField.IsPSN or
+                GameField.IsEmulator or
+                GameField.WithDLC or
+                GameField.WithTrophyset =>
+                    FieldHelper.Name(field),
                 GameField.AvailablePlatinum =>
-                    "Platinum Availble",
-                GameField.SinglePlayer =>
-                    "Single player",
-                GameField.CoachMultiplayer =>
-                    "Coach multiplayer",
-                GameField.OnlineMultiplayer =>
-                    "Online multiplayer",
-                GameField.Multiplayer =>
-                    "Multiplayer",
+                    "With platinum trophy",
                 _ => 
                     base.GetExtractItemCaption(field, value),
             };

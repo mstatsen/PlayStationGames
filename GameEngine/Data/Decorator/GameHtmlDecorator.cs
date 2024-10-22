@@ -39,8 +39,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     DecoratorHelper.NoWrap(
                         OtherDecorator(DecoratorType.Card)[field]?.ToString()
                     ),
-                GameField.StrategeLink or 
-                GameField.PSNProfilesLink or 
                 GameField.Verified =>
                     OtherDecorator(DecoratorType.Table)[field],
                 _ => 
@@ -131,9 +129,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.ScreenView or 
                 GameField.Links or
                 GameField.Tags or
-                GameField.TrophysetType or 
-                GameField.StrategeLink or 
-                GameField.PSNProfilesLink => 
+                GameField.TrophysetType => 
                     "center",
                 _ => 
                     "left",

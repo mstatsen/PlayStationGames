@@ -40,7 +40,6 @@
         Devices,
 
         //calced fields
-
         TrophysetType,
         AppliesTo,
         Difficult,
@@ -49,14 +48,14 @@
         AvailableGold,
         AvailableSilver,
         AvailableBronze,
-
         Installed,
-        ExistsDLCsWithTrophyset,
+        IsPSN,
+        CriticRange,
+        WithDLC,
+        WithDLCsTrophyset,
         Multiplayer,
-
-        //Links
-        StrategeLink,
-        PSNProfilesLink,
+        IsEmulator,
+        WithTrophyset,
 
         //system
         Field,

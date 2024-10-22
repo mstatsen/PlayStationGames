@@ -39,7 +39,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                         : string.Empty,
                 GameField.Region =>
                     RegionAndLanguage,
-                GameField.ExistsDLCsWithTrophyset =>
+                GameField.WithDLCsTrophyset =>
                     Dao.ExistsDLCsWithTrophyset
                         ? "+DLCs trophies"
                         : string.Empty,

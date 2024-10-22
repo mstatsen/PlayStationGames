@@ -63,8 +63,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Links => "Links",
                 GameField.RelatedGames => "Related games",
                 GameField.Field => "Field",
-                GameField.StrategeLink => "Stratege",
-                GameField.PSNProfilesLink => "PSNProfiles",
                 GameField.Verified => "All information verified",
                 GameField.PlatformFamily => "Platform Family",
                 GameField.EmulatorType => "Emulate",
@@ -77,7 +75,12 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.AppliesTo => "Applies to",
                 GameField.Installed => "Installed",
                 GameField.Multiplayer => "Multiplayer",
-                GameField.ExistsDLCsWithTrophyset => "+DLCs trophies",
+                GameField.WithDLCsTrophyset => "+DLCs trophies",
+                GameField.IsPSN => "PSN game",
+                GameField.CriticRange => "Critic Score",
+                GameField.WithDLC => "With DLC",
+                GameField.IsEmulator => "Emulator",
+                GameField.WithTrophyset => "With trophyset",
                 _ => string.Empty,
             };
 
@@ -123,7 +126,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Tags,
                     GameField.Installed,
                     GameField.Multiplayer,
-                    GameField.ExistsDLCsWithTrophyset
+                    GameField.WithDLCsTrophyset
                 },
                 [FieldsFilling.Default] = new()
                 {
@@ -244,7 +247,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Difficult,
                     GameField.CompleteTime,
                     GameField.Dlcs,
-                    GameField.ExistsDLCsWithTrophyset,
+                    GameField.WithDLCsTrophyset,
                     GameField.RelatedGames,
                     GameField.TrophysetType,
                     GameField.Genre,
@@ -253,8 +256,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.MaximumPlayers,
                     GameField.OnlineMultiplayer,
                     GameField.Multiplayer,
-                    GameField.StrategeLink,
-                    GameField.PSNProfilesLink,
                     GameField.Verified,
                     GameField.Tags,
                     GameField.Devices,
@@ -329,29 +330,33 @@ namespace PlayStationGames.GameEngine.Data.Fields
         {
             GameField.Verified,
             GameField.Licensed,
-            GameField.Installed,
+            GameField.IsPSN,
+            GameField.WithDLC,
+            GameField.WithTrophyset,
             GameField.AvailablePlatinum,
+            GameField.IsEmulator,
+            GameField.Installed,
             GameField.SinglePlayer,
             GameField.Multiplayer,
-            GameField.Tags,
-            GameField.CriticScore,
-            GameField.Pegi,
-            GameField.Year,
-            GameField.Publisher,
-            GameField.Developer,
-            GameField.CompleteTime,
-            GameField.Difficult,
-            GameField.TrophysetType,
-            GameField.Genre,
-            GameField.ScreenView,
-            GameField.Serieses,
-            GameField.Edition,
-            GameField.Language,
-            GameField.Region,
-            GameField.Source,
-            GameField.Format,
-            GameField.Platform,
             GameField.Owner,
+            GameField.Platform,
+            GameField.Format,
+            GameField.Source,
+            GameField.Region,
+            GameField.Language,
+            GameField.Edition,
+            GameField.Serieses,
+            GameField.ScreenView,
+            GameField.Genre,
+            GameField.TrophysetType,
+            GameField.Difficult,
+            GameField.CompleteTime,
+            GameField.Developer,
+            GameField.Publisher,
+            GameField.Year,
+            GameField.Pegi,
+            GameField.CriticRange,
+            GameField.Tags,
         };
 
         public override List<GameField> GetFieldsInternal(FieldsVariant variant, FieldsFilling filling)
@@ -405,6 +410,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Language,
             GameField.Installed,
             GameField.Multiplayer,
+            GameField.WithTrophyset,
+            GameField.IsPSN,
+            GameField.WithDLC
         };
 
         protected override List<GameField> GetCalcedFields() => new()
@@ -417,11 +425,14 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.AvailableSilver,
             GameField.AvailableGold,
             GameField.AvailablePlatinum,
-            GameField.StrategeLink,
-            GameField.PSNProfilesLink,
             GameField.Installed,
             GameField.Multiplayer,
-            GameField.ExistsDLCsWithTrophyset,
+            GameField.WithDLCsTrophyset,
+            GameField.IsPSN,
+            GameField.CriticRange,
+            GameField.WithDLC,
+            GameField.IsEmulator,
+            GameField.WithTrophyset
         };
 
         protected override List<GameField> GetEditingFields() => new()
@@ -556,7 +567,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Edition,
             GameField.Genre,
             GameField.Devices,
-            GameField.ExistsDLCsWithTrophyset,
+            GameField.WithDLCsTrophyset,
             GameField.Developer,
             GameField.Publisher,
             GameField.Year,
@@ -595,9 +606,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Devices or
                 GameField.AppliesTo => 
                     FilterOperation.Contains,
-                GameField.Image or
-                GameField.StrategeLink or
-                GameField.PSNProfilesLink => 
+                GameField.Image =>
                     FilterOperation.NotBlank,
                 _ =>
                     FilterOperation.Equals
@@ -637,8 +646,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.Links] = FilterOperations.ObjectOperations,
             [GameField.Installations] = FilterOperations.ObjectOperations,
             [GameField.RelatedGames] = FilterOperations.ObjectOperations,
-            [GameField.StrategeLink] = FilterOperations.UnaryOperations,
-            [GameField.PSNProfilesLink] = FilterOperations.UnaryOperations,
             [GameField.Verified] = FilterOperations.BoolOperations,
             [GameField.SinglePlayer] = FilterOperations.BoolOperations,
             [GameField.CoachMultiplayer] = FilterOperations.BoolOperations,
@@ -653,7 +660,12 @@ namespace PlayStationGames.GameEngine.Data.Fields
             [GameField.AppliesTo] = FilterOperations.ObjectOperations,
             [GameField.Installed] = FilterOperations.BoolOperations,
             [GameField.Multiplayer] = FilterOperations.BoolOperations,
-            [GameField.ExistsDLCsWithTrophyset] = FilterOperations.BoolOperations,
+            [GameField.WithDLCsTrophyset] = FilterOperations.BoolOperations,
+            [GameField.IsPSN] = FilterOperations.BoolOperations,
+            [GameField.CriticRange] = FilterOperations.EnumOperations,
+            [GameField.WithDLC] = FilterOperations.BoolOperations,
+            [GameField.IsEmulator] = FilterOperations.BoolOperations,
+            [GameField.WithTrophyset] = FilterOperations.BoolOperations
         };
 
         protected override List<GameField> GetSelectQuickFilterFields() => new()
@@ -740,7 +752,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Multiplayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or
-                GameField.ExistsDLCsWithTrophyset or
+                GameField.WithDLCsTrophyset or
                 GameField.Difficult =>
                     60,
                 GameField.CompleteTime or 
@@ -752,70 +764,72 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     100,
             };
 
-        public override FieldType GetFieldType(GameField field) => 
+        public override FieldType GetFieldType(GameField field) =>
             field switch
             {
                 GameField.Name =>
                     FieldType.ShortMemo,
-                GameField.EmulatorROMs => 
+                GameField.EmulatorROMs =>
                     FieldType.Memo,
-                GameField.Image => 
+                GameField.Image =>
                     FieldType.Image,
-                GameField.Edition or 
-                GameField.Developer or 
-                GameField.Publisher or 
-                GameField.Genre or 
+                GameField.Edition or
+                GameField.Developer or
+                GameField.Publisher or
+                GameField.Genre or
                 GameField.EmulatorType =>
                     FieldType.Extract,
-                GameField.PlatformFamily or 
-                GameField.Platform or 
-                GameField.ScreenView or 
-                GameField.Format or 
-                GameField.Source or 
-                GameField.Pegi or 
-                GameField.CompleteTime or 
-                GameField.Difficult or 
+                GameField.PlatformFamily or
+                GameField.Platform or
+                GameField.ScreenView or
+                GameField.Format or
+                GameField.Source or
+                GameField.Pegi or
+                GameField.CompleteTime or
+                GameField.Difficult or
                 GameField.TrophysetType or
                 GameField.Region or
-                GameField.Language =>
+                GameField.Language or
+                GameField.CriticRange =>
                     FieldType.Enum,
-                GameField.AvailablePlatinum or 
-                GameField.Verified or 
+                GameField.AvailablePlatinum or
+                GameField.Verified or
                 GameField.Licensed or
                 GameField.Installed or
                 GameField.Multiplayer or
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or
-                GameField.ExistsDLCsWithTrophyset => 
+                GameField.WithDLCsTrophyset or
+                GameField.IsPSN or
+                GameField.WithDLC or
+                GameField.IsEmulator or
+                GameField.WithTrophyset =>
                     FieldType.Boolean,
                 GameField.AvailableGold or
                 GameField.AvailableSilver or
                 GameField.AvailableBronze or
                 GameField.MaximumPlayers or
-                GameField.CriticScore => 
+                GameField.CriticScore =>
                     FieldType.Integer,
                 GameField.Id =>
                     FieldType.Guid,
                 GameField.Dlcs or
-                GameField.Installations or 
-                GameField.RelatedGames or 
+                GameField.Installations or
+                GameField.RelatedGames or
                 GameField.ReleasePlatforms or
                 GameField.Tags or
                 GameField.Serieses or
                 GameField.Devices or
-                GameField.AppliesTo => 
+                GameField.AppliesTo =>
                     FieldType.List,
-                GameField.StrategeLink or
-                GameField.PSNProfilesLink =>
-                    FieldType.Link,
                 GameField.Links =>
                     FieldType.LinkList,
-                GameField.Year or 
+                GameField.Year or
                 GameField.Owner or
-                GameField.Trophyset => 
+                GameField.Trophyset =>
                     FieldType.Custom,
-                _ => 
+                _ =>
                     FieldType.String,
             };
 

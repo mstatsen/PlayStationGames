@@ -203,14 +203,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                         .AddFilterEquals(GameField.Year, -1)
                         .AddFilterEquals(GameField.Pegi, Pegi.Unknown)
                         .AddFilterBlank(GameField.ReleasePlatforms)
-                )
-                .AddChild(
-                    new Category<GameField, Game>("Some Link Lost")
-                        .AddFilterNotEquals(GameField.TrophysetType,
-                            TrophysetType.NoSet,
-                            FilterConcat.AND)
-                        .AddFilterBlank(GameField.StrategeLink)
-                        .AddFilterBlank(GameField.PSNProfilesLink)
                 );
 
         private static Category<GameField, Game>? FindCategory(Category<GameField, Game> parentCategory, string name)

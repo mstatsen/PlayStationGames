@@ -27,8 +27,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.Genre => CalcedGenre,
                 GameField.Format => Format,
                 GameField.Platform => PlatformType,
-                GameField.StrategeLink => StrategeLink,
-                GameField.PSNProfilesLink => PSNProfilesLink,
                 GameField.RelatedGames => RelatedGames,
                 GameField.ReleasePlatforms => ReleasePlatforms,
                 GameField.Dlcs => DLC,
@@ -112,12 +110,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 ? string.Empty
                 : Dao.Year.ToString();
 
-        private object? StrategeLink =>
-            Link("Stratege");
-
-        private object? PSNProfilesLink =>
-            Link("PSNProfiles");
-
         public object Owner
         {
             get
@@ -129,8 +121,5 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 return string.Empty;
             }
         }
-
-        private object? Link(string Name) =>
-            Dao.Links.Find(l => l.Name.Equals(Name));
     }
 }

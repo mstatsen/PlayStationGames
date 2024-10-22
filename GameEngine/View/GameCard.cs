@@ -79,7 +79,7 @@ namespace PlayStationGames.GameEngine.View
 
             if (Item.ExistsDLCsWithTrophyset)
             {
-                ControlLayout<GameField> withDLCLayout = trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.ExistsDLCsWithTrophyset, -8));
+                ControlLayout<GameField> withDLCLayout = trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.WithDLCsTrophyset, -8));
                 withDLCLayout.CaptionVariant = ControlCaptionVariant.None;
                 withDLCLayout.Left = 8;
             }
@@ -261,7 +261,7 @@ namespace PlayStationGames.GameEngine.View
 
         protected override string GetTitle() =>
             Item != null
-                ? $"{Item.FullTitle()})"
+                ? $"{Item.FullTitle()}"
                 : "Game";
 
         private readonly OxFrameWithHeader trophiesPanel;

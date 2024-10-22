@@ -525,11 +525,11 @@ namespace PlayStationGames.GameEngine.Data
             RelatedGames.CopyFrom(value);
         }
 
-        protected override object? GetFieldValue(GameField field) => 
+        protected override object? GetFieldValue(GameField field) =>
             field switch
             {
                 GameField.Id => id,
-                GameField.Name or GameField.Image => 
+                GameField.Name or GameField.Image =>
                     base.GetFieldValue(field),
                 GameField.Edition => edition,
                 GameField.PlatformFamily => PlatformFamily.Sony,
@@ -574,7 +574,12 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.AppliesTo => Trophyset.AppliesTo,
                 GameField.Installed => Installed,
                 GameField.Multiplayer => Multiplayer,
-                GameField.ExistsDLCsWithTrophyset => ExistsDLCsWithTrophyset,
+                GameField.WithDLCsTrophyset => ExistsDLCsWithTrophyset,
+                GameField.IsPSN => sourceHelper.IsPSN(SourceType),
+                GameField.CriticRange => TypeHelper.Helper<CriticRangeHelper>().Range(CriticScore),
+                GameField.WithDLC => Dlcs.Count > 0,
+                GameField.IsEmulator => Format.Equals(GameFormat.Emulator),
+                GameField.WithTrophyset => Trophyset.Type != TrophysetType.NoSet,
                 _ => new GameCardDecorator(this)[field],
             };
 

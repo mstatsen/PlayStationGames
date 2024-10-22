@@ -49,6 +49,8 @@ namespace PlayStationGames.GameEngine.ControlFactory
                         CreateEnumAccessor<Difficult>(context),
                     GameField.TrophysetType =>
                         CreateEnumAccessor<TrophysetType>(context),
+                    GameField.CriticRange =>
+                        CreateEnumAccessor<CriticRange>(context),
                     GameField.Year =>
                         CreateYearAccessor(context),
                     GameField.Dlcs =>
