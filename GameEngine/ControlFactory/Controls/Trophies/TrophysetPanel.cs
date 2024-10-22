@@ -63,10 +63,18 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         public TrophysetPanel(bool forDLC)
         {
             IsDLCTrophyset = forDLC;
-            typeControl = forDLC ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) : builder[GameField.TrophysetType];
-            appliesToControl = forDLC ? builder.Accessor("DLC:TrophysetAppliesTo", FieldType.Enum) : builder[GameField.AppliesTo];
-            difficultControl = forDLC ? builder.Accessor("DLC:Difficult", FieldType.Enum) : builder[GameField.Difficult];
-            completeTimeControl = forDLC ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) : builder[GameField.CompleteTime];
+            typeControl = forDLC 
+                ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) 
+                : builder[GameField.TrophysetType];
+            appliesToControl = forDLC 
+                ? builder.Accessor("DLC:TrophysetAppliesTo", FieldType.Enum) 
+                : builder[GameField.AppliesTo];
+            difficultControl = forDLC 
+                ? builder.Accessor("DLC:Difficult", FieldType.Enum) 
+                : builder[GameField.Difficult];
+            completeTimeControl = forDLC 
+                ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) 
+                : builder[GameField.CompleteTime];
             PrepareAccessor(typeControl, trophysetTypeLabel, 4, 154, TypeChangeHandler);
             PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 154, AppliesToChandeHandler);
             PrepareAccessor(difficultControl, difficultLabel, appliesToControl.Bottom, 64, DifficultChangeHandler);
@@ -96,29 +104,30 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             if (Type == TrophysetType.NoSet)
                 ClearValues();
 
-            appliesToControl.Visible = Type != TrophysetType.NoSet;
+            bool isTrophysetExists = Type != TrophysetType.NoSet;
+            appliesToControl.Visible = isTrophysetExists;
             AddCurrentPlatformToAppliesTo();
-            appliesToLabel.Visible = Type != TrophysetType.NoSet;
-            difficultControl.Visible = Type != TrophysetType.NoSet;
-            completeTimeControl.Visible = Type != TrophysetType.NoSet;
-            difficultLabel.Visible = Type != TrophysetType.NoSet;
-            completeTimeLabel.Visible = Type != TrophysetType.NoSet;
-            addButton.Visible = Type != TrophysetType.NoSet;
+            appliesToLabel.Visible = isTrophysetExists;
+            difficultControl.Visible = isTrophysetExists;
+            completeTimeControl.Visible = isTrophysetExists;
+            difficultLabel.Visible = isTrophysetExists;
+            completeTimeLabel.Visible = isTrophysetExists;
+            addButton.Visible = isTrophysetExists;
             RecalcTrophiesPanels();
             ValueChanged?.Invoke(this, e);
         }
 
         private void AddCurrentPlatformToAppliesTo()
         {
-            if (Type != TrophysetType.NoSet)
+            if (Type == TrophysetType.NoSet)
+                return;
+
+            appliesToControl.Value = new Platforms
             {
-                appliesToControl.Value = new Platforms
-                {
-                    new Platform(
-                        builder.Value<PlatformType>(GameField.Platform)
-                    )
-                };
-            }
+                new Platform(
+                    builder.Value<PlatformType>(GameField.Platform)
+                )
+            };
         }
 
         private void SetMinimumSize()
