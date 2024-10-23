@@ -27,12 +27,22 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Country => "Country",
                 AccountField.Consoles => "Consoles",
                 AccountField.Games => "Games",
-                AccountField.StrategeLink => "Stratege",
                 AccountField.Links => "Links",
-                AccountField.PSNProfilesLink => "PSNProfiles",
                 AccountField.DefaultAccount => "Default Account",
+                AccountField.UsesAndOwns => "Uses and owns",
                 _ => string.Empty,
             };
+
+        public override string GetCaption(AccountField value) =>
+            value switch
+            {
+                AccountField.Consoles =>
+                    "Registered on consoles",
+                AccountField.Games =>
+                    "Owner of",
+                _ => base.GetCaption(value)
+            };
+        
 
         private readonly AccountFieldsVariantDictionary fieldDictionary = new()
         {
@@ -47,8 +57,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountField.Login,
                     AccountField.Password,
                     AccountField.Country,
-                    AccountField.StrategeLink,
-                    AccountField.PSNProfilesLink,
                     AccountField.DefaultAccount
                 },
                 [FieldsFilling.Default] = new List<AccountField>
@@ -66,8 +74,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountField.Type,
                     AccountField.Login,
                     AccountField.Country,
-                    AccountField.PSNProfilesLink,
-                    AccountField.StrategeLink,
                     AccountField.Consoles,
                     AccountField.Games,
                     AccountField.DefaultAccount
@@ -79,8 +85,6 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountField.Type,
                     AccountField.Login,
                     AccountField.Country,
-                    AccountField.PSNProfilesLink,
-                    AccountField.StrategeLink,
                     AccountField.DefaultAccount
                 },
                 [FieldsFilling.Min] = new List<AccountField>
@@ -117,9 +121,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         protected override List<AccountField> GetGroupByFields() => new() { };
 
         protected override List<AccountField> GetCalcedFields() => new() 
-        {
-            AccountField.StrategeLink,
-            AccountField.PSNProfilesLink
+        { 
+            AccountField.UsesAndOwns
         };
 
         protected override List<AccountField> GetEditingFields() => new()
@@ -151,14 +154,21 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.DefaultAccount
         };
 
-        protected override List<AccountField> GetCardFields() => new() { };
+        protected override List<AccountField> GetCardFields() => new() 
+        {
+            AccountField.Avatar,
+            AccountField.Name,
+            AccountField.Type,
+            AccountField.Country,
+            AccountField.Login,
+            AccountField.Links,
+            AccountField.UsesAndOwns
+        };
 
         protected override FilterOperation GetDefaultFilterOperation(AccountField field) =>
             field switch
             {
                 AccountField.Avatar or
-                AccountField.StrategeLink or
-                AccountField.PSNProfilesLink or
                 AccountField.Password =>
                     FilterOperation.NotBlank,
                 AccountField.Name or 
@@ -184,9 +194,8 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             [AccountField.Login] = FilterOperations.StringOperations,
             [AccountField.Name] = FilterOperations.StringOperations,
             [AccountField.Password] = FilterOperations.UnaryOperations,
-            [AccountField.PSNProfilesLink] = FilterOperations.UnaryOperations,
-            [AccountField.StrategeLink] = FilterOperations.UnaryOperations,
-            [AccountField.DefaultAccount] = FilterOperations.BoolOperations
+            [AccountField.DefaultAccount] = FilterOperations.BoolOperations,
+            [AccountField.UsesAndOwns] = FilterOperations.StringOperations
         };
 
         protected override List<AccountField> GetSelectQuickFilterFields() => new(){ };

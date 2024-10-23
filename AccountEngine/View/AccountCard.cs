@@ -1,24 +1,38 @@
-﻿using OxLibrary.Controls;
-using OxDAOEngine.ControlFactory;
+﻿using OxDAOEngine.ControlFactory;
 using OxDAOEngine.View;
+using OxLibrary;
+using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
-
 
 namespace PlayStationGames.AccountEngine.View
 {
     public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
     {
-        protected override int CardWidth => 350;
-        protected override int CardHeight => 260;
+        protected override int CardWidth => 400;
+        protected override int CardHeight => 200;
 
-        public AccountCard(ItemViewMode viewMode) : base(viewMode) { }
+        public AccountCard(ItemViewMode viewMode) : base(viewMode) 
+        {
+            trophiesPanel = new()
+            {
+                Parent = this,
+                Text = "PSN Level"
+            };
+            trophiesPanel.Header.SetContentSize(1, 18);
+            trophiesPanel.SetContentSize(140, 168);
+            trophiesPanel.Paddings.SetSize(OxSize.Large);
+            trophiesPanel.Top = 1;
+            trophiesPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            PrepareColors();
+        }
 
         protected override void PrepareLayouts()
         {
             FillAvatarLayout();
             FillBaseLayouts();
-            FillBottomLayouts();
+            FillUsedAndOwnsLayout();
+            FillLinksLayout();
         }
 
         private void FillAvatarLayout()
@@ -28,80 +42,73 @@ namespace PlayStationGames.AccountEngine.View
 
             ControlLayout<AccountField> avatarLayout = Layouter.AddFromTemplate(AccountField.Avatar);
             avatarLayout.CaptionVariant = ControlCaptionVariant.None;
-            avatarLayout.Width = 108;
-            avatarLayout.Height = 60;
+            avatarLayout.Width = 80;
+            avatarLayout.Height = 80;
         }
 
         private void FillBaseLayouts()
         {
             ClearLayoutTemplate();
             baseLayouts.Clear();
-            Layouter.Template.Left = Layouter[AccountField.Avatar]!.Right + 84;
-            baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Login));
-            baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Password));
-            baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Country));
+            Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
+            Layouter.Template.Left = Layouter[AccountField.Avatar]!.Right + 8;
+            Layouter.Template.Top = 12;
+            baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Type));
+            Layouter.Template.FontStyle = FontStyle.Regular;
+
+            if (Item!.Login != string.Empty)
+                baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Login, -8));
+
+            baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Country,-8));
         }
 
-        private void FillBottomLayouts()
+        private void FillUsedAndOwnsLayout()
         {
-            ClearLayoutTemplate();
-            bottomLayouts.Clear();
-
-            if (Item == null)
+            if (Item == null
+                || (Item.ConsolesCount == 0
+                    && Item.GamesCount == 0))
                 return;
 
-            Layouter.Template.Left = Layouter[AccountField.Avatar]!.Left + 72;
-            Layouter.Template.Top = Layouter[AccountField.Avatar]!.Bottom + 12;
-            bottomLayouts.Add(Layouter.AddFromTemplate(AccountField.Consoles, 16));
-            bottomLayouts.Add(Layouter.AddFromTemplate(AccountField.Games, 16));
+            ClearLayoutTemplate();
+            Layouter.Template.Left = Layouter[AccountField.Avatar]!.Left;
+            Layouter.Template.Top = Layouter[AccountField.Avatar]!.Bottom-2;
+            Layouter.Template.FontStyle = FontStyle.Italic;
+            Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
+            Layouter.AddFromTemplate(AccountField.UsesAndOwns);
+        }
+
+        private void FillLinksLayout()
+        {
+            ClearLayoutTemplate();
+            Layouter.Template.Width = 120;
+            Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
+            Layouter.Template.BackColor = BaseColor;
+            Layouter.AddFromTemplate(AccountField.Links, 12);
         }
 
         protected override void AlignControls()
         {
             Layouter.AlignLabels(baseLayouts);
-            Layouter.AlignLabels(bottomLayouts);
 
             foreach (AccountField field in baseLayouts.Fields)
                 Layouter.PlacedControl(field)!.Control.Left -= 8;
+
+            trophiesPanel.Left = ContentContainer.Width - trophiesPanel.Width - 1;
         }
 
-        protected override void ClearLayouts()
-        {
+        protected override void ClearLayouts() =>
             baseLayouts.Clear();
-            bottomLayouts.Clear();
+
+        protected override void PrepareColors()
+        {
+            base.PrepareColors();
+            SetPaneBaseColor(trophiesPanel, Colors.Darker());
         }
 
         protected override string GetTitle() =>
             Item != null ? Item.Name : string.Empty;
 
-        protected override void AfterLayoutControls()
-        {
-            base.AfterLayoutControls();
-            WrapStoragesAndFolders();
-        }
-
-        private void WrapStoragesAndFolders()
-        {
-            OxLabel? consolesControl =
-                (OxLabel?)Layouter.PlacedControl(AccountField.Consoles)?.Control;
-
-            if (consolesControl != null)
-            {
-                consolesControl.MaximumSize = new Size(290, 46);
-                consolesControl.TextAlign = ContentAlignment.TopLeft;
-            }
-
-            OxLabel? gamesControl =
-                (OxLabel?)Layouter.PlacedControl(AccountField.Consoles)?.Control;
-
-            if (gamesControl != null)
-            {
-                gamesControl.MaximumSize = new Size(290, 46);
-                gamesControl.TextAlign = ContentAlignment.TopLeft;
-            }
-        }
-
+        private readonly OxFrameWithHeader trophiesPanel;
         private readonly ControlLayouts<AccountField> baseLayouts = new();
-        private readonly ControlLayouts<AccountField> bottomLayouts = new();
     }
 }

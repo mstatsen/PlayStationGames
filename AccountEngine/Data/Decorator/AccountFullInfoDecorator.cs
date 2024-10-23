@@ -1,41 +1,18 @@
-﻿using PlayStationGames.AccountEngine.Data.Fields;
+﻿using OxDAOEngine.Data.Types;
+using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.AccountEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {
-    internal class AccountFullInfoDecorator : AccountTableDecorator
+    internal class AccountFullInfoDecorator : AccountCardDecorator
     {
         public AccountFullInfoDecorator(Account dao) : base(dao) { }
 
-        public override object? Value(AccountField field) => 
+        public override object? Value(AccountField field) =>
             field switch
             {
-                AccountField.Consoles => ConsolesText(),
-                AccountField.Games => GamesText(),
+                AccountField.Consoles => Dao.Consoles.OneColumnText(),
                 _ => base.Value(field),
             };
-
-        private object? GamesText()
-        {
-            string result = string.Empty;
-
-            /*
-            foreach (Storage storage in Dao.Storages)
-                result += $"{storage.Name} ({storage.Size} Gb, {storage.GameCount} games)\n";
-            */
-
-            return result;
-        }
-
-        private object? ConsolesText()
-        {
-            string result = string.Empty;
-
-            /*
-            foreach (Storage storage in Dao.Storages)
-                result += $"{storage.Name} ({storage.Size} Gb, {storage.GameCount} games)\n";
-            */
-
-            return result;
-        }
     }
 }

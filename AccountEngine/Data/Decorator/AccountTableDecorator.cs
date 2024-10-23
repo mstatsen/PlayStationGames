@@ -18,8 +18,6 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
                 AccountField.Avatar => OxImageBoxer.BoxingImage(Dao.Image, new Size(70, 40)),
                 AccountField.Consoles => ConsolesCount(),
                 AccountField.Games => GamesCount(),
-                AccountField.StrategeLink => StrategeLink,
-                AccountField.PSNProfilesLink => PSNProfilesLink,
                 _ => base.Value(field)
             };
         }

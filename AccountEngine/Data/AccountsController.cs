@@ -13,8 +13,6 @@ using PlayStationGames.AccountEngine.Data.Types;
 using OxLibrary;
 using OxDAOEngine.Data.Links;
 using OxDAOEngine.Grid;
-using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames.AccountEngine.Data
 {
@@ -67,7 +65,6 @@ namespace PlayStationGames.AccountEngine.Data
         public override bool AvailableSummary => false;
         public override bool AvailableCategories => false;
         public override bool AvailableQuickFilter => false;
-        public override bool AvailableCards => false;
         public override bool AvailableIcons => false;
         public override bool AvailableBatchUpdate => false;
         public override bool AvailableCopyItems => false;

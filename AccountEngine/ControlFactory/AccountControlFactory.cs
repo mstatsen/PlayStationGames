@@ -27,6 +27,9 @@ namespace PlayStationGames.AccountEngine.ControlFactory
         public override IItemInfo<AccountField, Account> CreateInfoCard() =>
             new AccountFullInfoCard();
 
+        public override IItemCard<AccountField, Account>? CreateCard(ItemViewMode viewMode) => 
+            new AccountCard(viewMode);
+
         public override GridPainter<AccountField, Account> CreateGridPainter(
             GridFieldColumns<AccountField> columns, GridUsage usage) => new AccountGridPainter(columns);
 

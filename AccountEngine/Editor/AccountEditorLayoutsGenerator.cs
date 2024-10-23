@@ -15,8 +15,6 @@ namespace PlayStationGames.AccountEngine.Editor
         public override List<AccountField> ControlsWithoutLabel() =>
             new()
             {
-                AccountField.Consoles,
-                AccountField.Games,
                 AccountField.Avatar,
                 AccountField.DefaultAccount,
                 AccountField.Links
@@ -34,7 +32,6 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.Type,
                 AccountField.Password,
                 AccountField.Country,
-                AccountField.StrategeLink
             };
 
         public override int Top(AccountField field) =>
@@ -48,12 +45,12 @@ namespace PlayStationGames.AccountEngine.Editor
         public override int Left(AccountField field) =>
             field is AccountField.Avatar or 
                 AccountField.DefaultAccount
-            ? 8
-            : field is AccountField.Name or
-                AccountField.Country or
-                AccountField.Type
-                ? 169
-                : 74;
+                ? 8
+                : field is AccountField.Name or
+                    AccountField.Country or
+                    AccountField.Type
+                    ? 169
+                    : 74;
 
         public override int Width(AccountField field) =>
             field switch
@@ -67,9 +64,6 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.Login or
                 AccountField.Password => 
                     320,
-                AccountField.StrategeLink or
-                AccountField.PSNProfilesLink =>
-                    290,
                 _ => 210
             };
 

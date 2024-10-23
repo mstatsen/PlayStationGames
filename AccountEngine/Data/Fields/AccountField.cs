@@ -13,9 +13,10 @@
         Consoles,
         Games,
         Links,
-        StrategeLink,
-        PSNProfilesLink,
         DefaultAccount,
+
+        //calced
+        UsesAndOwns,
 
         //system
         Field,

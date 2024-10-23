@@ -6,6 +6,10 @@ using OxDAOEngine.XML;
 using OxLibrary.Data.Countries;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data.Types;
+using PlayStationGames.ConsoleEngine.Data;
+using PlayStationGames.ConsoleEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data;
+using PlayStationGames.GameEngine.Data.Fields;
 using System.Xml;
 
 namespace PlayStationGames.AccountEngine.Data
@@ -115,24 +119,49 @@ namespace PlayStationGames.AccountEngine.Data
         private AccountType type = default!;
 
 
-        /*
-         * TODO:
-        public List<Game> Games() =>
-            DataManager.FullItemsList<GameField, Game>().List.FindAll(
-                (g) => g.Installations.Contains(
-                    (i) => i.ConsoleId == Id
-                )
-            );
+        public List<Game> Games =>
+            DataManager.FullItemsList<GameField, Game>().FindAll((g) => g.Owner == Id);
 
-        public List<PSConsole> Consoles() =>
-            DataManager.FullItemsList<ConsoleField, PSConsole>().List.FindAll(
-                (g) => g.Installations.Contains(
-                    (i) => i.ConsoleId == Id
-                )
-            );
+        public ListDAO<PSConsole> Consoles
+        {
+            get
+            {
+                ListDAO<PSConsole> result = new();
+                result.AddRange(
+                    DataManager.FullItemsList<ConsoleField, PSConsole>().FindAll(
+                        (c) => c.Accounts.Contains(
+                            (a) => a.Id == Id
+                        )
+                    )
+                );
+                return result;
+            }
+        }
 
-        //public int GamesCount => Storages.GamesCount();
-        */
+        public int GamesCount => Games.Count();
+
+        public int ConsolesCount => Consoles.Count();
+
+        public string UsesAndOwns 
+        {
+            get
+            { 
+                string result = string.Empty;
+
+                if (ConsolesCount > 0)
+                    result = $"Use {ConsolesCount} console{(ConsolesCount > 1 ? "s" : string.Empty)}";
+
+                if (GamesCount > 0)
+                {
+                    if (ConsolesCount > 0)
+                        result += "\n";
+
+                    result += $"Owns {GamesCount} game{(GamesCount > 1 ? "s" : string.Empty)}";
+                }
+
+                return result;
+            }
+        }
 
         private static object? PrepareValueToSet(AccountField field, object? value)
         {
@@ -190,7 +219,7 @@ namespace PlayStationGames.AccountEngine.Data
             {
                 AccountField.Account => this,
                 AccountField.Id => Id,
-                AccountField.Name or 
+                AccountField.Name or
                 AccountField.Avatar =>
                     base.GetFieldValue(field),
                 AccountField.Type => Type,
@@ -199,9 +228,9 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.Password => Password,
                 AccountField.Country => Country,
                 AccountField.Links => Links,
-                AccountField.Consoles or
-                AccountField.Games =>
-                    DataManager.DecoratorFactory<AccountField, Account>().Decorator(DecoratorType.Table, this),
+                AccountField.Consoles => Consoles,
+                AccountField.Games => Games,
+                AccountField.UsesAndOwns => UsesAndOwns,
                 _ => null,
             };
 
@@ -240,8 +269,6 @@ namespace PlayStationGames.AccountEngine.Data
                 case AccountField.Country:
                 case AccountField.Login:
                 case AccountField.Password:
-                case AccountField.PSNProfilesLink:
-                case AccountField.StrategeLink:
                     return StringValue(this[field]).CompareTo(StringValue(y[field]));
             };
 

@@ -14,6 +14,9 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
         protected override Decorator<AccountField, Account> FullInfo(Account dao) =>
             new AccountFullInfoDecorator(dao);
 
+        protected override Decorator<AccountField, Account> Card(Account dao) =>
+            new AccountCardDecorator(dao);
+
         protected override Decorator<AccountField, Account> HTML(Account dao) =>
             new AccountHtmlDecorator(dao);
     }

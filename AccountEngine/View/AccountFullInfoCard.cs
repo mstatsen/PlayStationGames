@@ -19,64 +19,65 @@ namespace PlayStationGames.AccountEngine.View
             avatarLayout.Width = 80;
             avatarLayout.Height = 80;
 
-            Layouter.Template.Left = avatarLayout.Right + 90;
-
-            ControlLayout<AccountField> countryLayout = Layouter.AddFromTemplate(AccountField.Country);
-            countryLayout.Top = 12;
+            Layouter.Template.Top = 12;
+            ControlLayout<AccountField> typeLayout = Layouter.AddFromTemplate(AccountField.Type);
+            typeLayout.CaptionVariant = ControlCaptionVariant.None;
+            typeLayout.Left = avatarLayout.Right + 8;
+            Layouter.Template.Left = avatarLayout.Right + 70;
 
             return new ControlLayouts<AccountField>()
             {
                 avatarLayout,
-                countryLayout
+                typeLayout,
+                Layouter.AddFromTemplate(AccountField.Login, 2),
+                Layouter.AddFromTemplate(AccountField.Country, 2)
             };
         }
 
         protected override void PrepareLayouts()
         {
             LayoutsLists.Add(AccountPanel, FillAccountLayout());
-            LayoutsLists.Add(AuthPanel, FillAuthLayout());
-            LayoutsLists.Add(LinksPanel, FillLinksLayout());
             LayoutsLists.Add(PropertyPanel, FillPropertyLayout());
+            LayoutsLists.Add(LinksPanel, FillLinksLayout());
         }
 
         private ControlLayouts<AccountField> FillPropertyLayout()
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = PropertyPanel;
+            Layouter.Template.Left = 90;
 
-            return new ControlLayouts<AccountField>()
+            ControlLayouts<AccountField> result = new();
+
+            bool needOffsetGames = false;
+
+            if (Item!.ConsolesCount > 0)
             {
-            };
+                result.Add(Layouter.AddFromTemplate(AccountField.Consoles));
+                needOffsetGames = true;
+            }
+
+            if (Item!.GamesCount > 0)
+            {
+                if (needOffsetGames)
+                    result.Add(Layouter.AddFromTemplate(AccountField.Games, 16));
+                else result.Add(Layouter.AddFromTemplate(AccountField.Games));
+            }
+
+            return result;
         }
 
         private ControlLayouts<AccountField> FillLinksLayout()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Parent = LinksPanel;
-            ClearLayoutTemplate();
-            Layouter.Template.Top = 8;
-            Layouter.Template.Left = 4;
-            Layouter.Template.Width = 120;
+            Layouter.Template.Dock = DockStyle.Top;
             Layouter.Template.BackColor = BaseColor;
-            Layouter.Template.Anchors = AnchorStyles.Left | AnchorStyles.Top;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
+            Layouter.Template.Parent = LinksPanel;
 
             return new ControlLayouts<AccountField>()
             {
-                Layouter.AddFromTemplate(AccountField.PSNProfilesLink),
-                Layouter.AddFromTemplate(AccountField.StrategeLink)
-            };
-        }
-
-        private ControlLayouts<AccountField> FillAuthLayout()
-        {
-            ClearLayoutTemplate();
-            Layouter.Template.Parent = AuthPanel;
-
-            return new ControlLayouts<AccountField>()
-            {
-                Layouter.AddFromTemplate(AccountField.Login),
-                Layouter.AddFromTemplate(AccountField.Password)
+                Layouter.AddFromTemplate(AccountField.Links)
             };
         }
 
@@ -85,14 +86,12 @@ namespace PlayStationGames.AccountEngine.View
 
         protected override void PreparePanels()
         {
-            PreparePanel(PropertyPanel, "Property");
             PreparePanel(LinksPanel, "Links");
-            PreparePanel(AuthPanel, "Authentification");
+            PreparePanel(PropertyPanel, "Property");
             PreparePanel(AccountPanel, string.Empty);
         }
 
         private readonly OxPanel AccountPanel = new(new Size(200, 90));
-        private readonly OxPanel AuthPanel = new(new Size(200, 90));
         private readonly OxPanel LinksPanel = new(new Size(200, 90));
         private readonly OxPanel PropertyPanel = new(new Size(200, 90));
 
