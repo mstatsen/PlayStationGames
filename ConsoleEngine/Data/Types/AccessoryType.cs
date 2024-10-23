@@ -9,7 +9,7 @@
         Earphones,
         Wonderbook,
         VR,
-        VRCards,
+        ARCards,
         Connector,
         Charger,
         Box,

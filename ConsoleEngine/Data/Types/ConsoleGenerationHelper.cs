@@ -64,13 +64,13 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         public Bitmap Icon(ConsoleGeneration generation) =>
             generation switch
             {
-                ConsoleGeneration.PS5 => ConsoleIcons.ps5,
-                ConsoleGeneration.PS4 => ConsoleIcons.ps4,
-                ConsoleGeneration.PS3 => ConsoleIcons.ps3,
-                ConsoleGeneration.PSVita => ConsoleIcons.psvita,
-                ConsoleGeneration.PS2 => ConsoleIcons.ps2,
-                ConsoleGeneration.PSP => ConsoleIcons.psp,
-                ConsoleGeneration.PS1 => ConsoleIcons.ps1,
+                ConsoleGeneration.PS5 => OxIcons.PS5,
+                ConsoleGeneration.PS4 => OxIcons.PS4,
+                ConsoleGeneration.PS3 => OxIcons.PS3,
+                ConsoleGeneration.PSVita => OxIcons.PSVita,
+                ConsoleGeneration.PS2 => OxIcons.PS2,
+                ConsoleGeneration.PSP => OxIcons.PSP,
+                ConsoleGeneration.PS1 => OxIcons.PS1,
                 _ => OxIcons.Close
             };
 

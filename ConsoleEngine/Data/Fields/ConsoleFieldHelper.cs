@@ -11,7 +11,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         public override ConsoleField EmptyValue() =>
             ConsoleField.Id;
 
-        public override string GetName(ConsoleField value) => 
+        public override string GetName(ConsoleField value) =>
             value switch
             {
                 ConsoleField.Id => "Id",
@@ -30,6 +30,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Console => "Console",
                 ConsoleField.Field => "Field",
                 ConsoleField.Icon => "Icon",
+                ConsoleField.FullModel => "Model",
+                ConsoleField.IsOfficialFirmware => "Official firmware",
+                ConsoleField.FullFirmware => "Firmware",
                 _ => string.Empty,
             };
 
@@ -40,6 +43,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Firmware => "Type",
                 ConsoleField.FirmwareName => "Name",
                 ConsoleField.FirmwareVersion => "Version",
+                ConsoleField.Games => "Installed",
                 _ => base.GetCaption(value),
             };
 
@@ -131,7 +135,11 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             return result;
         }
 
-        protected override List<ConsoleField> GetCalcedFields() => new();
+        protected override List<ConsoleField> GetCalcedFields() => new()
+        { 
+            ConsoleField.FullModel,
+            ConsoleField.IsOfficialFirmware
+        };
 
         protected override List<ConsoleField> GetEditedFieldsExtended() =>
             EditingFields;
@@ -141,17 +149,13 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             {
                 ConsoleField.Icon,
                 ConsoleField.Name,
-                ConsoleField.Generation,
-                ConsoleField.Model,
-                ConsoleField.ModelCode,
-                ConsoleField.Firmware,
-                ConsoleField.FirmwareName,
-                ConsoleField.FirmwareVersion,
+                ConsoleField.FullModel,
+                ConsoleField.FullFirmware,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
                 ConsoleField.Accessories,
                 ConsoleField.Games,
-                ConsoleField.Accounts
+                ConsoleField.Accounts,
             };
 
         protected override List<ConsoleField> GetCardFields() =>
@@ -160,11 +164,10 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleField.Icon,
                 ConsoleField.Name,
                 ConsoleField.Generation,
+                ConsoleField.FullModel,
                 ConsoleField.Model,
                 ConsoleField.ModelCode,
-                ConsoleField.Firmware,
-                ConsoleField.FirmwareName,
-                ConsoleField.FirmwareVersion,
+                ConsoleField.FullFirmware,
                 ConsoleField.Storages,
                 ConsoleField.Folders,
                 ConsoleField.Accessories,
@@ -259,9 +262,13 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                     FieldType.List,
                 ConsoleField.Icon =>
                     FieldType.Image,
+                ConsoleField.IsOfficialFirmware =>
+                    FieldType.Boolean,
                 _ => 
                     FieldType.String,
             };
+
+        public override ConsoleField ImageField => ConsoleField.Icon;
 
         public override string ColumnCaption(ConsoleField field) =>
             field == ConsoleField.Icon 

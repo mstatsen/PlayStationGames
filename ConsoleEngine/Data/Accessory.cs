@@ -242,6 +242,9 @@ namespace PlayStationGames.ConsoleEngine.Data
         private string description = string.Empty;
         private int count = 1;
 
+        public ShortAccessoryInfo ShortInfo => 
+            new(Name, Type, JoystickType);
+
         public override int GetHashCode() => 
             type.GetHashCode() ^ (count * color.GetHashCode()) 
             + name.GetHashCode() ^ 3

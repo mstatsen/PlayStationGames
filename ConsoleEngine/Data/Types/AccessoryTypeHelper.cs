@@ -23,7 +23,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.Documents => "Documents",
                 AccessoryType.Wonderbook => "Wonderbook",
                 AccessoryType.VR => "VR System",
-                AccessoryType.VRCards => "VR Cards",
+                AccessoryType.ARCards => "AR Cards",
                 _ => string.Empty,
             };
 
@@ -45,7 +45,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.Documents => "Documents",
                 AccessoryType.Wonderbook => "Wonderbook",
                 AccessoryType.VR => "VR",
-                AccessoryType.VRCards => "VRCards",
+                AccessoryType.ARCards => "ARCards",
                 _ => string.Empty,
             };
 
@@ -92,7 +92,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                         ConsoleGeneration.PS5,
                 AccessoryType.Wonderbook =>
                     generation is ConsoleGeneration.PS3,
-                AccessoryType.VRCards =>
+                AccessoryType.ARCards =>
                     generation is ConsoleGeneration.PSVita,
                 AccessoryType.RemoteControl => 
                     generation is not ConsoleGeneration.PSP and 

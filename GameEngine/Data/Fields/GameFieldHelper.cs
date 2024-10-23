@@ -899,5 +899,15 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Devices,
                 GameField.AppliesTo
             };
+
+        public TrophyType TrophyTypeByField(GameField field) =>
+            field switch
+            {
+                GameField.AvailableBronze => TrophyType.Bronze,
+                GameField.AvailableSilver => TrophyType.Silver,
+                GameField.AvailableGold => TrophyType.Gold,
+                GameField.AvailablePlatinum => TrophyType.Platinum,
+                _=> default
+            };
     }
 }

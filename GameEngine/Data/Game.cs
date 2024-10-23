@@ -575,16 +575,21 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.Installed => Installed,
                 GameField.Multiplayer => Multiplayer,
                 GameField.WithDLCsTrophyset => ExistsDLCsWithTrophyset,
-                GameField.IsPSN => sourceHelper.IsPSN(SourceType),
-                GameField.CriticRange => TypeHelper.Helper<CriticRangeHelper>().Range(CriticScore),
-                GameField.WithDLC => Dlcs.Count > 0,
-                GameField.IsEmulator => Format.Equals(GameFormat.Emulator),
-                GameField.WithTrophyset => Trophyset.Type != TrophysetType.NoSet,
+                GameField.IsPSN => IsPSN,
+                GameField.CriticRange => CriticRange,
+                GameField.WithDLC => WithDLC,
+                GameField.IsEmulator => IsEmulator,
+                GameField.WithTrophyset => WithTrophyset,
                 _ => new GameCardDecorator(this)[field],
             };
 
         public bool Installed => Installations.Count > 0;
         public bool Multiplayer => CoachMultiplayer || OnlineMultiplayer;
+        public CriticRange CriticRange => TypeHelper.Helper<CriticRangeHelper>().Range(CriticScore);
+        public bool IsPSN => sourceHelper.IsPSN(SourceType);
+        public bool WithDLC => Dlcs.Count > 0;
+        public bool IsEmulator => Format.Equals(GameFormat.Emulator);
+        public bool WithTrophyset => Trophyset.Type != TrophysetType.NoSet;
 
         public bool ExistsDLCsWithTrophyset => 
             Dlcs.Contains(d => d.Trophyset.Type != TrophysetType.NoSet);

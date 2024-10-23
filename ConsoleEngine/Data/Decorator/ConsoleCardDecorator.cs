@@ -8,6 +8,21 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
     internal class ConsoleCardDecorator : ConsoleTableDecorator
     {
         public ConsoleCardDecorator(PSConsole dao) : base(dao){ }
+
+        public object InstalledGames 
+        {
+            get
+            {
+                int gamesCount = Dao.GamesCount;
+
+                return gamesCount == 0 
+                    ? string.Empty 
+                    : gamesCount == 1 
+                        ? "1 game" 
+                        : (object)$"{Dao.GamesCount} games";
+            }
+        }
+
         public override object? Value(ConsoleField field)
         {
             if (TypeHelper.IsTypeHelpered(Dao[field]))
@@ -17,10 +32,11 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
             {
                 ConsoleField.Icon =>
                     OxImageBoxer.BoxingImage(Dao.Icon, new Size(80, 33)),
-                ConsoleField.Storages => 
-                    NormalizeIfEmpty(Dao.Storages.ToString()),
-                ConsoleField.Folders => 
-                    NormalizeIfEmpty(Dao.Folders.ToString()),
+                ConsoleField.Storages =>
+                    NormalizeIfEmpty(Dao.Storages.ShortString),
+                ConsoleField.Accessories =>
+                    NormalizeIfEmpty(Dao.Accessories.ShortColumnText()),
+                ConsoleField.Games => InstalledGames,
                 _ => base.Value(field),
             };
         }

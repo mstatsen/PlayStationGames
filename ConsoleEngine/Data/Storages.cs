@@ -25,5 +25,26 @@ namespace PlayStationGames.ConsoleEngine.Data
 
             return result;
         }
+
+        public override string ShortString
+        {
+            get
+            {
+                string result = base.ShortString;
+
+                if (Count == 0)
+                    return result;
+
+                if (Count == 1)
+                    return $"{result} ({this[0].Size} Gb)";
+
+                int totalSize = 0;
+
+                foreach (Storage storage in this)
+                    totalSize += int.Parse(storage.Size);
+
+                return $"{result} (total {totalSize} Gb)";
+            }
+        }
     }
 }

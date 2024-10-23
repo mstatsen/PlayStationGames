@@ -193,8 +193,24 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ConsoleField.Games => 
                     DataManager.DecoratorFactory<ConsoleField, PSConsole>().Decorator(DecoratorType.Table, this),
                 ConsoleField.Icon => TypeHelper.Helper<ConsoleGenerationHelper>().Icon(Generation),
+                ConsoleField.FullModel => FullModel,
+                ConsoleField.FullFirmware => FullFirmware,
+                ConsoleField.IsOfficialFirmware => IsOfficialFirmware,
                 _ => null,
             };
+
+        public bool IsOfficialFirmware => 
+                Firmware == FirmwareType.Official;
+        public string FullModel =>
+            $"{TypeHelper.FullName(Model)} ({ModelCode})";
+
+        private object? FullFirmware =>
+            (IsOfficialFirmware
+                ? TypeHelper.Name(Firmware)
+                : FirmwareName)
+            + (FirmwareVersion != string.Empty
+                ? $", ver. {FirmwareVersion}"
+                : string.Empty);
 
         public override int CompareTo(DAO? other)
         {

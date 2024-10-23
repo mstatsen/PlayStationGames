@@ -85,6 +85,9 @@ namespace PlayStationGames.ConsoleEngine.Data
         public override string ToString() =>
             $"{Name} ({Size} Gb)";
 
+        public override string ShortString => 
+            Name; 
+
         private Guid id = Guid.Empty;
         private StoragePlacement placement = default!;
         private string size = string.Empty;

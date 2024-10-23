@@ -22,18 +22,20 @@ namespace PlayStationGames.ConsoleEngine.View
             imageLayout.Left = 10;
             imageLayout.Width = 96;
             imageLayout.Height = 60;
+            
+            ControlLayout<ConsoleField> modelLayout = Layouter.AddFromTemplate(ConsoleField.FullModel);
+            modelLayout.Top = 20;
+            modelLayout.Left = imageLayout.Right + 2;
+            modelLayout.CaptionVariant = ControlCaptionVariant.None;
 
-            Layouter.Template.Left = imageLayout.Right + 90;
-
-            ControlLayout<ConsoleField> generationLayout = Layouter.AddFromTemplate(ConsoleField.Generation);
-            generationLayout.Top = 2;
+            ControlLayout<ConsoleField> firmwareLayout = Layouter.AddFromTemplate(ConsoleField.FullFirmware, 2);
+            firmwareLayout.Left = imageLayout.Right + 72;
 
             return new ControlLayouts<ConsoleField>()
             {
                 imageLayout,
-                generationLayout,
-                Layouter.AddFromTemplate(ConsoleField.Model, -2),
-                Layouter.AddFromTemplate(ConsoleField.Firmware, -2)
+                modelLayout,
+                firmwareLayout
             };
         }
 
@@ -52,53 +54,29 @@ namespace PlayStationGames.ConsoleEngine.View
         private readonly ConsoleGenerationHelper generationHelper = 
             TypeHelper.Helper<ConsoleGenerationHelper>();
 
-        private void FillStoragesLayout()
+        private ControlLayouts<ConsoleField> CreateFillDockLayouts(ConsoleField field, OxPanel parent)
         {
             ClearLayoutTemplate();
-            Layouter.Template.Parent = StoragesPanel;
+            Layouter.Template.Parent = parent;
             Layouter.Template.Top = 12;
             Layouter.Template.Left = 12;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
-            Layouter.AddFromTemplate(ConsoleField.Storages);
+            return new ControlLayouts<ConsoleField>()
+            {
+                Layouter.AddFromTemplate(field)
+            };
         }
 
-        private void FillFoldersLayout()
-        {
-            ClearLayoutTemplate();
-            Layouter.Template.Parent = FoldersPanel;
-            Layouter.Template.Top = 12;
-            Layouter.Template.Left = 12;
-            Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
-            Layouter.AddFromTemplate(ConsoleField.Folders);
-        }
+        private void AddFillDockLayout(OxPanel parentPanel, ConsoleField field) =>
+            LayoutsLists.Add(parentPanel, CreateFillDockLayouts(field, parentPanel));
 
         protected override void PrepareLayouts()
         {
             LayoutsLists.Add(ConsolePanel, FillConsoleLayout());
-
-            if (Item != null && generationHelper.StorageSupport(Item.Generation))
-            {
-                Headers[StoragesPanel].Visible = true;
-                StoragesPanel.Visible = true;
-                FillStoragesLayout();
-            }
-            else
-            {
-                Headers[StoragesPanel].Visible = false;
-                StoragesPanel.Visible = false;
-            }
-
-            if (Item != null && generationHelper.FolderSupport(Item.Generation))
-            {
-                Headers[FoldersPanel].Visible = true;
-                FoldersPanel.Visible = true;
-                FillFoldersLayout();
-            }
-            else
-            {
-                Headers[FoldersPanel].Visible = false;
-                FoldersPanel.Visible = false;
-            }
+            AddFillDockLayout(AccountsPanel, ConsoleField.Accounts);
+            AddFillDockLayout(StoragesPanel, ConsoleField.Storages);
+            AddFillDockLayout(FoldersPanel, ConsoleField.Folders);
+            AddFillDockLayout(AccessoriesPanel, ConsoleField.Accessories);
         }
 
         protected override string GetTitle() =>
@@ -108,12 +86,16 @@ namespace PlayStationGames.ConsoleEngine.View
         {
             PreparePanel(FoldersPanel, "Folders");
             PreparePanel(StoragesPanel, "Storages");
+            PreparePanel(AccountsPanel, "Accounts");
+            PreparePanel(AccessoriesPanel, "Accessories");
             PreparePanel(ConsolePanel, string.Empty);
         }
 
         private readonly OxPanel ConsolePanel = new(new Size(200, 90));
         private readonly OxPanel StoragesPanel = new(new Size(200, 160));
         private readonly OxPanel FoldersPanel = new(new Size(200, 200));
+        private readonly OxPanel AccountsPanel = new(new Size(200, 200));
+        private readonly OxPanel AccessoriesPanel = new(new Size(200, 200));
 
         public ConsoleFullInfoCard() : base() { }
     }

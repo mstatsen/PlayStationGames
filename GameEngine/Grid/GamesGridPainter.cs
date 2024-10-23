@@ -3,6 +3,7 @@ using OxDAOEngine.Data.Types;
 using OxDAOEngine.Grid;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Grid
 {
@@ -20,6 +21,7 @@ namespace PlayStationGames.GameEngine.Grid
 
             FontStyle fontStyle = FontStyle.Regular;
             float fontSize = Styles.DefaultFontSize;
+            style.ForeColor = TypeHelper.FontColor(item?.SourceType);
 
             switch (field)
             {
@@ -31,12 +33,11 @@ namespace PlayStationGames.GameEngine.Grid
                     fontSize -= 1;
                     break;
                 case GameField.CriticScore:
-                    style.ForeColor = Color.Black;
-                    style.BackColor = CriticScoreBackColor(item?.CriticScore);
+                    fontStyle |= FontStyle.Bold;
+                    style.BackColor = TypeHelper.BackColor(item?.CriticRange);
 
-                    break;
-                default:
-                    style.ForeColor = TypeHelper.FontColor(item?.SourceType);
+                    if (item?.CriticRange == CriticRange.Best)
+                        style.ForeColor = Color.FromArgb(225,225,225);
                     break;
             }
 
@@ -49,14 +50,5 @@ namespace PlayStationGames.GameEngine.Grid
             style.SelectionForeColor = style.ForeColor;
             return style;
         }
-
-        private static Color CriticScoreBackColor(int? criticScore) => 
-            criticScore > 74
-                ? Color.FromArgb(200, 255, 200)
-                : criticScore > 49
-                    ? Color.FromArgb(255, 255, 200)
-                    : criticScore > 0
-                        ? Color.FromArgb(255, 200, 200)
-                        : Color.Silver;
     }
 }

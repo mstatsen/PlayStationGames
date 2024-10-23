@@ -79,12 +79,17 @@ namespace PlayStationGames.AccountEngine.Data
                 return null;
 
             List<ToolStripMenuItem> result = new();
-            ToolStripMenuItem goToItem = new("Go to", OxIcons.Go);
 
-            foreach (Link<AccountField> link in item.Links)
-                goToItem.DropDownItems.Add(new ItemsRootGridLinkToolStripMenuItem<AccountField>(link));
+            if (item.Links.Count > 0)
+            {
+                ToolStripMenuItem goToItem = new("Go to", OxIcons.Go);
 
-            result.Add(goToItem);
+                foreach (Link<AccountField> link in item.Links)
+                    goToItem.DropDownItems.Add(new ItemsRootGridLinkToolStripMenuItem<AccountField>(link));
+
+                result.Add(goToItem);
+            }
+
             return result;
         }
     }

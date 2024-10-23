@@ -3,7 +3,7 @@ using OxLibrary;
 
 namespace PlayStationGames.GameEngine.Data.Types
 {
-    public class TrophyTypeHelper : AbstractTypeHelper<TrophyType>
+    public class TrophyTypeHelper : AbstractStyledTypeHelper<TrophyType>
     {
         public override TrophyType EmptyValue() => TrophyType.Platinum;
 
@@ -38,5 +38,17 @@ namespace PlayStationGames.GameEngine.Data.Types
             iconsDictionary.TryGetValue(type, out Bitmap? bitmap)
                 ? bitmap
                 : null;
+
+        public override Color GetBaseColor(TrophyType value) => Styles.CardColor;
+
+        public override Color GetFontColor(TrophyType value) =>
+            value switch
+            {
+                TrophyType.Platinum => Color.FromArgb(139,138,136),
+                TrophyType.Gold => Color.FromArgb(212,154,0),
+                TrophyType.Silver => Color.FromArgb(126,126,126),
+                TrophyType.Bronze => Color.FromArgb(105,102,0),
+                _ => Color.Black,
+            };
     }
 }

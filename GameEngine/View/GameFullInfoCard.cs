@@ -4,7 +4,6 @@ using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
-using OxLibrary;
 using OxDAOEngine.Data;
 using PlayStationGames.GameEngine.Data.Types;
 
@@ -23,35 +22,32 @@ namespace PlayStationGames.GameEngine.View
 
             if (Item != null && Item.TrophysetAvailable)
             {
-                result.Add(Layouter.AddFromTemplate(GameField.TrophysetType, -6));
-                result.Add(Layouter.AddFromTemplate(GameField.AppliesTo, -6));
-                result.Add(Layouter.AddFromTemplate(GameField.Difficult, -6));
-                result.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -6));
+                result.Add(Layouter.AddFromTemplate(GameField.TrophysetType, 2));
+                result.Add(Layouter.AddFromTemplate(GameField.AppliesTo, 2));
+                result.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
+                result.Add(Layouter.AddFromTemplate(GameField.CompleteTime, 2));
 
                 if (Item.Trophyset.Type != TrophysetType.NoSet)
                 {
-                    List<GameField> trophiesFieldsMap = new()
-                    {
-                        GameField.AvailablePlatinum,
-                        GameField.AvailableGold,
-                        GameField.AvailableSilver,
-                        GameField.AvailableBronze
-                    };
-
                     bool firstLayout = true;
 
-                    foreach (var item in trophiesFieldsMap)
-                        if (DAO.IntValue(Item?[item]) > 0)
+                    foreach (var field in FieldHelper.TrophiesFields)
+                        if (DAO.IntValue(Item?[field]) > 0)
                         {
-                            result.Add(
-                                Layouter.AddFromTemplate(item, firstLayout ? 2 : -10)
-                            );
+                            ControlLayout<GameField> trophyLayout = 
+                                result.Add(
+                                    Layouter.AddFromTemplate(field, firstLayout ? 18 : 2)
+                                );
+                            trophyLayout.FontColor = TypeHelper.FontColor(FieldHelper.TrophyTypeByField(field));
+                            trophyLayout.LabelColor = trophyLayout.FontColor;
                             firstLayout = false;
                         }
                 }
             }
             return result;
         }
+
+        private readonly GameFieldHelper FieldHelper = TypeHelper.Helper<GameFieldHelper>();
 
         private ControlLayouts<GameField> FillReleaseLayouts()
         {
@@ -63,10 +59,10 @@ namespace PlayStationGames.GameEngine.View
             return new ControlLayouts<GameField>()
                 {
                     Layouter.AddFromTemplate(GameField.Developer),
-                    Layouter.AddFromTemplate(GameField.Publisher, -10),
-                    Layouter.AddFromTemplate(GameField.Year, -10),
-                    Layouter.AddFromTemplate(GameField.Pegi),
-                    Layouter.AddFromTemplate(GameField.ReleasePlatforms, -10)
+                    Layouter.AddFromTemplate(GameField.Publisher, 2),
+                    Layouter.AddFromTemplate(GameField.Year, 2),
+                    Layouter.AddFromTemplate(GameField.Pegi, 2),
+                    Layouter.AddFromTemplate(GameField.ReleasePlatforms, 2)
                 };
         }
 
@@ -77,16 +73,15 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.BackColor = BaseColor;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.Parent = LinksPanel;
+
             return new ControlLayouts<GameField>()
             {
                 Layouter.AddFromTemplate(GameField.Links)
             };
         }
 
-        protected override void WrapTextControls()
-        {
+        protected override void WrapTextControls() => 
             WrapControl(GameField.ReleasePlatforms);
-        }
 
         protected override void PrepareLayouts()
         {
@@ -97,6 +92,13 @@ namespace PlayStationGames.GameEngine.View
             LayoutsLists.Add(TrophysetPanel, FillTrophiesLayouts());
             LayoutsLists.Add(ReleasePanel, FillReleaseLayouts());
             LayoutsLists.Add(LinksPanel, FillLinksLayout());
+
+            if (Item != null)
+            {
+                Layouter[GameField.CriticScore]!.FontColor =
+                    TypeHelper.Helper<CriticRangeHelper>().FontColor(Item.CriticScore);
+                Layouter[GameField.Pegi]!.FontColor = TypeHelper.FontColor(Item.Pegi);
+            }
         }
 
         private ControlLayouts<GameField> FillStockLayouts()
@@ -108,7 +110,7 @@ namespace PlayStationGames.GameEngine.View
             return new ControlLayouts<GameField>()
                 {
                     Layouter.AddFromTemplate(GameField.Edition),
-                    Layouter.AddFromTemplate(GameField.Dlcs, -10),
+                    Layouter.AddFromTemplate(GameField.Dlcs, 2),
                     Layouter.AddFromTemplate(GameField.Installations, 12),
                     Layouter.AddFromTemplate(GameField.RelatedGames, 12)
                 };
@@ -124,9 +126,9 @@ namespace PlayStationGames.GameEngine.View
             return new ControlLayouts<GameField>()
             {
                 Layouter.AddFromTemplate(GameField.Licensed),
-                Layouter.AddFromTemplate(GameField.Owner, -6),
-                Layouter.AddFromTemplate(GameField.Source, -6),
-                Layouter.AddFromTemplate(GameField.Platform, -6),
+                Layouter.AddFromTemplate(GameField.Owner, 2),
+                Layouter.AddFromTemplate(GameField.Source, 2),
+                Layouter.AddFromTemplate(GameField.Platform, 2),
             };
         }
 
@@ -138,12 +140,12 @@ namespace PlayStationGames.GameEngine.View
 
             return new ControlLayouts<GameField>() {
                 Layouter.AddFromTemplate(GameField.Region),
-                Layouter.AddFromTemplate(GameField.Code, -6),
-                Layouter.AddFromTemplate(GameField.Serieses, -6),
-                Layouter.AddFromTemplate(GameField.CriticScore, -6),
-                Layouter.AddFromTemplate(GameField.Genre, -6),
-                Layouter.AddFromTemplate(GameField.Devices, -6),
-                Layouter.AddFromTemplate(GameField.Tags, -6),
+                Layouter.AddFromTemplate(GameField.Code, 2),
+                Layouter.AddFromTemplate(GameField.Serieses, 2),
+                Layouter.AddFromTemplate(GameField.CriticScore, 2),
+                Layouter.AddFromTemplate(GameField.Genre, 2),
+                Layouter.AddFromTemplate(GameField.Devices, 2),
+                Layouter.AddFromTemplate(GameField.Tags, 2),
             };
         }
 

@@ -1,5 +1,4 @@
-﻿using OxLibrary.Controls;
-using OxDAOEngine.ControlFactory;
+﻿using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
 using PlayStationGames.ConsoleEngine.Data;
@@ -11,8 +10,8 @@ namespace PlayStationGames.ConsoleEngine.View
 {
     public class ConsoleCard : ItemCard<ConsoleField, PSConsole, ConsoleFieldGroup>
     {
-        protected override int CardWidth => 350;
-        protected override int CardHeight => 260;
+        protected override int CardWidth => 400;
+        protected override int CardHeight => 320;
 
         public ConsoleCard(ItemViewMode viewMode) : base(viewMode) { }
 
@@ -38,10 +37,19 @@ namespace PlayStationGames.ConsoleEngine.View
         {
             ClearLayoutTemplate();
             baseLayouts.Clear();
-            Layouter.Template.Left = Layouter[ConsoleField.Icon]!.Right + 84;
-            baseLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Generation));
-            baseLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Model, -6));
-            baseLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Firmware, -6));
+            ControlLayout<ConsoleField> iconLayout = Layouter[ConsoleField.Icon]!;
+            ControlLayout<ConsoleField> modelLayout = Layouter.AddFromTemplate(ConsoleField.FullModel);
+            modelLayout.Top = 2;
+            modelLayout.Left = iconLayout.Right + 6;
+            modelLayout.CaptionVariant = ControlCaptionVariant.None;
+
+            baseLayouts.Add(modelLayout);
+
+            Layouter.Template.Left = iconLayout.Right + 68;
+            baseLayouts.Add(Layouter.AddFromTemplate(ConsoleField.FullFirmware, -8));
+
+            if (Item!.Accounts.Count > 0)
+                baseLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Accounts, -8));
         }
 
         private static readonly ConsoleGenerationHelper generationHelper = TypeHelper.Helper<ConsoleGenerationHelper>();
@@ -54,15 +62,30 @@ namespace PlayStationGames.ConsoleEngine.View
             if (Item == null)
                 return;
 
-            Layouter.Template.Left = Layouter[ConsoleField.Icon]!.Left + 72;
-            Layouter.Template.Top = Layouter[ConsoleField.Icon]!.Bottom + 12;
-            bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Storages))
-                .Visible = generationHelper.StorageSupport(Item.Generation);
-            bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Games, 16))
-                .Visible = generationHelper.StorageSupport(Item.Generation);
-            bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Folders, 16))
-                .Visible = generationHelper.FolderSupport(Item.Generation);
-            
+            Layouter.Template.Left = Layouter[ConsoleField.Icon]!.Left + 84;
+            Layouter.Template.Top = Layouter[ConsoleField.Icon]!.Bottom + 6;
+
+            bool needOffsetAccessories = false;
+
+            if (generationHelper.StorageSupport(Item.Generation) 
+                && Item.Storages.Count > 0)
+            {
+                bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Storages));
+
+                if (generationHelper.FolderSupport(Item.Generation)
+                    && Item.Folders.Count > 0)
+                    bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Folders, -8));
+
+                if (Item.GamesCount > 0)
+                    bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Games, -8));
+
+                needOffsetAccessories = true;
+            }
+
+            if (needOffsetAccessories)
+                bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Accessories, 8));
+            else
+                bottomLayouts.Add(Layouter.AddFromTemplate(ConsoleField.Accessories));
         }
 
         protected override void AlignControls()
@@ -82,33 +105,6 @@ namespace PlayStationGames.ConsoleEngine.View
 
         protected override string GetTitle() =>
             Item != null ? Item.Name : string.Empty;
-
-        protected override void AfterLayoutControls()
-        {
-            base.AfterLayoutControls();
-            WrapStoragesAndFolders();
-        }
-
-        private void WrapStoragesAndFolders()
-        {
-            OxLabel? storagesControl =
-                (OxLabel?)Layouter.PlacedControl(ConsoleField.Storages)?.Control;
-
-            if (storagesControl != null)
-            {
-                storagesControl.MaximumSize = new Size(290, 46);
-                storagesControl.TextAlign = ContentAlignment.TopLeft;
-            }
-
-            OxLabel? foldersControl =
-                (OxLabel?)Layouter.PlacedControl(ConsoleField.Folders)?.Control;
-
-            if (foldersControl != null)
-            {
-                foldersControl.MaximumSize = new Size(290, 120);
-                foldersControl.TextAlign = ContentAlignment.TopLeft;
-            }
-        }
 
         private readonly ControlLayouts<ConsoleField> baseLayouts = new();
         private readonly ControlLayouts<ConsoleField> bottomLayouts = new();

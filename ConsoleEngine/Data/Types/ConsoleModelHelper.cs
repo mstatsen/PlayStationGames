@@ -78,6 +78,15 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                     "Unknown"
             };
 
+        public override string GetFullName(ConsoleModel value) => 
+            value switch
+            {
+                ConsoleModel.PS1One =>
+                    "PSOne",
+                _ =>
+                    $"{TypeHelper.Name(DependsOnValue(value))} {Name(value)}",
+            };
+
         public override string GetXmlValue(ConsoleModel value) => 
             value.ToString();
 

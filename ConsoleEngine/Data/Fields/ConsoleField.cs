@@ -17,6 +17,11 @@
         Accessories,
         Games,
         Accounts,
-        Field
+        Field,
+
+        //Calced fields
+        IsOfficialFirmware,
+        FullModel,
+        FullFirmware
     }
 }

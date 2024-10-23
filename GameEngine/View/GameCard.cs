@@ -18,7 +18,7 @@ namespace PlayStationGames.GameEngine.View
 
         public GameCard(ItemViewMode viewMode) : base(viewMode)
         {
-            trophiesPanel = new OxFrameWithHeader()
+            trophiesPanel = new()
             {
                 Parent = this,
                 Text = "Trophyset"
@@ -62,7 +62,8 @@ namespace PlayStationGames.GameEngine.View
             Layouter[GameField.AppliesTo]!.CaptionVariant = ControlCaptionVariant.None;
 
             bool firstTrophy = true;
-            foreach (GameField field in TypeHelper.Helper<GameFieldHelper>().TrophiesFields)
+
+            foreach (GameField field in FieldHelper.TrophiesFields)
             {
                 if (DAO.IntValue(Item![field]) > 0)
                 {
@@ -73,6 +74,8 @@ namespace PlayStationGames.GameEngine.View
                     if (field == GameField.AvailablePlatinum)
                         trophyLayout.CaptionVariant = ControlCaptionVariant.None;
 
+                    trophyLayout.FontColor = TypeHelper.FontColor(FieldHelper.TrophyTypeByField(field));
+                    trophyLayout.LabelColor = trophyLayout.FontColor;
                     firstTrophy = false;
                 }
             }
@@ -84,6 +87,8 @@ namespace PlayStationGames.GameEngine.View
                 withDLCLayout.Left = 8;
             }
         }
+
+        private readonly GameFieldHelper FieldHelper = TypeHelper.Helper<GameFieldHelper>();
 
         private void FillLinksLayout()
         {
@@ -121,8 +126,8 @@ namespace PlayStationGames.GameEngine.View
 
             if (linksControl != null)
             {
-                linksControl.Left = SavedWidth - linksControl.Width;
-                linksControl.Top = SavedHeight - linksControl.Height;
+                linksControl.Left = ContentContainer.Width - linksControl.Width;
+                linksControl.Top = ContentContainer.Height - linksControl.Height;
             }
         }
 
@@ -212,7 +217,9 @@ namespace PlayStationGames.GameEngine.View
             ControlLayout<GameField> pegiLayout = Layouter.AddFromTemplate(GameField.Pegi);
             pegiLayout.Top = yearLayout.Top;
             pegiLayout.Left += 88;
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.CriticScore, -8));
+            pegiLayout.FontColor = TypeHelper.FontColor(Item.Pegi);
+            ControlLayout<GameField> criticLayout = releaseLayouts.Add(Layouter.AddFromTemplate(GameField.CriticScore, -8));
+            criticLayout.FontColor = TypeHelper.Helper<CriticRangeHelper>().FontColor(Item.CriticScore);
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.ReleasePlatforms, -8));
         }
 
