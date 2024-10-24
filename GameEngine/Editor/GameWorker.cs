@@ -260,11 +260,6 @@ namespace PlayStationGames.GameEngine.Editor
 
             SetAsEmulatorVisible();
 
-            bool withoutTrophyset = 
-                Builder.Control<TrophysetPanel>(GameField.Trophyset).Type == TrophysetType.NoSet;
-            Builder.SetVisible(GameField.Difficult, !withoutTrophyset);
-            Builder.SetVisible(GameField.CompleteTime, !withoutTrophyset);
-
             bool verified = Builder.Value<bool>(GameField.Verified);
             List<GameField> unverifiedFields = GameFieldHelper.UnverifiedFields();
 
@@ -275,6 +270,7 @@ namespace PlayStationGames.GameEngine.Editor
 
             SetEditionAndSeriesesVisible();
             SetGenreControlsVisible();
+            SetCodeVisible();
 
             if (verified)
                 foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
@@ -290,6 +286,15 @@ namespace PlayStationGames.GameEngine.Editor
             Editor.Groups[GameFieldGroup.DLC].Visible = Builder.Value<bool>(GameField.Licensed) 
                 && (!verified || !Builder[GameField.Dlcs].IsEmpty);
             return true;
+        }
+
+        private void SetCodeVisible()
+        {
+            bool isEmulator = GameFormat.Emulator.Equals(Builder.Value(GameField.Format));
+            bool verified = Builder.Value<bool>(GameField.Verified);
+            Builder.SetVisible(GameField.Code,
+                !isEmulator
+                && (!verified || !Builder[GameField.Code].IsEmpty));
         }
 
         private void SetGenreControlsVisible()

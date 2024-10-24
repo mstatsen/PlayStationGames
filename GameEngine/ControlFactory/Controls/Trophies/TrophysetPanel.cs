@@ -273,9 +273,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 {
                     if (appliesToControl != null)
                         result.AppliesTo.CopyFrom(appliesToControl.DAOValue<ListDAO<Platform>>());
-
-                    result.Available.CopyFrom(AvailableTrophiesPanel.Value);
                 }
+
+                result.Available.CopyFrom(AvailableTrophiesPanel.Value);
 
                 foreach (TrophiesPanel trophiesPanel in VisiblePanels)
                 {
