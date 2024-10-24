@@ -1,6 +1,7 @@
 ﻿using OxLibrary;
 using OxDAOEngine.Data.Decorator;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.ConsoleEngine.Data;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {
@@ -23,29 +24,11 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
                     base.Value(field),
             };
 
-        private string Consoles()
-        {
-            List<string?> consolesStringList = new();
+        private string Consoles() => 
+            DecoratorHelper.ListToString(Dao.Consoles, ", ");
 
-            /*TODO:
-            foreach (Game game in Dao.Games())
-                gamesStringList.Add(game.ToString());
-            */
-
-            return DecoratorHelper.ListToString(consolesStringList, ", ");
-        }
-
-        private string Games()
-        {
-            List<string?> gamesStringList = new();
-
-            /*TODO:
-            foreach (Game game in Dao.Games())
-                gamesStringList.Add(game.ToString());
-            */
-
-            return DecoratorHelper.ListToString(gamesStringList, ", ");
-        }
+        private string Games() => 
+            DecoratorHelper.ListToString(Dao.Games, ", ");
 
         public override string Attributes(AccountField field)
         {
