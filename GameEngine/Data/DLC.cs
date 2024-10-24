@@ -2,7 +2,6 @@
 using OxDAOEngine.Data;
 using OxDAOEngine.XML;
 using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data
 {
@@ -26,6 +25,22 @@ namespace PlayStationGames.GameEngine.Data
             Trophyset.Clear();
         }
 
+        public override int CompareTo(DAO? other)
+        {
+            if (other is DLC otherDLC)
+            {
+                if (WithTrophyset
+                    && !otherDLC.WithTrophyset)
+                    return -1;
+
+                if (!WithTrophyset
+                    && otherDLC.WithTrophyset)
+                    return 1;
+            }
+
+            return base.CompareTo(other);
+        }
+
         public override void Init()
         {
             base.Init();
@@ -44,7 +59,7 @@ namespace PlayStationGames.GameEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.Aqcuired, Acquired);
         }
 
-        public override string ToString() => 
+        public override string ToString() =>
             Name;
 
         public override bool Equals(object? obj) =>
@@ -57,5 +72,7 @@ namespace PlayStationGames.GameEngine.Data
             539060726 + EqualityComparer<string>.Default.GetHashCode(Name);
 
         protected override bool AlwaysSaveImage => true;
+
+        public bool WithTrophyset => Trophyset.TrophysetExists;
     }
 }

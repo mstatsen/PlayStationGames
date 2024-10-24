@@ -589,10 +589,10 @@ namespace PlayStationGames.GameEngine.Data
         public bool IsPSN => sourceHelper.IsPSN(SourceType);
         public bool WithDLC => Dlcs.Count > 0;
         public bool IsEmulator => Format.Equals(GameFormat.Emulator);
-        public bool WithTrophyset => Trophyset.Type != TrophysetType.NoSet;
+        public bool WithTrophyset => Trophyset.TrophysetExists;
 
         public bool ExistsDLCsWithTrophyset => 
-            Dlcs.Contains(d => d.Trophyset.Type != TrophysetType.NoSet);
+            Dlcs.Contains(d => d.WithTrophyset);
 
         public override void Clear()
         {
@@ -952,7 +952,7 @@ namespace PlayStationGames.GameEngine.Data
                 fullTrophyset.CopyFrom(Trophyset);
 
                 foreach (DLC dlc in Dlcs)
-                    if (dlc.Trophyset.Type != TrophysetType.NoSet)
+                    if (dlc.WithTrophyset)
                         fullTrophyset.AddTrophies(dlc.Trophyset);
 
                 return fullTrophyset;

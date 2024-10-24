@@ -27,7 +27,7 @@ namespace PlayStationGames.GameEngine.View
                 result.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
                 result.Add(Layouter.AddFromTemplate(GameField.CompleteTime, 2));
 
-                if (Item.Trophyset.Type != TrophysetType.NoSet)
+                if (Item.WithTrophyset)
                 {
                     bool firstLayout = true;
 
@@ -140,7 +140,6 @@ namespace PlayStationGames.GameEngine.View
 
             return new ControlLayouts<GameField>() {
                 Layouter.AddFromTemplate(GameField.Region),
-                Layouter.AddFromTemplate(GameField.Code, 2),
                 Layouter.AddFromTemplate(GameField.Serieses, 2),
                 Layouter.AddFromTemplate(GameField.CriticScore, 2),
                 Layouter.AddFromTemplate(GameField.Genre, 2),

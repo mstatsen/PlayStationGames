@@ -65,7 +65,7 @@ namespace PlayStationGames.GameEngine.Data
         {
             XmlHelper.AppendElement(element, XmlConsts.Type, Type);
 
-            if (Type != TrophysetType.NoSet)
+            if (TrophysetExists)
             {
                 XmlHelper.AppendElement(element, XmlConsts.Difficult, Difficult);
                 XmlHelper.AppendElement(element, XmlConsts.CompleteTime, CompleteTime);
@@ -156,6 +156,9 @@ namespace PlayStationGames.GameEngine.Data
             return trophyList != null 
                 && trophyList.Points.Equals(Available.Points);
         }
+
+        public bool TrophysetExists => 
+            Type != TrophysetType.NoSet;
     }
 
     public class FullTrophyset : Trophyset

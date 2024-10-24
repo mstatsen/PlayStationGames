@@ -547,8 +547,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.RelatedGames,
             GameField.Tags,
             GameField.Region,
-            GameField.Language,
-            GameField.Code,
             GameField.Devices,
             GameField.AppliesTo
         };

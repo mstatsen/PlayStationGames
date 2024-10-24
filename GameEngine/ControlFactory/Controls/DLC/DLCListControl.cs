@@ -2,6 +2,7 @@
 using OxDAOEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -13,5 +14,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override string ItemName() => "DLC";
 
         public override ReadonlyMode ReadonlyMode => ReadonlyMode.EditAsReadonly;
+
+        protected override bool IsHighPriorityItem(DLC item) => 
+            item.WithTrophyset;
     }
 }
