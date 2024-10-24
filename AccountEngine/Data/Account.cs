@@ -10,6 +10,7 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 using System.Xml;
 
 namespace PlayStationGames.AccountEngine.Data
@@ -138,9 +139,9 @@ namespace PlayStationGames.AccountEngine.Data
             }
         }
 
-        public int GamesCount => Games.Count();
+        public int GamesCount => Games.Count;
 
-        public int ConsolesCount => Consoles.Count();
+        public int ConsolesCount => Consoles.Count;
 
         public string UsesAndOwns 
         {
@@ -212,6 +213,7 @@ namespace PlayStationGames.AccountEngine.Data
                     Links.CopyFrom((DAO?)value);
                     break;
             }
+
         }
 
         protected override object? GetFieldValue(AccountField field) =>
@@ -231,8 +233,20 @@ namespace PlayStationGames.AccountEngine.Data
                 AccountField.Consoles => Consoles,
                 AccountField.Games => Games,
                 AccountField.UsesAndOwns => UsesAndOwns,
+                AccountField.PlayedGames => ListController.UniqueTrophysets.TrophysetsCount(Id),
+                AccountField.PSNLevel => ListController.UniqueTrophysets.PSNLevel(Id),
+                AccountField.TotalPoints => ListController.UniqueTrophysets.Points(Id),
+                AccountField.TotalTrophies => ListController.UniqueTrophysets.TrophiesCount(Id),
+                AccountField.CompletedGames => ListController.UniqueTrophysets.CompletedCount(Id),
+                AccountField.PlatinumCount => ListController.UniqueTrophysets.TrophiesCount(Id, TrophyType.Platinum),
+                AccountField.GoldCount => ListController.UniqueTrophysets.TrophiesCount(Id, TrophyType.Gold),
+                AccountField.SilverCount => ListController.UniqueTrophysets.TrophiesCount(Id, TrophyType.Silver),
+                AccountField.BronzeCount => ListController.UniqueTrophysets.TrophiesCount(Id, TrophyType.Bronze),
                 _ => null,
             };
+
+        private readonly AccountsController ListController =
+            (AccountsController)DataManager.ListController<AccountField, Account>();
 
         public override int CompareTo(DAO? other)
         {

@@ -50,5 +50,22 @@ namespace PlayStationGames.GameEngine.Data.Types
                 TrophyType.Bronze => Color.FromArgb(105,102,0),
                 _ => Color.Black,
             };
+
+        public int Points(TrophyType type) =>
+            type switch
+            {
+                TrophyType.Platinum => 300,
+                TrophyType.Gold => 90,
+                TrophyType.Silver => 30,
+                TrophyType.Bronze => 15,
+                _ => 0,
+            };
+
+        public int OldPoints(TrophyType type) =>
+            type switch
+            {
+                TrophyType.Platinum => 180,
+                _ => Points(type),
+            };
     }
 }

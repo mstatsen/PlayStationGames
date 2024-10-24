@@ -6,7 +6,6 @@ using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Editor;
 using OxDAOEngine.Settings;
-using OxDAOEngine.Summary;
 using OxDAOEngine.Data.Sorting;
 using PlayStationGames.GameEngine.ControlFactory;
 using PlayStationGames.GameEngine.Data.Decorator;
@@ -14,7 +13,6 @@ using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Filter;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.Editor;
-using PlayStationGames.GameEngine.Summary;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
@@ -41,8 +39,6 @@ namespace PlayStationGames.GameEngine.Data
             TypeHelper.Register<GameFieldHelper>();
             TypeHelper.Register<GameFieldGroupHelper>();
             TypeHelper.Register<GameFormatHelper>();
-            TypeHelper.Register<LevelValueTypeHelper>();
-            TypeHelper.Register<LevelValueTypeGroupHelper>();
             TypeHelper.Register<PegiHelper>();
             TypeHelper.Register<PlatformFamilyHelper>();
             TypeHelper.Register<PlatformTypeHelper>();
@@ -156,6 +152,57 @@ namespace PlayStationGames.GameEngine.Data
                 _ => 
                     base.GetExtractItemCaption(field, value),
             };
+        }
+
+        private UniqueTrophysets? uniqueTrophisets;
+        public UniqueTrophysets UniqueTrophisets
+        {
+            get
+            {
+                if (uniqueTrophisets == null)
+                {
+                    uniqueTrophisets = new();
+                    Dictionary<Game, Trophyset> handledGames = new();
+
+                    foreach (Game game in FullItemsList)
+                    {
+                        foreach (RelatedGame relGame in game.RelatedGames)
+                        {
+                            Game? realRelatedGame = relGame.Game;
+
+                            if (realRelatedGame == null)
+                                continue;
+
+                            if (handledGames.TryGetValue(realRelatedGame, out Trophyset? foundTrophyset)
+                                && realRelatedGame.GameRegion.Equals(game.GameRegion)
+                                && foundTrophyset.AppliesTo.Contains(game.PlatformType))
+                            {
+                                handledGames.Add(game, foundTrophyset);
+                                uniqueTrophisets[foundTrophyset].Add(game);
+                                break;
+                            }
+                        }
+
+                        if (!handledGames.ContainsKey(game))
+                        {
+                            Trophyset gameTrophyset = game.GetFullTrophyset;
+                            handledGames.Add(game, gameTrophyset);
+                            uniqueTrophisets.Add(gameTrophyset, new() { game });
+                        }
+                    }
+                }
+
+                return uniqueTrophisets;
+            }
+        }
+
+        protected override void RenewAdditionalLists()
+        {
+            if (uniqueTrophisets != null)
+            {
+                uniqueTrophisets.Clear();
+                uniqueTrophisets = null;
+            }
         }
     }
 }

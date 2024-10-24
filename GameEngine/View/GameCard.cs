@@ -265,7 +265,6 @@ namespace PlayStationGames.GameEngine.View
             releaseLayouts.Clear();
         }
 
-
         protected override string GetTitle() =>
             Item != null
                 ? $"{Item.FullTitle()}"

@@ -9,7 +9,7 @@ namespace PlayStationGames.AccountEngine.View
 {
     public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
     {
-        protected override int CardWidth => 400;
+        protected override int CardWidth => 424;
         protected override int CardHeight => 200;
 
         public AccountCard(ItemViewMode viewMode) : base(viewMode) 
@@ -20,7 +20,7 @@ namespace PlayStationGames.AccountEngine.View
                 Text = "PSN Level"
             };
             trophiesPanel.Header.SetContentSize(1, 18);
-            trophiesPanel.SetContentSize(140, 168);
+            trophiesPanel.SetContentSize(164, 168);
             trophiesPanel.Paddings.SetSize(OxSize.Large);
             trophiesPanel.Top = 1;
             trophiesPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -33,6 +33,25 @@ namespace PlayStationGames.AccountEngine.View
             FillBaseLayouts();
             FillUsedAndOwnsLayout();
             FillLinksLayout();
+            FillTrophiesLayouts();
+        }
+
+        private void FillTrophiesLayouts()
+        {
+            ClearLayoutTemplate();
+            trophiesLayouts.Clear();
+            Layouter.Template.Parent = trophiesPanel;
+            Layouter.Template.Left = 94;
+            Layouter.Template.WrapLabel = false;
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlayedGames));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PSNLevel, -10));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.TotalPoints, -10));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.CompletedGames, -10));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.TotalTrophies, -10));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlatinumCount, -10));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.GoldCount, -10));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.SilverCount, -10));
+            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.BronzeCount, -10));
         }
 
         private void FillAvatarLayout()
@@ -93,6 +112,9 @@ namespace PlayStationGames.AccountEngine.View
             foreach (AccountField field in baseLayouts.Fields)
                 Layouter.PlacedControl(field)!.Control.Left -= 8;
 
+            foreach (AccountField field in trophiesLayouts.Fields)
+                Layouter.PlacedControl(field)!.Control.Left -= 8;
+
             trophiesPanel.Left = ContentContainer.Width - trophiesPanel.Width - 1;
         }
 
@@ -110,5 +132,6 @@ namespace PlayStationGames.AccountEngine.View
 
         private readonly OxFrameWithHeader trophiesPanel;
         private readonly ControlLayouts<AccountField> baseLayouts = new();
+        private readonly ControlLayouts<AccountField> trophiesLayouts = new();
     }
 }

@@ -133,5 +133,46 @@ namespace PlayStationGames.GameEngine.Data
 
             return AppliesTo.CompareTo(otherTrophyset.AppliesTo);
         }
+
+        public void AddTrophies(Trophyset trophyset)
+        {
+            Available.Add(trophyset.Available);
+
+            foreach (EarnedTrophies otherEarned in trophyset.EarnedTrophies)
+                EarnedTrophies.Add(otherEarned.AccountId, otherEarned.Trophies);
+        }
+
+        public TrophyList? GetTrophies(Guid? accountId) => 
+            accountId != null 
+                ? EarnedTrophies.GetTrophies(accountId) 
+                : Available;
+
+        public bool ExistsTrophies(Guid accountId) =>
+            EarnedTrophies.Contains(e => e.AccountId.Equals(accountId));
+
+        public bool TrophysetIsComplete(Guid accountId)
+        {
+            TrophyList? trophyList = GetTrophies(accountId);
+            return trophyList != null 
+                && trophyList.Points.Equals(Available.Points);
+        }
+    }
+
+    public class FullTrophyset : Trophyset
+    { 
+        public string GameName { get; private set; }
+
+        public FullTrophyset(string gameName) => 
+            GameName = gameName;
+
+        public override string DefaultXmlElementName => "Trophyset";
+
+        public override bool Equals(object? obj) =>
+            base.Equals(obj)
+            && obj is FullTrophyset otherFullTrophyset
+            && GameName.Equals(otherFullTrophyset.GameName);
+
+        public override int GetHashCode() => 
+            base.GetHashCode() ^ GameName.GetHashCode();
     }
 }

@@ -944,5 +944,20 @@ namespace PlayStationGames.GameEngine.Data
 
         public override Color BaseColor => sourceHelper.BaseColor(SourceType);
 
+        public Trophyset GetFullTrophyset
+        {
+            get 
+            {
+                FullTrophyset fullTrophyset = new(Name);
+                fullTrophyset.CopyFrom(Trophyset);
+
+                foreach (DLC dlc in Dlcs)
+                    if (dlc.Trophyset.Type != TrophysetType.NoSet)
+                        fullTrophyset.AddTrophies(dlc.Trophyset);
+
+                return fullTrophyset;
+            }
+        }
+
     }
 }

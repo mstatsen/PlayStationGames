@@ -30,6 +30,15 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountField.Links => "Links",
                 AccountField.DefaultAccount => "Default Account",
                 AccountField.UsesAndOwns => "Uses and owns",
+                AccountField.PlayedGames => "Played games",
+                AccountField.PSNLevel => "Level",
+                AccountField.TotalTrophies => "Total trophies",
+                AccountField.CompletedGames => "100% games",
+                AccountField.PlatinumCount => "Platinum",
+                AccountField.GoldCount => "Gold",
+                AccountField.SilverCount => "Silver",
+                AccountField.BronzeCount => "Bronze",
+                AccountField.TotalPoints => "Total points",
                 _ => string.Empty,
             };
 
@@ -122,7 +131,15 @@ namespace PlayStationGames.AccountEngine.Data.Fields
 
         protected override List<AccountField> GetCalcedFields() => new() 
         { 
-            AccountField.UsesAndOwns
+            AccountField.UsesAndOwns,
+            AccountField.PlayedGames,
+            AccountField.PSNLevel,
+            AccountField.TotalTrophies,
+            AccountField.CompletedGames,
+            AccountField.PlatinumCount,
+            AccountField.GoldCount,
+            AccountField.SilverCount,
+            AccountField.BronzeCount
         };
 
         protected override List<AccountField> GetEditingFields() => new()
@@ -162,7 +179,16 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             AccountField.Country,
             AccountField.Login,
             AccountField.Links,
-            AccountField.UsesAndOwns
+            AccountField.UsesAndOwns,
+            AccountField.PlayedGames,
+            AccountField.PSNLevel,
+            AccountField.TotalTrophies,
+            AccountField.CompletedGames,
+            AccountField.PlatinumCount,
+            AccountField.GoldCount,
+            AccountField.SilverCount,
+            AccountField.BronzeCount,
+            AccountField.TotalPoints
         };
 
         protected override FilterOperation GetDefaultFilterOperation(AccountField field) =>
@@ -195,7 +221,15 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             [AccountField.Name] = FilterOperations.StringOperations,
             [AccountField.Password] = FilterOperations.UnaryOperations,
             [AccountField.DefaultAccount] = FilterOperations.BoolOperations,
-            [AccountField.UsesAndOwns] = FilterOperations.StringOperations
+            [AccountField.UsesAndOwns] = FilterOperations.StringOperations,
+            [AccountField.PlayedGames] = FilterOperations.NumericOperations,
+            [AccountField.PSNLevel] = FilterOperations.StringOperations,
+            [AccountField.TotalTrophies] = FilterOperations.NumericOperations,
+            [AccountField.CompletedGames] = FilterOperations.NumericOperations,
+            [AccountField.PlatinumCount] = FilterOperations.NumericOperations,
+            [AccountField.GoldCount] = FilterOperations.NumericOperations,
+            [AccountField.SilverCount] = FilterOperations.NumericOperations,
+            [AccountField.BronzeCount] = FilterOperations.NumericOperations
         };
 
         protected override List<AccountField> GetSelectQuickFilterFields() => new(){ };
@@ -233,14 +267,14 @@ namespace PlayStationGames.AccountEngine.Data.Fields
             {
                 AccountField.Account =>
                     FieldType.Extract,
-                AccountField.Id => 
+                AccountField.Id =>
                     FieldType.Guid,
-                AccountField.Avatar => 
+                AccountField.Avatar =>
                     FieldType.Image,
-                AccountField.Country => 
+                AccountField.Country =>
                     FieldType.Country,
                 AccountField.Consoles or
-                AccountField.Games => 
+                AccountField.Games =>
                     FieldType.List,
                 AccountField.Links =>
                     FieldType.LinkList,
@@ -248,6 +282,14 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     FieldType.Boolean,
                 AccountField.Type =>
                     FieldType.Enum,
+                AccountField.PlayedGames or
+                AccountField.TotalTrophies or
+                AccountField.CompletedGames or
+                AccountField.PlatinumCount or
+                AccountField.GoldCount or
+                AccountField.SilverCount or
+                AccountField.BronzeCount =>
+                    FieldType.Integer,
                 _ =>
                     FieldType.String,
             };

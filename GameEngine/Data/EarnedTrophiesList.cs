@@ -9,5 +9,22 @@ namespace PlayStationGames.GameEngine.Data
             XmlName = "Earned";
             SaveEmptyList = false;
         }
+
+        public EarnedTrophies Add(Guid accountId, TrophyList trophyList)
+        {
+            EarnedTrophies? existsEarned = Find(e => e.AccountId == accountId);
+
+            if (existsEarned == null)
+            {
+                existsEarned = Add();
+                existsEarned.AccountId = accountId;
+            }
+            
+            existsEarned.Trophies.Add(trophyList);
+            return existsEarned;
+        }
+
+        public TrophyList? GetTrophies(Guid? accountId) =>
+            Find(e => e.AccountId.Equals(accountId))?.Trophies;
     }
 }

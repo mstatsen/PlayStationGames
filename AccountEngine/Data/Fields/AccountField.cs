@@ -17,6 +17,16 @@
 
         //calced
         UsesAndOwns,
+        PlayedGames,
+        PSNLevel,
+        TotalPoints,
+        CompletedGames,
+        TotalTrophies,
+        PlatinumCount,
+        GoldCount,
+        SilverCount,
+        BronzeCount,
+
 
         //system
         Field,

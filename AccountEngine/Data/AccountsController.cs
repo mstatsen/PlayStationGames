@@ -13,6 +13,8 @@ using PlayStationGames.AccountEngine.Data.Types;
 using OxLibrary;
 using OxDAOEngine.Data.Links;
 using OxDAOEngine.Grid;
+using PlayStationGames.GameEngine.Data;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data
 {
@@ -89,5 +91,8 @@ namespace PlayStationGames.AccountEngine.Data
 
             return result;
         }
+
+        public UniqueTrophysets UniqueTrophysets =>
+            ((GamesController)DataManager.ListController<GameField, Game>()).UniqueTrophisets;
     }
 }
