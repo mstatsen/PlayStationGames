@@ -21,11 +21,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         public readonly Account? Account;
 
+        private readonly bool IsDLCPanel;
+
         public TrophiesPanel(Account? account, bool forDLC)
         {
             Account = account;
+            IsDLCPanel = forDLC;
             SetRemoveButtonVisible();
-            CreateControls(forDLC);
+            CreateControls();
             Header.SetContentSize(1, 20);
         }
 
@@ -110,24 +113,32 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             icons.Add(icon);
         }
 
-        private void CreateControls(bool forDLC)
+        private void CreateControls()
         {
             Text = Account == null ? "Available trophies": Account.Name;
             ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
-            CreateIcon(TrophyType.Platinum, 8);
-            string forDLCPrefix = forDLC ? "DLC:" : string.Empty;
-            CheckBoxAccessor<GameField, Game> platinumControl = new(
-                builder.Context($"{forDLCPrefix}{Text}_platinum", FieldType.Boolean, null)
-            )
-            { 
-                Parent = this,
-                Left = icons[0].Right,
-                Top = 6,
-                Width = 16
-            };
-            platinumControl.ValueChangeHandler += ApplyConstraintsToDependedPanelsHandler;
-            controls.Add(TrophyType.Platinum, platinumControl);
-            int calcedLeft = 64;
+
+            if (!IsDLCPanel)
+                CreateIcon(TrophyType.Platinum, 8);
+
+            string forDLCPrefix = IsDLCPanel ? "DLC:" : string.Empty;
+
+            if (!IsDLCPanel)
+            {
+                CheckBoxAccessor<GameField, Game> platinumControl = new(
+                    builder.Context($"{forDLCPrefix}{Text}_platinum", FieldType.Boolean, null)
+                )
+                {
+                    Parent = this,
+                    Left = icons[0].Right,
+                    Top = 6,
+                    Width = 16
+                };
+                platinumControl.ValueChangeHandler += ApplyConstraintsToDependedPanelsHandler;
+                controls.Add(TrophyType.Platinum, platinumControl);
+            }
+
+            int calcedLeft = IsDLCPanel ? 8 : 64;
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
             {
@@ -146,7 +157,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 calcedLeft += 40;
                 controls.Add(type, accessor);
             }
-            SetContentSize(256, 26);
+            SetContentSize(IsDLCPanel ? 200 : 256, 26);
         }
 
         private void ApplyConstraintsToDependedPanels()
@@ -168,7 +179,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void SetValue(TrophyList? value)
         {
-            controls[TrophyType.Platinum].Value = value != null && value.Platinum > 0;
+            if (!IsDLCPanel)
+                controls[TrophyType.Platinum].Value = value != null && value.Platinum > 0;
 
             foreach(TrophyType type in trophyTypeHelper.CountingTrophies)
                 controls[type].Value = value == null ? 0 : value.GetTrophyCount(type);
@@ -180,7 +192,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             TrophyList value = new()
             {
-                { TrophyType.Platinum, controls[TrophyType.Platinum].BoolValue ? 1 : 0 }
+                { TrophyType.Platinum, !IsDLCPanel && controls[TrophyType.Platinum].BoolValue ? 1 : 0 }
             };
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
@@ -191,7 +203,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         internal void ClearValue()
         {
-            controls[TrophyType.Platinum].Value = false;
+            if (!IsDLCPanel)
+                controls[TrophyType.Platinum].Value = false;
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
                 controls[type].MaximumValue = 0;

@@ -17,7 +17,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
     {
         private readonly ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
         private readonly IControlAccessor typeControl;
-        private readonly IControlAccessor appliesToControl;
+        private readonly IControlAccessor? appliesToControl;
         private readonly IControlAccessor difficultControl;
         private readonly IControlAccessor completeTimeControl;
         private readonly List<TrophiesPanel> trophiesPanels = new();
@@ -44,13 +44,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         private readonly OxLabel completeTimeLabel = new()
         { 
             Left = 8, 
-            Text = "Complete time" 
+            Text = "Time" 
         };
 
         private void PrepareAccessor(IControlAccessor accessor, OxLabel label, int top, int width, EventHandler OnChangeHandler)
         {
             accessor.Parent = this;
-            accessor.Left = 112;
+            accessor.Left = 88;
             accessor.Top = top + 4;
             accessor.Width = width;
             accessor.ValueChangeHandler += OnChangeHandler;
@@ -58,33 +58,37 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             OxControlHelper.AlignByBaseLine(accessor.Control, label);
         }
 
-        private readonly bool IsDLCTrophyset;
+        private readonly bool IsDLCPanel;
 
         public TrophysetPanel(bool forDLC)
         {
-            IsDLCTrophyset = forDLC;
-            typeControl = forDLC 
+            IsDLCPanel = forDLC;
+            typeControl = IsDLCPanel
                 ? builder.Accessor("DLC:TrophysetType", FieldType.Enum) 
                 : builder[GameField.TrophysetType];
-            appliesToControl = forDLC 
-                ? builder.Accessor("DLC:TrophysetAppliesTo", FieldType.Enum) 
-                : builder[GameField.AppliesTo];
-            difficultControl = forDLC 
+
+            if (!IsDLCPanel)
+                appliesToControl = IsDLCPanel
+                    ? builder.Accessor("DLC:TrophysetAppliesTo", FieldType.Enum) 
+                    : builder[GameField.AppliesTo];
+
+            difficultControl = IsDLCPanel
                 ? builder.Accessor("DLC:Difficult", FieldType.Enum) 
                 : builder[GameField.Difficult];
-            completeTimeControl = forDLC 
+            completeTimeControl = IsDLCPanel
                 ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) 
                 : builder[GameField.CompleteTime];
-            PrepareAccessor(typeControl, trophysetTypeLabel, 4, 154, TypeChangeHandler);
-            PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 154, AppliesToChandeHandler);
-            PrepareAccessor(difficultControl, difficultLabel, appliesToControl.Bottom, 64, DifficultChangeHandler);
+            PrepareAccessor(typeControl, trophysetTypeLabel, 4, IsDLCPanel ? 122 : 178, TypeChangeHandler);
+
+            if (appliesToControl != null)
+                PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 178, AppliesToChandeHandler);
+
+            PrepareAccessor(difficultControl, difficultLabel, 
+                appliesToControl == null ? typeControl.Bottom : appliesToControl.Bottom, 
+                64, DifficultChangeHandler);
             PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 88, CompleteTimeChangeHandler);
-            CreateTrophiesPanels(forDLC);
+            CreateTrophiesPanels();
             AccountSelector = new(this);
-
-            if (forDLC)
-                appliesToControl.ReadOnly = true;
-
             SetMinimumSize();
         }
 
@@ -105,7 +109,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 ClearValues();
 
             bool isTrophysetExists = Type != TrophysetType.NoSet;
-            appliesToControl.Visible = isTrophysetExists;
+
+            if (appliesToControl != null)
+                appliesToControl.Visible = isTrophysetExists;
             AddCurrentPlatformToAppliesTo();
             appliesToLabel.Visible = isTrophysetExists;
             difficultControl.Visible = isTrophysetExists;
@@ -119,15 +125,17 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void AddCurrentPlatformToAppliesTo()
         {
-            if (Type == TrophysetType.NoSet)
+            if (IsDLCPanel 
+                || Type == TrophysetType.NoSet)
                 return;
 
-            appliesToControl.Value = new Platforms
-            {
-                new Platform(
-                    builder.Value<PlatformType>(GameField.Platform)
-                )
-            };
+            if (appliesToControl != null)
+                appliesToControl.Value = new Platforms
+                {
+                    new Platform(
+                        builder.Value<PlatformType>(GameField.Platform)
+                    )
+                };
         }
 
         private void SetMinimumSize()
@@ -154,7 +162,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             if (typeControl != null)
             {
                 ControlPainter.ColorizeControl(typeControl, Colors.Darker());
-                ControlPainter.ColorizeControl(appliesToControl, Colors.Darker());
+
+                if (appliesToControl != null)
+                    ControlPainter.ColorizeControl(appliesToControl, Colors.Darker());
+
                 ControlPainter.ColorizeControl(difficultControl, Colors.Darker());
                 ControlPainter.ColorizeControl(completeTimeControl, Colors.Darker());
                 ControlPainter.ColorizeControl(addButton, Colors.Darker());
@@ -165,16 +176,16 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 AccountSelector.BaseColor = Colors.Darker();
             }
         }
-        private void CreateTrophiesPanels(bool forDLC)
+        private void CreateTrophiesPanels()
         {
-            AvailableTrophiesPanel = CreateTrophiesPanel(null, forDLC);
+            AvailableTrophiesPanel = CreateTrophiesPanel(null, IsDLCPanel);
             addButton.Parent = this;
             addButton.Left = AvailableTrophiesPanel.Right - addButton.Width;
             addButton.Top = AvailableTrophiesPanel.Bottom + 6;
             addButton.Click += AddButtonClickHandler;
 
             foreach (Account account in DataManager.FullItemsList<AccountField, Account>())
-                CreateTrophiesPanel(account, forDLC);
+                CreateTrophiesPanel(account, IsDLCPanel);
         }
 
         private void AddButtonClickHandler(object? sender, EventArgs e)
@@ -220,7 +231,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 Parent = this,
                 Left = 8,
                 Top = (trophiesPanels.Count == 0 
-                        ? 132 
+                        ? completeTimeControl.Bottom + 32
                         : trophiesPanels.Count == 1 
                             ? addButton.Bottom - 2
                             : trophiesPanels.Last().Bottom + 4)
@@ -258,8 +269,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                     CompleteTime = completeTimeControl.EnumValue<CompleteTime>(),
                 };
 
-                result.AppliesTo.CopyFrom(appliesToControl.DAOValue<ListDAO<Platform>>());
-                result.Available.CopyFrom(AvailableTrophiesPanel.Value);
+                if (!IsDLCPanel)
+                {
+                    if (appliesToControl != null)
+                        result.AppliesTo.CopyFrom(appliesToControl.DAOValue<ListDAO<Platform>>());
+
+                    result.Available.CopyFrom(AvailableTrophiesPanel.Value);
+                }
 
                 foreach (TrophiesPanel trophiesPanel in VisiblePanels)
                 {
@@ -283,9 +299,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
                 typeControl.Value = value.Type;
 
-                if (IsDLCTrophyset)
-                    AddCurrentPlatformToAppliesTo();
-                else
+                if (appliesToControl != null)
                     appliesToControl.Value = value.AppliesTo;
 
                 difficultControl.Value = value.Difficult;
@@ -315,7 +329,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             set
             {
                 typeControl.ReadOnly = value;
-                appliesToControl.ReadOnly = appliesToControl.ReadOnly || value;
+
+                if (appliesToControl != null)
+                    appliesToControl.ReadOnly = value;
+
                 difficultControl.ReadOnly = value;
                 completeTimeControl.ReadOnly = value;
                 AvailableTrophiesPanel!.ReadOnly = value;
@@ -331,7 +348,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         public void ClearValues()
         {
             typeControl.Value = TrophysetType.NoSet;
-            appliesToControl.Clear();
+
+            if (appliesToControl != null)
+                appliesToControl.Clear();
+
             difficultControl.Value = Difficult.Unknown;
             completeTimeControl.Value = CompleteTime.Unknown;
 
