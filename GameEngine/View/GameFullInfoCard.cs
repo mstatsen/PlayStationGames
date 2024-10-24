@@ -122,7 +122,7 @@ namespace PlayStationGames.GameEngine.View
             Layouter.Template.Parent = BasePanel;
             Layouter.Template.Top = 4;
             ControlLayout<GameField>? imageLayout = Layouter[GameField.Image];
-            Layouter.Template.Left = (imageLayout != null ? imageLayout.Right : 0) + 72;
+            Layouter.Template.Left = (imageLayout != null ? imageLayout.Right : 0) + 80;
             return new ControlLayouts<GameField>()
             {
                 Layouter.AddFromTemplate(GameField.Licensed),
