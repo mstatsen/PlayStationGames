@@ -65,8 +65,8 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Difficult,
                 GameField.CompleteTime,
                 GameField.Genre,
+                GameField.Developer,
                 GameField.Publisher,
-                GameField.Year,
                 GameField.Pegi,
                 GameField.Region,
                 GameField.SinglePlayer,
@@ -243,7 +243,8 @@ namespace PlayStationGames.GameEngine.Editor
                     8,
                 GameField.Edition or
                 GameField.Serieses or
-                GameField.Devices =>
+                GameField.Devices or
+                GameField.Developer =>
                     4,
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or
@@ -253,10 +254,9 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Region or
                 GameField.Source or
                 GameField.Format or 
-                GameField.CriticScore or 
+                GameField.CriticScore or
                 GameField.Genre or 
                 GameField.Publisher or 
-                GameField.Year or
                 GameField.Pegi => 
                     2,
                 _ => 

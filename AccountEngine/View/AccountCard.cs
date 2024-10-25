@@ -1,9 +1,13 @@
 ﻿using OxDAOEngine.ControlFactory;
+using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
 using OxLibrary;
+using OxLibrary.Controls;
 using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.View
 {
@@ -14,16 +18,16 @@ namespace PlayStationGames.AccountEngine.View
 
         public AccountCard(ItemViewMode viewMode) : base(viewMode) 
         {
-            trophiesPanel = new()
+            TrophiesPanel = new()
             {
                 Parent = this,
                 Text = "PSN Level"
             };
-            trophiesPanel.Header.SetContentSize(1, 18);
-            trophiesPanel.SetContentSize(164, 168);
-            trophiesPanel.Paddings.SetSize(OxSize.Large);
-            trophiesPanel.Top = 1;
-            trophiesPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            TrophiesPanel.Header.SetContentSize(1, 18);
+            TrophiesPanel.SetContentSize(164, 168);
+            TrophiesPanel.Paddings.SetSize(OxSize.Large);
+            TrophiesPanel.Top = 1;
+            TrophiesPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             PrepareColors();
         }
 
@@ -39,19 +43,22 @@ namespace PlayStationGames.AccountEngine.View
         private void FillTrophiesLayouts()
         {
             ClearLayoutTemplate();
-            trophiesLayouts.Clear();
-            Layouter.Template.Parent = trophiesPanel;
+            RenewTrophiesIcons();
+            TrophiesLayouts.Clear();
+            Layouter.Template.Parent = TrophiesPanel;
             Layouter.Template.Left = 94;
             Layouter.Template.WrapLabel = false;
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlayedGames));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PSNLevel, -10));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.TotalPoints, -10));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.CompletedGames, -10));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.TotalTrophies, -10));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlatinumCount, -10));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.GoldCount, -10));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.SilverCount, -10));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.BronzeCount, -10));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlayedGames));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PSNLevel, -10));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.TotalPoints, -10));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.CompletedGames, -10));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.TotalTrophies, -10));
+
+            Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlatinumCount, -10));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.GoldCount, -10));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.SilverCount, -10));
+            TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.BronzeCount, -10));
         }
 
         private void FillAvatarLayout()
@@ -68,17 +75,17 @@ namespace PlayStationGames.AccountEngine.View
         private void FillBaseLayouts()
         {
             ClearLayoutTemplate();
-            baseLayouts.Clear();
+            BaseLayouts.Clear();
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.Left = Layouter[AccountField.Avatar]!.Right + 8;
             Layouter.Template.Top = 12;
-            baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Type));
+            BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Type));
             Layouter.Template.FontStyle = FontStyle.Regular;
 
             if (Item!.Login != string.Empty)
-                baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Login, -8));
+                BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Login, -8));
 
-            baseLayouts.Add(Layouter.AddFromTemplate(AccountField.Country,-8));
+            BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Country,-8));
         }
 
         private void FillUsedAndOwnsLayout()
@@ -107,31 +114,62 @@ namespace PlayStationGames.AccountEngine.View
 
         protected override void AlignControls()
         {
-            Layouter.AlignLabels(baseLayouts);
+            Layouter.AlignLabels(BaseLayouts, 8);
+            Layouter.MovePlacedControlsToLeft(TrophiesLayouts, 8);
+            TrophiesPanel.Left = ContentContainer.Width - TrophiesPanel.Width - 1;
+            AlignTrophiesIcons();
+        }
 
-            foreach (AccountField field in baseLayouts.Fields)
-                Layouter.PlacedControl(field)!.Control.Left -= 8;
-
-            foreach (AccountField field in trophiesLayouts.Fields)
-                Layouter.PlacedControl(field)!.Control.Left -= 8;
-
-            trophiesPanel.Left = ContentContainer.Width - trophiesPanel.Width - 1;
+        private void AlignTrophiesIcons()
+        {
+            foreach (KeyValuePair<TrophyType, OxPicture> icon in TrophiesIcons)
+            {
+                PlacedControl<AccountField> trophyControl =
+                    Layouter.PlacedControl(trophyHelper.FieldForAccount(icon.Key))!;
+                OxControlHelper.AlignByBaseLine(
+                    trophyControl.Control,
+                    icon.Value
+                    );
+                icon.Value.Left = trophyControl.Control.Left - 32;
+            }
         }
 
         protected override void ClearLayouts() =>
-            baseLayouts.Clear();
+            BaseLayouts.Clear();
 
         protected override void PrepareColors()
         {
             base.PrepareColors();
-            SetPaneBaseColor(trophiesPanel, Colors.Darker());
+            SetPaneBaseColor(TrophiesPanel, Colors.Darker());
         }
 
         protected override string GetTitle() =>
             Item != null ? Item.Name : string.Empty;
 
-        private readonly OxFrameWithHeader trophiesPanel;
-        private readonly ControlLayouts<AccountField> baseLayouts = new();
-        private readonly ControlLayouts<AccountField> trophiesLayouts = new();
+        private readonly TrophyTypeHelper trophyHelper = TypeHelper.Helper<TrophyTypeHelper>();
+
+        private void RenewTrophiesIcons()
+        {
+            foreach (OxPicture icon in TrophiesIcons.Values)
+                icon.Dispose();
+
+            TrophiesIcons.Clear();
+
+            foreach (TrophyType trophyType in trophyHelper.All())
+                TrophiesIcons.Add(
+                    trophyType,
+                    new OxPicture()
+                    {
+                        Image = trophyHelper.Icon(trophyType),
+                        Parent = TrophiesPanel,
+                        Left = 0
+                    }
+                );
+        }
+
+        private readonly Dictionary<TrophyType, OxPicture> TrophiesIcons = new();
+        private readonly OxFrameWithHeader TrophiesPanel;
+        private readonly ControlLayouts<AccountField> BaseLayouts = new();
+        private readonly ControlLayouts<AccountField> TrophiesLayouts = new();
     }
 }

@@ -90,11 +90,8 @@ namespace PlayStationGames.ConsoleEngine.View
 
         protected override void AlignControls()
         {
-            Layouter.AlignLabels(baseLayouts);
+            Layouter.AlignLabels(baseLayouts, 8);
             Layouter.AlignLabels(bottomLayouts);
-
-            foreach (ConsoleField field in baseLayouts.Fields)
-                Layouter.PlacedControl(field)!.Control.Left -= 8;
         }
 
         protected override void ClearLayouts()

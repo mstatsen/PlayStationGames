@@ -1,9 +1,6 @@
 ﻿using OxLibrary;
 using OxLibrary.Panels;
-using OxDAOEngine.Data;
 using OxDAOEngine.Editor;
-using PlayStationGames.AccountEngine.Data;
-using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 
@@ -26,12 +23,6 @@ namespace PlayStationGames.GameEngine.Editor
             PrepareParentPanel(PanelRight, PanelTop);
             PrepareParentPanel(PanelMiddle, PanelTop);
             PrepareParentPanel(PanelLeft, PanelTop);
-        }
-
-        protected override void SetGroupCaptions()
-        {
-            base.SetGroupCaptions();
-            Account? defaultAccount = DataManager.ListController<AccountField, Account>().FullItemsList.Find((a) => a.DefaultAccount);
         }
 
         protected override OxPane? GroupParent(GameFieldGroup group) => 

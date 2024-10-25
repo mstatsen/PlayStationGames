@@ -1,5 +1,6 @@
 ﻿using OxDAOEngine.Data.Types;
 using OxLibrary;
+using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.Data.Types
@@ -76,6 +77,16 @@ namespace PlayStationGames.GameEngine.Data.Types
                 TrophyType.Gold => GameField.AvailableGold,
                 TrophyType.Silver => GameField.AvailableSilver,
                 TrophyType.Bronze => GameField.AvailableBronze,
+                _ => default!,
+            };
+
+        public AccountField FieldForAccount(TrophyType trophyType) =>
+            trophyType switch
+            {
+                TrophyType.Platinum => AccountField.PlatinumCount,
+                TrophyType.Gold => AccountField.GoldCount,
+                TrophyType.Silver => AccountField.SilverCount,
+                TrophyType.Bronze => AccountField.BronzeCount,
                 _ => default!,
             };
     }

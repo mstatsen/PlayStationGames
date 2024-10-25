@@ -13,7 +13,7 @@ namespace PlayStationGames.GameEngine.View
     public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
     {
         protected override int CardWidth => 440;
-        protected override int CardHeight => 358;
+        protected override int CardHeight => 300;
 
         public GameCard(ItemViewMode viewMode) : base(viewMode)
         {
@@ -141,19 +141,6 @@ namespace PlayStationGames.GameEngine.View
             CalcLinksPanelLayout();
             CalcTrophiesPanelSize();
             CalcTrophysetPanelSize();
-            WrapReleasePlatforms();
-        }
-
-        private void WrapReleasePlatforms()
-        {
-            OxLabel? platformsControl =
-                (OxLabel?)Layouter.PlacedControl(GameField.ReleasePlatforms)?.Control;
-
-            if (platformsControl != null)
-            {
-                platformsControl.MaximumSize = new Size(240, 120);
-                platformsControl.TextAlign = ContentAlignment.TopLeft;
-            }
         }
 
         private void CalcLinksPanelLayout()
@@ -169,24 +156,35 @@ namespace PlayStationGames.GameEngine.View
 
         protected override void AlignControls()
         {
-            Layouter.AlignLabels(difficultLayouts);
-            Layouter.AlignLabels(baseLayouts);
-            Layouter.AlignLabels(releaseLayouts);
+            Layouter.AlignLabels(baseLayouts, 8);
+            Layouter.AlignLabels(releaseLayouts, 8);
+            Layouter.AlignLabels(difficultLayouts, 4);
+            AlignPegiAndCritic();
+            AlignTrophiesIcons();
+        }
 
-            foreach (GameField field in baseLayouts.Fields)
-                Layouter.PlacedControl(field)!.Control.Left -= 8;
+        private void AlignPegiAndCritic()
+        {
+            PlacedControl<GameField> yearControl = Layouter.PlacedControl(GameField.Year)!;
+            PlacedControl<GameField> pegiControl = Layouter.PlacedControl(GameField.Pegi)!;
+            PlacedControl<GameField> criticControl = Layouter.PlacedControl(GameField.CriticScore)!;
 
-            foreach (GameField field in releaseLayouts.Fields)
-                Layouter.PlacedControl(field)!.Control.Left -= 8;
+            yearControl.Control.Left = yearControl.LabelRight;
 
-            foreach (GameField field in difficultLayouts.Fields)
-                Layouter.PlacedControl(field)!.Control.Left -= 4;
+            pegiControl.LabelLeft = yearControl.Control.Right + 16;
+            pegiControl.Control.Left = pegiControl.LabelRight;
 
+            criticControl.LabelLeft = pegiControl.Control.Right + 16;
+            criticControl.Control.Left = criticControl.LabelRight;
+        }
+
+        private void AlignTrophiesIcons()
+        {
             foreach (KeyValuePair<TrophyType, OxPicture> icon in trophiesIcons)
-            {
-                PlacedControl<GameField> trophyControl = Layouter.PlacedControl(trophyHelper.Field(icon.Key))!;
-                icon.Value.Top = trophyControl.Control.Top - (icon.Value.Height - trophyControl.Control.Height) / 2;
-            }
+                OxControlHelper.AlignByBaseLine(
+                    Layouter.PlacedControl(trophyHelper.Field(icon.Key))!.Control,
+                    icon.Value
+                    );
         }
 
         private void CalcTrophiesPanelSize()
@@ -252,8 +250,7 @@ namespace PlayStationGames.GameEngine.View
         private void FillReleaseLayouts()
         {
             ClearLayoutTemplate();
-            ControlLayouts<GameField> result = new();
-            Layouter.Template.Left = 82;
+            Layouter.Template.Left = 74;
             Layouter.Template.Top = Layouter[GameField.Image]!.Bottom + 8;
             releaseLayouts.Clear();
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Platform));
@@ -271,23 +268,24 @@ namespace PlayStationGames.GameEngine.View
             if (Item!.Devices.Count > 0)
                 releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Devices, -8));
 
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Developer, 8));
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Publisher, -8));
-            ControlLayout<GameField> yearLayout = result.Add(Layouter.AddFromTemplate(GameField.Year, -8));
+            ControlLayout<GameField> yearLayout = releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Year, 8));
             ControlLayout<GameField> pegiLayout = Layouter.AddFromTemplate(GameField.Pegi);
             pegiLayout.Top = yearLayout.Top;
-            pegiLayout.Left += 88;
             pegiLayout.FontColor = TypeHelper.FontColor(Item.Pegi);
-            ControlLayout<GameField> criticLayout = releaseLayouts.Add(Layouter.AddFromTemplate(GameField.CriticScore, -8));
+            ControlLayout<GameField> criticLayout = Layouter.AddFromTemplate(GameField.CriticScore);
             criticLayout.FontColor = TypeHelper.Helper<CriticRangeHelper>().FontColor(Item.CriticScore);
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.ReleasePlatforms, -8));
+            criticLayout.Top = yearLayout.Top;
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Developer, -8));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Publisher, -8));
         }
 
         private void FillBaseLayouts()
         {
             ClearLayoutTemplate();
             baseLayouts.Clear();
-            Layouter.Template.Left = Layouter[GameField.Image]!.Right + 86;
+            ControlLayout<GameField> imageLayout = Layouter[GameField.Image]!;
+            Layouter.Template.Top = imageLayout.Top;
+            Layouter.Template.Left = imageLayout.Right + 86;
 
             if (Item!.Licensed)
             {
@@ -311,6 +309,9 @@ namespace PlayStationGames.GameEngine.View
 
         private void FillImageLayout()
         {
+            ClearLayoutTemplate();
+            Layouter.Template.Top = 2;
+            Layouter.Template.Left = 2;
             ControlLayout<GameField> imageLayout = Layouter.AddFromTemplate(GameField.Image);
             imageLayout.CaptionVariant = ControlCaptionVariant.None;
             imageLayout.Width = 140;

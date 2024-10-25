@@ -4,8 +4,9 @@ using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
-using OxDAOEngine.Data;
 using PlayStationGames.GameEngine.Data.Types;
+using OxLibrary.Controls;
+using OxLibrary;
 
 namespace PlayStationGames.GameEngine.View
 {
@@ -27,24 +28,43 @@ namespace PlayStationGames.GameEngine.View
                 result.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
                 result.Add(Layouter.AddFromTemplate(GameField.CompleteTime, 2));
 
+                RenewTrophiesIcons();
+
                 if (Item.WithTrophyset)
                 {
-                    bool firstLayout = true;
+                    Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
+                    bool firstTrophy = true;
 
-                    foreach (var field in FieldHelper.TrophiesFields)
-                        if (DAO.IntValue(Item?[field]) > 0)
-                        {
-                            ControlLayout<GameField> trophyLayout = 
-                                result.Add(
-                                    Layouter.AddFromTemplate(field, firstLayout ? 18 : 2)
-                                );
-                            trophyLayout.FontColor = TypeHelper.FontColor(FieldHelper.TrophyTypeByField(field));
-                            trophyLayout.LabelColor = trophyLayout.FontColor;
-                            firstLayout = false;
-                        }
+                    foreach (GameField field in FieldHelper.TrophiesFields)
+                    {
+                        TrophyType trophyType = FieldHelper.TrophyTypeByField(field);
+                        ControlLayout<GameField> trophyLayout;
+                        trophyLayout = result.Add(Layouter.AddFromTemplate(field), firstTrophy ? 8 : 2);
+                        trophyLayout.FontColor = TypeHelper.FontColor(trophyType);
+                        trophyLayout.LabelColor = trophyLayout.FontColor;
+                        firstTrophy = false;
+                    }
                 }
             }
             return result;
+        }
+
+        private void RenewTrophiesIcons()
+        {
+            foreach (OxPicture icon in trophiesIcons.Values)
+                icon.Dispose();
+
+            trophiesIcons.Clear();
+
+            foreach (TrophyType trophyType in trophyHelper.All())
+                trophiesIcons.Add(
+                    trophyType,
+                    new OxPicture()
+                    {
+                        Image = trophyHelper.Icon(trophyType),
+                        Parent = TrophysetPanel
+                    }
+                );
         }
 
         private readonly GameFieldHelper FieldHelper = TypeHelper.Helper<GameFieldHelper>();
@@ -182,12 +202,30 @@ namespace PlayStationGames.GameEngine.View
             PreparePanel(BasePanel, string.Empty);
         }
 
+        protected override void AfterControlLayout()
+        {
+            base.AfterControlLayout();
+            AlignTrophiesIcons();
+        }
+
+        private void AlignTrophiesIcons()
+        {
+            foreach (KeyValuePair<TrophyType, OxPicture> icon in trophiesIcons)
+            {
+                PlacedControl<GameField> trophyControl = Layouter.PlacedControl(trophyHelper.Field(icon.Key))!;
+                OxControlHelper.AlignByBaseLine(trophyControl.Control, icon.Value);
+                icon.Value.Left = trophyControl.Control.Left - 32;
+            }
+        }
+
         private readonly OxPanel BasePanel = new();
         private readonly OxPanel BasePanel2 = new();
         private readonly OxPanel StockPanel = new();
         private readonly OxPanel TrophysetPanel = new();
         private readonly OxPanel ReleasePanel = new();
         private readonly OxPanel LinksPanel = new();
+        private readonly Dictionary<TrophyType, OxPicture> trophiesIcons = new();
+        private readonly TrophyTypeHelper trophyHelper = TypeHelper.Helper<TrophyTypeHelper>();
 
         public GameFullInfoCard() : base() { }
     }

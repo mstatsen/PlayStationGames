@@ -435,11 +435,11 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.EmulatorType
             },
             new() {
-                GameField.Developer,
-                GameField.Publisher,
                 GameField.Year,
                 GameField.Pegi,
-                GameField.CriticScore
+                GameField.CriticScore,
+                GameField.Developer,
+                GameField.Publisher
             },
             new() {
                 GameField.Genre,
