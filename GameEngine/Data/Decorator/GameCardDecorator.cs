@@ -33,16 +33,14 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     Dao.Licensed
                         ? "Installed"
                         : string.Empty,
-                GameField.AvailablePlatinum =>
-                    Dao.Trophyset.Available.Platinum > 0
-                        ? "Platinum"
-                        : string.Empty,
                 GameField.Region =>
                     RegionAndLanguage,
-                GameField.WithDLCsTrophyset =>
-                    Dao.ExistsDLCsWithTrophyset
-                        ? "+DLCs trophies"
-                        : string.Empty,
+                GameField.AvailableGold => 
+                    Dao.GetFullTrophyset.Available.Gold,
+                GameField.AvailableSilver =>
+                    Dao.GetFullTrophyset.Available.Silver,
+                GameField.AvailableBronze =>
+                    Dao.GetFullTrophyset.Available.Bronze,
                 _ => base.Value(field),
             };
         }

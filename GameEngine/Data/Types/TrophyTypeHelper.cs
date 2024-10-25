@@ -1,5 +1,6 @@
 ﻿using OxDAOEngine.Data.Types;
 using OxLibrary;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.Data.Types
 {
@@ -66,6 +67,16 @@ namespace PlayStationGames.GameEngine.Data.Types
             {
                 TrophyType.Platinum => 180,
                 _ => Points(type),
+            };
+
+        public GameField Field(TrophyType trophyType) =>
+            trophyType switch
+            {
+                TrophyType.Platinum => GameField.AvailablePlatinum,
+                TrophyType.Gold => GameField.AvailableGold,
+                TrophyType.Silver => GameField.AvailableSilver,
+                TrophyType.Bronze => GameField.AvailableBronze,
+                _ => default!,
             };
     }
 }

@@ -565,7 +565,6 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Edition,
             GameField.Genre,
             GameField.Devices,
-            GameField.WithDLCsTrophyset,
             GameField.Developer,
             GameField.Publisher,
             GameField.Year,

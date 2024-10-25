@@ -370,6 +370,30 @@ namespace PlayStationGames.GameEngine.Data
             };
         }
 
+        public int AvailablePlatinum
+        {
+            get => Trophyset.Available.Platinum;
+            set => Trophyset.Available.Platinum = value;
+        }
+
+        public int AvailableGold
+        {
+            get => Trophyset.Available.Gold;
+            set => Trophyset.Available.Gold = value;
+        }
+
+        public int AvailableSilver
+        {
+            get => Trophyset.Available.Silver;
+            set => Trophyset.Available.Silver = value;
+        }
+
+        public int AvailableBronze
+        {
+            get => Trophyset.Available.Bronze;
+            set => Trophyset.Available.Bronze = value;
+        }
+
         protected override void SetFieldValue(GameField field, object? value)
         {
             value = PrepareValueToSet(field, value);
@@ -405,16 +429,16 @@ namespace PlayStationGames.GameEngine.Data
                     Trophyset.Type = TypeHelper.Value<TrophysetType>(value);
                     break;
                 case GameField.AvailablePlatinum:
-                    Trophyset.Available.Platinum = IntValue(value);
+                    AvailablePlatinum = IntValue(value);
                     break;
                 case GameField.AvailableGold:
-                    Trophyset.Available.Gold = IntValue(value);
+                    AvailableGold = IntValue(value);
                     break;
                 case GameField.AvailableSilver:
-                    Trophyset.Available.Silver = IntValue(value);
+                    AvailableSilver = IntValue(value);
                     break;
                 case GameField.AvailableBronze:
-                    Trophyset.Available.Bronze = IntValue(value);
+                    AvailableBronze = IntValue(value);
                     break;
                 case GameField.Source:
                     SourceType = TypeHelper.Value<Source>(value);
@@ -539,10 +563,10 @@ namespace PlayStationGames.GameEngine.Data
                 GameField.TrophysetType => Trophyset.Type,
                 GameField.Difficult => Trophyset.Difficult,
                 GameField.CompleteTime => Trophyset.CompleteTime,
-                GameField.AvailablePlatinum => Trophyset.Available.Platinum,
-                GameField.AvailableGold => Trophyset.Available.Gold,
-                GameField.AvailableSilver => Trophyset.Available.Silver,
-                GameField.AvailableBronze => Trophyset.Available.Bronze,
+                GameField.AvailablePlatinum => AvailablePlatinum,
+                GameField.AvailableGold => AvailableGold,
+                GameField.AvailableSilver => AvailableSilver,
+                GameField.AvailableBronze => AvailableBronze,
                 GameField.Source => sourceType,
                 GameField.Region => region,
                 GameField.Language => language,
@@ -884,12 +908,6 @@ namespace PlayStationGames.GameEngine.Data
 
         public override bool IsCalcedField(GameField field) =>
             fieldHelper.CalcedFields.Contains(field);
-
-        public static bool CheckUniqueTrophyset(Game game, RootListDAO<GameField, Game> list)
-        {
-            //TODO: need implementation
-            return false;
-        }
 
         public static IMatcher<ConsoleField> AvailableConsoleFilter(ControlBuilder<GameField, Game> gameControlBuilder)
         {

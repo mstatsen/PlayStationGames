@@ -2,7 +2,6 @@
 using OxLibrary.Controls;
 using OxLibrary.Panels;
 using OxDAOEngine.ControlFactory;
-using OxDAOEngine.Data;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
@@ -18,77 +17,113 @@ namespace PlayStationGames.GameEngine.View
 
         public GameCard(ItemViewMode viewMode) : base(viewMode)
         {
-            trophiesPanel = new()
+            TrophysetPanel = new()
             {
                 Parent = this,
                 Text = "Trophyset"
             };
-            trophiesPanel.Header.SetContentSize(1, 18);
-            trophiesPanel.Paddings.SetSize(OxSize.Large);
+            TrophysetPanel.Header.SetContentSize(1, 18);
+            TrophysetPanel.Paddings.SetSize(OxSize.Large);
+            TrophiesPanel = new()
+            {
+                Parent = TrophysetPanel,
+                Text = "Trophyset",
+                Top = 0
+            };
             PrepareColors();
         }
 
         protected override void PrepareColors()
         {
             base.PrepareColors();
-            SetPaneBaseColor(trophiesPanel, Colors.Darker());
+            SetPaneBaseColor(TrophysetPanel, BaseColor);
+            SetPaneBaseColor(TrophiesPanel, BaseColor);
+        }
+
+        private void FillTrophysetLayouts()
+        {
+            trophysetLayouts.Clear();
+            difficultLayouts.Clear();
+            ClearLayoutTemplate();
+            Layouter.Template.Left = 67;
+            Layouter.Template.Top = 0;
+            Layouter.Template.Parent = TrophysetPanel;
+            Layouter.Template.AutoSize = true;
+            ControlLayout<GameField> trophysetTypeLayout = trophysetLayouts.Add(
+                Layouter.AddFromTemplate(GameField.TrophysetType)
+            );
+            trophysetTypeLayout.Left = 8;
+            trophysetTypeLayout.CaptionVariant = ControlCaptionVariant.None;
+
+            TrophysetPanel.Header.Visible = Item!.Trophyset.TrophysetExists;
+
+            if (!Item!.Trophyset.TrophysetExists)
+            {
+                trophysetTypeLayout.FontStyle = FontStyle.Bold | FontStyle.Italic;
+                return;
+            }
+
+            ControlLayout<GameField> appliesToLayout = trophysetLayouts.Add(
+                Layouter.AddFromTemplate(GameField.AppliesTo, -6)
+            );
+            appliesToLayout.CaptionVariant = ControlCaptionVariant.None;
+            appliesToLayout.Left = 12;
+            appliesToLayout.FontSize = appliesToLayout.FontSize - 2;
+            appliesToLayout.FontStyle = FontStyle.Regular;
+            
+
+            difficultLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
+            difficultLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -8));
         }
 
         private void FillTrophiesLayouts()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Left = 67;
-            Layouter.Template.Top = 0;
-            Layouter.Template.Parent = trophiesPanel;
-            Layouter.Template.AutoSize = true;
-
+            RenewTrophiesIcons();
+            Layouter.Template.Parent = TrophiesPanel;
+            Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
+            Layouter.Template.Left = 24;
+            Layouter.Template.Top = 4;
             trophiesLayouts.Clear();
-
-            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.TrophysetType));
-            Layouter.AddFromTemplate(GameField.AppliesTo, -6);
-            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
-            trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -8));
-
-            Layouter[GameField.TrophysetType]!.Left = 8;
-            Layouter[GameField.TrophysetType]!.CaptionVariant = ControlCaptionVariant.None;
-
-            if (!Item!.TrophysetAvailable 
-                || Item!.Trophyset.Type == TrophysetType.NoSet)
-                return;
-
-            Layouter[GameField.AppliesTo]!.Left = 12;
-            Layouter[GameField.AppliesTo]!.FontSize = Layouter[GameField.AppliesTo]!.FontSize - 2;
-            Layouter[GameField.AppliesTo]!.FontStyle = FontStyle.Regular;
-            Layouter[GameField.AppliesTo]!.CaptionVariant = ControlCaptionVariant.None;
-
             bool firstTrophy = true;
 
             foreach (GameField field in FieldHelper.TrophiesFields)
             {
-                if (DAO.IntValue(Item![field]) > 0)
-                {
-                    ControlLayout<GameField> trophyLayout = trophiesLayouts.Add(
-                        Layouter.AddFromTemplate(field), firstTrophy ? 2 : - 8
-                    );
+                TrophyType trophyType = FieldHelper.TrophyTypeByField(field);
+                ControlLayout<GameField> trophyLayout;
 
-                    if (field == GameField.AvailablePlatinum)
-                        trophyLayout.CaptionVariant = ControlCaptionVariant.None;
-
-                    trophyLayout.FontColor = TypeHelper.FontColor(FieldHelper.TrophyTypeByField(field));
-                    trophyLayout.LabelColor = trophyLayout.FontColor;
-                    firstTrophy = false;
-                }
-            }
-
-            if (Item.ExistsDLCsWithTrophyset)
-            {
-                ControlLayout<GameField> withDLCLayout = trophiesLayouts.Add(Layouter.AddFromTemplate(GameField.WithDLCsTrophyset, -8));
-                withDLCLayout.CaptionVariant = ControlCaptionVariant.None;
-                withDLCLayout.Left = 8;
+                if (firstTrophy)
+                    trophyLayout = trophiesLayouts.Add(Layouter.AddFromTemplate(field));
+                else
+                    trophyLayout = trophiesLayouts.Add(Layouter.AddFromTemplate(field), -8);
+                
+                trophyLayout.FontColor = TypeHelper.FontColor(trophyType);
+                trophyLayout.LabelColor = trophyLayout.FontColor;
+                firstTrophy = false;
             }
         }
 
+        private void RenewTrophiesIcons()
+        {
+            foreach (OxPicture icon in trophiesIcons.Values)
+                icon.Dispose();
+
+            trophiesIcons.Clear();
+
+            foreach(TrophyType trophyType in trophyHelper.All())
+                trophiesIcons.Add(
+                    trophyType,
+                    new OxPicture()
+                    {
+                        Image = trophyHelper.Icon(trophyType),
+                        Parent = TrophiesPanel,
+                        Left = 0
+                    }
+                );
+        }
+
         private readonly GameFieldHelper FieldHelper = TypeHelper.Helper<GameFieldHelper>();
+        private readonly TrophyTypeHelper trophyHelper = TypeHelper.Helper<TrophyTypeHelper>();
 
         private void FillLinksLayout()
         {
@@ -105,6 +140,7 @@ namespace PlayStationGames.GameEngine.View
             base.AfterLayoutControls();
             CalcLinksPanelLayout();
             CalcTrophiesPanelSize();
+            CalcTrophysetPanelSize();
             WrapReleasePlatforms();
         }
 
@@ -133,7 +169,7 @@ namespace PlayStationGames.GameEngine.View
 
         protected override void AlignControls()
         {
-            Layouter.AlignLabels(trophiesLayouts);
+            Layouter.AlignLabels(difficultLayouts);
             Layouter.AlignLabels(baseLayouts);
             Layouter.AlignLabels(releaseLayouts);
 
@@ -143,11 +179,23 @@ namespace PlayStationGames.GameEngine.View
             foreach (GameField field in releaseLayouts.Fields)
                 Layouter.PlacedControl(field)!.Control.Left -= 8;
 
-            foreach (GameField field in trophiesLayouts.Fields)
+            foreach (GameField field in difficultLayouts.Fields)
                 Layouter.PlacedControl(field)!.Control.Left -= 4;
+
+            foreach (KeyValuePair<TrophyType, OxPicture> icon in trophiesIcons)
+            {
+                PlacedControl<GameField> trophyControl = Layouter.PlacedControl(trophyHelper.Field(icon.Key))!;
+                icon.Value.Top = trophyControl.Control.Top - (icon.Value.Height - trophyControl.Control.Height) / 2;
+            }
         }
 
         private void CalcTrophiesPanelSize()
+        {
+            TrophiesPanel.Visible = Item!.Trophyset.Available.Count > 0;
+            TrophiesPanel.SetContentSize(50, 8*2 + trophiesLayouts.Count * 18);
+        }
+
+        private void CalcTrophysetPanelSize()
         {
             Layouter.PlacedControl(GameField.TrophysetType)!.Control.Left =
                 Layouter.PlacedControl(GameField.Difficult)!.LabelLeft;
@@ -155,29 +203,40 @@ namespace PlayStationGames.GameEngine.View
             PlacedControl<GameField>? platinumControl = 
                 Layouter.PlacedControl(GameField.AvailablePlatinum);
 
-            if (platinumControl != null)
-                platinumControl.Control.Left =
-                    Layouter.PlacedControl(GameField.Difficult)!.LabelLeft;
+            int maximumTrophysetLabelRight = 0;
 
-            int maximumTrophiesLabelRight = 0;
-
-            foreach (GameField field in trophiesLayouts.Fields)
-                maximumTrophiesLabelRight = Math.Max(
-                    maximumTrophiesLabelRight,
+            foreach (GameField field in trophysetLayouts.Fields)
+                maximumTrophysetLabelRight = Math.Max(
+                    maximumTrophysetLabelRight,
                     Layouter.PlacedControl(field)!.Control.Right);
 
-            ControlLayout<GameField>? lastTrophyLayout = trophiesLayouts.Last;
+            foreach (GameField field in difficultLayouts.Fields)
+                maximumTrophysetLabelRight = Math.Max(
+                    maximumTrophysetLabelRight,
+                    Layouter.PlacedControl(field)!.Control.Right);
 
-            if (lastTrophyLayout != null)
-                trophiesPanel.SetContentSize(
-                    maximumTrophiesLabelRight + 
-                        trophiesPanel.Paddings.Left + trophiesPanel.Paddings.Right,
-                    Layouter.PlacedControl(lastTrophyLayout.Field)!.Control.Bottom + 
-                        trophiesPanel.Paddings.Top + trophiesPanel.Paddings.Bottom
+            TrophiesPanel.Left = maximumTrophysetLabelRight + 4;
+
+            int lastBottom = 0;
+
+            if (difficultLayouts.Last != null)
+                lastBottom = Layouter.PlacedControl(difficultLayouts.Last.Field)!.Control.Bottom;
+
+            if (trophysetLayouts.Last != null)
+                lastBottom = Math.Max(
+                    Layouter.PlacedControl(trophysetLayouts.Last.Field)!.Control.Bottom,
+                    lastBottom
                 );
 
-            trophiesPanel.Left = SavedWidth - trophiesPanel.Width;
-            trophiesPanel.Top = 0;
+            TrophysetPanel.SetContentSize(
+                maximumTrophysetLabelRight 
+                    + (Item!.Trophyset.Available.Count > 0 ? TrophiesPanel.Width : 0)
+                    + TrophysetPanel.Paddings.Right,
+                lastBottom
+            );
+
+            TrophysetPanel.Left = SavedWidth - TrophysetPanel.Width;
+            TrophysetPanel.Top = 32;
         }
 
         protected override void PrepareLayouts()
@@ -185,6 +244,7 @@ namespace PlayStationGames.GameEngine.View
             FillImageLayout();
             FillBaseLayouts();
             FillReleaseLayouts();
+            FillTrophysetLayouts();
             FillTrophiesLayouts();
             FillLinksLayout();
         }
@@ -229,9 +289,11 @@ namespace PlayStationGames.GameEngine.View
             baseLayouts.Clear();
             Layouter.Template.Left = Layouter[GameField.Image]!.Right + 86;
 
-            if (Item!.Licensed )
+            if (Item!.Licensed)
             {
-                ControlLayout<GameField> licensedLayout = baseLayouts.Add(Layouter.AddFromTemplate(GameField.Licensed));
+                ControlLayout<GameField> licensedLayout = baseLayouts.Add(
+                    Layouter.AddFromTemplate(GameField.Licensed)
+                );
                 licensedLayout.CaptionVariant = ControlCaptionVariant.None;
                 licensedLayout.Left = Layouter[GameField.Image]!.Right + 12;
             }
@@ -262,6 +324,8 @@ namespace PlayStationGames.GameEngine.View
         {
             baseLayouts.Clear();
             trophiesLayouts.Clear();
+            difficultLayouts.Clear();
+            trophysetLayouts.Clear();
             releaseLayouts.Clear();
         }
 
@@ -270,7 +334,11 @@ namespace PlayStationGames.GameEngine.View
                 ? $"{Item.FullTitle()}"
                 : "Game";
 
-        private readonly OxFrameWithHeader trophiesPanel;
+        private readonly Dictionary<TrophyType, OxPicture> trophiesIcons = new();
+        private readonly OxFrameWithHeader TrophysetPanel;
+        private readonly OxFrame TrophiesPanel;
+        private readonly ControlLayouts<GameField> trophysetLayouts = new();
+        private readonly ControlLayouts<GameField> difficultLayouts = new();
         private readonly ControlLayouts<GameField> trophiesLayouts = new();
         private readonly ControlLayouts<GameField> baseLayouts = new();
         private readonly ControlLayouts<GameField> releaseLayouts = new();
