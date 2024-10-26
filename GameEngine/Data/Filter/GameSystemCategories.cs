@@ -14,7 +14,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 .AddChild(Verifying())
                 .AddChild(BadFilling())
                 .AddChild(Availabitity())
-                .AddChild(SeveralCopies())
                 .AddChild(ReleasedOn())
                 .AddChild(Critic());
 
@@ -54,10 +53,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                     new Category<GameField, Game>("0-49")
                         .AddFilterLower(GameField.CriticScore, 50)
                 );
-
-        private static Category<GameField, Game> SeveralCopies() =>
-            new Category<GameField, Game>("Several copies")
-                .AddFilterNotBlank(GameField.RelatedGames);
 
         private static Category<GameField, Game> Availabitity() => 
             new Category<GameField, Game>("Availability")
