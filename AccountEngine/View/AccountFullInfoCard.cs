@@ -49,15 +49,18 @@ namespace PlayStationGames.AccountEngine.View
 
             ControlLayouts<AccountField> result = new();
 
+            if (Item == null)
+                return result;
+
             bool needOffsetGames = false;
 
-            if (Item!.ConsolesCount > 0)
+            if (Item.ConsolesCount > 0)
             {
                 result.Add(Layouter.AddFromTemplate(AccountField.Consoles));
                 needOffsetGames = true;
             }
 
-            if (Item!.GamesCount > 0)
+            if (Item.GamesCount > 0)
             {
                 if (needOffsetGames)
                     result.Add(Layouter.AddFromTemplate(AccountField.Games, 16));
