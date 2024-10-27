@@ -79,10 +79,9 @@ namespace PlayStationGames.GameEngine.View
 
             return new ControlLayouts<GameField>()
                 {
-                    Layouter.AddFromTemplate(GameField.Developer),
+                    Layouter.AddFromTemplate(GameField.Year),
+                    Layouter.AddFromTemplate(GameField.Developer, 2),
                     Layouter.AddFromTemplate(GameField.Publisher, 2),
-                    Layouter.AddFromTemplate(GameField.Year, 2),
-                    Layouter.AddFromTemplate(GameField.Pegi, 2),
                     Layouter.AddFromTemplate(GameField.ReleasePlatforms, 2)
                 };
         }
@@ -163,9 +162,10 @@ namespace PlayStationGames.GameEngine.View
             return new ControlLayouts<GameField>() {
                 Layouter.AddFromTemplate(GameField.Region),
                 Layouter.AddFromTemplate(GameField.Serieses, 2),
-                Layouter.AddFromTemplate(GameField.CriticScore, 2),
                 Layouter.AddFromTemplate(GameField.Genre, 2),
                 Layouter.AddFromTemplate(GameField.Devices, 2),
+                Layouter.AddFromTemplate(GameField.Pegi, 2),
+                Layouter.AddFromTemplate(GameField.CriticScore, 2),
                 Layouter.AddFromTemplate(GameField.Tags, 2),
             };
         }
