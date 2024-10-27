@@ -1,7 +1,5 @@
-﻿using OxDAOEngine.Data;
-using OxDAOEngine.Data.Filter;
+﻿using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Data.Filter.Types;
-using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 
@@ -13,9 +11,7 @@ namespace PlayStationGames.GameEngine.Data.Filter
             new Category<GameField, Game>("All Games")
                 .AddChild(Verifying())
                 .AddChild(BadFilling())
-                .AddChild(Availabitity())
-                .AddChild(ReleasedOn())
-                .AddChild(Critic());
+                .AddChild(Availabitity());
 
         public static Categories<GameField, Game> Categories
         {
@@ -36,22 +32,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                 .AddChild(
                     new Category<GameField, Game>("Unverified")
                         .AddFilterEquals(GameField.Verified, false)
-                );
-
-        private static Category<GameField, Game> Critic() =>
-            new Category<GameField, Game>("Critic")
-                .AddChild(
-                    new Category<GameField, Game>("75-100")
-                        .AddFilterGreater(GameField.CriticScore, 74)
-                )
-                .AddChild(
-                    new Category<GameField, Game>("50-74")
-                        .AddFilterGreater(GameField.CriticScore, 49, FilterConcat.AND)
-                        .AddFilterLower(GameField.CriticScore, 75, FilterConcat.AND)
-                )
-                .AddChild(
-                    new Category<GameField, Game>("0-49")
-                        .AddFilterLower(GameField.CriticScore, 50)
                 );
 
         private static Category<GameField, Game> Availabitity() => 
@@ -83,56 +63,6 @@ namespace PlayStationGames.GameEngine.Data.Filter
                         new Category<GameField, Game>("Lost")
                             .AddFilterEquals(GameField.Source, Source.Lost)
                     );
-
-        private static Category<GameField, Game> ReleasedOnFamily(PlatformFamily family)
-        {
-            Category<GameField, Game> familyCategory = new(
-                TypeHelper.Name(family),
-                FiltrationType.BaseOnChilds);
-
-            foreach (PlatformType type in TypeHelper.All<PlatformType>())
-                if (TypeHelper.DependsOnValue<PlatformType, PlatformFamily>(type).Equals(family))
-                    familyCategory.AddChild(
-                        new Category<GameField, Game>(TypeHelper.Name(type))
-                            .AddFilter(
-                                GameField.ReleasePlatforms,
-                                new Platforms(type)
-                            )
-                    );
-
-            return familyCategory;
-        }
-
-        private static Category<GameField, Game> ReleasedOn()
-        {
-            Category<GameField, Game> releasedOn = new Category<GameField, Game>("Released on")
-                .AddChild(OnlyPlayStation);
-
-            foreach (PlatformFamily family in TypeHelper.Actual<PlatformFamily>())
-                releasedOn.AddChild(ReleasedOnFamily(family));
-
-            return releasedOn;
-        }
-
-
-        private static Category<GameField, Game> OnlyPlayStation
-        {
-            get
-            {
-                Category<GameField, Game> category = new("Only on PlayStation");
-                category.Filter.Root.FilterConcat = FilterConcat.AND;
-                PlatformTypeHelper helper = TypeHelper.Helper<PlatformTypeHelper>();
-
-                foreach (PlatformType type in TypeHelper.Actual<PlatformType>())
-                    if (!helper.DependsOnValue<PlatformFamily>(type).Equals(PlatformFamily.Sony))
-                        category.AddFilterNotContains(
-                            GameField.ReleasePlatforms,
-                            new Platforms(type),
-                            FilterConcat.AND);
-
-                return category;
-            }
-        }
 
         private static Category<GameField, Game> BadTrophyset()
         {
