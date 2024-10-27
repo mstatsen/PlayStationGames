@@ -91,11 +91,11 @@ namespace PlayStationGames.ConsoleEngine.View
             PreparePanel(ConsolePanel, string.Empty);
         }
 
-        private readonly OxPanel ConsolePanel = new(new Size(200, 90));
-        private readonly OxPanel StoragesPanel = new(new Size(200, 160));
-        private readonly OxPanel FoldersPanel = new(new Size(200, 200));
-        private readonly OxPanel AccountsPanel = new(new Size(200, 200));
-        private readonly OxPanel AccessoriesPanel = new(new Size(200, 200));
+        private readonly OxPanel ConsolePanel = new();
+        private readonly OxPanel StoragesPanel = new();
+        private readonly OxPanel FoldersPanel = new();
+        private readonly OxPanel AccountsPanel = new();
+        private readonly OxPanel AccessoriesPanel = new();
 
         public ConsoleFullInfoCard() : base() { }
     }
