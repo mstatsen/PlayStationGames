@@ -7,6 +7,8 @@ using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 using OxLibrary.Controls;
 using OxLibrary;
+using OxDAOEngine.ControlFactory.Accessors;
+using OxDAOEngine.ControlFactory.Controls.Links;
 
 namespace PlayStationGames.GameEngine.View
 {
@@ -206,7 +208,13 @@ namespace PlayStationGames.GameEngine.View
         {
             base.AfterControlLayout();
             AlignTrophiesIcons();
+            AlignLinkButtons();
         }
+
+        private void AlignLinkButtons() =>
+            ((LinkButtonList)Layouter.PlacedControl(GameField.Links)!.Control!).
+                RecalcButtonsSizeAndPositions();
+
 
         private void AlignTrophiesIcons()
         {

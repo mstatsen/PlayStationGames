@@ -3,6 +3,8 @@ using OxDAOEngine.ControlFactory;
 using OxDAOEngine.View;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
+using OxDAOEngine.ControlFactory.Controls.Links;
+using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.View
 {
@@ -93,6 +95,15 @@ namespace PlayStationGames.AccountEngine.View
             PreparePanel(PropertyPanel, "Property");
             PreparePanel(AccountPanel, string.Empty);
         }
+
+        protected override void AfterControlLayout()
+        {
+            base.AfterControlLayout();
+            AlignLinkButtons();
+        }
+        private void AlignLinkButtons() =>
+            ((LinkButtonList)Layouter.PlacedControl(AccountField.Links)!.Control!).
+                RecalcButtonsSizeAndPositions();
 
         private readonly OxPanel AccountPanel = new(new Size(200, 90));
         private readonly OxPanel LinksPanel = new(new Size(200, 90));
