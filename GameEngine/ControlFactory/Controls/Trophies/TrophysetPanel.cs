@@ -231,7 +231,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 Parent = this,
                 Left = 8,
                 Top = (trophiesPanels.Count == 0 
-                        ? completeTimeControl.Bottom + 32
+                        ? completeTimeControl.Bottom + 16
                         : trophiesPanels.Count == 1 
                             ? addButton.Bottom - 2
                             : trophiesPanels.Last().Bottom + 4)

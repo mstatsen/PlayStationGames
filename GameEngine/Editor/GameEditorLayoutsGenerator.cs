@@ -188,7 +188,8 @@ namespace PlayStationGames.GameEngine.Editor
                     20,
                 GameField.Serieses or
                 GameField.CriticScore or
-                GameField.MaximumPlayers =>
+                GameField.MaximumPlayers or
+                GameField.Code =>
                     26,
                 _ =>
                     base.Height(field)
@@ -241,7 +242,6 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Image or
                 GameField.SinglePlayer => 
                     8,
-                GameField.Edition or
                 GameField.Serieses or
                 GameField.Devices or
                 GameField.Developer =>
@@ -250,6 +250,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.OnlineMultiplayer or
                 GameField.MaximumPlayers =>
                     6,
+                GameField.Edition or
                 GameField.Platform or
                 GameField.Region or
                 GameField.Source or

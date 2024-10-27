@@ -7,7 +7,6 @@ using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 using OxLibrary.Controls;
 using OxLibrary;
-using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls.Links;
 
 namespace PlayStationGames.GameEngine.View
@@ -143,14 +142,15 @@ namespace PlayStationGames.GameEngine.View
             ClearLayoutTemplate();
             Layouter.Template.Parent = BasePanel;
             Layouter.Template.Top = 4;
-            ControlLayout<GameField>? imageLayout = Layouter[GameField.Image];
-            Layouter.Template.Left = (imageLayout != null ? imageLayout.Right : 0) + 80;
+            ControlLayout<GameField> imageLayout = Layouter[GameField.Image]!;
+            Layouter.Template.Left = imageLayout.Right + 80;
             return new ControlLayouts<GameField>()
             {
+                imageLayout,
                 Layouter.AddFromTemplate(GameField.Licensed),
                 Layouter.AddFromTemplate(GameField.Owner, 2),
                 Layouter.AddFromTemplate(GameField.Source, 2),
-                Layouter.AddFromTemplate(GameField.Platform, 2),
+                Layouter.AddFromTemplate(GameField.Platform, 2)
             };
         }
 
@@ -219,7 +219,11 @@ namespace PlayStationGames.GameEngine.View
         {
             foreach (KeyValuePair<TrophyType, OxPicture> icon in trophiesIcons)
             {
-                PlacedControl<GameField> trophyControl = Layouter.PlacedControl(trophyHelper.Field(icon.Key))!;
+                PlacedControl<GameField>? trophyControl = Layouter.PlacedControl(trophyHelper.Field(icon.Key));
+
+                if (trophyControl == null)
+                    continue;
+
                 OxControlHelper.AlignByBaseLine(trophyControl.Control, icon.Value);
                 icon.Value.Left = trophyControl.Control.Left - 32;
             }

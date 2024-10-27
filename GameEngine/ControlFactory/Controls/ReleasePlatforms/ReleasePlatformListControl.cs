@@ -66,13 +66,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     longestFamilyCheckBox.Right < checkBox.Right)
                     longestFamilyCheckBox = checkBox;
 
-                top = checkBox.Bottom + 2;
+                //top = checkBox.Bottom + 2;
+                top = checkBox.Bottom;
                 oldFamily = family;
                 calcedWidth = Math.Max(calcedWidth, checkBox.Right);
                 calcedHeight = Math.Max(calcedHeight, checkBox.Bottom);
             }
 
-            return new Size(calcedWidth + 12, calcedHeight);
+            return new Size(calcedWidth, calcedHeight);
         }
 
 
@@ -100,7 +101,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             mainPanel.Parent = this;
             mainPanel.Paddings.Horizontal = 12;
-            mainPanel.Paddings.VerticalOx = OxSize.Extra;
+            mainPanel.Paddings.Top = 6;
+            mainPanel.Paddings.Bottom = 5;
         }
 
         private OxCheckBox CreateCheckBox(PlatformType platformType, int top, int left)

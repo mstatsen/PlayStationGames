@@ -41,6 +41,10 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     Dao.GetFullTrophyset.Available.Silver,
                 GameField.AvailableBronze =>
                     Dao.GetFullTrophyset.Available.Bronze,
+                GameField.CriticScore =>
+                    Dao.Format == GameFormat.Emulator
+                        ? string.Empty
+                        : Dao.CriticScore,
                 _ => base.Value(field),
             };
         }
@@ -58,6 +62,9 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             get
             {
+                if (Dao.Format == GameFormat.Emulator)
+                    return string.Empty;
+
                 string genre = Dao.GenreName;
 
                 if (genre.Trim() == string.Empty)
@@ -70,7 +77,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     player = player.Remove(player.Length - 2);
 
                 player = player != string.Empty ? "(" + player + ")" : string.Empty;
-
                 return $"{TypeHelper.ShortName(Dao.ScreenView)} {genre} {player}";
             }
         }
@@ -79,6 +85,9 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             get
             {
+                if (Dao.Format == GameFormat.Emulator)
+                    return string.Empty;
+
                 string result = $"{TypeHelper.Name(Dao.GameRegion)} ({TypeHelper.Name(Dao.GameLanguage)})";
                 
                 if (Dao.Code.Trim() != string.Empty)
