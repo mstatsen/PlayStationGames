@@ -188,7 +188,6 @@ namespace PlayStationGames.GameEngine.View
                 imageLayout.Width = 200;
         }
 
-
         protected override string GetTitle() =>
             Item != null 
                 ? $"{Item.Name} ({TypeHelper.ShortName(Item.PlatformType)})" 
