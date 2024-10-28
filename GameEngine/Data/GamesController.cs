@@ -10,7 +10,6 @@ using OxDAOEngine.Data.Sorting;
 using PlayStationGames.GameEngine.ControlFactory;
 using PlayStationGames.GameEngine.Data.Decorator;
 using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Filter;
 using PlayStationGames.GameEngine.Data.Types;
 using PlayStationGames.GameEngine.Editor;
 using PlayStationGames.ConsoleEngine.Data;
@@ -73,9 +72,6 @@ namespace PlayStationGames.GameEngine.Data
             {
                 new FieldSorting<GameField, Game>(GameField.Name, SortOrder.Ascending)
             };
-
-        public override Categories<GameField, Game> SystemCategories =>
-            GameSystemCategories.Categories;
 
         public override bool UseImageList => true;
 
