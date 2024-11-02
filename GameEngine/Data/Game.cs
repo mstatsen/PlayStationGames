@@ -808,7 +808,7 @@ namespace PlayStationGames.GameEngine.Data
             CheckDevices();
         }
 
-        public override int CompareTo(DAO? other)
+        public override int CompareTo(IDAO? other)
         {
             if (Equals(other))
                 return 0;

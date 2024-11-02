@@ -41,7 +41,7 @@ namespace PlayStationGames.GameEngine.Data
         public Device() : base() =>
             WithoutXmlNode = true;
 
-        public override int CompareTo(DAO? other) => 
+        public override int CompareTo(IDAO? other) => 
             other is Device otherDevice 
                 ? Type.CompareTo(otherDevice.Type) 
                 : -1;

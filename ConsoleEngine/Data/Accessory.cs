@@ -164,7 +164,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             return $"{countStr}{colorStr}{nameStr}{typeStr}{withCoverStr}".Trim();
         }
 
-        public override int CompareTo(DAO? other)
+        public override int CompareTo(IDAO? other)
         {
             if (Equals(other))
                 return 0;

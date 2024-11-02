@@ -44,7 +44,7 @@ namespace PlayStationGames.GameEngine.Data
         public Platform(PlatformType platformType) : this() =>
             type = platformType;
 
-        public override int CompareTo(DAO? other) => 
+        public override int CompareTo(IDAO? other) => 
             other is Platform otherPlatform ? 
                 Type.CompareTo(otherPlatform.Type) 
                 : -1;

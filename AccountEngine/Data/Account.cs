@@ -248,7 +248,7 @@ namespace PlayStationGames.AccountEngine.Data
         private readonly AccountsController ListController =
             (AccountsController)DataManager.ListController<AccountField, Account>();
 
-        public override int CompareTo(DAO? other)
+        public override int CompareTo(IDAO? other)
         {
             if (Equals(other))
                 return 0;

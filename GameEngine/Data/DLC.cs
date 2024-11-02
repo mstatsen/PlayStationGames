@@ -25,7 +25,7 @@ namespace PlayStationGames.GameEngine.Data
             Trophyset.Clear();
         }
 
-        public override int CompareTo(DAO? other)
+        public override int CompareTo(IDAO? other)
         {
             if (other is DLC otherDLC)
             {

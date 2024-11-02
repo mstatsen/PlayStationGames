@@ -96,7 +96,7 @@ namespace PlayStationGames.GameEngine.Data
 
         public Trophyset() : base() { }
 
-        public override int CompareTo(DAO? other)
+        public override int CompareTo(IDAO? other)
         {
             if (Equals(other))
                 return 0;
@@ -105,7 +105,6 @@ namespace PlayStationGames.GameEngine.Data
                 return 1;
 
             Trophyset otherTrophyset = (Trophyset)other;
-
             int result = Type.CompareTo(otherTrophyset.Type);
 
             if (result != 0) 

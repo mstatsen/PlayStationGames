@@ -212,7 +212,7 @@ namespace PlayStationGames.ConsoleEngine.Data
                 ? $", ver. {FirmwareVersion}"
                 : string.Empty);
 
-        public override int CompareTo(DAO? other)
+        public override int CompareTo(IDAO? other)
         {
             if (Equals(other))
                 return 0;
