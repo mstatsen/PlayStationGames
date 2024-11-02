@@ -826,6 +826,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 GameField.Owner or
                 GameField.Trophyset =>
                     FieldType.Custom,
+                GameField.Field => 
+                    FieldType.MetaData,
                 _ =>
                     FieldType.String,
             };
