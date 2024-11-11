@@ -99,7 +99,7 @@ namespace PlayStationGames.AccountEngine.Editor
         {
             get
             {
-                Filter<ConsoleField, PSConsole> filter = new();
+                Filter<ConsoleField, PSConsole> filter = new(FilterConcat.AND);
 
                 if (account != null)
                 {

@@ -170,7 +170,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                     Builder.Value<FirmwareType>(ConsoleField.Firmware)
                 );
 
-                Filter<GameField, Game> filter = new();
+                Filter<GameField, Game> filter = new(FilterConcat.AND);
 
                 foreach (SuitableConsoleGame suitableGame in suitableConsoleGames)
                     filter.AddFilter(

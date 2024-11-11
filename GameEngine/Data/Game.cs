@@ -911,7 +911,7 @@ namespace PlayStationGames.GameEngine.Data
 
         public static IMatcher<ConsoleField> AvailableConsoleFilter(ControlBuilder<GameField, Game> gameControlBuilder)
         {
-            Filter<ConsoleField, PSConsole> filter = new();
+            Filter<ConsoleField, PSConsole> filter = new(FilterConcat.AND);
 
             bool licensed = gameControlBuilder.Value<bool>(GameField.Licensed);
 

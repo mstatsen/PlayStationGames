@@ -76,7 +76,7 @@ namespace PlayStationGames.GameEngine.Editor
             if (Item == null)
                 return;
 
-            Filter<GameField, Game> relatedGameFilter = new();
+            Filter<GameField, Game> relatedGameFilter = new(FilterConcat.AND);
             relatedGameFilter.AddFilter(GameField.Id, FilterOperation.NotEquals, Item.Id, FilterConcat.AND);
 
             foreach (RelatedGame relatedGame in Builder.Value<RelatedGames>(GameField.RelatedGames)!)
