@@ -90,8 +90,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             }
             else
             {
-                SimpleFilter<ConsoleField, PSConsole> filter = 
-                    new(ConsoleField.Id, FilterOperation.Equals, console.Id);
+                Filter<ConsoleField, PSConsole> filter = new(FilterConcat.AND);
+                filter.AddFilter(ConsoleField.Id, FilterOperation.Equals, console.Id);
 
                 storageControl.Enabled = true;
                 storageLabel.Enabled = true;

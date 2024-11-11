@@ -99,18 +99,18 @@ namespace PlayStationGames.AccountEngine.Editor
         {
             get
             {
-                Filter<ConsoleField, PSConsole> filter = new(FilterConcat.AND);
+                Filter<ConsoleField, PSConsole> filter = new(FilterConcat.OR);
 
                 if (account != null)
                 {
-                    filter.AddFilter(ConsoleField.Generation, ConsoleGeneration.PS5, FilterConcat.OR);
-                    filter.AddFilter(ConsoleField.Generation, ConsoleGeneration.PS4, FilterConcat.OR);
-                    filter.AddFilter(ConsoleField.Generation, ConsoleGeneration.PS3, FilterConcat.OR);
-                    filter.AddFilter(ConsoleField.Generation, ConsoleGeneration.PSVita, FilterConcat.OR);
-                    SimpleFilter<ConsoleField, PSConsole> pspFilter = new();
-                    pspFilter.AddFilter(ConsoleField.Generation, ConsoleGeneration.PSP);
-                    pspFilter.AddFilter(ConsoleField.Firmware, FirmwareType.Official);
-                    filter.AddFilter(pspFilter, FilterConcat.OR);
+                    FilterGroup<ConsoleField, PSConsole> baseGenerationGroup = filter.AddGroup(FilterConcat.OR);
+                    baseGenerationGroup.Add(ConsoleField.Generation, ConsoleGeneration.PS5);
+                    baseGenerationGroup.Add(ConsoleField.Generation, ConsoleGeneration.PS4);
+                    baseGenerationGroup.Add(ConsoleField.Generation, ConsoleGeneration.PS3);
+                    baseGenerationGroup.Add(ConsoleField.Generation, ConsoleGeneration.PSVita);
+                    FilterGroup<ConsoleField, PSConsole> pspGroup = filter.AddGroup(FilterConcat.AND);
+                    pspGroup.Add(ConsoleField.Generation, ConsoleGeneration.PSP);
+                    pspGroup.Add(ConsoleField.Firmware, FirmwareType.Official);
                 }
 
                 return filter;

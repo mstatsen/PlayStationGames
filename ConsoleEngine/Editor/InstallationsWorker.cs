@@ -10,6 +10,7 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxDAOEngine.Data.Filter.Types;
+using Microsoft.VisualBasic.FileIO;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
@@ -170,16 +171,15 @@ namespace PlayStationGames.ConsoleEngine.Editor
                     Builder.Value<FirmwareType>(ConsoleField.Firmware)
                 );
 
-                Filter<GameField, Game> filter = new(FilterConcat.AND);
+                Filter<GameField, Game> filter = new(FilterConcat.OR);
 
                 foreach (SuitableConsoleGame suitableGame in suitableConsoleGames)
-                    filter.AddFilter(
-                        new SimpleFilter<GameField, Game>()
-                            .AddFilter(GameField.Platform, suitableGame.PlatformType)
-                            .AddFilter(GameField.Source, suitableGame.Source)
-                            .AddFilter(GameField.Licensed, suitableGame.Licensed),
-                        FilterConcat.OR
-                    );
+                {
+                    FilterGroup<GameField, Game> group = filter.AddGroup(FilterConcat.AND);
+                    group.Add(GameField.Platform, suitableGame.PlatformType);
+                    group.Add(GameField.Source, suitableGame.Source);
+                    group.Add(GameField.Licensed, suitableGame.Licensed);
+                }
 
                 return filter;
             }
