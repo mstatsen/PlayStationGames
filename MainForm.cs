@@ -34,7 +34,7 @@ namespace PlayStationGames
                 Parent = this,
                 Font = Styles.DefaultFont,
                 BaseColor = MainPanel.BaseColor,
-                TabHeaderSize = new Size(140, 32),
+                TabHeaderSize = new(140, 32),
                 TabPosition = OxDock.Top
             };
             mainTabControl.Margins.SetSize(OxSize.Medium);

@@ -15,7 +15,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
 
             return field switch
             {
-                ConsoleField.Icon => OxImageBoxer.BoxingImage(Dao.Icon, new Size(70, 40)),
+                ConsoleField.Icon => OxImageBoxer.BoxingImage(Dao.Icon, new(70, 40)),
                 ConsoleField.Storages => StoragesCount(),
                 ConsoleField.Folders => FoldersCount(),
                 ConsoleField.Games => GamesCount(),

@@ -66,14 +66,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     longestFamilyCheckBox.Right < checkBox.Right)
                     longestFamilyCheckBox = checkBox;
 
-                //top = checkBox.Bottom + 2;
                 top = checkBox.Bottom;
                 oldFamily = family;
                 calcedWidth = Math.Max(calcedWidth, checkBox.Right);
                 calcedHeight = Math.Max(calcedHeight, checkBox.Bottom);
             }
 
-            return new Size(calcedWidth, calcedHeight);
+            return new(calcedWidth, calcedHeight);
         }
 
 
@@ -117,7 +116,6 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             };
 
             checkBox.CheckedChanged += CheckBoxCheckedChangedHandler;
-
             CheckBoxes.Add(platformType, checkBox);
             return checkBox;
         }

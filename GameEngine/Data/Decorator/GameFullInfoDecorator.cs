@@ -14,7 +14,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             field switch
             {
                 GameField.Image =>
-                    OxImageBoxer.BoxingImage(Dao.Image, new Size(200, 97)),
+                    OxImageBoxer.BoxingImage(Dao.Image, new(200, 97)),
                 GameField.Format =>
                     TypeHelper.ShortName(Dao.Format),
                 GameField.Installations => 

@@ -97,7 +97,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
             ReadOnlyPicture.Parent = readOnlyControl;
             ReadOnlyPicture.Height = ReadOnlyPictureSize;
             ReadOnlyPicture.Width = ReadOnlyPictureSize;
-            ReadOnlyPicture.MinimumSize = new Size(ReadOnlyPictureSize, ReadOnlyPictureSize);
+            ReadOnlyPicture.MinimumSize = new(ReadOnlyPictureSize, ReadOnlyPictureSize);
             ReadOnlyPicture.Top = 0;
             ReadOnlyPicture.Left = 0;
             ReadOnlyPicture.Dock = DockStyle.Left;

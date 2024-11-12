@@ -46,7 +46,7 @@ namespace PlayStationGames.ConsoleEngine.View
 
             if (foldersControl != null)
             {
-                foldersControl.MaximumSize = new Size(460, 280);
+                foldersControl.MaximumSize = new(460, 280);
                 foldersControl.TextAlign = ContentAlignment.TopLeft;
             }
         }

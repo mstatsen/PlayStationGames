@@ -147,7 +147,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                         ? VisiblePanels.Last().Bottom 
                         : addButton.Bottom;
 
-            MinimumSize = new Size(
+            MinimumSize = new(
                 trophiesPanels.Last().Right + 8,
                 height
             );

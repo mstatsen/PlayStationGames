@@ -72,7 +72,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 : string.Empty;
 
         private object Image =>
-            OxImageBoxer.BoxingImage(Dao.Image, new Size(70, 40));
+            OxImageBoxer.BoxingImage(Dao.Image, new(70, 40));
 
         private object? Pegi =>
             Dao.Pegi == TypeHelper.EmptyValue<Pegi>()

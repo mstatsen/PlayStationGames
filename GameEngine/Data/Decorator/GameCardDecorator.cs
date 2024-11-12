@@ -56,7 +56,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     : $" / {TypeHelper.ShortName(Dao.Format)}");
 
         private object? Image() =>
-            OxImageBoxer.BoxingImage(Dao.Image, new Size(140, 80));
+            OxImageBoxer.BoxingImage(Dao.Image, new(140, 80));
 
         private object FullGenre
         {

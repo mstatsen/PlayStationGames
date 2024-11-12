@@ -31,7 +31,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
             return field switch
             {
                 ConsoleField.Icon =>
-                    OxImageBoxer.BoxingImage(Dao.Icon, new Size(80, 33)),
+                    OxImageBoxer.BoxingImage(Dao.Icon, new(80, 33)),
                 ConsoleField.Storages =>
                     NormalizeIfEmpty(Dao.Storages.ShortString),
                 ConsoleField.Accessories =>

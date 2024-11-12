@@ -70,7 +70,6 @@ namespace PlayStationGames.GameEngine.View
             appliesToLayout.Left = 12;
             appliesToLayout.FontSize = appliesToLayout.FontSize - 2;
             appliesToLayout.FontStyle = FontStyle.Regular;
-            
 
             difficultLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));
             difficultLayouts.Add(Layouter.AddFromTemplate(GameField.CompleteTime, -8));
@@ -113,7 +112,7 @@ namespace PlayStationGames.GameEngine.View
             foreach(TrophyType trophyType in trophyHelper.All())
                 trophiesIcons.Add(
                     trophyType,
-                    new OxPicture()
+                    new()
                     {
                         Image = trophyHelper.Icon(trophyType),
                         Parent = TrophiesPanel,
@@ -147,11 +146,11 @@ namespace PlayStationGames.GameEngine.View
         {
             OxPane? linksControl = (OxPane?)Layouter.PlacedControl(GameField.Links)?.Control;
 
-            if (linksControl != null)
-            {
-                linksControl.Left = ContentContainer.Width - linksControl.Width;
-                linksControl.Top = ContentContainer.Height - linksControl.Height;
-            }
+            if (linksControl == null)
+                return;
+            
+            linksControl.Left = ContentContainer.Width - linksControl.Width;
+            linksControl.Top = ContentContainer.Height - linksControl.Height;
         }
 
         protected override void AlignControls()
@@ -197,9 +196,6 @@ namespace PlayStationGames.GameEngine.View
         {
             Layouter.PlacedControl(GameField.TrophysetType)!.Control.Left =
                 Layouter.PlacedControl(GameField.Difficult)!.LabelLeft;
-
-            PlacedControl<GameField>? platinumControl = 
-                Layouter.PlacedControl(GameField.AvailablePlatinum);
 
             int maximumTrophysetLabelRight = 0;
 
@@ -317,7 +313,9 @@ namespace PlayStationGames.GameEngine.View
             imageLayout.Width = 140;
             imageLayout.Height = 80;
 
-            if (Item != null && Item.Image != null && Item.Image.GetPixel(0, 0).A == 0)
+            if (Item != null 
+                && Item.Image != null 
+                && Item.Image.GetPixel(0, 0).A == 0)
                 imageLayout.BackColor = Colors.Darker();
         }
 

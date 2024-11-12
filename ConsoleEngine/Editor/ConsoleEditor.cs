@@ -47,8 +47,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
             if (CreatingProcess)
                 return;
             
-            MinimumSize = new Size(0, 0);
-            MaximumSize = new Size(0, 0);
+            MinimumSize = Size.Empty;
+            MaximumSize = Size.Empty;
             PanelLeft.Width = CalcedWidth(PanelLeft);
             ConsoleGeneration generation = ((ConsoleWorker)Worker).Generation;
             FirmwareType firmware = ((ConsoleWorker)Worker).Firmware;
