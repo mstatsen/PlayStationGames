@@ -82,7 +82,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             foreach (OxCheckBox checkBox in CheckBoxes.Values)
             {
                 checkBox.ReadOnly = false;
-                checkBox.Font = new Font(checkBox.Font, FontStyle.Regular);
+                checkBox.Font = new(checkBox.Font, FontStyle.Regular);
             }
 
             if (FixedItems == null)
@@ -93,7 +93,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 OxCheckBox checkBox = CheckBoxes[platform.Type];
                 checkBox.Checked = true;
                 checkBox.ReadOnly = true;
-                checkBox.Font = new Font(checkBox.Font, FontStyle.Bold);
+                checkBox.Font = new(checkBox.Font, FontStyle.Bold);
             }
         }
 
