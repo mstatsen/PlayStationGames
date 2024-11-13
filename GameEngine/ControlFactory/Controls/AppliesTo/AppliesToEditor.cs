@@ -9,7 +9,7 @@ using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public partial class AppliesToEditor : ListItemEditor<Platform, GameField, Game>
+    public partial class AppliesToEditor : CustomItemEditor<Platform, GameField, Game>
     {
         private EnumAccessor<GameField, Game, PlatformType> TypeControl = default!;
 
@@ -22,7 +22,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             if (TypeControl.Context.Initializer is PlaystationPlatformTypeInitializer playstationPlatformTypeInitializer)
             {
                 playstationPlatformTypeInitializer.ExistingTypes.Clear();
-                playstationPlatformTypeInitializer.Game = ParentItem;
+                playstationPlatformTypeInitializer.Game = OwnerDAO;
 
                 if (ExistingItems != null)
                     playstationPlatformTypeInitializer.ExistingTypes.AddRange(ExistingItems.Cast<Platform>());

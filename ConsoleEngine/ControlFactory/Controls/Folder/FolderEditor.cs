@@ -7,7 +7,7 @@ using OxDAOEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {
-    public partial class FolderEditor : ListItemEditor<Folder, ConsoleField, PSConsole>
+    public partial class FolderEditor : CustomItemEditor<Folder, ConsoleField, PSConsole>
     {
         protected override void FillControls(Folder item) => 
             folderControl!.Value = item.Name;

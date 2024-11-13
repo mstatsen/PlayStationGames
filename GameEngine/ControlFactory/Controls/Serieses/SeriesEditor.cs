@@ -9,7 +9,7 @@ using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public partial class SeriesEditor : ListItemEditor<Series, GameField, Game>
+    public partial class SeriesEditor : CustomItemEditor<Series, GameField, Game>
     {
         private ComboBoxAccessor<GameField, Game> NameControl = default!;
 

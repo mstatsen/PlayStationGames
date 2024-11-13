@@ -16,9 +16,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GetMaximumCount += GetMaximumCountHandler;
 
         private int GetMaximumCountHandler() => 
-            ParentItem == null 
+            OwnerDAO == null 
                 ? -1 
                 : TypeHelper.Helper<DeviceTypeHelper>().
-                    Available(ParentItem.PlatformType).Count;
+                    Available(OwnerDAO.PlatformType).Count;
     }
 }

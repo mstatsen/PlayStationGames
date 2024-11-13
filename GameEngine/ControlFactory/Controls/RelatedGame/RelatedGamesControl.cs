@@ -17,7 +17,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             viewButton.ToolTipText = "View the game";
             PrepareViewButton(
                 viewButton,
-                (s, e) => DataManager.ViewItem<GameField, Game>(GameField.Id, SelectedItem.GameId), 
+                (s, e) =>
+                {
+                    if (SelectedItem != null)
+                        DataManager.ViewItem<GameField, Game>(GameField.Id, SelectedItem.GameId);
+                }, 
                 true);
         }
 

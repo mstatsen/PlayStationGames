@@ -9,7 +9,7 @@ using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public class ReleasePlatformListControl : CustomListControl<GameField, Game, Platforms, Platform>
+    public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Platforms, Platform>
     {
         private readonly Dictionary<PlatformType, OxCheckBox> CheckBoxes = new();
         private readonly OxFrame mainPanel = new();

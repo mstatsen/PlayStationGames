@@ -141,7 +141,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         private void FixAppliesTo()
         {
-            ((ICustomListControl<Platform, Platforms>)
+            ((ICustomItemsControl<Platform, Platforms>)
                 Builder[GameField.AppliesTo].Control).FixedItems = 
                 CurrentPlatformAsList;
         }
@@ -161,7 +161,7 @@ namespace PlayStationGames.GameEngine.Editor
         }
 
         private void FixReleasePlatform() =>
-            ((ICustomListControl<Platform, Platforms>)
+            ((ICustomItemsControl<Platform, Platforms>)
                 Builder[GameField.ReleasePlatforms].Control).FixedItems =
                 CurrentPlatformAsList;
 

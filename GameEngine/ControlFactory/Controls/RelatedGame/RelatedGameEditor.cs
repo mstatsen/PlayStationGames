@@ -11,7 +11,7 @@ using OxDAOEngine.Grid;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public partial class RelatedGameEditor : ListItemEditor<RelatedGame, GameField, Game>
+    public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField, Game>
     {
         private OxLabel? GameLabel;
         private IControlAccessor? GameControl;
@@ -79,7 +79,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         }
 
         private void SynchronizeHandler(object? sender, EventArgs e) => 
-            ItemsSynchronizer<GameField, Game>.SynchronizeItems(ParentItem!, SelectedGame!, MainPanel);
+            ItemsSynchronizer<GameField, Game>.SynchronizeItems(OwnerDAO!, SelectedGame!, MainPanel);
 
         private void CreateGameControl()
         {
@@ -109,12 +109,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void SelectGame()
         {
-            if (ParentItem == null)
+            if (OwnerDAO == null)
                 return;
 
             Game initialGame = new()
             {
-                Name = ParentItem.OriginalName
+                Name = OwnerDAO.OriginalName
             };
 
             if (DataManager.SelectItem(out Game? newSelected, MainPanel, initialGame, Filter))

@@ -10,7 +10,7 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {
-    public partial class AccountEditor : ListItemEditor<ConsoleAccount, ConsoleField, PSConsole>
+    public partial class AccountEditor : CustomItemEditor<ConsoleAccount, ConsoleField, PSConsole>
     {
         protected override void FillControls(ConsoleAccount item) =>
             accountControl!.Value = item.Id;

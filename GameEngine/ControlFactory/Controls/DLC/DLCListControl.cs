@@ -2,7 +2,6 @@
 using OxDAOEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {

@@ -20,11 +20,11 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls.Accounts
             GetMaximumCount += GetMaximumCountHandler;
 
         private int GetMaximumCountHandler() =>
-            ParentItem == null
+            OwnerDAO == null
                 ? -1
                 : TypeHelper.Helper<ConsoleGenerationHelper>().MaxAccountsCount(
-                    ParentItem.Generation,
-                    ParentItem.Firmware);
+                    OwnerDAO.Generation,
+                    OwnerDAO.Firmware);
 
         protected override void InitButtons()
         {
@@ -33,7 +33,11 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls.Accounts
             viewButton.ToolTipText = "View the account";
             PrepareViewButton(
                 viewButton,
-                (s, e) => DataManager.ViewItem<AccountField, Account>(AccountField.Id, SelectedItem.Id),
+                (s, e) => 
+                {
+                    if (SelectedItem != null)
+                        DataManager.ViewItem<AccountField, Account>(AccountField.Id, SelectedItem.Id);
+                },
                 true);
         }
     }

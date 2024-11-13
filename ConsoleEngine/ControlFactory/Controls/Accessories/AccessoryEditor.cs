@@ -12,7 +12,7 @@ using OxDAOEngine.ControlFactory.Context;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {
-    public partial class AccessoryEditor : ListItemEditor<Accessory, ConsoleField, PSConsole>
+    public partial class AccessoryEditor : CustomItemEditor<Accessory, ConsoleField, PSConsole>
     {
         public override Bitmap? FormIcon => OxIcons.Dualshock;
 
@@ -43,8 +43,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         protected override void CreateControls()
         {
-            typeControl = Context.Accessor("Accessory:Type", FieldType.Enum, ParentItem);
-            joystickTypeControl = Context.Accessor("Joystick:Type", FieldType.Enum, ParentItem);
+            typeControl = Context.Accessor("Accessory:Type", FieldType.Enum, OwnerDAO);
+            joystickTypeControl = Context.Accessor("Joystick:Type", FieldType.Enum, OwnerDAO);
 
             IBuilderContext<ConsoleField, PSConsole> context = Context.Builder.Context(ConsoleField.Accessories);
 
@@ -92,7 +92,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         private void RenewAccessoryType()
         {
-            ((AccessoryTypeInitializer)typeControl.Context.Initializer!).Console = ParentItem!;
+            ((AccessoryTypeInitializer)typeControl.Context.Initializer!).Console = OwnerDAO!;
             typeControl.RenewControl(true);
         }
 
@@ -100,7 +100,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             if (IsJoystick())
             {
-                ((JoystickTypeInitializer)joystickTypeControl.Context.Initializer!).Console = ParentItem!;
+                ((JoystickTypeInitializer)joystickTypeControl.Context.Initializer!).Console = OwnerDAO!;
                 joystickTypeControl.RenewControl(true);
             }
         }

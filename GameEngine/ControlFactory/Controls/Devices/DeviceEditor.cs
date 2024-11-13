@@ -9,7 +9,7 @@ using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public partial class DeviceEditor : ListItemEditor<Device, GameField, Game>
+    public partial class DeviceEditor : CustomItemEditor<Device, GameField, Game>
     {
         private EnumAccessor<GameField, Game, DeviceType> TypeControl = default!;
 
@@ -21,7 +21,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
             if (TypeControl.Context.Initializer is DeviceTypeInitializer deviceTypeInitializer)
             {
-                deviceTypeInitializer.Game = ParentItem;
+                deviceTypeInitializer.Game = OwnerDAO;
                 deviceTypeInitializer.ExistingTypes.Clear();
 
                 if (ExistingItems != null)

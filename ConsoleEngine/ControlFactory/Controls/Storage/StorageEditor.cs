@@ -9,7 +9,7 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {
-    public partial class StorageEditor : ListItemEditor<Storage, ConsoleField, PSConsole>
+    public partial class StorageEditor : CustomItemEditor<Storage, ConsoleField, PSConsole>
     {
         public override Bitmap? FormIcon => OxIcons.Storage;
 

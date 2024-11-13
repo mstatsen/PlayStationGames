@@ -18,7 +18,7 @@ using OxDAOEngine.Data.Filter.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public partial class InstallationEditor : ListItemEditor<Installation, GameField, Game>
+    public partial class InstallationEditor : CustomItemEditor<Installation, GameField, Game>
     {
         private ExtractAccessor<ConsoleField, PSConsole> consoleControl = default!;
         private IControlAccessor storageControl = default!;

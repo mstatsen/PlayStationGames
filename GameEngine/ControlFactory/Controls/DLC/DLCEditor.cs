@@ -12,7 +12,7 @@ using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
-    public partial class DLCEditor : ListItemEditor<DLC, GameField, Game>
+    public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
     {
         private IControlAccessor NameControl = default!;
         private IControlAccessor AcquiredControl = default!;

@@ -19,7 +19,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
             PrepareViewButton(
                 viewButton,
-                (s, e) => DataManager.ViewItem<ConsoleField, PSConsole>(ConsoleField.Id, SelectedItem.ConsoleId),
+                (s, e) =>
+                {
+                    if (SelectedItem != null)
+                        DataManager.ViewItem<ConsoleField, PSConsole>(ConsoleField.Id, SelectedItem.ConsoleId);
+                },
                 true);
         }
 
