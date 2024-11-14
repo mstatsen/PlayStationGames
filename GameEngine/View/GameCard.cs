@@ -68,7 +68,7 @@ namespace PlayStationGames.GameEngine.View
             );
             appliesToLayout.CaptionVariant = ControlCaptionVariant.None;
             appliesToLayout.Left = 12;
-            appliesToLayout.FontSize = appliesToLayout.FontSize - 2;
+            appliesToLayout.FontSize -= 2;
             appliesToLayout.FontStyle = FontStyle.Regular;
 
             difficultLayouts.Add(Layouter.AddFromTemplate(GameField.Difficult, 2));

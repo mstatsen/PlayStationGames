@@ -348,10 +348,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         public void ClearValues()
         {
             typeControl.Value = TrophysetType.NoSet;
-
-            if (appliesToControl != null)
-                appliesToControl.Clear();
-
+            appliesToControl?.Clear();
             difficultControl.Value = Difficult.Unknown;
             completeTimeControl.Value = CompleteTime.Unknown;
 
