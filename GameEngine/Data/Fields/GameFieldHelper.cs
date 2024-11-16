@@ -101,6 +101,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 [FieldsFilling.Full] = new()
                 {
                     GameField.Owner,
+                    GameField.Image,
                     GameField.Licensed,
                     GameField.CompleteTime,
                     GameField.CriticScore,
@@ -126,6 +127,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
                     GameField.Tags,
                     GameField.Installed,
                     GameField.Multiplayer,
+                    GameField.Verified,
                     GameField.WithDLCsTrophyset
                 },
                 [FieldsFilling.Default] = new()
