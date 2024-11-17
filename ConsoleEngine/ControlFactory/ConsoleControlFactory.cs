@@ -80,7 +80,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
             };
         }
 
-        public override IItemInfo<ConsoleField, PSConsole> CreateInfoCard() =>
+        public override IItemInfo<ConsoleField, PSConsole> CreateInfoPanel() =>
             new ConsoleFullInfoCard();
 
         public override GridPainter<ConsoleField, PSConsole> CreateGridPainter(
