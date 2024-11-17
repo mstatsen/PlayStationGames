@@ -22,7 +22,7 @@
     <Compile Update="ConsoleEngine\View\ConsoleCard.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="ConsoleEngine\View\ConsoleFullInfoCard.cs">
+    <Compile Update="ConsoleEngine\View\ConsoleInfoPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="GameEngine\ControlFactory\Controls\AppliesTo\AppliesToListControl.cs">
@@ -70,7 +70,7 @@
     <Compile Update="GameEngine\View\GameCard.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="GameEngine\View\GameFullInfoCard.cs">
+    <Compile Update="GameEngine\View\GameInfoPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="MainForm.cs">

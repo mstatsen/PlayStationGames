@@ -518,7 +518,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             GameField.Devices
         };
 
-        protected override List<GameField> GetFullInfoFields() => new()
+        protected override List<GameField> GetInfoFields() => new()
         {
             GameField.Image,
             GameField.Name,

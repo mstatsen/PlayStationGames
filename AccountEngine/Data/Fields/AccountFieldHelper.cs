@@ -157,7 +157,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         protected override List<AccountField> GetEditedFieldsExtended() => 
             EditingFields;
 
-        protected override List<AccountField> GetFullInfoFields() => new()
+        protected override List<AccountField> GetInfoFields() => new()
         {
             AccountField.Avatar,
             AccountField.Name,

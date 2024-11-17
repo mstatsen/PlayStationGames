@@ -14,8 +14,8 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         protected override Decorator<GameField, Game> Table(Game dao) =>
             new GameTableDecorator(dao);
 
-        protected override Decorator<GameField, Game> FullInfo(Game dao) =>
-            new GameFullInfoDecorator(dao);
+        protected override Decorator<GameField, Game> Info(Game dao) =>
+            new GameInfoDecorator(dao);
 
         protected override Decorator<GameField, Game> Icon(Game dao) =>
             new GameIconDecorator(dao);

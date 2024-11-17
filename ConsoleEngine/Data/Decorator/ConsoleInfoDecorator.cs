@@ -3,9 +3,9 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.Data.Decorator
 {
-    internal class ConsoleFullInfoDecorator : ConsoleCardDecorator
+    internal class ConsoleInfoDecorator : ConsoleCardDecorator
     {
-        public ConsoleFullInfoDecorator(PSConsole dao) : base(dao) { }
+        public ConsoleInfoDecorator(PSConsole dao) : base(dao) { }
 
         public override object? Value(ConsoleField field) => 
             field switch

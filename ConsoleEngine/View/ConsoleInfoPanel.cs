@@ -10,7 +10,7 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 
 namespace PlayStationGames.ConsoleEngine.View
 {
-    public class ConsoleFullInfoCard : ItemInfo<ConsoleField, PSConsole, ConsoleFieldGroup>
+    public class ConsoleInfoPanel : ItemInfo<ConsoleField, PSConsole, ConsoleFieldGroup>
     {
         private ControlLayouts<ConsoleField> FillConsoleLayout()
         {
@@ -97,6 +97,6 @@ namespace PlayStationGames.ConsoleEngine.View
         private readonly OxPanel AccountsPanel = new();
         private readonly OxPanel AccessoriesPanel = new();
 
-        public ConsoleFullInfoCard() : base() { }
+        public ConsoleInfoPanel() : base() { }
     }
 }

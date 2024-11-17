@@ -8,7 +8,7 @@ using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.View
 {
-    public class AccountFullInfoCard : ItemInfo<AccountField, Account, AccountFieldGroup>
+    public class AccountInfoPanel : ItemInfo<AccountField, Account, AccountFieldGroup>
     {
         private ControlLayouts<AccountField> FillAccountLayout()
         {
@@ -109,6 +109,6 @@ namespace PlayStationGames.AccountEngine.View
         private readonly OxPanel LinksPanel = new();
         private readonly OxPanel PropertyPanel = new();
 
-        public AccountFullInfoCard() : base() { }
+        public AccountInfoPanel() : base() { }
     }
 }

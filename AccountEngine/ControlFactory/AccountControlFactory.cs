@@ -25,7 +25,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory
                 : base.CreateOtherAccessor(context);
 
         public override IItemInfo<AccountField, Account> CreateInfoPanel() =>
-            new AccountFullInfoCard();
+            new AccountInfoPanel();
 
         public override IItemCard<AccountField, Account>? CreateCard(ItemViewMode viewMode) => 
             new AccountCard(viewMode);

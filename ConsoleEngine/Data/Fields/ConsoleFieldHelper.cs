@@ -144,7 +144,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         protected override List<ConsoleField> GetEditedFieldsExtended() =>
             EditingFields;
 
-        protected override List<ConsoleField> GetFullInfoFields() =>
+        protected override List<ConsoleField> GetInfoFields() =>
             new()
             {
                 ConsoleField.Icon,

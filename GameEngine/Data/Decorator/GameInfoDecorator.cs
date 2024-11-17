@@ -6,9 +6,9 @@ using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
-    internal class GameFullInfoDecorator : GameCardDecorator
+    internal class GameInfoDecorator : GameCardDecorator
     {
-        public GameFullInfoDecorator(Game game) : base(game) { }
+        public GameInfoDecorator(Game game) : base(game) { }
 
         public override object Value(GameField field) => 
             field switch

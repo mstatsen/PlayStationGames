@@ -25,7 +25,7 @@
     <Compile Update="AccountEngine\View\AccountCard.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="AccountEngine\View\AccountFullInfoCard.cs">
+    <Compile Update="AccountEngine\View\AccountInfoPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Accessories\AccessoryEditor.cs">
@@ -71,14 +71,14 @@
     <Compile Update="GameEngine\ControlFactory\Controls\ReleasePlatforms\ReleasePlatformListControl.cs" />
     <Compile Update="GameEngine\Editor\GameEditor.cs" />
     <Compile Update="GameEngine\View\GameCard.cs" />
-    <Compile Update="GameEngine\View\GameFullInfoCard.cs" />
+    <Compile Update="GameEngine\View\GameInfoPanel.cs" />
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Folder\FolderEditor.cs" />
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Folder\FoldersControl.cs" />
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Storage\StorageEditor.cs" />
     <Compile Update="ConsoleEngine\ControlFactory\Controls\Storage\StoragesControl.cs" />
     <Compile Update="ConsoleEngine\Editor\ConsoleEditor.cs" />
     <Compile Update="ConsoleEngine\View\ConsoleCard.cs" />
-    <Compile Update="ConsoleEngine\View\ConsoleFullInfoCard.cs" />
+    <Compile Update="ConsoleEngine\View\ConsoleInfoPanel.cs" />
   </ItemGroup>
 
   <ItemGroup>

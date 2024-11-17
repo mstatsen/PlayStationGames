@@ -154,7 +154,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
         }
 
         public override IItemInfo<GameField, Game> CreateInfoPanel() =>
-            new GameFullInfoCard();
+            new GameInfoPanel();
 
         public override GridPainter<GameField, Game> CreateGridPainter(
             GridFieldColumns<GameField> columns, GridUsage usage) => 

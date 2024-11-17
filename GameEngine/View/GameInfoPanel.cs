@@ -11,7 +11,7 @@ using OxDAOEngine.ControlFactory.Controls.Links;
 
 namespace PlayStationGames.GameEngine.View
 {
-    public class GameFullInfoCard : ItemInfo<GameField, Game, GameFieldGroup>
+    public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
     {
         private ControlLayouts<GameField> FillTrophiesLayouts()
         {
@@ -238,6 +238,6 @@ namespace PlayStationGames.GameEngine.View
         private readonly Dictionary<TrophyType, OxPicture> trophiesIcons = new();
         private readonly TrophyTypeHelper trophyHelper = TypeHelper.Helper<TrophyTypeHelper>();
 
-        public GameFullInfoCard() : base() { }
+        public GameInfoPanel() : base() { }
     }
 }

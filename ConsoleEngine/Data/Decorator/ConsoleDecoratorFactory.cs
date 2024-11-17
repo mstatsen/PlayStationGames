@@ -14,8 +14,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
         protected override Decorator<ConsoleField, PSConsole> Card(PSConsole dao) =>
             new ConsoleCardDecorator(dao);
 
-        protected override Decorator<ConsoleField, PSConsole> FullInfo(PSConsole dao) =>
-            new ConsoleFullInfoDecorator(dao);
+        protected override Decorator<ConsoleField, PSConsole> Info(PSConsole dao) =>
+            new ConsoleInfoDecorator(dao);
 
         protected override Decorator<ConsoleField, PSConsole> HTML(PSConsole dao) =>
             new ConsoleHtmlDecorator(dao);

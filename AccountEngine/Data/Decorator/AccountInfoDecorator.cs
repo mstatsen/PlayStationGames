@@ -4,9 +4,9 @@ using PlayStationGames.AccountEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {
-    internal class AccountFullInfoDecorator : AccountCardDecorator
+    internal class AccountInfoDecorator : AccountCardDecorator
     {
-        public AccountFullInfoDecorator(Account dao) : base(dao) { }
+        public AccountInfoDecorator(Account dao) : base(dao) { }
 
         public override object? Value(AccountField field) =>
             field switch

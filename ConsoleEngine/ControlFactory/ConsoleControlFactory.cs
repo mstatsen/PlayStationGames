@@ -81,7 +81,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory
         }
 
         public override IItemInfo<ConsoleField, PSConsole> CreateInfoPanel() =>
-            new ConsoleFullInfoCard();
+            new ConsoleInfoPanel();
 
         public override GridPainter<ConsoleField, PSConsole> CreateGridPainter(
             GridFieldColumns<ConsoleField> columns, GridUsage usage) => new ConsolesGridPainter(columns);
