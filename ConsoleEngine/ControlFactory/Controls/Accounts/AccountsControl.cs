@@ -20,7 +20,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls.Accounts
             GetMaximumCount += GetMaximumCountHandler;
 
         private int GetMaximumCountHandler() =>
-            OwnerDAO == null
+            OwnerDAO is null
                 ? -1
                 : TypeHelper.Helper<ConsoleGenerationHelper>().MaxAccountsCount(
                     OwnerDAO.Generation,
@@ -35,7 +35,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls.Accounts
                 viewButton,
                 (s, e) => 
                 {
-                    if (SelectedItem != null)
+                    if (SelectedItem is not null)
                         DataManager.ViewItem<AccountField, Account>(AccountField.Id, SelectedItem.Id);
                 },
                 true);

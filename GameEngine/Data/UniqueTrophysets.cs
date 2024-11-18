@@ -45,13 +45,19 @@ namespace PlayStationGames.GameEngine.Data
         public int TrophiesCount(Guid accountId)
         {
             TrophyList? trophyList = TrophyList(accountId);
-            return trophyList == null ? 0 : trophyList.TotalTrophiesCount;
+            return 
+                trophyList is null 
+                    ? 0 
+                    : trophyList.TotalTrophiesCount;
         }
 
         public int TrophiesCount(Guid accountId, TrophyType type)
         {
             TrophyList? trophyList = TrophyList(accountId);
-            return trophyList == null ? 0 : trophyList.TrophiesCount(type);
+            return 
+                trophyList is null 
+                    ? 0 
+                    : trophyList.TrophiesCount(type);
         }
 
         public int CompletedCount(Guid accountId) =>
@@ -60,13 +66,19 @@ namespace PlayStationGames.GameEngine.Data
         public int Points(Guid accountId)
         {
             TrophyList? trophyList = TrophyList(accountId);
-            return trophyList == null ? 0 : trophyList.Points;
+            return 
+                trophyList is null 
+                    ? 0 
+                    : trophyList.Points;
         }
 
         public int OldPoints(Guid accountId)
         {
             TrophyList? trophyList = TrophyList(accountId);
-            return trophyList == null ? 0 : trophyList.OldPoints;
+            return 
+                trophyList is null 
+                    ? 0 
+                    : trophyList.OldPoints;
         }
 
         public string PSNLevel(Guid accountId) =>

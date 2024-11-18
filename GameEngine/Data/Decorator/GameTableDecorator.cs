@@ -116,7 +116,8 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             get
             {
                 Account? account = DataManager.ListController<AccountField, Account>().FullItemsList.Find((a) => a.Id == Dao.Owner);
-                if (account != null)
+
+                if (account is not null)
                     return account.Name;
 
                 return string.Empty;

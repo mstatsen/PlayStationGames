@@ -105,7 +105,7 @@ namespace PlayStationGames.AccountEngine.Data
             XmlHelper.AppendElement(element, XmlConsts.Default, DefaultAccount);
             XmlHelper.AppendElement(element, XmlConsts.Type, Type);
 
-            if (Country != null)
+            if (Country is not null)
                 XmlHelper.AppendElement(element, XmlConsts.Country, Country.Alpha3, true);
 
             XmlHelper.AppendElement(element, XmlConsts.Login, Login);
@@ -255,7 +255,7 @@ namespace PlayStationGames.AccountEngine.Data
             
             Account? otherAccount = (Account?)other;
 
-            if (otherAccount == null)
+            if (otherAccount is null)
                 return 1;
 
             return Id.CompareTo(otherAccount.Id);
@@ -266,9 +266,9 @@ namespace PlayStationGames.AccountEngine.Data
             && (obj is Account otherAccount)
             && DefaultAccount.Equals(otherAccount.DefaultAccount)
             && Type.Equals(otherAccount.Type)
-            && (Country != null
+            && (Country is not null
                 ? Country.Equals(otherAccount.Country)
-                : otherAccount.Country != null
+                : otherAccount.Country is not null
             )
             && Login.Equals(otherAccount.Login)
             && Password.Equals(otherAccount.Password)

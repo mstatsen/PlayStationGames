@@ -19,7 +19,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 viewButton,
                 (s, e) =>
                 {
-                    if (SelectedItem != null)
+                    if (SelectedItem is not null)
                         DataManager.ViewItem<GameField, Game>(GameField.Id, SelectedItem.GameId);
                 }, 
                 true);

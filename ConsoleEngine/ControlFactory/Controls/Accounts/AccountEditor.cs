@@ -18,7 +18,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         public override Bitmap? FormIcon => OxIcons.Account;
 
         protected override int ContentHeight => 
-            accountControl == null 
+            accountControl is null 
                 ? 36 
                 : accountControl.Bottom + 12;
 
@@ -57,10 +57,10 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             base.RenewData();
 
-            if (accountControl == null)
+            if (accountControl is null)
                 return;
 
-            if (ExistingItems != null)
+            if (ExistingItems is not null)
                 accountInitializer.ExistingAccounts = new ListDAO<ConsoleAccount>(ExistingItems);
 
             accountControl!.RenewControl(true);

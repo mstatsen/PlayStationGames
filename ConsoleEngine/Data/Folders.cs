@@ -14,7 +14,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
             Folder? folder = GetByName(name);
 
-            return folder == null
+            return folder is null
                 ? "[LOST FOLDER]"
                 : folder.Name;
         }

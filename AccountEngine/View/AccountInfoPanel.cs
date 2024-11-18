@@ -51,7 +51,7 @@ namespace PlayStationGames.AccountEngine.View
 
             ControlLayouts<AccountField> result = new();
 
-            if (Item == null)
+            if (Item is null)
                 return result;
 
             bool needOffsetGames = false;
@@ -87,7 +87,9 @@ namespace PlayStationGames.AccountEngine.View
         }
 
         protected override string GetTitle() =>
-            Item == null ? "Unknown Account" : Item.Name;
+            Item is null 
+                ? "Unknown Account" 
+                : Item.Name;
 
         protected override void PreparePanels()
         {

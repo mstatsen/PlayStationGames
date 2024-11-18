@@ -101,7 +101,7 @@ namespace PlayStationGames.GameEngine.Data
             if (Equals(other))
                 return 0;
 
-            if (other == null)
+            if (other is null)
                 return 1;
 
             Trophyset otherTrophyset = (Trophyset)other;
@@ -142,7 +142,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         public TrophyList? GetTrophies(Guid? accountId) => 
-            accountId != null 
+            accountId is not null
                 ? EarnedTrophies.GetTrophies(accountId) 
                 : Available;
 
@@ -152,7 +152,8 @@ namespace PlayStationGames.GameEngine.Data
         public bool TrophysetIsComplete(Guid accountId)
         {
             TrophyList? trophyList = GetTrophies(accountId);
-            return trophyList != null 
+            return 
+                trophyList is not null
                 && trophyList.Points.Equals(Available.Points);
         }
 

@@ -21,7 +21,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
         }
 
         public override bool AvailableValue(AccessoryType value) =>
-            Console == null 
-            || TypeHelper.Helper<AccessoryTypeHelper>().SupportByGeneration(Console.Generation, value);
+            Console is null 
+            || TypeHelper.Helper<AccessoryTypeHelper>()
+                .SupportByGeneration(Console.Generation, value);
     }
 }

@@ -53,12 +53,16 @@ namespace PlayStationGames.ConsoleEngine.Data
         private void CalcToString()
         {
             Account? account = DataManager.Item<AccountField, Account>(AccountField.Id, id);
-            savedToString = account != null ? account.ToString() : AccountValueAccessor.NullAccount.Name;
+            savedToString = 
+                account is not null 
+                    ? account.ToString() 
+                    : AccountValueAccessor.NullAccount.Name;
         }
 
         public override string? ToString()
         {
-            if (savedToString == string.Empty || savedToString == null)
+            if (savedToString == string.Empty
+                || savedToString is null)
                 CalcToString();
 
             return savedToString;

@@ -15,11 +15,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
         public override bool AvailableValue(PlatformType value) =>
             base.AvailableValue(value)
             && TypeHelper.Helper<PlatformTypeHelper>().IsPSNPlatform(value)
-            && (Game == null 
-                || Game.PlatformType == value 
-                || Game.ReleasePlatforms.Contains(p => p.Type == value))
+            && (Game is null 
+                || Game.PlatformType.Equals(value)
+                || Game.ReleasePlatforms.Contains(p => p.Type.Equals(value)))
             && (ExistingTypes.Count == 0 
-                || !ExistingTypes.Contains(p => p.Type == value));
+                || !ExistingTypes.Contains(p => p.Type.Equals(value)));
 
         public PlaystationPlatformTypeInitializer() { }
     }

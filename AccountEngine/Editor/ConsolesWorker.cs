@@ -22,7 +22,7 @@ namespace PlayStationGames.AccountEngine.Editor
             RootListDAO<ConsoleField, PSConsole> selectedList, 
             ItemsChooser<ConsoleField, PSConsole> chooser)
         {
-            if (account == null)
+            if (account is null)
                 return CanSelectResult.Return;
 
             currentItem.Accounts.Remove((a) => a.Id == account.Id);
@@ -33,7 +33,7 @@ namespace PlayStationGames.AccountEngine.Editor
             RootListDAO<ConsoleField, PSConsole> selectedList, 
             ItemsChooser<ConsoleField, PSConsole> chooser)
         {
-            if (account == null)
+            if (account is null)
                 return CanSelectResult.Return;
 
             if (currentItem.Accounts.Count >= TypeHelper.Helper<ConsoleGenerationHelper>()
@@ -56,7 +56,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Show(Control owner)
         {
-            if (account == null)
+            if (account is null)
                 return;
 
             RootListDAO<ConsoleField, PSConsole> availableConsoles = new();
@@ -101,7 +101,7 @@ namespace PlayStationGames.AccountEngine.Editor
             {
                 Filter<ConsoleField, PSConsole> filter = new(FilterConcat.OR);
 
-                if (account != null)
+                if (account is not null)
                 {
                     FilterGroup<ConsoleField, PSConsole> baseGenerationGroup = filter.AddGroup(FilterConcat.OR);
                     baseGenerationGroup.Add(ConsoleField.Generation, ConsoleGeneration.PS5);
@@ -125,9 +125,9 @@ namespace PlayStationGames.AccountEngine.Editor
             this.account = account;
             registeredConsoles.Clear();
 
-            if (account != null)
+            if (account is not null)
                 foreach (PSConsole console in DataManager.FullItemsList<ConsoleField, PSConsole>()
-                    .FindAll((c) => c.Accounts.GetById(account.Id) != null))
+                    .FindAll((c) => c.Accounts.GetById(account.Id) is not null))
                 {
                     PSConsole tempConsole = new();
                     tempConsole.CopyFrom(console);
@@ -137,7 +137,8 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Save()
         {
-            if (account == null || !Modified)
+            if (account is null 
+                || !Modified)
                 return;
 
             RenewOwners();
@@ -149,7 +150,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private void RenewOwners()
         {
-            if (account == null)
+            if (account is null)
                 return;
 
             FullConsolesList.StartSilentChange();
@@ -157,9 +158,9 @@ namespace PlayStationGames.AccountEngine.Editor
             try
             {
                 foreach (PSConsole console in FullConsolesList
-                    .FindAll((c) => c.Accounts.GetById(account.Id) != null)
+                    .FindAll((c) => c.Accounts.GetById(account.Id) is not null)
                     )
-                    console.Accounts.RemoveAll((a) => a.Id == account.Id);
+                    console.Accounts.RemoveAll((a) => a.Id.Equals(account.Id));
 
                 foreach (PSConsole console in registeredConsoles)
                     ConsolesController.Item(ConsoleField.Id, console.Id)?.Accounts.Add(account);
@@ -168,7 +169,9 @@ namespace PlayStationGames.AccountEngine.Editor
             {
                 FullConsolesList.FinishSilentChange();
 
-                foreach (PSConsole console in FullConsolesList.FindAll((c) => c.Accounts.GetById(account.Id) != null))
+                foreach (PSConsole console in FullConsolesList.FindAll(c => 
+                            c.Accounts.GetById(account.Id) is not null)
+                        )
                     console.ChangeHandler?.Invoke(console, new DAOEntityEventArgs(DAOOperation.Modify));
 
                 ConsolesController.ListChanged?.Invoke(ConsolesController, new EventArgs());

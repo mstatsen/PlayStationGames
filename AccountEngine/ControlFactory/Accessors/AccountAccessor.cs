@@ -42,14 +42,14 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
             if (Context.IsQuickFilter)
                 ComboBox.Items.Add(Account.AnyAccount);
 
-            if (Context.Scope != ControlScope.Editor ||
-                Parameters == null ||
-                Parameters.UseNullable)
+            if (Context.Scope is not ControlScope.Editor 
+                || Parameters is null 
+                || Parameters.UseNullable)
                 ComboBox.Items.Add(AccountValueAccessor.NullAccount);
 
-            if (Context.Scope != ControlScope.Editor || 
-                Parameters == null ||
-                !Parameters.OnlyNullable)
+            if (Context.Scope is not ControlScope.Editor || 
+                Parameters is null 
+                || !Parameters.OnlyNullable)
             {
                 foreach (var account in DataManager.ListController<AccountField, Account>().FullItemsList)
                     if (AvailableValue(account))
@@ -61,8 +61,8 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
         public override void SetDefaultValue()
         {
-            if (Parameters != null &&
-                Parameters.UseNullable)
+            if (Parameters is not null 
+                && Parameters.UseNullable)
                 base.SetDefaultValue();
         }
 
@@ -109,7 +109,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
         {
             base.OnControlSizeChanged();
 
-            if (ReadOnlyControl != null)
+            if (ReadOnlyControl is not null)
             {
                 ReadOnlyControl.Width = ReadOnlyPictureSize + ReadOnlyLabel.Width;
                 ReadOnlyControl.Height = ReadOnlyPictureSize;
@@ -121,7 +121,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
         {
             base.OnControlLocationChanged();
 
-            if (ReadOnlyControl != null)
+            if (ReadOnlyControl is not null)
                 ReadOnlyControl.Top -= 2;
         }
 
@@ -133,7 +133,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
         protected override void OnControlTextChanged(string? text)
         {
-            if (ReadOnlyControl == null)
+            if (ReadOnlyControl is null)
                 return;
 
             ReadOnlyLabel.Text = Control.Text;
@@ -142,7 +142,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
         protected override void OnControlBackColorChanged()
         {
-            if (ReadOnlyControl == null)
+            if (ReadOnlyControl is null)
                 return;
 
             base.OnControlBackColorChanged();

@@ -27,14 +27,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             {
                 selectedGame = value;
                 SetGameControlValue();
-                firstSet = selectedGame == null;
-                SynchronizeButton!.Enabled = selectedGame != null;
+                firstSet = selectedGame is null;
+                SynchronizeButton!.Enabled = selectedGame is not null;
 
                 if (firstSet)
                 {
                     SelectGame();
 
-                    if (selectedGame == null)
+                    if (selectedGame is null)
                         DialogResult = DialogResult.Cancel;
                 }
             }
@@ -109,7 +109,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void SelectGame()
         {
-            if (OwnerDAO == null)
+            if (OwnerDAO is null)
                 return;
 
             Game initialGame = new()
@@ -123,7 +123,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private void SetGameControlValue()
         {
-            GameControl!.Value = SelectedGame != null
+            GameControl!.Value = SelectedGame is not null
                 ? SelectedGame.FullTitle()
                 : string.Empty;
         }
@@ -138,7 +138,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         protected override void GrabControls(RelatedGame item)
         {
-            if (SelectedGame == null)
+            if (SelectedGame is null)
             {
                 OxMessage.ShowError("Select the Game for relate!", this);
                 return;

@@ -22,7 +22,7 @@ namespace PlayStationGames.GameEngine.Data
 
         public void Add(ListDAO<Trophy>? trophyList)
         {
-            if (trophyList == null)
+            if (trophyList is null)
                 return;
 
             foreach (Trophy trophy in trophyList)
@@ -35,14 +35,17 @@ namespace PlayStationGames.GameEngine.Data
         public int GetTrophyCount(TrophyType type)
         {
             Trophy? trophy = TrophyByType(type);
-            return trophy == null ? 0 : trophy.Count;
+            return 
+                trophy is null 
+                    ? 0 
+                    : trophy.Count;
         }
 
         private void SetTrophyCount(TrophyType type, int value)
         {
             Trophy? trophy = TrophyByType(type);
 
-            if (trophy == null)
+            if (trophy is null)
                 Add(type, value);
             else
                 trophy.Count = value;

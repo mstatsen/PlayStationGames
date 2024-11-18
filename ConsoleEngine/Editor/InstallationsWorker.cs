@@ -27,7 +27,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             RootListDAO<GameField, Game> selectedList, 
             ItemsChooser<GameField, Game> chooser)
         {
-            if (Console == null)
+            if (Console is null)
                 return CanSelectResult.Return;
 
             bool uninstallAvailable = !needShowUninstallMessage
@@ -54,7 +54,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             RootListDAO<GameField, Game> selectedList, 
             ItemsChooser<GameField, Game> chooser)
         {
-            if (Console == null)
+            if (Console is null)
                 return CanSelectResult.Return;
 
             if (!ApplyPlacementForAll)
@@ -83,16 +83,16 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         public void Show(Control owner)
         {
-            if (Console == null)
+            if (Console is null)
                 return;
 
             RootListDAO<GameField, Game> availableGames = new();
             availableGames.CopyFrom(DataManager.FullItemsList<GameField, Game>().FilteredList(SuilableGamesFilter));
             availableGames.RemoveAll(
-                g => g.AccountAvailable && 
-                    !Console.Accounts.Contains(
-                        a => a.Id == g.Owner
-                    ), 
+                g => g.AccountAvailable 
+                    && !Console.Accounts.Contains(
+                         a => a.Id.Equals(g.Owner)
+                        ), 
                 false
             );
 
@@ -132,20 +132,20 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private object? GameStorageGetter(Game item)
         {
-            if (Console == null)
+            if (Console is null)
                 return null;
 
-            Guid? storageId = item.Installations.Find(i => i.ConsoleId == Console.Id)?.StorageId;
+            Guid? storageId = item.Installations.Find(i => i.ConsoleId.Equals(Console.Id))?.StorageId;
 
-            if (storageId == null)
+            if (storageId is null)
                 return null;
 
-            return Console.Storages.Find(s => s.Id == storageId)?.Name;
+            return Console.Storages.Find(s => s.Id.Equals(storageId))?.Name;
         }
 
         private object? GameFolderGetter(Game item)
         {
-            if (Console == null)
+            if (Console is null)
                 return null;
 
             return item.Installations.Find(i => i.ConsoleId == Console.Id)?.Folder;
@@ -191,9 +191,9 @@ namespace PlayStationGames.ConsoleEngine.Editor
             Console = console;
             installedGames.Clear();
 
-            if (console != null)
+            if (console is not null)
                 foreach (Game game in DataManager.FullItemsList<GameField, Game>())
-                    if (game.Installations.Contains(i => i.ConsoleId == console.Id))
+                    if (game.Installations.Contains(i => i.ConsoleId.Equals(console.Id)))
                     {
                         Game tempGame = new();
                         tempGame.CopyFrom(game);
@@ -203,7 +203,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         public void Save()
         {
-            if (Console == null || !Modified)
+            if (Console is null 
+                || !Modified)
                 return;
 
             RemoveInactiveInstallations();
@@ -216,24 +217,24 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private void RenewInstallations()
         {
-            if (Console == null)
+            if (Console is null)
                 return;
 
             foreach (Game installedGame in installedGames)
             {
                 Game? game = DataManager.Item<GameField, Game>(GameField.Id, installedGame.Id);
 
-                if (game == null)
+                if (game is null)
                     continue;
                 
-                Installation? newInstallation = installedGame.Installations.Find(i => i.ConsoleId == Console.Id);
+                Installation? newInstallation = installedGame.Installations.Find(i => i.ConsoleId.Equals(Console.Id));
 
-                if (newInstallation == null)
+                if (newInstallation is null)
                     continue;
 
-                Installation? currentInstallation = game.Installations.Find(i => i.ConsoleId == Console.Id);
+                Installation? currentInstallation = game.Installations.Find(i => i.ConsoleId.Equals(Console.Id));
 
-                if (currentInstallation == null)
+                if (currentInstallation is null)
                     game.Installations.Add(newInstallation);
                 else
                     currentInstallation.CopyFrom(newInstallation);
@@ -242,13 +243,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private void RemoveInactiveInstallations()
         {
-            if (Console == null)
+            if (Console is null)
                 return;
 
             foreach (Game game in DataManager.FullItemsList<GameField, Game>()
-                    .FindAll(g => g.Installations.Contains(i => i.ConsoleId == Console.Id)))
-                if (!installedGames.Contains(g => g.Id == game.Id))
-                    game.Installations.Remove(i => i.ConsoleId == Console.Id);
+                    .FindAll(g => g.Installations.Contains(i => i.ConsoleId.Equals(Console.Id))))
+                if (!installedGames.Contains(g => g.Id.Equals(game.Id)))
+                    game.Installations.Remove(i => i.ConsoleId.Equals(Console.Id));
         }
     }
 }

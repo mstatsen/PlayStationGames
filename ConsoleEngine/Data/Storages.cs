@@ -5,13 +5,13 @@ namespace PlayStationGames.ConsoleEngine.Data
     public class Storages : ListDAO<Storage>
     {
         public Storage? GetById(Guid id) =>
-            Find(s => s.Id == id);
+            Find(s => s.Id.Equals(id));
 
         public string StorageName(Guid id)
         {
             Storage? storage = GetById(id);
 
-            return storage == null
+            return storage is null
                 ? "[LOST STORAGE]"
                 : storage.Name;
         }

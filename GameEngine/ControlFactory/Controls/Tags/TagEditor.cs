@@ -23,7 +23,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             {
                 tagInitalizer.ExistingTags.Clear();
 
-                if (ExistingItems != null)
+                if (ExistingItems is not null)
                     tagInitalizer.ExistingTags.AddRange(ExistingItems.Cast<Tag>());
 
                 NameControl.Context.InitControl(NameControl);
@@ -68,11 +68,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         public override bool CanOKClose()
         {
-            if (ExistingItems == null)
+            if (ExistingItems is null)
                 return true;
 
-            if (NameControl.Value != null &&
-                ExistingItems.Find(t => ((Tag)t).Name == NameControl.Value.ToString()) != null)
+            if (NameControl.Value is not null 
+                && ExistingItems.Find(t => ((Tag)t).Name.Equals(NameControl.Value.ToString())) is not null)
             {
                 OxMessage.ShowError("Game already contains this tag.", this);
                 return false;

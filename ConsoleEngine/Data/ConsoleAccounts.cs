@@ -12,7 +12,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         {
             ConsoleAccount? account = GetById(id);
 
-            return account == null
+            return account is null
                 ? "[LOST ACCOUNT]"
                 : account.ToString();
         }

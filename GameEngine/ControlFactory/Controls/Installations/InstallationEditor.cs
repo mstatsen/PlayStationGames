@@ -98,7 +98,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 IFilteredInitializer<ConsoleField, PSConsole>? storageInitializer =
                     (IFilteredInitializer<ConsoleField, PSConsole>?)storageControl.Context.Initializer;
 
-                if (storageInitializer != null)
+                if (storageInitializer is not null)
                     storageInitializer.Filter = filter;
 
                 storageControl.RenewControl(true);
@@ -109,7 +109,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 folderControl.Enabled = true;
                 folderLabel.Enabled = true;
 
-                if (folderInitializer != null)
+                if (folderInitializer is not null)
                     folderInitializer.Filter = filter;
 
                 folderControl.RenewControl(true);
@@ -124,7 +124,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             PSConsole? console = DataManager.Item<ConsoleField, PSConsole>(ConsoleField.Id, item.ConsoleId);
             consoleControl.Value = console;
 
-            if (console != null)
+            if (console is not null)
             {
                 storageControl.Value = console.Storages.GetById(item.StorageId);
                 folderControl.Value = console.Folders.GetByName(item.Folder);
@@ -136,18 +136,19 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             PSConsole? console = consoleControl?.DAOValue<PSConsole>();
 
-            if (console == null)
+            if (console is null)
                 return;
 
             item.ConsoleId = console.Id;
             Storage? storage = storageControl.DAOValue<Storage>();
 
-            if (storage != null)
+            if (storage is not null)
             {
                 item.StorageId = storage.Id;
                 Folder? folder = folderControl.DAOValue<Folder>();
 
-                item.Folder = folder == null || folderControl.IsEmpty
+                item.Folder = folder is null 
+                    || folderControl.IsEmpty
                     ? string.Empty
                     : folder.Name;
             }
@@ -174,9 +175,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         }
 
         protected override string EmptyMandatoryField() =>
-            consoleControl != null && consoleControl.IsEmpty
+            consoleControl is not null 
+            && consoleControl.IsEmpty
                 ? "Console"
-                : storageControl != null && storageControl.IsEmpty
+                : storageControl is not null 
+                    && storageControl.IsEmpty
                     ? "Storage"
                     : base.EmptyMandatoryField();
 
@@ -196,7 +199,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             ConsoleInitializer? consoleInitializer  =
                 (ConsoleInitializer?)consoleControl?.Context.Initializer;
 
-            if (consoleInitializer != null)
+            if (consoleInitializer is not null)
                 foreach (object console in consoleInitializer.AvailableItems)
                     if (console is PSConsole psConsole)
                     {
@@ -226,11 +229,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             ConsoleInitializer? consoleInitializer =
                 (ConsoleInitializer?)consoleControl.Context.Initializer;
 
-            if (consoleInitializer != null)
+            if (consoleInitializer is not null)
             {
                 consoleInitializer.Filter = Game.AvailableConsoleFilter(Context.Builder);
 
-                if (ExistingItems != null)
+                if (ExistingItems is not null)
                 {
                     ListDAO<PSConsole> consolesList = new();
 
@@ -239,7 +242,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                         {
                             PSConsole? console = DataManager.Item<ConsoleField, PSConsole>(ConsoleField.Id, installation.ConsoleId);
 
-                            if (console != null)
+                            if (console is not null)
                                 consolesList.Add(console);
                         }
                     

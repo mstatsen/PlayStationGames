@@ -17,7 +17,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
         }
 
         public bool AvailableValue(object value) =>
-            ExistingConsoles == null
-            || (value is PSConsole console && !ExistingConsoles.Contains(l => l.Id == console.Id));
+            ExistingConsoles is null
+            || (value is PSConsole console 
+                && !ExistingConsoles.Contains(l => l.Id.Equals(console.Id)));
     }
 }

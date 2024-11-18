@@ -20,9 +20,9 @@ namespace PlayStationGames.GameEngine.View
             TrophysetPanel = new()
             {
                 Parent = this,
-                Text = "Trophyset"
+                Text = "Trophyset",
+                HeaderHeight = 18
             };
-            TrophysetPanel.Header.SetContentSize(1, 18);
             TrophysetPanel.Paddings.SetSize(OxSize.Large);
             TrophiesPanel = new()
             {
@@ -146,7 +146,7 @@ namespace PlayStationGames.GameEngine.View
         {
             OxPane? linksControl = (OxPane?)Layouter.PlacedControl(GameField.Links)?.Control;
 
-            if (linksControl == null)
+            if (linksControl is null)
                 return;
             
             linksControl.Left = ContentContainer.Width - linksControl.Width;
@@ -213,10 +213,10 @@ namespace PlayStationGames.GameEngine.View
 
             int lastBottom = 0;
 
-            if (difficultLayouts.Last != null)
+            if (difficultLayouts.Last is not null)
                 lastBottom = Layouter.PlacedControl(difficultLayouts.Last.Field)!.Control.Bottom;
 
-            if (trophysetLayouts.Last != null)
+            if (trophysetLayouts.Last is not null)
                 lastBottom = Math.Max(
                     Layouter.PlacedControl(trophysetLayouts.Last.Field)!.Control.Bottom,
                     lastBottom
@@ -313,8 +313,8 @@ namespace PlayStationGames.GameEngine.View
             imageLayout.Width = 140;
             imageLayout.Height = 80;
 
-            if (Item != null 
-                && Item.Image != null 
+            if (Item is not null
+                && Item.Image is not null
                 && Item.Image.GetPixel(0, 0).A == 0)
                 imageLayout.BackColor = Colors.Darker();
         }
@@ -329,7 +329,7 @@ namespace PlayStationGames.GameEngine.View
         }
 
         protected override string GetTitle() =>
-            Item != null
+            Item is not null
                 ? $"{Item.FullTitle()}"
                 : "Game";
 

@@ -21,7 +21,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 viewButton,
                 (s, e) =>
                 {
-                    if (SelectedItem != null)
+                    if (SelectedItem is not null)
                         DataManager.ViewItem<ConsoleField, PSConsole>(ConsoleField.Id, SelectedItem.ConsoleId);
                 },
                 true);

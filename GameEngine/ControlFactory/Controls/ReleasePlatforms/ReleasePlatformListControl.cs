@@ -54,16 +54,17 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 if (oldFamily != family)
                 {
                     top = 0;
-                    left = longestFamilyCheckBox == null 
-                        ? 0 : 
-                        longestFamilyCheckBox.Right + 30;
+                    left = 
+                        longestFamilyCheckBox is null 
+                            ? 0 : 
+                            longestFamilyCheckBox.Right + 30;
                     longestFamilyCheckBox = null;
                 }
 
                 OxCheckBox checkBox = CreateCheckBox(platformType, top, left);
 
-                if (longestFamilyCheckBox == null || 
-                    longestFamilyCheckBox.Right < checkBox.Right)
+                if (longestFamilyCheckBox is null
+                    || longestFamilyCheckBox.Right < checkBox.Right)
                     longestFamilyCheckBox = checkBox;
 
                 top = checkBox.Bottom;
@@ -84,7 +85,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 checkBox.Font = new(checkBox.Font, FontStyle.Regular);
             }
 
-            if (FixedItems == null)
+            if (FixedItems is null)
                 return;
 
             foreach (Platform platform in FixedItems)

@@ -103,7 +103,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private void InstallationsClickHandler(object? sender, EventArgs e)
         {
-            if (Item == null)
+            if (Item is null)
                 return;
 
             installationsWorker.Show(Editor);

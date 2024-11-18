@@ -74,7 +74,7 @@ namespace PlayStationGames.AccountEngine.Data
 
         public override List<ToolStripMenuItem>? MenuItems(Account? item)
         {
-            if (item == null)
+            if (item is null)
                 return null;
 
             List<ToolStripMenuItem> result = new();

@@ -130,8 +130,13 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     (accessorContext.Field == GameField.Year))
                 {
                     object? variant = BuilderVariant(context.Builder);
-                    return new ExtractInitializer<GameField, Game>(accessorContext.Field, addAnyObject: true,
-                        fullExtract: variant != null && variant.Equals(QuickFilterVariant.Export));
+                    return new ExtractInitializer<GameField, Game>(
+                        field: accessorContext.Field, 
+                        addAnyObject: true,
+                        fullExtract: 
+                            variant is not null 
+                            && variant.Equals(QuickFilterVariant.Export)
+                    );
                 }
 
                 if (accessorContext.Field == GameField.Owner)

@@ -29,12 +29,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             IsDLCPanel = forDLC;
             SetRemoveButtonVisible();
             CreateControls();
-            Header.SetContentSize(1, 20);
+            HeaderHeight = 20;
         }
 
         private void SetRemoveButtonVisible()
         {
-            if (Account != null)
+            if (Account is not null)
             {
                 removeButton.Visible = true;
                 removeButton.ToolTipText = $"Remove {Account.Name}'s earned trophies";
@@ -64,7 +64,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             foreach (var item in controls)
             {
-                int maxValue = constraints == null ? 200 : constraints.GetTrophyCount(item.Key);
+                int maxValue = 
+                    constraints is null 
+                        ? 200 
+                        : constraints.GetTrophyCount(item.Key);
                 item.Value.MaximumValue = maxValue;
                 item.Value.Enabled = maxValue > 0;
             }
@@ -115,7 +118,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void CreateControls()
         {
-            Text = Account == null ? "Available trophies": Account.Name;
+            Text = 
+                Account is null 
+                    ? "Available trophies"
+                    : Account.Name;
             ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
 
             if (!IsDLCPanel)
@@ -180,10 +186,15 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         private void SetValue(TrophyList? value)
         {
             if (!IsDLCPanel)
-                controls[TrophyType.Platinum].Value = value != null && value.Platinum > 0;
+                controls[TrophyType.Platinum].Value = 
+                    value is not null 
+                    && value.Platinum > 0;
 
             foreach(TrophyType type in trophyTypeHelper.CountingTrophies)
-                controls[type].Value = value == null ? 0 : value.GetTrophyCount(type);
+                controls[type].Value = 
+                    value is null 
+                        ? 0 
+                        : value.GetTrophyCount(type);
 
             ApplyConstraintsToDependedPanels();
         }

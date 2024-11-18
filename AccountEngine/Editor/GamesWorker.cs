@@ -30,7 +30,7 @@ namespace PlayStationGames.AccountEngine.Editor
             RootListDAO<GameField, Game> selectedList, 
             ItemsChooser<GameField, Game> chooser)
         {
-            if (account == null)
+            if (account is null)
                 return CanSelectResult.Return;
 
             currentItem.Owner = account.Id;
@@ -39,7 +39,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Show(Control owner)
         {
-            if (account == null)
+            if (account is null)
                 return;
 
             RootListDAO<GameField, Game> availableGames = new();
@@ -82,7 +82,7 @@ namespace PlayStationGames.AccountEngine.Editor
             {
                 Filter<GameField, Game> filter = new(FilterConcat.OR);
 
-                if (account != null)
+                if (account is not null)
                 {
                     FilterGroup<GameField, Game> psnGroup = filter.AddGroup(FilterConcat.OR);
                     psnGroup.Add(GameField.Source, FilterOperation.Equals, Source.PSN);
@@ -103,7 +103,7 @@ namespace PlayStationGames.AccountEngine.Editor
             this.account = account;
             existsGames.Clear();
 
-            if (account != null)
+            if (account is not null)
                 foreach (Game game in DataManager.FullItemsList<GameField, Game>().FindAll((g) => g.Owner == account.Id))
                 {
                     Game tempGame = new();
@@ -114,13 +114,9 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public void Save()
         {
-            if (account == null)
-                return;
-
-            if (ClearOwnerForGamesForLocalAccount())
-                return;
-
-            if (!Modified)
+            if (account is null 
+                || ClearOwnerForGamesForLocalAccount() 
+                || !Modified)
                 return;
 
             RenewOwners();
@@ -130,8 +126,8 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private bool ClearOwnerForGamesForLocalAccount()
         {
-            if (account == null || 
-                account.Type != AccountType.Local)
+            if (account is null 
+                || account.Type is not AccountType.Local)
                 return false;
 
             List<Game> owneredGameList = FullGameList.FindAll(g => g.Owner == account.Id);
@@ -149,13 +145,13 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private void RenewOwners()
         {
-            if (account == null)
+            if (account is null)
                 return;
 
             gamesController.FullItemsList.StartSilentChange();
             List<Game> updatedList = FullGameList.FindAll((g) =>
-                g.Owner == account.Id &&
-                !existsGames.Contains((g2) => g2.Id == g.Id)
+                g.Owner == account.Id 
+                && !existsGames.Contains((g2) => g2.Id.Equals(g.Id))
             );
 
             try

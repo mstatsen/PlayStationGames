@@ -83,11 +83,12 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override List<ToolStripMenuItem>? MenuItems(PSConsole? item)
         {
-            if (item == null || 
-                !TypeHelper.Helper<ConsoleGenerationHelper>().StorageSupport(item.Generation))
+            if (item is null 
+                || !TypeHelper.Helper<ConsoleGenerationHelper>()
+                    .StorageSupport(item.Generation))
                 return null;
-            List<ToolStripMenuItem> result = new();
 
+            List<ToolStripMenuItem> result = new();
             ToolStripMenuItem showGamesItem = new(
                 "Show installed games", 
                 OxIcons.Install,

@@ -22,7 +22,8 @@ namespace PlayStationGames.GameEngine.View
 
             ControlLayouts<GameField> result = new();
 
-            if (Item != null && Item.TrophysetAvailable)
+            if (Item is not null && 
+                Item.TrophysetAvailable)
             {
                 result.Add(Layouter.AddFromTemplate(GameField.TrophysetType, 2));
                 result.Add(Layouter.AddFromTemplate(GameField.AppliesTo, 2));
@@ -113,7 +114,7 @@ namespace PlayStationGames.GameEngine.View
             LayoutsLists.Add(ReleasePanel, FillReleaseLayouts());
             LayoutsLists.Add(LinksPanel, FillLinksLayout());
 
-            if (Item != null)
+            if (Item is not null)
             {
                 Layouter[GameField.CriticScore]!.FontColor =
                     TypeHelper.Helper<CriticRangeHelper>().FontColor(Item.CriticScore);
@@ -177,8 +178,8 @@ namespace PlayStationGames.GameEngine.View
             imageLayout.CaptionVariant = ControlCaptionVariant.None;
             imageLayout.Height = 97;
 
-            if (Item?.Image != null && 
-                Item.Image.GetPixel(0, 0).A == 0)
+            if (Item?.Image is not null 
+                && Item.Image.GetPixel(0, 0).A == 0)
             {
                 imageLayout.Left = 12;
                 imageLayout.Width = 176;
@@ -189,7 +190,7 @@ namespace PlayStationGames.GameEngine.View
         }
 
         protected override string GetTitle() =>
-            Item != null 
+            Item is not null
                 ? $"{Item.Name} ({TypeHelper.ShortName(Item.PlatformType)})" 
                 : "Unknown Game";
 
@@ -221,7 +222,7 @@ namespace PlayStationGames.GameEngine.View
             {
                 PlacedControl<GameField>? trophyControl = Layouter.PlacedControl(trophyHelper.Field(icon.Key));
 
-                if (trophyControl == null)
+                if (trophyControl is null)
                     continue;
 
                 OxControlHelper.AlignByBaseLine(trophyControl.Control, icon.Value);

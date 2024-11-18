@@ -169,7 +169,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             if (Equals(other))
                 return 0;
 
-            if (other == null)
+            if (other is null)
                 return 1;
 
             Accessory otherAccessory = (Accessory)other;

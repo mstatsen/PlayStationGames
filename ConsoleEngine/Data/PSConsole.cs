@@ -219,7 +219,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             
             PSConsole? otherConsole = (PSConsole?)other;
 
-            if (otherConsole == null)
+            if (otherConsole is null)
                 return 1;
 
             int result = Name.CompareTo(otherConsole.Name);

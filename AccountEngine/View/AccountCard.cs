@@ -21,13 +21,13 @@ namespace PlayStationGames.AccountEngine.View
             TrophiesPanel = new()
             {
                 Parent = this,
-                Text = "PSN Level"
+                Text = "PSN Level",
+                HeaderHeight = 18,
+                Top = 1,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
-            TrophiesPanel.Header.SetContentSize(1, 18);
             TrophiesPanel.SetContentSize(164, 168);
             TrophiesPanel.Paddings.SetSize(OxSize.Large);
-            TrophiesPanel.Top = 1;
-            TrophiesPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             PrepareColors();
         }
 
@@ -63,7 +63,7 @@ namespace PlayStationGames.AccountEngine.View
 
         private void FillAvatarLayout()
         {
-            if (Item == null)
+            if (Item is null)
                 return;
 
             ControlLayout<AccountField> avatarLayout = Layouter.AddFromTemplate(AccountField.Avatar);
@@ -90,7 +90,7 @@ namespace PlayStationGames.AccountEngine.View
 
         private void FillUsedAndOwnsLayout()
         {
-            if (Item == null
+            if (Item is null
                 || (Item.ConsolesCount == 0
                     && Item.GamesCount == 0))
                 return;
@@ -144,7 +144,9 @@ namespace PlayStationGames.AccountEngine.View
         }
 
         protected override string GetTitle() =>
-            Item != null ? Item.Name : string.Empty;
+            Item is not null 
+                ? Item.Name 
+                : string.Empty;
 
         private readonly TrophyTypeHelper trophyHelper = TypeHelper.Helper<TrophyTypeHelper>();
 

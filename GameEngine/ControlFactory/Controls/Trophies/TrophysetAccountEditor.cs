@@ -62,7 +62,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             base.PrepareColors();
 
-            if (AccountAccessor != null)
+            if (AccountAccessor is not null)
                 AccountAccessor.Control.BackColor = BackColor;
         }
     }

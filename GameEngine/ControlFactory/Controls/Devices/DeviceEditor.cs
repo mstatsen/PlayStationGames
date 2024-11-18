@@ -24,7 +24,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 deviceTypeInitializer.Game = OwnerDAO;
                 deviceTypeInitializer.ExistingTypes.Clear();
 
-                if (ExistingItems != null)
+                if (ExistingItems is not null)
                     deviceTypeInitializer.ExistingTypes.AddRange(ExistingItems.Cast<Device>());
 
                 TypeControl.RenewControl(true);

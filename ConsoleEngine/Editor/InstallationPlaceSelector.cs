@@ -88,7 +88,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
         }
 
         private string GetEmptyMandatoryFieldHandler() =>
-            storageControl != null && SelectedStorageId == Guid.Empty
+            storageControl is not null
+            && SelectedStorageId.Equals(Guid.Empty)
                 ? "Storage"
                 : string.Empty;
 

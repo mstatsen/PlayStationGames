@@ -44,7 +44,7 @@ namespace PlayStationGames.ConsoleEngine.View
             OxLabel? foldersControl =
                 (OxLabel?)Layouter.PlacedControl(ConsoleField.Folders)?.Control;
 
-            if (foldersControl != null)
+            if (foldersControl is not null)
             {
                 foldersControl.MaximumSize = new(460, 280);
                 foldersControl.TextAlign = ContentAlignment.TopLeft;
@@ -80,7 +80,9 @@ namespace PlayStationGames.ConsoleEngine.View
         }
 
         protected override string GetTitle() =>
-            Item == null ? "Unknown Console" : Item.Name;
+            Item is null 
+                ? "Unknown Console" 
+                : Item.Name;
 
         protected override void PreparePanels()
         {

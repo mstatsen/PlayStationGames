@@ -106,7 +106,7 @@ namespace PlayStationGames.GameEngine.Data
 
         public override List<ToolStripMenuItem>? MenuItems(Game? item)
         {
-            if (item == null)
+            if (item is null)
                 return null;
 
             List<ToolStripMenuItem> result = new();
@@ -128,7 +128,10 @@ namespace PlayStationGames.GameEngine.Data
             if (field == GameField.Owner && value is Guid guidValue)
             {
                 Account? account = DataManager.Item<AccountField, Account>(AccountField.Id, guidValue);
-                return account != null ? account.Name : "Blank";
+                return 
+                    account is not null 
+                        ? account.Name 
+                        : "Blank";
             }
 
             return field switch
@@ -157,7 +160,7 @@ namespace PlayStationGames.GameEngine.Data
         {
             get
             {
-                if (uniqueTrophisets == null)
+                if (uniqueTrophisets is null)
                 {
                     uniqueTrophisets = new();
                     Dictionary<Game, Trophyset> handledGames = new();
@@ -168,7 +171,7 @@ namespace PlayStationGames.GameEngine.Data
                         {
                             Game? realRelatedGame = relGame.Game;
 
-                            if (realRelatedGame == null)
+                            if (realRelatedGame is null)
                                 continue;
 
                             if (handledGames.TryGetValue(realRelatedGame, out Trophyset? foundTrophyset)
@@ -196,11 +199,11 @@ namespace PlayStationGames.GameEngine.Data
 
         protected override void RenewAdditionalLists()
         {
-            if (uniqueTrophisets != null)
-            {
-                uniqueTrophisets.Clear();
-                uniqueTrophisets = null;
-            }
+            if (uniqueTrophisets is null)
+                return;
+            
+            uniqueTrophisets.Clear();
+            uniqueTrophisets = null;
         }
 
         protected override void FillDefaultCategories(Categories<GameField, Game> categories)
@@ -211,23 +214,12 @@ namespace PlayStationGames.GameEngine.Data
             {
                 BaseOnChilds = true
             };
+
+            BadFillingCategory.AddChild("Not verified", GameField.Verified, false);
+            BadFillingCategory.AddChild("Image not set", GameField.Image, FilterOperation.Blank, null);
+
             categories.Add(BadFillingCategory);
-
-            Category<GameField, Game> NotVerifiedCategory = new("Not verified");
-            NotVerifiedCategory.AddFilter(GameField.Verified, false);
-            BadFillingCategory.AddChild(NotVerifiedCategory);
-
-            Category<GameField, Game> ImageIsEmptyCategory = new("Image not set");
-            NotVerifiedCategory.AddFilter(GameField.Image, FilterOperation.Blank);
-            BadFillingCategory.AddChild(ImageIsEmptyCategory);
-
-            categories.Add(
-                new("By Tags")
-                { 
-                    Type = CategoryType.FieldExtraction,
-                    Field = GameField.Tags
-                }
-            );
+            categories.Add(GameField.Tags);
         }
     }
 }

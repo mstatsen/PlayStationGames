@@ -10,7 +10,9 @@ namespace PlayStationGames.GameEngine.Data
         public bool Remove(Guid? id)
         {
             RelatedGame? relatedGame = GetById(id);
-            return relatedGame != null && Remove(relatedGame);
+            return 
+                relatedGame is not null 
+                && Remove(relatedGame);
         }
 
         public RelatedGame? Add(Guid id)

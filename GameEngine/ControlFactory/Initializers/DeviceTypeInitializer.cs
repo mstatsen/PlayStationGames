@@ -15,8 +15,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
 
         public override bool AvailableValue(DeviceType value) => 
             base.AvailableValue(value)
-            && (Game == null || deviceTypeHelper.Available(Game.PlatformType).Contains(value))
-            && (ExistingTypes.Count == 0 || !ExistingTypes.Contains(d => d.Type == value));
+            && (Game is null 
+                || deviceTypeHelper.Available(Game.PlatformType).Contains(value))
+            && (ExistingTypes.Count == 0 
+                || !ExistingTypes.Contains(d => d.Type.Equals(value)));
 
         public DeviceTypeInitializer() { }
     }

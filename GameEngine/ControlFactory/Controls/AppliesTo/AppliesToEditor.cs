@@ -24,7 +24,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 playstationPlatformTypeInitializer.ExistingTypes.Clear();
                 playstationPlatformTypeInitializer.Game = OwnerDAO;
 
-                if (ExistingItems != null)
+                if (ExistingItems is not null)
                     playstationPlatformTypeInitializer.ExistingTypes.AddRange(ExistingItems.Cast<Platform>());
 
                 TypeControl.RenewControl(true);

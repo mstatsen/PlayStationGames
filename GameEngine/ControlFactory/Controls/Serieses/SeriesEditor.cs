@@ -23,7 +23,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             {
                 seriesInitalizer.ExistingSeries.Clear();
 
-                if (ExistingItems != null)
+                if (ExistingItems is not null)
                     seriesInitalizer.ExistingSeries.AddRange(ExistingItems.Cast<Series>());
 
                 NameControl.Context.InitControl(NameControl);
@@ -70,11 +70,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         public override bool CanOKClose()
         {
-            if (ExistingItems == null)
+            if (ExistingItems is null)
                 return true;
 
-            if (NameControl.Value != null &&
-                ExistingItems.Find(t => ((Series)t).Name == NameControl.Value.ToString()) != null)
+            if (NameControl.Value is not null &&
+                ExistingItems.Find(t => ((Series)t).Name.Equals(NameControl.Value.ToString())) is not null)
             {
                 OxMessage.ShowError("Game already contains this series.", this);
                 return false;

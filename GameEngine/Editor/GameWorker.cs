@@ -73,7 +73,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         private void SetRelatedGamesFilter()
         {
-            if (Item == null)
+            if (Item is null)
                 return;
 
             Filter<GameField, Game> relatedGameFilter = new(FilterConcat.AND);
@@ -452,7 +452,7 @@ namespace PlayStationGames.GameEngine.Editor
         {
             base.BeforeGrabControls();
 
-            if (Item == null)
+            if (Item is null)
                 return;
 
             if (!AvailableTrophyset)
@@ -493,13 +493,13 @@ namespace PlayStationGames.GameEngine.Editor
         {
             ListDAO<Installation>? installations = Builder.Value<ListDAO<Installation>>(GameField.Installations);
 
-            if (installations == null)
+            if (installations is null)
                 return;
 
             RootListDAO<ConsoleField, PSConsole> availableConsoles = 
                 DataManager.FullItemsList<ConsoleField, PSConsole>().FilteredList(Game.AvailableConsoleFilter(Builder));
 
-            installations.RemoveAll(i => !availableConsoles.Contains(c => c.Id == i.ConsoleId));
+            installations.RemoveAll(i => !availableConsoles.Contains(c => c.Id.Equals(i.ConsoleId)));
             Builder[GameField.Installations].Value = installations;
         }
 

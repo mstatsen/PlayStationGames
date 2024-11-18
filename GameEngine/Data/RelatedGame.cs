@@ -36,7 +36,7 @@ namespace PlayStationGames.GameEngine.Data
         public override string ToString()
         {
             Game? game = DataManager.Item<GameField, Game>(GameField.Id, GameId);
-            return game == null 
+            return game is null 
                 ? GameId.ToString() 
                 : game.FullTitle();
         }

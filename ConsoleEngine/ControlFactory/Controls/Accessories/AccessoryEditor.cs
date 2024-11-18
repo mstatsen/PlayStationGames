@@ -113,7 +113,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         private static int SetControlTop(IControlAccessor? accessor, int lastBottom)
         {
-            if (accessor == null)
+            if (accessor is null)
                 return lastBottom;
 
             accessor.Top = lastBottom + 4;
@@ -135,10 +135,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         private void SetControlsVisible()
         {
-            if (typeControl == null)
-                return;
-
-            if (joystickTypeControl == null) 
+            if (typeControl is null 
+                || joystickTypeControl is null)
                 return;
 
             bool isJoystick = IsJoystick();
@@ -163,8 +161,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         private void RecalcHeight()
         {
-            if (typeControl == null || 
-                descriptionControl == null)
+            if (typeControl is null
+                || descriptionControl is null)
                 return;
 
             bool named = typeHelper.Named(AccessoryType, JoystickType);

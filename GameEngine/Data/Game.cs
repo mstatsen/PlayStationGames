@@ -357,7 +357,7 @@ namespace PlayStationGames.GameEngine.Data
 
             ITypeHelper? helper = TypeHelper.FieldHelper<GameField>().GetHelper(field);
 
-            if (helper != null)
+            if (helper is not null)
                 return helper.Value(value);
 
             return field switch
@@ -536,13 +536,13 @@ namespace PlayStationGames.GameEngine.Data
 
         private void SetRelatedGames(RelatedGames? value)
         {
-            if (value != null)
+            if (value is not null)
                 foreach (RelatedGame relatedGame in RelatedGames)
                 {
                     Game? game = DataManager.Item<GameField, Game>(GameField.Id, relatedGame.GameId);
 
-                    if (game != null && 
-                        value.GetById(relatedGame.GameId) == null)
+                    if (game is not null 
+                        && value.GetById(relatedGame.GameId) is null)
                         game.RelatedGames.Remove(id);
                 }
 
@@ -813,7 +813,7 @@ namespace PlayStationGames.GameEngine.Data
             if (Equals(other))
                 return 0;
 
-            if (other == null)
+            if (other is null)
                 return 1;
 
             Game otherGame = (Game)other;

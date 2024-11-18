@@ -24,7 +24,7 @@ namespace PlayStationGames.ConsoleEngine.View
 
         private void FillIconLayout()
         {
-            if (Item == null)
+            if (Item is null)
                 return;
 
             ControlLayout<ConsoleField> imageLayout = Layouter.AddFromTemplate(ConsoleField.Icon);
@@ -59,7 +59,7 @@ namespace PlayStationGames.ConsoleEngine.View
             ClearLayoutTemplate();
             bottomLayouts.Clear();
 
-            if (Item == null)
+            if (Item is null)
                 return;
 
             Layouter.Template.Left = Layouter[ConsoleField.Icon]!.Left + 84;
@@ -101,7 +101,9 @@ namespace PlayStationGames.ConsoleEngine.View
         }
 
         protected override string GetTitle() =>
-            Item != null ? Item.Name : string.Empty;
+            Item is not null 
+                ? Item.Name 
+                : string.Empty;
 
         private readonly ControlLayouts<ConsoleField> baseLayouts = new();
         private readonly ControlLayouts<ConsoleField> bottomLayouts = new();

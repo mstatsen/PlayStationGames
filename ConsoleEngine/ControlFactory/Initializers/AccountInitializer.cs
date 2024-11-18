@@ -18,15 +18,9 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
                 ComboBox.SelectedIndex = 0;
         }
 
-        public override bool AvailableValue(object value)
-        {
-            if (ExistingAccounts != null)
-            {
-                if (value is Account account)
-                    return !ExistingAccounts.Contains(a => a.Id == account.Id);
-            }
-
-            return false;
-        }
+        public override bool AvailableValue(object value) =>
+            ExistingAccounts is not null 
+            && value is Account account 
+            && !ExistingAccounts.Contains(a => a.Id == account.Id);
     }
 }

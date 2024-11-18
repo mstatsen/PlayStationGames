@@ -10,18 +10,18 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             List<bool> licensedList = new();
             List<Source> sourceList = new();
 
-            if (licensed == null || licensed == true)
+            if (licensed is null 
+                || licensed is true)
                 licensedList.Add(true);
 
-            if (licensed == null || licensed == false)
+            if (licensed is null 
+                || licensed is false)
                 licensedList.Add(false);
 
-            if (source == null)
-            { 
+            if (source is null)
                 foreach (Source s in TypeHelper.All<Source>())
                     if (TypeHelper.Helper<SourceHelper>().InstallationsSupport(s))
                         sourceList.Add(s);
-            }
             else
             {
                 Source inSource = (Source)source!;

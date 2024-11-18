@@ -80,12 +80,18 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 : builder[GameField.CompleteTime];
             PrepareAccessor(typeControl, trophysetTypeLabel, 4, IsDLCPanel ? 122 : 178, TypeChangeHandler);
 
-            if (appliesToControl != null)
+            if (appliesToControl is not null)
                 PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 178, AppliesToChandeHandler);
 
-            PrepareAccessor(difficultControl, difficultLabel, 
-                appliesToControl == null ? typeControl.Bottom : appliesToControl.Bottom, 
-                64, DifficultChangeHandler);
+            PrepareAccessor(
+                difficultControl, 
+                difficultLabel, 
+                appliesToControl is null 
+                    ? typeControl.Bottom 
+                    : appliesToControl.Bottom, 
+                64, 
+                DifficultChangeHandler
+            );
             PrepareAccessor(completeTimeControl, completeTimeLabel, difficultControl.Bottom, 88, CompleteTimeChangeHandler);
             CreateTrophiesPanels();
             AccountSelector = new(this);
@@ -110,8 +116,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
             bool isTrophysetExists = Type != TrophysetType.NoSet;
 
-            if (appliesToControl != null)
+            if (appliesToControl is not null)
                 appliesToControl.Visible = isTrophysetExists;
+
             AddCurrentPlatformToAppliesTo();
             appliesToLabel.Visible = isTrophysetExists;
             difficultControl.Visible = isTrophysetExists;
@@ -129,7 +136,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 || Type == TrophysetType.NoSet)
                 return;
 
-            if (appliesToControl != null)
+            if (appliesToControl is not null)
                 appliesToControl.Value = new Platforms
                 {
                     new Platform(
@@ -159,11 +166,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             base.PrepareColors();
 
-            if (typeControl != null)
+            if (typeControl is not null)
             {
                 ControlPainter.ColorizeControl(typeControl, Colors.Darker());
 
-                if (appliesToControl != null)
+                if (appliesToControl is not null)
                     ControlPainter.ColorizeControl(appliesToControl, Colors.Darker());
 
                 ControlPainter.ColorizeControl(difficultControl, Colors.Darker());
@@ -241,8 +248,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
             trophiesPanels.Add(result);
 
-            if (AvailableTrophiesPanel != null &&
-                account != null)
+            if (AvailableTrophiesPanel is not null 
+                && account is not null)
                 AvailableTrophiesPanel.DependedPanels.Add(result);
 
             return result;
@@ -250,7 +257,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void OnRemovePanelHandler(object? sender, EventArgs e)
         {
-            if (sender == null)
+            if (sender is null)
                 return;
 
             VisiblePanels.Remove((TrophiesPanel)sender);
@@ -271,7 +278,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
                 if (!IsDLCPanel)
                 {
-                    if (appliesToControl != null)
+                    if (appliesToControl is not null)
                         result.AppliesTo.CopyFrom(appliesToControl.DAOValue<ListDAO<Platform>>());
                 }
 
@@ -291,7 +298,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     ClearValues();
                     return;
@@ -299,7 +306,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
                 typeControl.Value = value.Type;
 
-                if (appliesToControl != null)
+                if (appliesToControl is not null)
                     appliesToControl.Value = value.AppliesTo;
 
                 difficultControl.Value = value.Difficult;
@@ -330,7 +337,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             {
                 typeControl.ReadOnly = value;
 
-                if (appliesToControl != null)
+                if (appliesToControl is not null)
                     appliesToControl.ReadOnly = value;
 
                 difficultControl.ReadOnly = value;

@@ -113,7 +113,7 @@ namespace PlayStationGames.GameEngine.Data
         {
             PSConsole? console = DataManager.Item<ConsoleField, PSConsole>(ConsoleField.Id, ConsoleId);
 
-            if (console == null)
+            if (console is null)
             {
                 savedToString = null;
                 return;
@@ -124,14 +124,14 @@ namespace PlayStationGames.GameEngine.Data
             if (folderName != string.Empty)
                 folderName = $"/{folderName}";
 
-            savedToString = console == null
+            savedToString = console is null
                 ? base.ToString()
                 : $"{console.Name}/{console.Storages.StorageName(StorageId)}{folderName}";
         }
 
         public override string? ToString()
         {
-            if (savedToString == null)
+            if (savedToString is null)
                 CalcToString();
 
             return savedToString;

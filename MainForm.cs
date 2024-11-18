@@ -162,11 +162,11 @@ namespace PlayStationGames
             ISettingsController settings = SettingsManager.Settings<GeneralSettings>();
             SettingsPart part = SettingsPart.Full;
             IDataController? activeController = 
-                mainTabControl.ActivePage == null 
+                mainTabControl.ActivePage is null 
                     ? null 
                     : DataManager.Controller(mainTabControl.ActivePage);
 
-            if (activeController != null)
+            if (activeController is not null)
             {
                 settings = activeController.Settings;
                 part = activeController.ActiveSettingsPart;
@@ -195,7 +195,7 @@ namespace PlayStationGames
             WindowState = SettingsManager.Settings<GeneralSettings>().MainFormState;
             IDataController? controller = DataManager.Controller(SettingsManager.Settings<GeneralSettings>().CurrentController);
 
-            if (controller == null)
+            if (controller is null)
                 mainTabControl.ActivateFirstPage();
             else
                 mainTabControl.ActivePage = controller.Face;

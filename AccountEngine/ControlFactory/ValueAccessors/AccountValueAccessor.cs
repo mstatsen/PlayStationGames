@@ -20,14 +20,15 @@ namespace PlayStationGames.AccountEngine.ControlFactory.ValueAccessors
 
         public override void SetValue(object? value)
         {
-            if (value == null ||
-                value is not Guid id)
+            if (value is null 
+                || value is not Guid id)
                 return;
 
-            ComboBox.SelectedItem = id == Guid.Empty
-                ? NullAccount
-                : DataManager.ListController<AccountField, Account>()
-                    .FullItemsList.Find((a) => a.Id == id);
+            ComboBox.SelectedItem = 
+                id.Equals(Guid.Empty)
+                    ? NullAccount
+                    : DataManager.ListController<AccountField, Account>()
+                        .FullItemsList.Find((a) => a.Id == id);
         }
     }
 }

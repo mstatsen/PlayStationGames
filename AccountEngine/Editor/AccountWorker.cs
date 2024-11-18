@@ -88,7 +88,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)
         {
-            if (Item == null)
+            if (Item is null)
                 return;
 
             gamesWorker.Show(Editor);
@@ -100,7 +100,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private void ConsoleButtonClickHandler(object? sender, EventArgs e)
         {
-            if (Item == null)
+            if (Item is null)
                 return;
 
             consolesWorker.Show(Editor);
@@ -131,9 +131,13 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private void ResetDefaultAccountIfExists()
         {
-            if (Item != null && Item.DefaultAccount)
+            if (Item is not null 
+                && Item.DefaultAccount)
                 foreach (Account account in DataManager.FullItemsList<AccountField, Account>()
-                    .FindAll(a => a.DefaultAccount && a.Id != Item.Id)
+                    .FindAll(a => 
+                        a.DefaultAccount 
+                        && !a.Id.Equals(Item.Id)
+                    )
                 )
                     account.DefaultAccount = false;
         }
