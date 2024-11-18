@@ -194,8 +194,18 @@ namespace PlayStationGames.GameEngine.View
 
         private void CalcTrophysetPanelSize()
         {
-            Layouter.PlacedControl(GameField.TrophysetType)!.Control.Left =
-                Layouter.PlacedControl(GameField.Difficult)!.LabelLeft;
+            PlacedControl<GameField>? trophysetTypeControl = Layouter.PlacedControl(GameField.TrophysetType);
+
+            if (trophysetTypeControl is null)
+                return;
+
+            PlacedControl<GameField>? difficultControl = Layouter.PlacedControl(GameField.Difficult);
+
+            if (difficultControl is null)
+                return;
+
+            trophysetTypeControl.Control.Left =
+                difficultControl.LabelLeft;
 
             int maximumTrophysetLabelRight = 0;
 
