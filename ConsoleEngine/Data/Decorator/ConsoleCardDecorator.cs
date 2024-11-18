@@ -15,9 +15,9 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
             {
                 int gamesCount = Dao.GamesCount;
 
-                return gamesCount == 0 
+                return gamesCount is 0 
                     ? string.Empty 
-                    : gamesCount == 1 
+                    : gamesCount is 1 
                         ? "1 game" 
                         : (object)$"{Dao.GamesCount} games";
             }

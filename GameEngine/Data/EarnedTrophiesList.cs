@@ -12,7 +12,7 @@ namespace PlayStationGames.GameEngine.Data
 
         public EarnedTrophies Add(Guid accountId, TrophyList trophyList)
         {
-            EarnedTrophies? existsEarned = Find(e => e.AccountId == accountId);
+            EarnedTrophies? existsEarned = Find(e => e.AccountId.Equals(accountId));
 
             if (existsEarned is null)
             {

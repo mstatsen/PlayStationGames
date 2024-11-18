@@ -612,7 +612,7 @@ namespace PlayStationGames.GameEngine.Data
         public CriticRange CriticRange => TypeHelper.Helper<CriticRangeHelper>().Range(CriticScore);
         public bool IsPSN => sourceHelper.IsPSN(SourceType);
         public bool WithDLC => Dlcs.Count > 0;
-        public bool IsEmulator => Format.Equals(GameFormat.Emulator);
+        public bool IsEmulator => Format is GameFormat.Emulator;
         public bool WithTrophyset => Trophyset.TrophysetExists;
 
         public bool ExistsDLCsWithTrophyset => 
@@ -681,12 +681,12 @@ namespace PlayStationGames.GameEngine.Data
             base.SaveData(element, clearModified);
             XmlHelper.AppendElement(element, XmlConsts.Id, Id);
 
-            if (Owner != Guid.Empty)
+            if (!Owner.Equals(Guid.Empty))
                 XmlHelper.AppendElement(element, XmlConsts.Owner, Owner);
 
             XmlHelper.AppendElement(element, XmlConsts.Edition, Edition, true);
 
-            if (SourceType != TypeHelper.DefaultValue<Source>())
+            if (!SourceType.Equals(TypeHelper.DefaultValue<Source>()))
                 XmlHelper.AppendElement(element, XmlConsts.Source, SourceType);
 
             XmlHelper.AppendElement(element, XmlConsts.Genre, GenreName, true);
@@ -736,7 +736,7 @@ namespace PlayStationGames.GameEngine.Data
             platformType = XmlHelper.Value<PlatformType>(element, XmlConsts.Platform);
             format = XmlHelper.Value<GameFormat>(element, XmlConsts.Format);
             verified = XmlHelper.ValueBool(element, XmlConsts.Verified);
-            licensed = (XmlHelper.Value(element, XmlConsts.Licensed) == string.Empty) 
+            licensed = (XmlHelper.Value(element, XmlConsts.Licensed).Equals(string.Empty))
                 || XmlHelper.ValueBool(element, XmlConsts.Licensed);
             owner = XmlHelper.ValueGuid(element, XmlConsts.Owner);
             SetOldOwnerName(owner);
@@ -761,15 +761,19 @@ namespace PlayStationGames.GameEngine.Data
 
         private void CheckAppliesTo()
         {
-            Trophyset.AppliesTo.Remove(p => !ReleasePlatforms.Contains(p2 => p2.Type == p.Type));
+            Trophyset.AppliesTo.Remove(p => 
+                !ReleasePlatforms.Contains(p2 => 
+                    p2.Type.Equals(p.Type)
+                )
+            );
 
-            if (Format != GameFormat.Emulator)
+            if (Format is not GameFormat.Emulator)
                 Trophyset.AppliesTo.Add(PlatformType);
         }
 
         private void CheckReleasePlatforms()
         {
-            if (Format == GameFormat.Emulator)
+            if (Format is GameFormat.Emulator)
                 ReleasePlatforms.Clear();
             else
                 ReleasePlatforms.Add(PlatformType);
@@ -791,7 +795,7 @@ namespace PlayStationGames.GameEngine.Data
 
         private void CheckRelease()
         {
-            if (Format == GameFormat.Emulator)
+            if (Format is GameFormat.Emulator)
             {
                 Developer = string.Empty;
                 Publisher = string.Empty;
@@ -820,7 +824,7 @@ namespace PlayStationGames.GameEngine.Data
 
             int result = Name.CompareTo(otherGame.Name);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             if (PlatformType > otherGame.PlatformType)
@@ -953,8 +957,8 @@ namespace PlayStationGames.GameEngine.Data
             Licensed
                 ? platformTypeHelper.IsPSNPlatform(PlatformType)
                     && sourceHelper.IsPSN(SourceType)
-                : PlatformType == PlatformType.PSVita
-                    && SourceType == Source.PKGj;
+                : PlatformType is PlatformType.PSVita
+                    && SourceType is Source.PKGj;
 
         public bool TrophysetAvailable =>
             formatHelper.AvailableTrophies(Format)

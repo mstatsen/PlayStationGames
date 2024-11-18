@@ -42,8 +42,8 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public List<Game> Games =>
             DataManager.FullItemsList<GameField, Game>().List.FindAll(
-                (g) => g.Installations.Contains(
-                    (i) => i.StorageId == Id
+                g => g.Installations.Contains(
+                    i => i.StorageId.Equals(Id)
                 )
             );
 

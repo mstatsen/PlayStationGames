@@ -26,7 +26,7 @@ namespace PlayStationGames.GameEngine.Data
             {
                 consoleId = ModifyValue(consoleId, value);
 
-                if (State != DAOState.Loading)
+                if (State is not DAOState.Loading)
                     savedToString = null;
             }
         }
@@ -38,7 +38,7 @@ namespace PlayStationGames.GameEngine.Data
             {
                 storageId = ModifyValue(storageId, value);
 
-                if (State != DAOState.Loading)
+                if (State is not DAOState.Loading)
                     savedToString = null;
             }
         }
@@ -50,7 +50,7 @@ namespace PlayStationGames.GameEngine.Data
             {
                 folder = StringValue(ModifyValue(folder, value));
 
-                if (State != DAOState.Loading)
+                if (State is not DAOState.Loading)
                     savedToString = null;
             }
         }
@@ -70,7 +70,7 @@ namespace PlayStationGames.GameEngine.Data
         {
             XmlHelper.AppendElement(element, XmlConsts.ConsoleId, ConsoleId);
 
-            if (StorageId != Guid.Empty)
+            if (!StorageId.Equals(Guid.Empty))
                 XmlHelper.AppendElement(element, XmlConsts.StorageId, StorageId);
 
             XmlHelper.AppendElement(element, XmlConsts.Folder, Folder, true);
@@ -78,7 +78,7 @@ namespace PlayStationGames.GameEngine.Data
             if (Size > 0)
                 XmlHelper.AppendElement(element, XmlConsts.Size, Size);
 
-            if (State == DAOState.Coping)
+            if (State is DAOState.Coping)
                 XmlHelper.AppendElement(element, "ToStringValue", savedToString);
         }
 
@@ -89,10 +89,10 @@ namespace PlayStationGames.GameEngine.Data
             folder = XmlHelper.Value(element, XmlConsts.Folder);
             size = XmlHelper.ValueInt(element, XmlConsts.Size);
             
-            if (State == DAOState.Coping)
+            if (State is DAOState.Coping)
                 savedToString = (string?)XmlHelper.Value(element, "ToStringValue");
             else
-                if (State == DAOState.Loading)
+                if (State is DAOState.Loading)
                     CalcToString();
         }
 
@@ -121,7 +121,7 @@ namespace PlayStationGames.GameEngine.Data
 
             string folderName = console.Folders.CheckName(Folder);
 
-            if (folderName != string.Empty)
+            if (!folderName.Equals(string.Empty))
                 folderName = $"/{folderName}";
 
             savedToString = console is null

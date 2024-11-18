@@ -709,7 +709,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             };
 
         public override DataGridViewContentAlignment ColumnAlign(GameField field) =>
-            field == GameField.Name
+            field is GameField.Name
                 ? DataGridViewContentAlignment.MiddleLeft
                 : DataGridViewContentAlignment.MiddleCenter;
 
@@ -862,8 +862,8 @@ namespace PlayStationGames.GameEngine.Data.Fields
 
         public override void FillAdditionalContext(GameField field, IAccessorContext context)
         {
-            if (context.Scope == ControlScope.Editor && 
-                field == GameField.Name)
+            if (context.Scope is ControlScope.Editor 
+                && field is GameField.Name)
                 context.AdditionalContext = true;
         }
 

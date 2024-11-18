@@ -24,7 +24,7 @@ namespace PlayStationGames.AccountEngine.Editor
         }
 
         protected override bool SyncFieldValue(AccountField field, bool byUser) => 
-            field == AccountField.Type;
+            field is AccountField.Type;
 
         protected override EditorLayoutsGenerator<AccountField, Account, AccountFieldGroup> 
             CreateLayoutsGenerator(FieldGroupFrames<AccountField, AccountFieldGroup> frames, 
@@ -175,7 +175,7 @@ namespace PlayStationGames.AccountEngine.Editor
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)
         {
-            if (Builder.Value<AccountType>(AccountField.Type) == AccountType.PSN)
+            if (Builder.Value<AccountType>(AccountField.Type) is AccountType.PSN)
             {
                 Editor.Groups[AccountFieldGroup.Auth].Visible = true;
                 Editor.Groups[AccountFieldGroup.Links].Visible = true;

@@ -51,8 +51,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         protected override void FillControls(Tag item)
         {
-            if (item.Name != string.Empty &&
-                NameControl.ComboBox.Items.IndexOf(item.Name) < 0)
+            if (!item.Name.Equals(string.Empty) 
+                && NameControl.ComboBox.Items.IndexOf(item.Name) < 0)
                 NameControl.ComboBox.Items.Insert(0, item.Name);
 
             NameControl.Value = item.Name;

@@ -75,8 +75,14 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         private void OnAccountRemove(Account dao, DAOEntityEventArgs e)
         {
-            foreach (PSConsole console in FullItemsList.FindAll((c) => c.Accounts.Contains((ca) => ca.Id == dao.Id)))
-                console.Accounts.RemoveAll((c) => c.Id == dao.Id);
+            foreach (PSConsole console in FullItemsList.
+                FindAll(c => 
+                    c.Accounts.Contains(ca => 
+                            ca.Id.Equals(dao.Id)
+                        )
+                    )
+            )
+                console.Accounts.RemoveAll(c => c.Id.Equals(dao.Id));
         }
 
         protected override Bitmap? GetIcon() => OxIcons.Console;
@@ -92,8 +98,13 @@ namespace PlayStationGames.ConsoleEngine.Data
             ToolStripMenuItem showGamesItem = new(
                 "Show installed games", 
                 OxIcons.Install,
-                (s, e) => DataManager.ViewItems<GameField, Game>(
-                    g => g.Installations.Contains(i => i.ConsoleId == item.Id), $"Games, installed on {item}")
+                (s, e) => 
+                    DataManager.ViewItems<GameField, Game>(
+                        g => g.Installations.Contains(i => 
+                            i.ConsoleId.Equals(item.Id)
+                        ), 
+                        $"Games, installed on {item}"
+                    )
             );
             result.Add(showGamesItem);
             return result;

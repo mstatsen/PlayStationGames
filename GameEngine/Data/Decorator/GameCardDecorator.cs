@@ -42,7 +42,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 GameField.AvailableBronze =>
                     Dao.GetFullTrophyset.Available.Bronze,
                 GameField.CriticScore =>
-                    Dao.Format == GameFormat.Emulator
+                    Dao.Format is GameFormat.Emulator
                         ? string.Empty
                         : Dao.CriticScore,
                 _ => base.Value(field),
@@ -51,7 +51,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
 
         private object PlatformAndFormat =>
             TypeHelper.ShortName(Dao.PlatformType)
-                + (Dao.Format == TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType)
+                + (Dao.Format.Equals(TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType))
                     ? string.Empty
                     : $" / {TypeHelper.ShortName(Dao.Format)}");
 
@@ -62,21 +62,24 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             get
             {
-                if (Dao.Format == GameFormat.Emulator)
+                if (Dao.Format is GameFormat.Emulator)
                     return string.Empty;
 
                 string genre = Dao.GenreName;
 
-                if (genre.Trim() == string.Empty)
+                if (genre.Trim().Equals(string.Empty))
                     genre = Consts.Short_Unknown;
 
                 string player =
                     $"{(Dao.SinglePlayer ? "single, " : string.Empty)}{(Dao.Multiplayer ? $"multiplayler, " : string.Empty)}";
 
-                if (player != string.Empty)
+                if (!player.Equals(string.Empty))
                     player = player.Remove(player.Length - 2);
 
-                player = player != string.Empty ? "(" + player + ")" : string.Empty;
+                player = 
+                    !player.Equals(string.Empty) 
+                        ? "(" + player + ")" 
+                        : string.Empty;
                 return $"{TypeHelper.ShortName(Dao.ScreenView)} {genre} {player}";
             }
         }
@@ -85,13 +88,13 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             get
             {
-                if (Dao.Format == GameFormat.Emulator)
+                if (Dao.Format is GameFormat.Emulator)
                     return string.Empty;
 
                 string result = $"{TypeHelper.Name(Dao.GameRegion)} ({TypeHelper.Name(Dao.GameLanguage)})";
                 
-                if (Dao.Code.Trim() != string.Empty)
-                        result += $", {Dao.Code}";
+                if (!Dao.Code.Trim().Equals(string.Empty))
+                    result += $", {Dao.Code}";
 
                 return result;
             }
@@ -107,7 +110,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 {
                     result += "Linesed";
 
-                    if (Dao.Owner != Guid.Empty)
+                    if (!Dao.Owner.Equals(Guid.Empty))
                         result += $" ({DataManager.Item<AccountField, Account>(AccountField.Id, Dao.Owner)})";
                 }
 

@@ -107,9 +107,9 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleFieldGroup.Accounts or
                 ConsoleFieldGroup.Storages =>
                     OxSize.None,
-                ConsoleFieldGroup.Games when Groups[ConsoleFieldGroup.Games].Dock == DockStyle.Bottom =>
+                ConsoleFieldGroup.Games when Groups[ConsoleFieldGroup.Games].Dock is DockStyle.Bottom =>
                     OxSize.None,
-                ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Games].Dock == DockStyle.Bottom
+                ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Games].Dock is DockStyle.Bottom
                     || generationHelper.StorageSupport(((ConsoleWorker)Worker).Generation) =>
                     OxSize.None,
                 _ => OxSize.Extra,

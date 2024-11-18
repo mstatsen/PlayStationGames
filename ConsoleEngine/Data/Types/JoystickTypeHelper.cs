@@ -59,11 +59,11 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
 
         public bool SupportByGeneration(ConsoleGeneration generation, ConsoleModel model, JoystickType type)
         {
-            if (generation == ConsoleGeneration.PSP || 
-                generation == ConsoleGeneration.PSVita)
+            if (generation is ConsoleGeneration.PSP || 
+                generation is ConsoleGeneration.PSVita)
                 return false;
 
-            if (type == JoystickType.Other)
+            if (type is JoystickType.Other)
                 return true;
 
             return generation switch
@@ -96,10 +96,10 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                     type is JoystickType.Dualshock2 or
                     JoystickType.Dualshock or
                     JoystickType.DSReplica,
-                ConsoleGeneration.PSVita when model == ConsoleModel.PSVitaTV  => 
+                ConsoleGeneration.PSVita when model is ConsoleModel.PSVitaTV  => 
                     type is JoystickType.Dualshock3 or
                     JoystickType.Dualshock4,
-                ConsoleGeneration.PSP when model == ConsoleModel.PSPGO =>
+                ConsoleGeneration.PSP when model is ConsoleModel.PSPGO =>
                     type is JoystickType.Dualshock3,
                 _ => false,
             };

@@ -160,7 +160,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             accessor.Parent = this;
             accessor.Left = left;
-            accessor.Top = lastBottom == -1 ? 8 : lastBottom + 4;
+            accessor.Top = lastBottom is -1 ? 8 : lastBottom + 4;
             accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
             if (fullRow)

@@ -36,7 +36,7 @@ namespace PlayStationGames.GameEngine.Grid
                     fontStyle |= FontStyle.Bold;
                     style.BackColor = TypeHelper.BackColor(item?.CriticRange);
 
-                    if (item?.CriticRange == CriticRange.Best)
+                    if (item?.CriticRange is CriticRange.Best)
                         style.ForeColor = Color.FromArgb(225,225,225);
                     break;
             }

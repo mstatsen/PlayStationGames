@@ -20,7 +20,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             Type switch
             {
                 AccessoryType.Joystick =>
-                    JoystickType.Equals(JoystickType.Other)
+                    JoystickType is JoystickType.Other
                         ? "Other joystick"
                         : TypeHelper.Name(JoystickType),
                 AccessoryType.Other =>

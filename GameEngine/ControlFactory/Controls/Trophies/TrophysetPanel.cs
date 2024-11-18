@@ -111,10 +111,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void TypeChangeHandler(object? sender, EventArgs e)
         {
-            if (Type == TrophysetType.NoSet)
+            if (Type is TrophysetType.NoSet)
                 ClearValues();
 
-            bool isTrophysetExists = Type != TrophysetType.NoSet;
+            bool isTrophysetExists = Type is not TrophysetType.NoSet;
 
             if (appliesToControl is not null)
                 appliesToControl.Visible = isTrophysetExists;
@@ -133,7 +133,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         private void AddCurrentPlatformToAppliesTo()
         {
             if (IsDLCPanel 
-                || Type == TrophysetType.NoSet)
+                || Type is TrophysetType.NoSet)
                 return;
 
             if (appliesToControl is not null)
@@ -148,7 +148,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         private void SetMinimumSize()
         {
             int height = 
-                Type == TrophysetType.NoSet 
+                Type is TrophysetType.NoSet 
                     ? typeControl.Bottom 
                     : VisiblePanels.Count > 0 
                         ? VisiblePanels.Last().Bottom 
@@ -197,11 +197,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void AddButtonClickHandler(object? sender, EventArgs e)
         {
-            if (AccountSelector.ShowAsDialog(this) == DialogResult.OK
-                && AccountSelector.SelectedAccountId != Guid.Empty)
+            if (AccountSelector.ShowAsDialog(this) is DialogResult.OK
+                && !AccountSelector.SelectedAccountId.Equals(Guid.Empty))
             {
                 TrophiesPanel newPanel = AvailableTrophiesPanel.DependedPanels.Find(t =>
-                    t.Account!.Id == AccountSelector.SelectedAccountId)!;
+                    t.Account!.Id.Equals(AccountSelector.SelectedAccountId))!;
                 newPanel.Value = new();
                 VisiblePanels.Add(newPanel);
                 RecalcTrophiesPanels();
@@ -211,10 +211,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void RecalcTrophiesPanels()
         {
-            AvailableTrophiesPanel.Visible = Type != TrophysetType.NoSet;
+            AvailableTrophiesPanel.Visible = Type is not TrophysetType.NoSet;
 
             foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
-                trophiesPanel.Visible = Type != TrophysetType.NoSet
+                trophiesPanel.Visible = 
+                    Type is not TrophysetType.NoSet
                     && VisiblePanels.Contains(trophiesPanel);
 
             int lastTop = addButton.Bottom - 2;
@@ -237,13 +238,15 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             {
                 Parent = this,
                 Left = 8,
-                Top = (trophiesPanels.Count == 0 
+                Top = 
+                    (trophiesPanels.Count is 0 
                         ? completeTimeControl.Bottom + 16
-                        : trophiesPanels.Count == 1 
+                        : trophiesPanels.Count is 1 
                             ? addButton.Bottom - 2
-                            : trophiesPanels.Last().Bottom + 4)
-                      + 8
-            };
+                            : trophiesPanels.Last().Bottom + 4
+                    )
+                    + 8
+        };
             result.OnRemove += OnRemovePanelHandler;
 
             trophiesPanels.Add(result);
@@ -318,7 +321,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 foreach (EarnedTrophies trophies in value.EarnedTrophies)
                 {
                     TrophiesPanel trophiesPanel = AvailableTrophiesPanel.DependedPanels.Find(t => 
-                        t.Account!.Id == trophies.AccountId
+                        t.Account!.Id.Equals(trophies.AccountId)
                     )!;
                     VisiblePanels.Add(trophiesPanel);
                     trophiesPanel.Value = trophies.Trophies;

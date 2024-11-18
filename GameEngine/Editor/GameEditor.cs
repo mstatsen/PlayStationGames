@@ -52,7 +52,7 @@ namespace PlayStationGames.GameEngine.Editor
             if (GroupParents[PanelRight].Contains(frame))
                 frame.Margins.RightOx = OxSize.Extra;
 
-            if (group == GameFieldGroup.ReleaseBase)
+            if (group is GameFieldGroup.ReleaseBase)
             {
                 frame.Margins.RightOx = OxSize.Extra;
                 frame.Margins.BottomOx = OxSize.Extra;

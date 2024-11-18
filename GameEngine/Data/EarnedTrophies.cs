@@ -32,13 +32,15 @@ namespace PlayStationGames.GameEngine.Data
 
         protected override void SaveData(XmlElement element, bool clearModified = true)
         {
-            if (Trophies.Count != 0)
+            if (!Trophies.IsEmpty)
                 XmlHelper.AppendElement(element, XmlConsts.AccountId, accountId);
         }
 
-        public override bool IsEmpty => Trophies.Count == 0;
+        public override bool IsEmpty =>
+            Trophies.IsEmpty;
 
-        public override bool Equals(object? obj) => base.Equals(obj)
+        public override bool Equals(object? obj) => 
+            base.Equals(obj)
             || (obj is EarnedTrophies otherEarnedTrophies
                 && accountId.Equals(otherEarnedTrophies.AccountId)
                 && Trophies.Equals(otherEarnedTrophies.Trophies));

@@ -84,9 +84,9 @@ namespace PlayStationGames.AccountEngine.Editor
             };
 
         public override int Height(AccountField field) =>
-            field == AccountField.Avatar
+            field is AccountField.Avatar
                 ? 80
-                : field == AccountField.DefaultAccount 
+                : field is AccountField.DefaultAccount 
                     ? 20
                     : base.Height(field);
 

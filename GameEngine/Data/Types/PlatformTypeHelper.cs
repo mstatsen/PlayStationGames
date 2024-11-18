@@ -13,13 +13,13 @@ namespace PlayStationGames.GameEngine.Data.Types
 
         public bool IsPSNPlatform(PlatformType type) =>
             PlatformWithTrophies(type)
-                || type == PlatformType.PSP;
+                || type is PlatformType.PSP;
 
         public bool PlatformWithTrophies(PlatformType type) =>
-            type == PlatformType.PS3
-                || type == PlatformType.PS4
-                || type == PlatformType.PS5
-                || type == PlatformType.PSVita;
+            type is PlatformType.PS3
+                 or PlatformType.PS4
+                 or PlatformType.PS5
+                 or PlatformType.PSVita;
 
         public override object DependsOnValue(PlatformType value) => 
             value switch
@@ -122,7 +122,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                         List<PlatformType> result = new();
 
                         foreach (PlatformType platform in All())
-                            if (DependsOnValue<PlatformFamily>(platform) == family)
+                            if (DependsOnValue<PlatformFamily>(platform).Equals(family))
                                 result.Add(platform);
 
                         return result;
@@ -134,7 +134,7 @@ namespace PlayStationGames.GameEngine.Data.Types
         }
 
         public bool StoragesSupport(PlatformType platformType) => 
-            platformType != PlatformType.PSOne;
+            platformType is not PlatformType.PSOne;
 
         public List<ConsoleGeneration> Generations(PlatformType platformType, Source source, bool licensed)
         {

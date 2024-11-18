@@ -107,27 +107,27 @@ namespace PlayStationGames.GameEngine.Data
             Trophyset otherTrophyset = (Trophyset)other;
             int result = Type.CompareTo(otherTrophyset.Type);
 
-            if (result != 0) 
+            if (result is not 0) 
                 return result;
 
             result = Difficult.CompareTo(otherTrophyset.Difficult);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = CompleteTime.CompareTo(otherTrophyset.CompleteTime);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = Available.CompareTo(otherTrophyset.Available);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = EarnedTrophies.CompareTo(otherTrophyset.EarnedTrophies);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             return AppliesTo.CompareTo(otherTrophyset.AppliesTo);
@@ -158,7 +158,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         public bool TrophysetExists => 
-            Type != TrophysetType.NoSet;
+            Type is not TrophysetType.NoSet;
     }
 
     public class FullTrophyset : Trophyset

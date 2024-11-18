@@ -123,11 +123,11 @@ namespace PlayStationGames.GameEngine.ControlFactory
             if (context is FieldContext<GameField, Game> accessorContext)
             {
                 if (!context.IsQuickFilter &&
-                    accessorContext.Field == GameField.CriticScore)
+                    accessorContext.Field is GameField.CriticScore)
                     return new NumericInitializer(-1, 100);
 
                 if (context.IsQuickFilter &&
-                    (accessorContext.Field == GameField.Year))
+                    (accessorContext.Field is GameField.Year))
                 {
                     object? variant = BuilderVariant(context.Builder);
                     return new ExtractInitializer<GameField, Game>(
@@ -139,7 +139,7 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     );
                 }
 
-                if (accessorContext.Field == GameField.Owner)
+                if (accessorContext.Field is GameField.Owner)
                     return new OwnerInitializer();
             }
 

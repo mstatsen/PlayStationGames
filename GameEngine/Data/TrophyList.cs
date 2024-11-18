@@ -9,12 +9,13 @@ namespace PlayStationGames.GameEngine.Data
         public Trophy Add(TrophyType type, int count)
         {
             Trophy? existTrophy = 
-                Find(t => t.Type == type) 
-                ?? Add(new Trophy()
-                {
-                    Type = type,
-                    Count = 0
-                });
+                TrophyByType(type)
+                ?? Add(
+                    new Trophy()
+                    {
+                        Type = type,
+                        Count = 0
+                    });
 
             existTrophy.Count += count;
             return existTrophy;
@@ -30,7 +31,7 @@ namespace PlayStationGames.GameEngine.Data
         }
 
         public Trophy? TrophyByType(TrophyType type) => 
-            Find(t => t.Type == type);
+            Find(t => t.Type.Equals(type));
 
         public int GetTrophyCount(TrophyType type)
         {

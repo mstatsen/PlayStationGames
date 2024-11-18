@@ -19,10 +19,10 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         private int PrepareControl(IControlAccessor accessor, 
             string caption = "", int lastBottom = -1, bool fullRow = false)
         {
-            bool withoutLabel = caption == string.Empty;
+            bool withoutLabel = caption.Equals(string.Empty);
             accessor.Parent = this;
             accessor.Left = withoutLabel ? 12 : 100;
-            accessor.Top = lastBottom == -1 ? 8 : lastBottom + 4;
+            accessor.Top = lastBottom is -1 ? 8 : lastBottom + 4;
             accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
             if (fullRow)
@@ -35,7 +35,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
             accessor.Height = 24;
 
-            if (caption != string.Empty)
+            if (!caption.Equals(string.Empty))
                 accessor.Control.Tag = CreateLabel(caption, accessor);
 
             return accessor.Bottom;
@@ -122,7 +122,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         }
 
         private bool IsJoystick() => 
-            AccessoryType == AccessoryType.Joystick;
+            AccessoryType is AccessoryType.Joystick;
 
         private readonly JoystickTypeHelper joystickTypeHelper = TypeHelper.Helper<JoystickTypeHelper>();
         private readonly AccessoryTypeHelper typeHelper = TypeHelper.Helper<AccessoryTypeHelper>();

@@ -84,7 +84,7 @@ namespace PlayStationGames.GameEngine.Data.Fields
             };
 
         public override GameFieldGroup EditedGroup(GameField field) =>
-            field == GameField.ReleasePlatforms
+            field is GameField.ReleasePlatforms
                 ? GameFieldGroup.ReleaseBase
                 : base.EditedGroup(field);
 
@@ -110,7 +110,9 @@ namespace PlayStationGames.GameEngine.Data.Fields
             };
 
         public override DockStyle GroupDock(GameFieldGroup group) =>
-            group == GameFieldGroup.ReleaseBase ? DockStyle.Bottom : base.GroupDock(group);
+            group is GameFieldGroup.ReleaseBase 
+                ? DockStyle.Bottom 
+                : base.GroupDock(group);
 
         public override bool IsCalcedHeightGroup(GameFieldGroup group) =>
             new List<GameFieldGroup>

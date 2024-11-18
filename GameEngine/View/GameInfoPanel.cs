@@ -179,7 +179,7 @@ namespace PlayStationGames.GameEngine.View
             imageLayout.Height = 97;
 
             if (Item?.Image is not null 
-                && Item.Image.GetPixel(0, 0).A == 0)
+                && Item.Image.GetPixel(0, 0).A is 0)
             {
                 imageLayout.Left = 12;
                 imageLayout.Width = 176;

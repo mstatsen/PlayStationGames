@@ -52,13 +52,13 @@ namespace PlayStationGames.GameEngine.Data
         public override bool Equals(object? obj) => 
             base.Equals(obj)
                 || (obj is Trophy otherTrophy
-                    && Type == otherTrophy.Type
-                    && Count == otherTrophy.Count
+                    && Type.Equals(otherTrophy.Type)
+                    && Count.Equals(otherTrophy.Count)
                 );
 
         public override int GetHashCode() => 
             Type.GetHashCode() ^ Count.GetHashCode();
 
-        public override bool IsEmpty => count == 0; 
+        public override bool IsEmpty => count is 0; 
     }
 }

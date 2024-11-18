@@ -18,7 +18,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             accessor.Parent = this;
             accessor.Left = 80;
-            accessor.Top = lastBottom == -1 ? 8 : lastBottom + 4;
+            accessor.Top = lastBottom is -1 ? 8 : lastBottom + 4;
             accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
             if (fullRow)
@@ -54,7 +54,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             string? newPlacementName = TypeHelper.Name(placementControl!.EnumValue);
 
-            if (nameControl!.IsEmpty || nameControl.StringValue == lastPlacementName)
+            if (nameControl!.IsEmpty 
+                || nameControl.StringValue.Equals(lastPlacementName))
                 nameControl.Value = newPlacementName;
 
             lastPlacementName = newPlacementName;

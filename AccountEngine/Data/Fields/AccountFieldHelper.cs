@@ -241,7 +241,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
         public override AccountField UniqueField => AccountField.Id;
 
         public override DataGridViewContentAlignment ColumnAlign(AccountField field) =>
-            field == AccountField.Name
+            field is AccountField.Name
                 ? DataGridViewContentAlignment.MiddleLeft
                 : DataGridViewContentAlignment.MiddleCenter;
 

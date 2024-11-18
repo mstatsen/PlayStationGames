@@ -31,7 +31,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
         private object? GamesCount()
         {
             int result = Dao.Storages.GamesCount();
-            return result == 0
+            return result is 0
                 ? string.Empty
                 : result;
         }

@@ -14,8 +14,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
         private void AddSeriesNameToComboBox(string? seriesName)
         {
             if (ComboBox!.Items.IndexOf(seriesName) < 0
-                && (ExistingSeries.Count == 0 ||
-                    !ExistingSeries.Contains(l => l.Name == seriesName)))
+                && (ExistingSeries.Count is 0 
+                    || !ExistingSeries.Contains(l => l.Name.Equals(seriesName)))
+                )
                 ComboBox!.Items.Add(seriesName);
         }
 

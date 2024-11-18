@@ -28,7 +28,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.ValueAccessors
                 id.Equals(Guid.Empty)
                     ? NullAccount
                     : DataManager.ListController<AccountField, Account>()
-                        .FullItemsList.Find((a) => a.Id == id);
+                        .FullItemsList.Find((a) => a.Id.Equals(id));
         }
     }
 }

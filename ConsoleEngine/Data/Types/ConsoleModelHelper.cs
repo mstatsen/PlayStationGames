@@ -139,7 +139,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                         List<ConsoleModel> result = new();
 
                         foreach (ConsoleModel model in All())
-                            if (DependsOnValue<ConsoleGeneration>(model) == generation)
+                            if (DependsOnValue<ConsoleGeneration>(model).Equals(generation))
                                 result.Add(model);
 
                         return result;

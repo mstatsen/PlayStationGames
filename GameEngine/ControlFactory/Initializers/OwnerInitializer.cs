@@ -9,7 +9,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Initializers
         public override bool AvailableValue(object value)
         {
             if (value is Account account)
-                return account.Type == AccountType.PSN;
+                return account.Type is AccountType.PSN;
 
             return false;
         }

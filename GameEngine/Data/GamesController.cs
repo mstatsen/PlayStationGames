@@ -85,7 +85,7 @@ namespace PlayStationGames.GameEngine.Data
 
         private void OnAccountRemove(Account dao, DAOEntityEventArgs e)
         {
-            foreach (Game game in FullItemsList.FindAll((g) => g.Owner == dao.Id))
+            foreach (Game game in FullItemsList.FindAll((g) => g.Owner.Equals(dao.Id)))
                 game.Owner = Guid.Empty;
         }
 
@@ -93,13 +93,13 @@ namespace PlayStationGames.GameEngine.Data
         {
             List<Game> gamesInstalledOnCurrentConsole = FullItemsList
                 .FindAll(
-                    (g) => g.Installations.Contains(
-                        (i) => i.ConsoleId == dao.Id
+                    g => g.Installations.Contains(
+                        i => i.ConsoleId.Equals(dao.Id)
                     )
                 );
 
             foreach (Game game in gamesInstalledOnCurrentConsole)
-                game.Installations.RemoveAll((i) => i.ConsoleId == dao.Id);
+                game.Installations.RemoveAll(i => i.ConsoleId.Equals(dao.Id));
         }
 
         protected override Bitmap? GetIcon() => OxIcons.Game;
@@ -125,7 +125,8 @@ namespace PlayStationGames.GameEngine.Data
 
         public override string GetExtractItemCaption(GameField field, object? value)
         {
-            if (field == GameField.Owner && value is Guid guidValue)
+            if (field is GameField.Owner 
+                && value is Guid guidValue)
             {
                 Account? account = DataManager.Item<AccountField, Account>(AccountField.Id, guidValue);
                 return 

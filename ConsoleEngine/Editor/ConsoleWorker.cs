@@ -23,9 +23,9 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         protected override bool SyncFieldValue(ConsoleField field, bool byUser)
         {
-            if (field == ConsoleField.Firmware)
+            if (field is ConsoleField.Firmware)
             {
-                if (Firmware.Equals(FirmwareType.Official))
+                if (Firmware is FirmwareType.Official)
                 {
                     Builder.SetVisible(ConsoleField.FirmwareName, false);
                     Builder[ConsoleField.FirmwareVersion].Top = Builder[ConsoleField.FirmwareName].Top;
@@ -33,7 +33,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 else
                 {
                     Builder.SetVisible(ConsoleField.FirmwareName, true);
-                    Builder[ConsoleField.FirmwareVersion].Top = Builder[ConsoleField.FirmwareName].Bottom
+                    Builder[ConsoleField.FirmwareVersion].Top = 
+                        Builder[ConsoleField.FirmwareName].Bottom
                         + Generator.Offset(ConsoleField.FirmwareVersion) + 2;
                 }
             }

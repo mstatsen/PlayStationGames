@@ -253,13 +253,13 @@ namespace PlayStationGames.GameEngine.View
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Source, -8));
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Region, -8));
 
-            if (Item!.Edition != string.Empty)
+            if (!Item!.Edition.Equals(string.Empty))
                 releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Edition, -8));
 
-            if (Item!.Serieses.Count != 0)
+            if (Item!.Serieses.Count is not 0)
                 releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Serieses, 8));
 
-            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Genre, Item!.Serieses.Count != 0 ? -8 : 8));
+            releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Genre, Item!.Serieses.Count is not 0 ? -8 : 8));
 
             if (Item!.Devices.Count > 0)
                 releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Devices, -8));
@@ -292,7 +292,7 @@ namespace PlayStationGames.GameEngine.View
                 licensedLayout.Left = Layouter[GameField.Image]!.Right + 12;
             }
             else
-            if (Item!.Owner != Guid.Empty)
+            if (!Item!.Owner.Equals(Guid.Empty))
                 baseLayouts.Add(Layouter.AddFromTemplate(GameField.Owner));
 
             if (Item!.Installed)
@@ -315,7 +315,7 @@ namespace PlayStationGames.GameEngine.View
 
             if (Item is not null
                 && Item.Image is not null
-                && Item.Image.GetPixel(0, 0).A == 0)
+                && Item.Image.GetPixel(0, 0).A is 0)
                 imageLayout.BackColor = Colors.Darker();
         }
 

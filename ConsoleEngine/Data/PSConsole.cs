@@ -126,7 +126,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         public List<Game> Games() =>
             DataManager.FullItemsList<GameField, Game>().FindAll(
                 (g) => g.Installations.Contains(
-                    (i) => i.ConsoleId == Id
+                    (i) => i.ConsoleId.Equals(Id)
                 )
             );
 
@@ -200,7 +200,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             };
 
         public bool IsOfficialFirmware => 
-                Firmware == FirmwareType.Official;
+                Firmware is FirmwareType.Official;
         public string FullModel =>
             $"{TypeHelper.FullName(Model)} ({ModelCode})";
 
@@ -208,7 +208,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             (IsOfficialFirmware
                 ? TypeHelper.Name(Firmware)
                 : FirmwareName)
-            + (FirmwareVersion != string.Empty
+            + (!FirmwareVersion.Equals(string.Empty)
                 ? $", ver. {FirmwareVersion}"
                 : string.Empty);
 
@@ -224,7 +224,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
             int result = Name.CompareTo(otherConsole.Name);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             if (Generation > otherConsole.Generation)
@@ -247,12 +247,12 @@ namespace PlayStationGames.ConsoleEngine.Data
 
             result = ModelCode.CompareTo(otherConsole.ModelCode);
 
-            if (result != 0) 
+            if (result is not 0) 
                 return result;
 
             result = FirmwareName.CompareTo(otherConsole.FirmwareName);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = FirmwareVersion.CompareTo(otherConsole.FirmwareVersion);

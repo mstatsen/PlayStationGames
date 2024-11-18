@@ -51,7 +51,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             {
                 PlatformFamily family = TypeHelper.DependsOnValue<PlatformType, PlatformFamily>(platformType);
 
-                if (oldFamily != family)
+                if (!oldFamily.Equals(family))
                 {
                     top = 0;
                     left = 

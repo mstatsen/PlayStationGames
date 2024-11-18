@@ -80,7 +80,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
         {
             control.Parent = this;
             control.Left = 80;
-            control.Top = lastBottom == -1 ? 8 : lastBottom + 4;
+            control.Top = lastBottom is -1 ? 8 : lastBottom + 4;
             control.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             control.Width = Width - control.Left - 8;
             control.Height = 32;

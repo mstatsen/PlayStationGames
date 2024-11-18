@@ -59,7 +59,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             type switch
             {
                 AccessoryType.Joystick => 
-                    joystickType == JoystickType.Other,
+                    joystickType is JoystickType.Other,
                 AccessoryType.Camera or
                 AccessoryType.Earphones or
                 AccessoryType.Connector or
@@ -70,7 +70,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             };
 
         public bool SupportModelCode(AccessoryType type, JoystickType joystickType) =>
-            type == AccessoryType.Joystick
+            type is AccessoryType.Joystick
                 ? TypeHelper.Helper<JoystickTypeHelper>().IsOficial(joystickType)
                 : type is 
                     AccessoryType.VR or
@@ -81,8 +81,8 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
             type switch
             {
                 AccessoryType.MemoryCard => 
-                    generation is ConsoleGeneration.PS1 or 
-                        ConsoleGeneration.PS2,
+                    generation is ConsoleGeneration.PS1 
+                               or ConsoleGeneration.PS2,
                 AccessoryType.Charger or 
                 AccessoryType.Cover => 
                     generation is ConsoleGeneration.PSP or 
@@ -95,15 +95,15 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 AccessoryType.ARCards =>
                     generation is ConsoleGeneration.PSVita,
                 AccessoryType.RemoteControl => 
-                    generation is not ConsoleGeneration.PSP and 
-                    not ConsoleGeneration.PSVita,
+                    generation is not ConsoleGeneration.PSP 
+                              and not ConsoleGeneration.PSVita,
                 _ => generation switch
                     {
                         ConsoleGeneration.PSP =>
-                            type != AccessoryType.Joystick,
+                            type is not AccessoryType.Joystick,
                         ConsoleGeneration.PSVita =>
-                            type != AccessoryType.Joystick &&
-                            type != AccessoryType.Camera,
+                            type is not AccessoryType.Joystick 
+                                and not AccessoryType.Camera,
                         _ => true,
                     },
             };

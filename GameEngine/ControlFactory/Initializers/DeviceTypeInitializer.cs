@@ -17,7 +17,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
             base.AvailableValue(value)
             && (Game is null 
                 || deviceTypeHelper.Available(Game.PlatformType).Contains(value))
-            && (ExistingTypes.Count == 0 
+            && (ExistingTypes.Count is 0 
                 || !ExistingTypes.Contains(d => d.Type.Equals(value)));
 
         public DeviceTypeInitializer() { }

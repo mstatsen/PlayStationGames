@@ -104,7 +104,8 @@ namespace PlayStationGames.AccountEngine.Editor
             existsGames.Clear();
 
             if (account is not null)
-                foreach (Game game in DataManager.FullItemsList<GameField, Game>().FindAll((g) => g.Owner == account.Id))
+                foreach (Game game in DataManager.FullItemsList<GameField, Game>().
+                    FindAll(g => g.Owner.Equals(account.Id)))
                 {
                     Game tempGame = new();
                     tempGame.CopyFrom(game);
@@ -130,7 +131,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 || account.Type is not AccountType.Local)
                 return false;
 
-            List<Game> owneredGameList = FullGameList.FindAll(g => g.Owner == account.Id);
+            List<Game> owneredGameList = FullGameList.FindAll(g => g.Owner.Equals(account.Id));
 
                 foreach (Game game in owneredGameList)
                     game.Owner = AccountValueAccessor.NullAccount.Id;
@@ -149,9 +150,9 @@ namespace PlayStationGames.AccountEngine.Editor
                 return;
 
             gamesController.FullItemsList.StartSilentChange();
-            List<Game> updatedList = FullGameList.FindAll((g) =>
-                g.Owner == account.Id 
-                && !existsGames.Contains((g2) => g2.Id.Equals(g.Id))
+            List<Game> updatedList = FullGameList.FindAll(g =>
+                g.Owner.Equals(account.Id)
+                && !existsGames.Contains(g2 => g2.Id.Equals(g.Id))
             );
 
             try
@@ -159,7 +160,11 @@ namespace PlayStationGames.AccountEngine.Editor
                 foreach (Game game in updatedList)
                     game.Owner = AccountValueAccessor.NullAccount.Id;
 
-                List<Game> updatedList2 = FullGameList.FindAll(g => existsGames.Contains(g2 => g2.Id == g.Id));
+                List<Game> updatedList2 = FullGameList.
+                    FindAll(g => existsGames.Contains(g2 => 
+                            g2.Id.Equals(g.Id)
+                        )
+                    );
 
                 foreach (Game game in updatedList2)
                     game.Owner = account.Id;

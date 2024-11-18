@@ -33,10 +33,10 @@ namespace PlayStationGames.ConsoleEngine.Data
         {
             id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
 
-            if (State == DAOState.Coping)
+            if (State is DAOState.Coping)
                 savedToString = (string?)XmlHelper.Value(element, "ToStringValue");
             else
-                if (State == DAOState.Loading)
+                if (State is DAOState.Loading)
                     CalcToString();
         }
 
@@ -44,7 +44,7 @@ namespace PlayStationGames.ConsoleEngine.Data
         {
             XmlHelper.AppendElement(element, XmlConsts.Id, id);
 
-            if (State == DAOState.Coping)
+            if (State is DAOState.Coping)
                 XmlHelper.AppendElement(element, "ToStringValue", savedToString);
         }
 
@@ -61,8 +61,8 @@ namespace PlayStationGames.ConsoleEngine.Data
 
         public override string? ToString()
         {
-            if (savedToString == string.Empty
-                || savedToString is null)
+            if (savedToString is null 
+                || savedToString.Equals(string.Empty))
                 CalcToString();
 
             return savedToString;

@@ -37,8 +37,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
         public bool IsLastLayoutForOneRow(GameField field, GameField lastField) => 
             field switch
             {
-                GameField.Format => lastField == GameField.Platform,
-                GameField.Genre => lastField == GameField.ScreenView,
+                GameField.Format => lastField is GameField.Platform,
+                GameField.Genre => lastField is GameField.ScreenView,
                 _ => false,
             };
 
@@ -50,10 +50,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
             switch (field)
             {
                 case GameField.ScreenView:
-                    if (variant == QuickFilterVariant.Export ||
-                        (variant == QuickFilterVariant.Base &&
-                            quickFilterFields.Contains(GameField.ScreenView) &&
-                            quickFilterFields.Contains(GameField.Genre)))
+                    if (variant is QuickFilterVariant.Export 
+                        || (variant is QuickFilterVariant.Base 
+                            && quickFilterFields.Contains(GameField.ScreenView) 
+                            && quickFilterFields.Contains(GameField.Genre)))
                         return "Genre";
                     break;
 
@@ -61,16 +61,16 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                     return "Single";
 
                 case GameField.CompleteTime:
-                    if (variant == QuickFilterVariant.Export ||
-                        (variant == QuickFilterVariant.Base &&
-                        quickFilterFields.Contains(GameField.CompleteTime)))
+                    if (variant is QuickFilterVariant.Export 
+                        || (variant is QuickFilterVariant.Base 
+                            && quickFilterFields.Contains(GameField.CompleteTime)))
                         return "Full time";
                     break;
 
                 case GameField.TrophysetType:
-                    if (variant == QuickFilterVariant.Export ||
-                        (variant == QuickFilterVariant.Base &&
-                        quickFilterFields.Contains(GameField.TrophysetType)))
+                    if (variant is QuickFilterVariant.Export 
+                        || (variant is QuickFilterVariant.Base 
+                            && quickFilterFields.Contains(GameField.TrophysetType)))
                         return "Trophyset";
                     break;
 

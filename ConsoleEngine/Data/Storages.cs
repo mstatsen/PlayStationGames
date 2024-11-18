@@ -32,10 +32,10 @@ namespace PlayStationGames.ConsoleEngine.Data
             {
                 string result = base.ShortString;
 
-                if (Count == 0)
+                if (Count is 0)
                     return result;
 
-                if (Count == 1)
+                if (Count is 1)
                     return $"{result} ({this[0].Size} Gb)";
 
                 int totalSize = 0;

@@ -21,6 +21,6 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
         public override bool AvailableValue(object value) =>
             ExistingAccounts is not null 
             && value is Account account 
-            && !ExistingAccounts.Contains(a => a.Id == account.Id);
+            && !ExistingAccounts.Contains(a => a.Id.Equals(account.Id));
     }
 }

@@ -189,13 +189,14 @@ namespace PlayStationGames.GameEngine.Editor
         {
             Platforms appliesTo = (Platforms)Builder[GameField.AppliesTo].Value!;
             
-            if (field == GameField.Platform && byUser)
-                appliesTo.Remove(p => p.Type == CurrentItem.PlatformType);
+            if (field is GameField.Platform 
+                && byUser)
+                appliesTo.Remove(p => p.Type.Equals(CurrentItem.PlatformType));
 
             appliesTo.Remove(
-                p => p.Type != CurrentItem.PlatformType 
+                p => !p.Type.Equals(CurrentItem.PlatformType)
                     && !Builder[GameField.ReleasePlatforms].DAOValue<Platforms>()!.Contains(
-                        p2 => p2.Type == p.Type 
+                        p2 => p2.Type.Equals(p.Type)
                 )
             );
 
@@ -390,7 +391,7 @@ namespace PlayStationGames.GameEngine.Editor
         private void SyncOwnerWithControls(bool byUser)
         {
             bool accountAvailable = AccountAvailable();
-            ownerReadOnlyChanged = accountAvailable != Builder[GameField.Owner].Enabled;
+            ownerReadOnlyChanged = !accountAvailable.Equals(Builder[GameField.Owner].Enabled);
 
             if (byUser && !ownerReadOnlyChanged)
                 return;
@@ -463,7 +464,7 @@ namespace PlayStationGames.GameEngine.Editor
             if (!Builder.Value<bool>(GameField.Licensed))
                 invisibleGroups.Add(GameFieldGroup.DLC);
 
-            if (Builder.Value<GameFormat>(GameField.Format) == GameFormat.Emulator)
+            if (Builder.Value<GameFormat>(GameField.Format) is GameFormat.Emulator)
             {
                 invisibleGroups.Add(GameFieldGroup.Genre);
                 invisibleGroups.Add(GameFieldGroup.RelatedGames);

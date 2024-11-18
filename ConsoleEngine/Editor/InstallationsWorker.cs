@@ -33,13 +33,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
             bool uninstallAvailable = !needShowUninstallMessage
                 || OxMessage.ShowConfirm(
                     $"Are you sure to want uninstall {(selectedList.Count > 1 ? "selected games" : currentItem.FullTitle())}?", 
-                    chooser) == DialogResult.Yes;
+                    chooser) is DialogResult.Yes;
 
             needShowUninstallMessage = false;
 
             if (uninstallAvailable)
             {
-                currentItem.Installations.RemoveAll(i => i.ConsoleId == Console.Id);
+                currentItem.Installations.RemoveAll(i => i.ConsoleId.Equals(Console.Id));
                 return CanSelectResult.Available;
             }
 
@@ -63,10 +63,10 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 placeSelector.Game = currentItem;
                 DialogResult result = placeSelector.ShowAsDialog(chooser);
 
-                if (result == OxDialogButtonsHelper.Result(OxDialogButton.Cancel))
+                if (result.Equals(OxDialogButtonsHelper.Result(OxDialogButton.Cancel)))
                     return CanSelectResult.Return;
 
-                ApplyPlacementForAll = result == OxDialogButtonsHelper.Result(OxDialogButton.ApplyForAll);
+                ApplyPlacementForAll = result.Equals(OxDialogButtonsHelper.Result(OxDialogButton.ApplyForAll));
             }
 
             currentItem.Installations.Add(
@@ -148,7 +148,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             if (Console is null)
                 return null;
 
-            return item.Installations.Find(i => i.ConsoleId == Console.Id)?.Folder;
+            return item.Installations.Find(i => i.ConsoleId.Equals(Console.Id))?.Folder;
         }
 
         private void CompleteSelectHandler(object? sender, EventArgs e)

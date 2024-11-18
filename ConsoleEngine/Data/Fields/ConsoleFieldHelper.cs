@@ -217,7 +217,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
             };
 
         public override DataGridViewContentAlignment ColumnAlign(ConsoleField field) =>
-            field == ConsoleField.Name 
+            field is ConsoleField.Name 
                 ? DataGridViewContentAlignment.MiddleLeft
                 : DataGridViewContentAlignment.MiddleCenter;
 
@@ -271,7 +271,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
         public override ConsoleField ImageField => ConsoleField.Icon;
 
         public override string ColumnCaption(ConsoleField field) =>
-            field == ConsoleField.Icon 
+            field is ConsoleField.Icon 
                 ? string.Empty 
                 : base.ColumnCaption(field);
 

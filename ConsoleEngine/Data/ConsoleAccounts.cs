@@ -6,7 +6,7 @@ namespace PlayStationGames.ConsoleEngine.Data
     public class ConsoleAccounts : ListDAO<ConsoleAccount>
     {
         public ConsoleAccount? GetById(Guid id) =>
-            Find(s => s.Id == id);
+            Find(s => s.Id.Equals(id));
 
         public string? AccountName(Guid id)
         {

@@ -14,8 +14,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
         private void AddTagNameToComboBox(string? tagName)
         {
             if (ComboBox!.Items.IndexOf(tagName) < 0
-                && (ExistingTags.Count == 0 ||
-                    !ExistingTags.Contains(l => l.Name == tagName)))
+                && (ExistingTags.Count is 0 
+                    || !ExistingTags.Contains(l => l.Name.Equals(tagName)))
+                )
                 ComboBox!.Items.Add(tagName);
         }
 

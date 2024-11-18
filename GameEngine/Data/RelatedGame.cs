@@ -14,7 +14,7 @@ namespace PlayStationGames.GameEngine.Data
         private readonly RootListDAO<GameField, Game> FullGamesList = 
             DataManager.ListController<GameField, Game>().FullItemsList;
 
-        public Game? Game => FullGamesList.Find(g => g.Id == gameId);
+        public Game? Game => FullGamesList.Find(g => g.Id.Equals(gameId));
 
         public override void Clear() => 
             GameId = Guid.Empty;

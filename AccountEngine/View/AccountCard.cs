@@ -82,7 +82,7 @@ namespace PlayStationGames.AccountEngine.View
             BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Type));
             Layouter.Template.FontStyle = FontStyle.Regular;
 
-            if (Item!.Login != string.Empty)
+            if (!Item!.Login.Equals(string.Empty))
                 BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Login, -8));
 
             BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Country,-8));
@@ -91,8 +91,8 @@ namespace PlayStationGames.AccountEngine.View
         private void FillUsedAndOwnsLayout()
         {
             if (Item is null
-                || (Item.ConsolesCount == 0
-                    && Item.GamesCount == 0))
+                || (Item.ConsolesCount is 0
+                    && Item.GamesCount is 0))
                 return;
 
             ClearLayoutTemplate();

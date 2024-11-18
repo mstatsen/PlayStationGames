@@ -5,11 +5,11 @@ namespace PlayStationGames.ConsoleEngine.Data
     public class Folders : ListDAO<Folder>
     {
         public Folder? GetByName(string name) =>
-            Find(f => f.Name == name);
+            Find(f => f.Name.Equals(name));
 
         public string CheckName(string name)
         {
-            if (name == string.Empty)
+            if (name.Equals(string.Empty))
                 return name;
 
             Folder? folder = GetByName(name);

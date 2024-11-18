@@ -47,7 +47,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             {
                 string genre = Dao.GenreName;
 
-                if (genre.Trim() == string.Empty)
+                if (genre.Trim().Equals(string.Empty))
                     genre = Consts.Short_Unknown;
 
                 return $"{TypeHelper.ShortName(Dao.ScreenView)} {genre}";
@@ -62,7 +62,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
 
         private object DLC =>
             Dao.Dlcs.Count > 0
-                ? Dao.Dlcs.First?.Name.Trim().ToUpper() == "All DlC".ToUpper()
+                ? Dao.Dlcs.First!.Name.Trim().ToUpper().Equals("All DlC".ToUpper())
                     ? "All DLC"
                     : Dao.Dlcs.Count.ToString()
                 : string.Empty;
@@ -76,7 +76,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             OxImageBoxer.BoxingImage(Dao.Image, new(70, 40));
 
         private object? Pegi =>
-            Dao.Pegi == TypeHelper.EmptyValue<Pegi>()
+            Dao.Pegi.Equals(TypeHelper.EmptyValue<Pegi>())
                 ? string.Empty
                 : TypeHelper.Name(Dao.Pegi);
 
@@ -84,30 +84,30 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             TypeHelper.Name(Dao.SourceType);
 
         private object? CompleteTime =>
-            Dao.Trophyset.CompleteTime == TypeHelper.EmptyValue<CompleteTime>()
+            Dao.Trophyset.CompleteTime.Equals(TypeHelper.EmptyValue<CompleteTime>())
                 ? string.Empty
                 : TypeHelper.Name(Dao.Trophyset.CompleteTime);
 
         private object? Format =>
-            Dao.Format != TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType)
-                ? TypeHelper.ShortName(Dao.Format)
-                : string.Empty;
+            Dao.Format.Equals(TypeHelper.Helper<GameFormatHelper>().DefaultFormat(Dao.PlatformType))
+                ? string.Empty
+                : TypeHelper.ShortName(Dao.Format);
 
         private object? PlatformType =>
             TypeHelper.ShortName(Dao.PlatformType);
 
         private object? Difficult =>
-            Dao.Trophyset.Difficult == TypeHelper.EmptyValue<Difficult>()
+            Dao.Trophyset.Difficult.Equals(TypeHelper.EmptyValue<Difficult>())
                 ? string.Empty
                 : TypeHelper.Name(Dao.Trophyset.Difficult);
 
         private string CriticScore =>
-            Dao.CriticScore == GameConsts.Empty_CriticScore
+            Dao.CriticScore is GameConsts.Empty_CriticScore
             ? Consts.Short_Unknown
             : Dao.CriticScore.ToString();
 
         private string Year =>
-            Dao.Year == GameConsts.Empty_Year
+            Dao.Year is GameConsts.Empty_Year
                 ? string.Empty
                 : Dao.Year.ToString();
 
@@ -115,7 +115,8 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         {
             get
             {
-                Account? account = DataManager.ListController<AccountField, Account>().FullItemsList.Find((a) => a.Id == Dao.Owner);
+                Account? account = DataManager.ListController<AccountField, Account>().FullItemsList.
+                    Find((a) => a.Id.Equals(Dao.Owner));
 
                 if (account is not null)
                     return account.Name;

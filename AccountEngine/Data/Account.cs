@@ -89,8 +89,9 @@ namespace PlayStationGames.AccountEngine.Data
             base.LoadData(element);
             id = XmlHelper.ValueGuid(element, XmlConsts.Id, true);
 
-            if (id == Guid.Empty)
+            if (id.Equals(Guid.Empty))
                 id = Guid.NewGuid();
+
             defaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
             country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
             login = XmlHelper.Value(element, XmlConsts.Login);
@@ -121,7 +122,7 @@ namespace PlayStationGames.AccountEngine.Data
 
 
         public List<Game> Games =>
-            DataManager.FullItemsList<GameField, Game>().FindAll((g) => g.Owner == Id);
+            DataManager.FullItemsList<GameField, Game>().FindAll((g) => g.Owner.Equals(Id));
 
         public ListDAO<PSConsole> Consoles
         {
@@ -130,8 +131,8 @@ namespace PlayStationGames.AccountEngine.Data
                 ListDAO<PSConsole> result = new();
                 result.AddRange(
                     DataManager.FullItemsList<ConsoleField, PSConsole>().FindAll(
-                        (c) => c.Accounts.Contains(
-                            (a) => a.Id == Id
+                        c => c.Accounts.Contains(
+                            a => a.Id.Equals(Id)
                         )
                     )
                 );

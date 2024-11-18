@@ -44,7 +44,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 or ConsoleGeneration.PSVita;
 
         public bool StorageSupport(ConsoleGeneration generation) => 
-            generation != ConsoleGeneration.PS1;
+            generation is not ConsoleGeneration.PS1;
 
         public int MaxAccountsCount(ConsoleGeneration generation, FirmwareType firmwareType) =>
             generation switch
@@ -52,7 +52,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 ConsoleGeneration.PS1 or
                 ConsoleGeneration.PS2 =>
                     0,
-                ConsoleGeneration.PSP when firmwareType == FirmwareType.Custom =>
+                ConsoleGeneration.PSP when firmwareType is FirmwareType.Custom =>
                     0,
                 ConsoleGeneration.PS3 or
                 ConsoleGeneration.PS4 or

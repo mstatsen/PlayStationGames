@@ -53,7 +53,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         protected override void FillControls(Series item)
         {
-            if (item.Name != string.Empty &&
+            if (!item.Name.Equals(string.Empty) &&
                 NameControl.ComboBox.Items.IndexOf(item.Name) < 0)
                 NameControl.ComboBox.Items.Insert(0, item.Name);
 

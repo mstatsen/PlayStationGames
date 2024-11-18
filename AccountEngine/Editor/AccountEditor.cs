@@ -29,7 +29,7 @@ namespace PlayStationGames.AccountEngine.Editor
             base.SetFrameMargin(group, frame);
             frame.Margins.RightOx = OxSize.Extra;
 
-            if (group == AccountFieldGroup.Games) 
+            if (group is AccountFieldGroup.Games) 
                 frame.Margins.BottomOx = OxSize.Extra;
         }
 

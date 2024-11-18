@@ -48,7 +48,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         {
             SuitableConsoleGames result = new();
 
-            bool isOfficial = firmware == FirmwareType.Official;
+            bool isOfficial = firmware is FirmwareType.Official;
             bool? officialOrNull = isOfficial ? true : null;
 
             switch (generation)
@@ -63,7 +63,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 case ConsoleGeneration.PSVita:
                     result.Add(PlatformType.PSVita, officialOrNull);
 
-                    if (firmware == FirmwareType.Custom)
+                    if (firmware is FirmwareType.Custom)
                     {
                         result.Add(PlatformType.PSVita, Source.PKGj, false);
                         result.Add(PlatformType.PSP, Source.PKGj, false);
@@ -73,30 +73,30 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
                 case ConsoleGeneration.PS3:
                     result.Add(PlatformType.PS3, officialOrNull);
 
-                    if (model == ConsoleModel.PS3Fat)
+                    if (model is ConsoleModel.PS3Fat)
                     {
                         result.Add(PlatformType.PS2, Source.Physical, true);
                         result.Add(PlatformType.PSOne, Source.Physical, true);
                     }
 
-                    if (firmware == FirmwareType.Custom)
+                    if (firmware is FirmwareType.Custom)
                         result.Add(PlatformType.PSOne, Source.Torrent, false);
 
                     break;
                 case ConsoleGeneration.PSP:
-                    if (model == ConsoleModel.PSPGO)
+                    if (model is ConsoleModel.PSPGO)
                         result.AddDigital(PlatformType.PSP, officialOrNull);
                     else
                         result.Add(PlatformType.PSP, officialOrNull);
 
-                    if (firmware == FirmwareType.Custom)
+                    if (firmware is FirmwareType.Custom)
                         result.Add(PlatformType.PSOne, Source.Torrent, false);
                     break;
                 case ConsoleGeneration.PS2:
                     result.Add(PlatformType.PS2, officialOrNull);
                     result.Add(PlatformType.PSOne, Source.Physical, officialOrNull);
 
-                    if (firmware == FirmwareType.Custom)
+                    if (firmware is FirmwareType.Custom)
                         result.Add(PlatformType.PSOne, Source.Torrent, false);
 
                     break;

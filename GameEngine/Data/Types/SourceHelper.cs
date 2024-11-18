@@ -99,7 +99,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                 result.Add(item);
             }
 
-            if (platform == PlatformType.PSVita)
+            if (platform is PlatformType.PSVita)
                 result.Remove(Source.Torrent);
             else
                 result.Remove(Source.PKGj);
@@ -153,6 +153,6 @@ namespace PlayStationGames.GameEngine.Data.Types
             };
 
         public bool InstallationsSupport(Source source) =>
-            source != Source.Lost;
+            source is not Source.Lost;
     }
 }

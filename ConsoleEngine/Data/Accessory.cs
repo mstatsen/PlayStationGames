@@ -97,7 +97,7 @@ namespace PlayStationGames.ConsoleEngine.Data
 
             count = XmlHelper.ValueInt(element, XmlConsts.Count);
 
-            if (count == 0)
+            if (count is 0)
                 count = 1;
 
             description = XmlHelper.Value(element, XmlConsts.Description);
@@ -112,7 +112,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             if (accessoryTypeHelper.Named(type, joystickType))
                 XmlHelper.AppendElement(element, XmlConsts.Name, name, true);
 
-            if (type == AccessoryType.Joystick)
+            if (type is AccessoryType.Joystick)
             {
                 XmlHelper.AppendElement(element, XmlConsts.JoystickType, joystickType);
 
@@ -136,7 +136,7 @@ namespace PlayStationGames.ConsoleEngine.Data
             if (count > 1)
                 XmlHelper.AppendElement(element, XmlConsts.Count, count);
 
-            if (description != string.Empty)
+            if (!description.Equals(string.Empty))
                 XmlHelper.AppendElement(element, XmlConsts.Description, description);
         }
 
@@ -145,17 +145,22 @@ namespace PlayStationGames.ConsoleEngine.Data
             string countStr = Count > 1 
                 ? Count.ToString() + " " 
                 : string.Empty;
-            string colorStr = Type == AccessoryType.Joystick && 
-                Color != string.Empty
-                ? Color + " "
-                : string.Empty;
-            bool named = accessoryTypeHelper.Named(type, joystickType);
-            string nameStr = named && name != string.Empty
-                ? name + " "
-                : Type == AccessoryType.Joystick
-                    ? TypeHelper.FullName(JoystickType) + " "
+            string colorStr = 
+                Type is AccessoryType.Joystick 
+                && !Color.Equals(string.Empty)
+                    ? Color + " "
                     : string.Empty;
-            string typeStr = !named && JoystickType == JoystickType.Other 
+            bool named = accessoryTypeHelper.Named(type, joystickType);
+            string nameStr = 
+                named 
+                && !name.Equals(string.Empty)
+                    ? name + " "
+                    : Type is AccessoryType.Joystick
+                        ? TypeHelper.FullName(JoystickType) + " "
+                        : string.Empty;
+            string typeStr = 
+                !named 
+                && JoystickType is JoystickType.Other 
                 ? TypeHelper.FullName(Type) + " "
                 : string.Empty;
             string withCoverStr = withCover 
@@ -176,44 +181,44 @@ namespace PlayStationGames.ConsoleEngine.Data
 
             int result = Type.CompareTo(otherAccessory.Type);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = JoystickType.CompareTo(otherAccessory.JoystickType);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = Name.CompareTo(otherAccessory.Name);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = ModelCode.CompareTo(otherAccessory.ModelCode);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = Color.CompareTo(otherAccessory.Color);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = WithCover.CompareTo(otherAccessory.WithCover);
 
-            if (result != 0) 
+            if (result is not 0) 
                 return result;
 
             result = CoverColor.CompareTo(otherAccessory.CoverColor);
 
-            if (result != 0)
+            if (result is not 0)
                 return result;
 
             result = WithStickCovers.CompareTo(otherAccessory.WithStickCovers);
 
-            return result != 0
-                ? result : 
-                description.CompareTo(otherAccessory.Description);
+            return result is not 0
+                ? result
+                : description.CompareTo(otherAccessory.Description);
         }
 
         public override bool Equals(object? obj) => 
