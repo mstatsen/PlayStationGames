@@ -1,8 +1,6 @@
 ﻿using OxLibrary;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
-using OxDAOEngine;
-using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
@@ -25,7 +23,8 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     NormalizeIfEmpty(Dao.Trophyset.AppliesTo),
                 GameField.Devices =>
                     NormalizeIfEmpty(Dao.Devices.OneColumnText()),
-                _ => NormalizeIfEmpty(base.Value(field)),
+                _ => 
+                    NormalizeIfEmpty(base.Value(field)),
             };
     }
 }

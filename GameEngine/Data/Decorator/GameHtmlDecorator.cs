@@ -6,7 +6,7 @@ using OxDAOEngine.Data.Links;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
-    internal class GameHtmlDecorator : GameDecorator
+    internal class GameHtmlDecorator : SimpleDecorator<GameField, Game>
     {
         public GameHtmlDecorator(Game dao) : base(dao) { }
 

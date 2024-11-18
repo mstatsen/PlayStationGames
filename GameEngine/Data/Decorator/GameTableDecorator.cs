@@ -6,10 +6,11 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxDAOEngine.Data.Decorator;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
-    internal class GameTableDecorator : GameDecorator
+    internal class GameTableDecorator : SimpleDecorator<GameField, Game>
     {
         public GameTableDecorator(Game game) : base(game) {}
 

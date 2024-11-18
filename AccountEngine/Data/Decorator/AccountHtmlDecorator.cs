@@ -1,11 +1,10 @@
 ﻿using OxLibrary;
 using OxDAOEngine.Data.Decorator;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.ConsoleEngine.Data;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {
-    internal class AccountHtmlDecorator : AccountDecorator
+    internal class AccountHtmlDecorator : SimpleDecorator<AccountField, Account>
     {
         public AccountHtmlDecorator(Account dao) : base(dao) { }
 

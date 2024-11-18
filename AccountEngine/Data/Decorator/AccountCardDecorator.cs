@@ -1,6 +1,5 @@
 ﻿using OxDAOEngine.Data.Types;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.AccountEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {

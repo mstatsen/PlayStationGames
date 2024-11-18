@@ -8,9 +8,6 @@ namespace PlayStationGames.GameEngine.Data.Decorator
         protected override Decorator<GameField, Game> HTML(Game dao) =>
             new GameHtmlDecorator(dao);
 
-        protected override Decorator<GameField, Game> Simple(Game dao) =>
-            new GameDecorator(dao);
-
         protected override Decorator<GameField, Game> Table(Game dao) =>
             new GameTableDecorator(dao);
 

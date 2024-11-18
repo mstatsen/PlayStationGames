@@ -5,9 +5,6 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
 {
     public class AccountDecoratorFactory : DecoratorFactory<AccountField, Account>
     {
-        protected override Decorator<AccountField, Account> Simple(Account dao) =>
-            new AccountDecorator(dao);
-
         protected override Decorator<AccountField, Account> Table(Account dao) => 
             new AccountTableDecorator(dao);
 

@@ -23,22 +23,21 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
             }
         }
 
-        public override object? Value(ConsoleField field)
-        {
-            if (TypeHelper.IsTypeHelpered(Dao[field]))
-                return TypeHelper.Name(Dao[field]);
-
-            return field switch
-            {
-                ConsoleField.Icon =>
-                    OxImageBoxer.BoxingImage(Dao.Icon, new(80, 33)),
-                ConsoleField.Storages =>
-                    NormalizeIfEmpty(Dao.Storages.ShortString),
-                ConsoleField.Accessories =>
-                    NormalizeIfEmpty(Dao.Accessories.ShortColumnText()),
-                ConsoleField.Games => InstalledGames,
-                _ => base.Value(field),
-            };
-        }
+        public override object? Value(ConsoleField field) => 
+            TypeHelper.IsTypeHelpered(Dao[field])
+                ? TypeHelper.Name(Dao[field])
+                : field switch
+                    {
+                        ConsoleField.Icon =>
+                            OxImageBoxer.BoxingImage(Dao.Icon, new(80, 33)),
+                        ConsoleField.Storages =>
+                            NormalizeIfEmpty(Dao.Storages.ShortString),
+                        ConsoleField.Accessories =>
+                            NormalizeIfEmpty(Dao.Accessories.ShortColumnText()),
+                        ConsoleField.Games =>
+                            InstalledGames,
+                        _ =>
+                            base.Value(field),
+                    };
     }
 }

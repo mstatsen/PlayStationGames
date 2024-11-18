@@ -1,11 +1,11 @@
-﻿using OxDAOEngine.Data.Types;
+﻿using OxDAOEngine.Data.Decorator;
+using OxDAOEngine.Data.Types;
 using OxLibrary;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {
-    internal class AccountTableDecorator : AccountDecorator
+    internal class AccountTableDecorator : SimpleDecorator<AccountField, Account>
     {
         public AccountTableDecorator(Account dao) : base(dao){ }
         public override object? Value(AccountField field)
@@ -15,36 +15,14 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
 
             return field switch
             {
-                AccountField.Avatar => OxImageBoxer.BoxingImage(Dao.Image, new(70, 40)),
-                AccountField.Consoles => ConsolesCount(),
-                AccountField.Games => GamesCount(),
+                AccountField.Avatar => 
+                    OxImageBoxer.BoxingImage(Dao.Image, new(70, 40)),
+                AccountField.Consoles =>
+                    Dao.ConsolesCount,
+                AccountField.Games => 
+                    Dao.GamesCount,
                 _ => base.Value(field)
             };
-        }
-
-        private object? StrategeLink =>
-            Link("Stratege");
-
-        private object? PSNProfilesLink =>
-            Link("PSNProfiles");
-
-        private object? Link(string Name) =>
-            Dao.Links.Find(l => l.Name.Equals(Name));
-
-        private int ConsolesCount()
-        {
-            return 0;
-        }
-
-        private object? GamesCount()
-        {
-            /*TODO:
-            int result = Dao.Storages.GamesCount();
-            return result == 0
-                ? string.Empty
-                : result;
-            */
-            return 0;
         }
     }
 }

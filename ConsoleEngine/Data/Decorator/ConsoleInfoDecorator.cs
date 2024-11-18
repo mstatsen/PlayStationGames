@@ -1,5 +1,4 @@
-﻿using OxDAOEngine.Data.Types;
-using PlayStationGames.ConsoleEngine.Data.Fields;
+﻿using PlayStationGames.ConsoleEngine.Data.Fields;
 
 namespace PlayStationGames.ConsoleEngine.Data.Decorator
 {
@@ -10,10 +9,14 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
         public override object? Value(ConsoleField field) => 
             field switch
             {
-                ConsoleField.Accounts => Dao.Accounts.OneColumnText(),
-                ConsoleField.Accessories => Dao.Accessories.OneColumnText(),
-                ConsoleField.Storages => StoragesText(),
-                _ => base.Value(field),
+                ConsoleField.Accounts => 
+                    Dao.Accounts.OneColumnText(),
+                ConsoleField.Accessories => 
+                    Dao.Accessories.OneColumnText(),
+                ConsoleField.Storages => 
+                    StoragesText(),
+                _ => 
+                    base.Value(field),
             };
 
         private object? StoragesText()

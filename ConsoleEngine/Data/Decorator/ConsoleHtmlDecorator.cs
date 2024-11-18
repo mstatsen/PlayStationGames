@@ -6,7 +6,7 @@ using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames.ConsoleEngine.Data.Decorator
 {
-    internal class ConsoleHtmlDecorator : ConsoleDecorator
+    internal class ConsoleHtmlDecorator : SimpleDecorator<ConsoleField, PSConsole>
     {
         public ConsoleHtmlDecorator(PSConsole dao) : base(dao) { }
 
