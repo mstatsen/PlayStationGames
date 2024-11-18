@@ -19,6 +19,8 @@ using PlayStationGames.AccountEngine.Data.Fields;
 using OxLibrary;
 using OxDAOEngine.Data.Links;
 using OxDAOEngine.Grid;
+using Microsoft.VisualBasic.FileIO;
+using OxDAOEngine.Data.Filter.Types;
 
 namespace PlayStationGames.GameEngine.Data
 {
@@ -199,6 +201,33 @@ namespace PlayStationGames.GameEngine.Data
                 uniqueTrophisets.Clear();
                 uniqueTrophisets = null;
             }
+        }
+
+        protected override void FillDefaultCategories(Categories<GameField, Game> categories)
+        {
+            base.FillDefaultCategories(categories);
+
+            Category<GameField, Game> BadFillingCategory = new("Bad filling")
+            {
+                BaseOnChilds = true
+            };
+            categories.Add(BadFillingCategory);
+
+            Category<GameField, Game> NotVerifiedCategory = new("Not verified");
+            NotVerifiedCategory.AddFilter(GameField.Verified, false);
+            BadFillingCategory.AddChild(NotVerifiedCategory);
+
+            Category<GameField, Game> ImageIsEmptyCategory = new("Image not set");
+            NotVerifiedCategory.AddFilter(GameField.Image, FilterOperation.Blank);
+            BadFillingCategory.AddChild(ImageIsEmptyCategory);
+
+            categories.Add(
+                new("By Tags")
+                { 
+                    Type = CategoryType.FieldExtraction,
+                    Field = GameField.Tags
+                }
+            );
         }
     }
 }
