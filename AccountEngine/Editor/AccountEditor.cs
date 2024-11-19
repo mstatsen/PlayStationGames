@@ -27,17 +27,17 @@ namespace PlayStationGames.AccountEngine.Editor
         protected override void SetFrameMargin(AccountFieldGroup group, OxFrame frame)
         {
             base.SetFrameMargin(group, frame);
-            frame.Margins.RightOx = OxSize.Extra;
+            frame.Margins.RightOx = OxSize.M;
 
             if (group is AccountFieldGroup.Games) 
-                frame.Margins.BottomOx = OxSize.Extra;
+                frame.Margins.BottomOx = OxSize.M;
         }
 
         protected override void SetPaddings()
         {
             base.SetPaddings();
-            Groups[AccountFieldGroup.Consoles].Paddings.SetSize(OxSize.Large);
-            Groups[AccountFieldGroup.Games].Paddings.SetSize(OxSize.Large);
+            Groups[AccountFieldGroup.Consoles].Paddings.SetSize(OxSize.S);
+            Groups[AccountFieldGroup.Games].Paddings.SetSize(OxSize.S);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace PlayStationGames.AccountEngine.View
                 Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
             TrophiesPanel.SetContentSize(164, 168);
-            TrophiesPanel.Paddings.SetSize(OxSize.Large);
+            TrophiesPanel.Paddings.SetSize(OxSize.S);
             PrepareColors();
         }
 

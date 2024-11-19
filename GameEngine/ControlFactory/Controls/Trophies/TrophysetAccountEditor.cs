@@ -21,7 +21,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             TrophysetPanel = trophysetPanel;
             Text = "Select account";
-            Paddings.SetSize(OxSize.Extra);
+            Paddings.SetSize(OxSize.M);
         }
 
         protected override void PrepareInnerControls()

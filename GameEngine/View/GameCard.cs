@@ -23,7 +23,7 @@ namespace PlayStationGames.GameEngine.View
                 Text = "Trophyset",
                 HeaderHeight = 18
             };
-            TrophysetPanel.Paddings.SetSize(OxSize.Large);
+            TrophysetPanel.Paddings.SetSize(OxSize.S);
             TrophiesPanel = new()
             {
                 Parent = TrophysetPanel,

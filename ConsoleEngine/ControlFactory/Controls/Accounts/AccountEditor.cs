@@ -51,7 +51,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         private readonly AccountInitializer accountInitializer = new();
 
         protected override void SetPaddings() =>
-            MainPanel.Paddings.SetSize(OxSize.Extra);
+            MainPanel.Paddings.SetSize(OxSize.M);
 
         public override void RenewData()
         {

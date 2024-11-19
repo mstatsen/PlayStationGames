@@ -34,7 +34,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void CreateControls()
         {
             BaseGroup.Parent = this;
-            BaseGroup.Margins.SetSize(OxSize.Extra);
+            BaseGroup.Margins.SetSize(OxSize.M);
             NameControl = Context.Accessor("DLC:Name", FieldType.ShortMemo, true);
             NameControl.Top = 8;
             NameControl.Left = 66;
@@ -73,7 +73,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             TrophysetControl.Parent = TrophysetGroup;
             TrophysetControl.ValueChangeHandler += TrophysetValueChange;
             TrophysetGroup.Parent = this;
-            TrophysetGroup.Margins.SetSize(OxSize.Extra);
+            TrophysetGroup.Margins.SetSize(OxSize.M);
             TrophysetGroup.Margins.LeftOx = OxSize.None;
             RecalcSize();
         }

@@ -37,7 +37,7 @@ namespace PlayStationGames
                 TabHeaderSize = new(140, 32),
                 TabPosition = OxDock.Top
             };
-            mainTabControl.Margins.SetSize(OxSize.Medium);
+            mainTabControl.Margins.SetSize(OxSize.XS);
 
             toolBar = new OxToolBar()
             {
@@ -52,7 +52,7 @@ namespace PlayStationGames
             toolBar.AddButton(OxToolbarAction.Settings, true, DockStyle.Right);
             toolBar.SendToBack();
             toolBar.Borders.TopOx = OxSize.None;
-            toolBar.Paddings.TopOx = OxSize.Medium;
+            toolBar.Paddings.TopOx = OxSize.XS;
             loadingPanel = new OxLoadingPanel()
             {
                 Parent = MainPanel,

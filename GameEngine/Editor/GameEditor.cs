@@ -50,24 +50,24 @@ namespace PlayStationGames.GameEngine.Editor
             base.SetFrameMargin(group, frame);
 
             if (GroupParents[PanelRight].Contains(frame))
-                frame.Margins.RightOx = OxSize.Extra;
+                frame.Margins.RightOx = OxSize.M;
 
             if (group is GameFieldGroup.ReleaseBase)
             {
-                frame.Margins.RightOx = OxSize.Extra;
-                frame.Margins.BottomOx = OxSize.Extra;
+                frame.Margins.RightOx = OxSize.M;
+                frame.Margins.BottomOx = OxSize.M;
             }
         }
 
         protected override void SetPaddings()
         {
-            Groups[GameFieldGroup.ReleaseBase].Paddings.HorizontalOx = OxSize.Large;
-            Groups[GameFieldGroup.DLC].Paddings.RightOx = OxSize.Medium;
-            Groups[GameFieldGroup.RelatedGames].Paddings.RightOx = OxSize.Medium;
-            Groups[GameFieldGroup.Links].Paddings.RightOx = OxSize.Medium;
-            Groups[GameFieldGroup.Installations].Paddings.RightOx = OxSize.Medium;
-            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.Medium;
-            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.Medium;
+            Groups[GameFieldGroup.ReleaseBase].Paddings.HorizontalOx = OxSize.S;
+            Groups[GameFieldGroup.DLC].Paddings.RightOx = OxSize.XS;
+            Groups[GameFieldGroup.RelatedGames].Paddings.RightOx = OxSize.XS;
+            Groups[GameFieldGroup.Links].Paddings.RightOx = OxSize.XS;
+            Groups[GameFieldGroup.Installations].Paddings.RightOx = OxSize.XS;
+            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.XS;
+            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.XS;
         }
 
         protected override void RecalcPanels()

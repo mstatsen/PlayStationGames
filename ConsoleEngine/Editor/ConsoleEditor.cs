@@ -82,23 +82,23 @@ namespace PlayStationGames.ConsoleEngine.Editor
         protected override void SetPaddings()
         {
             base.SetPaddings();
-            Groups[ConsoleFieldGroup.Games].Paddings.SetSize(OxSize.Large);
-            Groups[ConsoleFieldGroup.Accounts].Paddings.RightOx = OxSize.Medium;
-            Groups[ConsoleFieldGroup.Storages].Paddings.RightOx = OxSize.Medium;
-            Groups[ConsoleFieldGroup.Folders].Paddings.RightOx = OxSize.Medium;
-            Groups[ConsoleFieldGroup.Accessories].Paddings.RightOx = OxSize.Medium;
+            Groups[ConsoleFieldGroup.Games].Paddings.SetSize(OxSize.S);
+            Groups[ConsoleFieldGroup.Accounts].Paddings.RightOx = OxSize.XS;
+            Groups[ConsoleFieldGroup.Storages].Paddings.RightOx = OxSize.XS;
+            Groups[ConsoleFieldGroup.Folders].Paddings.RightOx = OxSize.XS;
+            Groups[ConsoleFieldGroup.Accessories].Paddings.RightOx = OxSize.XS;
         }
 
         protected override void SetFrameMargin(ConsoleFieldGroup group, OxFrame frame)
         {
             base.SetFrameMargin(group, frame);
-            frame.Margins.SetSize(OxSize.Extra);
+            frame.Margins.SetSize(OxSize.M);
             frame.Margins.LeftOx =
                 group is ConsoleFieldGroup.Folders or
                     ConsoleFieldGroup.Games or
                     ConsoleFieldGroup.Accessories
                         ? OxSize.None 
-                        : OxSize.Extra;
+                        : OxSize.M;
 
             frame.Margins.TopOx = group switch
             {
@@ -112,7 +112,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Games].Dock is DockStyle.Bottom
                     || generationHelper.StorageSupport(((ConsoleWorker)Worker).Generation) =>
                     OxSize.None,
-                _ => OxSize.Extra,
+                _ => OxSize.M,
             };
         }
     }
