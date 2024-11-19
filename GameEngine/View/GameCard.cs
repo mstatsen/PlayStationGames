@@ -36,8 +36,8 @@ namespace PlayStationGames.GameEngine.View
         protected override void PrepareColors()
         {
             base.PrepareColors();
-            SetPaneBaseColor(TrophysetPanel, BaseColor);
-            SetPaneBaseColor(TrophiesPanel, BaseColor);
+            TrophysetPanel.BaseColor = BaseColor;
+            TrophiesPanel.BaseColor = BaseColor;
         }
 
         private void FillTrophysetLayouts()
