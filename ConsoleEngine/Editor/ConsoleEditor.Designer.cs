@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.Editor;
+using OxLibrary;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 
@@ -37,7 +38,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             // 
             // MainPanel
             // 
-            this.MainPanel.Size = new System.Drawing.Size(1225, 636);
+            this.MainPanel.Size = new OxSize(OxWh.W(1225), OxWh.W636);
             this.MainPanel.Text = "Game";
             // 
             // GameEditor

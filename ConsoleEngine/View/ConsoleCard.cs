@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
+using OxLibrary;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -10,8 +11,8 @@ namespace PlayStationGames.ConsoleEngine.View
 {
     public class ConsoleCard : ItemCard<ConsoleField, PSConsole, ConsoleFieldGroup>
     {
-        protected override int CardWidth => 400;
-        protected override int CardHeight => 320;
+        protected override OxWidth CardWidth => OxWh.W400;
+        protected override OxWidth CardHeight => OxWh.W320;
 
         public ConsoleCard(ItemViewMode viewMode) : base(viewMode) { }
 

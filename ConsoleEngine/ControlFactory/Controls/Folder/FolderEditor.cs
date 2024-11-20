@@ -27,7 +27,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         }
 
         protected override void SetPaddings() => 
-            MainPanel.Padding.Size = OxSize.S;
+            MainPanel.Padding.Size = OxWh.W4;
 
         protected override string EmptyMandatoryField() =>
             folderControl!.IsEmpty 

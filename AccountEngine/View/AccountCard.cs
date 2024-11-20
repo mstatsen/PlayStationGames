@@ -6,15 +6,14 @@ using OxLibrary.Controls;
 using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.AccountEngine.View
 {
     public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
     {
-        protected override int CardWidth => 424;
-        protected override int CardHeight => 200;
+        protected override OxWidth CardWidth => OxWh.W424;
+        protected override OxWidth CardHeight => OxWh.W200;
 
         public AccountCard(ItemViewMode viewMode) : base(viewMode) 
         {
@@ -22,12 +21,12 @@ namespace PlayStationGames.AccountEngine.View
             {
                 Parent = this,
                 Text = "PSN Level",
-                HeaderHeight = 18,
+                HeaderHeight = OxWh.W18,
                 Top = 1,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Size = new(164, 168)
+                Size = new(OxWh.W164, OxWh.W168)
             };
-            TrophiesPanel.Padding.Size = OxSize.S;
+            TrophiesPanel.Padding.Size = OxWh.W4;
             PrepareColors();
         }
 

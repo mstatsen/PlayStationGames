@@ -38,7 +38,7 @@ namespace PlayStationGames.AccountEngine.Editor
             field switch
             {
                 AccountField.DefaultAccount =>
-                    (Parent(field).Height - Height(field)) / 2,
+                    (Parent(field).HeightInt - Height(field)) / 2,
                 _ => 8
             };
 

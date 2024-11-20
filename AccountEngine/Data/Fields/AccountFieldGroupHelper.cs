@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.Data.Fields;
+using OxLibrary;
 
 namespace PlayStationGames.AccountEngine.Data.Fields
 {
@@ -43,7 +44,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountFieldGroup.Base,
             };
 
-        public override int GroupWidth(AccountFieldGroup group) => 400;
+        public override OxWidth GroupWidth(AccountFieldGroup group) => OxWh.W400;
 
         public override bool IsCalcedHeightGroup(AccountFieldGroup group) =>
             new List<AccountFieldGroup>
@@ -52,16 +53,16 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountFieldGroup.Auth
             }.Contains(group);
 
-        public override int DefaultGroupHeight(AccountFieldGroup group) => 
+        public override OxWidth DefaultGroupHeight(AccountFieldGroup group) => 
             group switch
             {
                 AccountFieldGroup.Consoles or
-                AccountFieldGroup.Games => 
-                    38,
+                AccountFieldGroup.Games =>
+                    OxWh.W38,
                 AccountFieldGroup.Links =>
-                    84,
-                _=> 
-                    60
+                    OxWh.W84,
+                _=>
+                    OxWh.W60
             };
     }
 }

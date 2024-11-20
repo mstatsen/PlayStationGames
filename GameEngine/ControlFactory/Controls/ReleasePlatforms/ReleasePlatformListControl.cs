@@ -5,6 +5,7 @@ using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxLibrary;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -36,12 +37,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             MinimumSize = mainPanel.Size;
         }
 
-        private Size PrepareCheckBoxes()
+        private OxSize PrepareCheckBoxes()
         {
             int top = 0;
             int left = -1;
-            int calcedHeight = 0;
-            int calcedWidth = 0;
+            OxWidth calcedHeight = 0;
+            OxWidth calcedWidth = 0;
             OxCheckBox? longestFamilyCheckBox = null;
             PlatformFamily oldFamily = TypeHelper.EmptyValue<PlatformFamily>();
 
@@ -67,8 +68,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
                 top = checkBox.Bottom;
                 oldFamily = family;
-                calcedWidth = Math.Max(calcedWidth, checkBox.Right);
-                calcedHeight = Math.Max(calcedHeight, checkBox.Bottom);
+                calcedWidth = OxWh.Max(calcedWidth, checkBox.Right);
+                calcedHeight = OxWh.Max(calcedHeight, checkBox.Bottom);
             }
 
             return new(calcedWidth, calcedHeight);

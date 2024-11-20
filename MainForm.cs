@@ -30,36 +30,36 @@ namespace PlayStationGames
             
             mainTabControl = new OxTabControl
             {
-                Dock = DockStyle.Fill,
+                Dock = OxDock.Fill,
                 Parent = MainPanel,
                 Font = Styles.DefaultFont,
                 BaseColor = MainPanel.BaseColor,
-                TabHeaderSize = new(140, 32),
+                TabHeaderSize = new(OxWh.W140, OxWh.W32),
                 TabPosition = OxDock.Top
             };
-            mainTabControl.Margin.Size = OxSize.XS;
+            mainTabControl.Margin.Size = OxWh.W2;
 
             toolBar = new OxToolBar<OxButton>()
             {
                 Parent = MainPanel,
-                Dock = DockStyle.Top,
+                Dock = OxDock.Top,
                 BaseColor = MainPanel.BaseColor,
                 Visible = false,
                 ToolbarActionClick = MainToolBarActoinClickHandler
             };
 
             toolBar.AddButton(OxToolbarAction.Save).Enabled = false;
-            toolBar.AddButton(OxToolbarAction.Settings, true, DockStyle.Right);
+            toolBar.AddButton(OxToolbarAction.Settings, true, OxDock.Right);
             toolBar.SendToBack();
-            toolBar.Borders.Top = OxSize.None;
-            toolBar.Padding.Top = OxSize.XS;
+            toolBar.Borders.Top = OxWh.W0;
+            toolBar.Padding.Top = OxWh.W2;
             loadingPanel = new OxLoadingPanel()
             {
                 Parent = MainPanel,
                 UseParentColor = false
             };
-            loadingPanel.Margin.Size = OxSize.None;
-            loadingPanel.Borders.Size = OxSize.None;
+            loadingPanel.Margin.Size = OxWh.W0;
+            loadingPanel.Borders.Size = OxWh.W0;
             loadingPanel.StartLoading();
         }
 

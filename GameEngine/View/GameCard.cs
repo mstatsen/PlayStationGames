@@ -12,8 +12,8 @@ namespace PlayStationGames.GameEngine.View
 {
     public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
     {
-        protected override int CardWidth => 440;
-        protected override int CardHeight => 300;
+        protected override OxWidth CardWidth => OxWh.W(440);
+        protected override OxWidth CardHeight => OxWh.W(300);
 
         public GameCard(ItemViewMode viewMode) : base(viewMode)
         {
@@ -21,9 +21,9 @@ namespace PlayStationGames.GameEngine.View
             {
                 Parent = this,
                 Text = "Trophyset",
-                HeaderHeight = 18
+                HeaderHeight = OxWh.W18
             };
-            TrophysetPanel.Padding.Size = OxSize.S;
+            TrophysetPanel.Padding.Size = OxWh.W4;
             TrophiesPanel = new()
             {
                 Parent = TrophysetPanel,
@@ -189,7 +189,11 @@ namespace PlayStationGames.GameEngine.View
         private void CalcTrophiesPanelSize()
         {
             TrophiesPanel.Visible = Item!.Trophyset.Available.Count > 0;
-            TrophiesPanel.Size = new(50, 8*2 + trophiesLayouts.Count * 18);
+            TrophiesPanel.Size = new(
+                OxWh.W50, 
+                OxWh.Mul(OxWh.W8, OxWh.W2) 
+                    | OxWh.Mul(trophiesLayouts.Count, OxWh.W18)
+            );
         }
 
         private void CalcTrophysetPanelSize()
@@ -233,10 +237,10 @@ namespace PlayStationGames.GameEngine.View
                 );
 
             TrophysetPanel.Size = new(
-                maximumTrophysetLabelRight 
-                    + (Item!.Trophyset.Available.Count > 0 ? TrophiesPanel.Width : 0)
-                    + TrophysetPanel.Padding.RightInt,
-                lastBottom
+                OxWh.W(maximumTrophysetLabelRight)
+                    | (Item!.Trophyset.Available.Count > 0 ? TrophiesPanel.Width : OxWh.W0)
+                    | TrophysetPanel.Padding.Right,
+                OxWh.W(lastBottom)
             );
 
             TrophysetPanel.Left = Width - TrophysetPanel.Width;

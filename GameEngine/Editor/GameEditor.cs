@@ -19,7 +19,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override void PreparePanels()
         {
-            PrepareParentPanel(PanelTop, MainPanel, DockStyle.Top, false);
+            PrepareParentPanel(PanelTop, MainPanel, OxDock.Top, false);
             PrepareParentPanel(PanelRight, PanelTop);
             PrepareParentPanel(PanelMiddle, PanelTop);
             PrepareParentPanel(PanelLeft, PanelTop);
@@ -50,48 +50,50 @@ namespace PlayStationGames.GameEngine.Editor
             base.SetFrameMargin(group, frame);
 
             if (GroupParents[PanelRight].Contains(frame))
-                frame.Margin.Right = OxSize.M;
+                frame.Margin.Right = OxWh.W8;
 
             if (group is GameFieldGroup.ReleaseBase)
             {
-                frame.Margin.Right = OxSize.M;
-                frame.Margin.Bottom = OxSize.M;
+                frame.Margin.Right = OxWh.W8;
+                frame.Margin.Bottom = OxWh.W8;
             }
         }
 
         protected override void SetPaddings()
         {
-            Groups[GameFieldGroup.ReleaseBase].Padding.Horizontal = OxSize.S;
-            Groups[GameFieldGroup.DLC].Padding.Right = OxSize.XS;
-            Groups[GameFieldGroup.RelatedGames].Padding.Right = OxSize.XS;
-            Groups[GameFieldGroup.Links].Padding.Right = OxSize.XS;
-            Groups[GameFieldGroup.Installations].Padding.Right = OxSize.XS;
-            Groups[GameFieldGroup.Trophyset].Padding.Right = OxSize.XS;
-            Groups[GameFieldGroup.Trophyset].Padding.Right = OxSize.XS;
+            Groups[GameFieldGroup.ReleaseBase].Padding.Horizontal = OxWh.W4;
+            Groups[GameFieldGroup.DLC].Padding.Right = OxWh.W2;
+            Groups[GameFieldGroup.RelatedGames].Padding.Right = OxWh.W2;
+            Groups[GameFieldGroup.Links].Padding.Right = OxWh.W2;
+            Groups[GameFieldGroup.Installations].Padding.Right = OxWh.W2;
+            Groups[GameFieldGroup.Trophyset].Padding.Right = OxWh.W2;
+            Groups[GameFieldGroup.Trophyset].Padding.Right = OxWh.W2;
         }
 
         protected override void RecalcPanels()
         {
             MinimumSize = Size.Empty;
             MaximumSize = Size.Empty;
-            PanelTop.Height = Math.Max(
-                Math.Max(
-                    CalcedHeight(PanelLeft),
-                    CalcedHeight(PanelMiddle)
-                ),
-                CalcedHeight(PanelRight)
-            );
+            PanelTop.Height = 
+                OxWh.Max(
+                    OxWh.Max(
+                        CalcedHeight(PanelLeft),
+                        CalcedHeight(PanelMiddle)
+                    ),
+                    CalcedHeight(PanelRight)
+                );
 
             PanelLeft.Width = CalcedWidth(PanelLeft);
             PanelMiddle.Width = CalcedWidth(PanelMiddle);
             PanelRight.Width = CalcedWidth(PanelRight);
 
             MainPanel.Size = new(
-                PanelRight.Right,
-                PanelTop.Height +
-                    (Groups[GameFieldGroup.ReleaseBase].Visible
+                OxWh.W(PanelRight.Right),
+                PanelTop.Height 
+                | (Groups[GameFieldGroup.ReleaseBase].Visible
                         ? Groups[GameFieldGroup.ReleaseBase].CalcedHeight
-                        : 8) + 12
+                        : OxWh.W8) 
+                        | OxWh.W12
             );
         }
     }

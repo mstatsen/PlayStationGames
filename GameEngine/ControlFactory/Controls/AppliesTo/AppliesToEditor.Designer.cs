@@ -1,4 +1,6 @@
-﻿namespace PlayStationGames.GameEngine.ControlFactory.Controls
+﻿using OxLibrary;
+
+namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
     partial class AppliesToEditor
     {
@@ -32,7 +34,7 @@
             // 
             // MainPanel
             // 
-            this.MainPanel.Size = new System.Drawing.Size(390, 230);
+            this.MainPanel.Size = new OxSize(OxWh.W390, OxWh.W230);
             this.MainPanel.Text = "Applies To";
             // 
             // LinkEditor

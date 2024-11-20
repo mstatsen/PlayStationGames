@@ -117,7 +117,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Owner =>
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
-                    (Parent(field).Height - Height(field)) / 2,
+                    (Parent(field).HeightInt - Height(field)) / 2,
                 GameField.EmulatorType => 
                     Layouter[GameField.Region]!.Top,
                 GameField.Language or

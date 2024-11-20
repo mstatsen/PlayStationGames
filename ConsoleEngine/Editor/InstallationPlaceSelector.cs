@@ -40,12 +40,16 @@ namespace PlayStationGames.ConsoleEngine.Editor
             base.PrepareDialog(dialog);
             Renew();
             dialog.Text = $"Install {Game} into:";
-            dialog.MainPanel.Size = new(600,
-                (generationHelper.FolderSupport(Generation)
-                    ? folderControl.Bottom
-                    : storageControl.Bottom
+            dialog.MainPanel.Size = new(
+                OxWh.W600,
+                OxWh.Sum(
+                    generationHelper.FolderSupport(Generation)
+                        ? folderControl.Bottom
+                        : storageControl.Bottom
+                    ,
+                    OxWh.W22
                 )
-                + 22);
+            );
             dialog.DialogButtons = OxDialogButton.Apply | OxDialogButton.Cancel;
 
             if (GamesCount > 1)
@@ -82,7 +86,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             control.Left = 80;
             control.Top = lastBottom is -1 ? 8 : lastBottom + 4;
             control.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-            control.Width = Width - control.Left - 8;
+            control.Width = WidthInt - control.Left - 8;
             control.Height = 32;
             return control.Bottom;
         }

@@ -72,7 +72,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 Left = left,
                 Font = Styles.Font(FontStyle.Bold),
                 ToolTipText = toolTipText,
-                Size = new(140, 20)
+                Size = new(OxWh.W140, OxWh.W20)
             };
             button.Click += clickHandler;
             return button;
@@ -96,7 +96,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameControl.Left = GameLabel.Right + 8;
             GameControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GameControl.ReadOnly = true;
-            GameControl.Width = MainPanel.Width - GameControl.Left - 8;
+            GameControl.Width = MainPanel.WidthInt - GameControl.Left - 8;
             GameControl.Height = 56;
             GameControl.Control.BackColor = MainPanel.BackColor;
             ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;

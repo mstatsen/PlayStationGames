@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.Data.Fields;
+using OxLibrary;
 
 namespace PlayStationGames.ConsoleEngine.Data.Fields
 {
@@ -57,31 +58,36 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                     ConsoleFieldGroup.Base,
             };
 
-        public override int GroupWidth(ConsoleFieldGroup group) =>
+        public override OxWidth GroupWidth(ConsoleFieldGroup group) =>
             group switch
             { 
                 ConsoleFieldGroup.Folders or
                 ConsoleFieldGroup.Accessories =>
-                    450,
-                _=> 360
+                    OxWh.W450,
+                _=> OxWh.W360
             };
 
-        public override int DefaultGroupHeight(ConsoleFieldGroup group) => 
+        public override OxWidth DefaultGroupHeight(ConsoleFieldGroup group) => 
             group switch
             {
-                ConsoleFieldGroup.Base => 42,
-                ConsoleFieldGroup.Games => 36,
-                ConsoleFieldGroup.Accessories => 198,
+                ConsoleFieldGroup.Base => 
+                    OxWh.W42,
+                ConsoleFieldGroup.Games => 
+                    OxWh.W36,
+                ConsoleFieldGroup.Accessories => 
+                    OxWh.W198,
                 ConsoleFieldGroup.Accounts or
-                ConsoleFieldGroup.Storages => 84,
-                _ => 140,
+                ConsoleFieldGroup.Storages => 
+                    OxWh.W84,
+                _ => 
+                OxWh.W140,
             };
 
         public override bool IsCalcedHeightGroup(ConsoleFieldGroup group) => 
             group is ConsoleFieldGroup.GenerationAndModel or
                 ConsoleFieldGroup.Firmware;
 
-        public override DockStyle GroupDock(ConsoleFieldGroup group) => 
+        public override OxDock GroupDock(ConsoleFieldGroup group) => 
             group switch
             {
                 ConsoleFieldGroup.Base or
@@ -89,12 +95,12 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                 ConsoleFieldGroup.Firmware or
                 ConsoleFieldGroup.Storages or
                 ConsoleFieldGroup.Accounts =>
-                    DockStyle.Top,
+                    OxDock.Top,
                 ConsoleFieldGroup.Folders => 
-                    DockStyle.Fill,
+                    OxDock.Fill,
                 ConsoleFieldGroup.Games or
                 ConsoleFieldGroup.Accessories => 
-                    DockStyle.Bottom,
+                    OxDock.Bottom,
                 _ => 
                     base.GroupDock(group),
             };

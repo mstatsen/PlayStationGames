@@ -17,7 +17,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
     {
         private readonly Dictionary<TrophyType, ControlAccessor<GameField, Game>> controls = new();
         private readonly List<OxPicture> icons = new();
-        private readonly OxIconButton removeButton = new(OxIcons.Minus, 20);
+        private readonly OxIconButton removeButton = new(OxIcons.Minus, OxWh.W20);
 
         public readonly Account? Account;
 
@@ -29,7 +29,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             IsDLCPanel = forDLC;
             SetRemoveButtonVisible();
             CreateControls();
-            HeaderHeight = 20;
+            HeaderHeight = OxWh.W20;
         }
 
         private void SetRemoveButtonVisible()
@@ -110,9 +110,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 Parent = this,
                 Image = trophyTypeHelper.Icon(type),
                 Left = left,
-                Top = 6
+                Top = 6,
+                Size = new(OxWh.W24, OxWh.W24)
             };
-            icon.Size = new(24, 24);
             icons.Add(icon);
         }
 
@@ -163,7 +163,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 calcedLeft += 40;
                 controls.Add(type, accessor);
             }
-            Size = new(IsDLCPanel ? 200 : 256, 26);
+            Size = new(
+                IsDLCPanel ? OxWh.W200 : OxWh.W256, 
+                OxWh.W26
+            );
         }
 
         private void ApplyConstraintsToDependedPanels()

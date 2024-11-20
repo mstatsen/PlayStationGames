@@ -1,4 +1,6 @@
 ﻿
+using OxLibrary;
+
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
     partial class DLCEditor
@@ -33,7 +35,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             // 
             // MainPanel
             // 
-            this.MainPanel.Size = new System.Drawing.Size(220, 257);
+            this.MainPanel.Size = new OxSize(OxWh.W220, OxWh.W257);
             // 
             // DLCEditor
             // 

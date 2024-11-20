@@ -1,4 +1,6 @@
 ﻿
+using OxLibrary;
+
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
     partial class RelatedGameEditor
@@ -33,7 +35,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             // 
             // MainPanel
             // 
-            this.MainPanel.Size = new System.Drawing.Size(408, 213);
+            this.MainPanel.Size = new OxSize(OxWh.W408, OxWh.W213);
             this.MainPanel.Text = "Related Game";
             // 
             // RelatedGameEditor

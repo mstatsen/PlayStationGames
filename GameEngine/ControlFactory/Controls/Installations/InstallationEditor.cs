@@ -166,7 +166,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             if (fullRow)
             {
                 accessor.Anchor |= AnchorStyles.Right;
-                accessor.Width = MainPanel.Width - accessor.Left - 8;
+                accessor.Width = MainPanel.WidthInt - accessor.Left - 8;
             }
             else accessor.Width = 120;
 

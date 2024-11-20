@@ -37,7 +37,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             NameControl.Parent = this;
             NameControl.Left = 8;
             NameControl.Top = 8;
-            NameControl.Width = MainPanel.Width - NameControl.Left - 8;
+            NameControl.Width = MainPanel.WidthInt - NameControl.Left - 8;
             NameControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             NameControl.Height = 24;
             SetKeyUpHandler(NameControl.Control);

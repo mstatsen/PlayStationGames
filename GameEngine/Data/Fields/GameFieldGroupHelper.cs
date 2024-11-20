@@ -1,4 +1,5 @@
 ﻿using OxDAOEngine.Data.Fields;
+using OxLibrary;
 
 namespace PlayStationGames.GameEngine.Data.Fields
 {
@@ -88,30 +89,30 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 ? GameFieldGroup.ReleaseBase
                 : base.EditedGroup(field);
 
-        public override int GroupWidth(GameFieldGroup group) => 
+        public override OxWidth GroupWidth(GameFieldGroup group) => 
             group switch
             {
                 GameFieldGroup.Base or 
                 GameFieldGroup.DLC or 
                 GameFieldGroup.RelatedGames or
                 GameFieldGroup.Emulator =>
-                    460,
+                    OxWh.W460,
                 GameFieldGroup.Links or
                 GameFieldGroup.Trophyset =>
-                    292,
+                    OxWh.W292,
                 GameFieldGroup.Genre or
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Tags => 
-                    294,
-                GameFieldGroup.ReleaseBase => 
-                    200,
-                _ => 
-                    0,
+                    OxWh.W294,
+                GameFieldGroup.ReleaseBase =>
+                    OxWh.W200,
+                _ =>
+                    OxWh.W0,
             };
 
-        public override DockStyle GroupDock(GameFieldGroup group) =>
+        public override OxDock GroupDock(GameFieldGroup group) =>
             group is GameFieldGroup.ReleaseBase 
-                ? DockStyle.Bottom 
+                ? OxDock.Bottom 
                 : base.GroupDock(group);
 
         public override bool IsCalcedHeightGroup(GameFieldGroup group) =>
@@ -124,15 +125,15 @@ namespace PlayStationGames.GameEngine.Data.Fields
             }.Contains(group);
 
 
-        public override int DefaultGroupHeight(GameFieldGroup group) => 
+        public override OxWidth DefaultGroupHeight(GameFieldGroup group) => 
             group switch
             {
                 GameFieldGroup.Emulator =>
-                    200,
+                    OxWh.W200,
                 GameFieldGroup.Tags =>
-                    69,
+                    OxWh.W69,
                 _ =>
-                    84,
+                    OxWh.W84,
             };
 
         public List<GameFieldGroup> VerifiedGroups =
