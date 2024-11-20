@@ -23,7 +23,7 @@ namespace PlayStationGames.GameEngine.View
                 Text = "Trophyset",
                 HeaderHeight = 18
             };
-            TrophysetPanel.Paddings.SetSize(OxSize.S);
+            TrophysetPanel.Padding.Size = OxSize.S;
             TrophiesPanel = new()
             {
                 Parent = TrophysetPanel,
@@ -55,7 +55,7 @@ namespace PlayStationGames.GameEngine.View
             trophysetTypeLayout.Left = 8;
             trophysetTypeLayout.CaptionVariant = ControlCaptionVariant.None;
 
-            TrophysetPanel.Header.Visible = Item!.Trophyset.TrophysetExists;
+            TrophysetPanel.HeaderVisible = Item!.Trophyset.TrophysetExists;
 
             if (!Item!.Trophyset.TrophysetExists)
             {
@@ -149,8 +149,8 @@ namespace PlayStationGames.GameEngine.View
             if (linksControl is null)
                 return;
             
-            linksControl.Left = ContentContainer.Width - linksControl.Width;
-            linksControl.Top = ContentContainer.Height - linksControl.Height;
+            linksControl.Left = Width - linksControl.Width;
+            linksControl.Top = Height - linksControl.Height;
         }
 
         protected override void AlignControls()
@@ -189,7 +189,7 @@ namespace PlayStationGames.GameEngine.View
         private void CalcTrophiesPanelSize()
         {
             TrophiesPanel.Visible = Item!.Trophyset.Available.Count > 0;
-            TrophiesPanel.SetContentSize(50, 8*2 + trophiesLayouts.Count * 18);
+            TrophiesPanel.Size = new(50, 8*2 + trophiesLayouts.Count * 18);
         }
 
         private void CalcTrophysetPanelSize()
@@ -232,14 +232,14 @@ namespace PlayStationGames.GameEngine.View
                     lastBottom
                 );
 
-            TrophysetPanel.SetContentSize(
+            TrophysetPanel.Size = new(
                 maximumTrophysetLabelRight 
                     + (Item!.Trophyset.Available.Count > 0 ? TrophiesPanel.Width : 0)
-                    + TrophysetPanel.Paddings.Right,
+                    + TrophysetPanel.Padding.RightInt,
                 lastBottom
             );
 
-            TrophysetPanel.Left = SavedWidth - TrophysetPanel.Width;
+            TrophysetPanel.Left = Width - TrophysetPanel.Width;
             TrophysetPanel.Top = 32;
         }
 

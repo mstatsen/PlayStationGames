@@ -82,7 +82,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             installedGamesLabel.Parent = Editor.Groups[ConsoleFieldGroup.Games];
             installedGamesLabel.Left = 8;
             installationsButton.Parent = Editor.Groups[ConsoleFieldGroup.Games];
-            installationsButton.SetContentSize(installationsButton.Parent.Width / 3, 38);
+            installationsButton.Size = new(installationsButton.Parent.Width / 3, 38);
             installationsButton.Dock = DockStyle.Right;
             installationsButton.Click -= InstallationsClickHandler;
             installationsButton.Click += InstallationsClickHandler;
@@ -98,7 +98,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         private void GamesGroupSizeChangedHandler(object? sender, EventArgs e)
         {
-            installationsButton.SetContentSize(installationsButton.Parent.Width / 3, 38);
+            installationsButton.Size = new(installationsButton.Parent!.Width / 3, 38);
             installedGamesLabel.Top = (installationsButton.Parent.Height - installedGamesLabel.Height) / 2;
         }
 

@@ -24,10 +24,10 @@ namespace PlayStationGames.AccountEngine.View
                 Text = "PSN Level",
                 HeaderHeight = 18,
                 Top = 1,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Size = new(164, 168)
             };
-            TrophiesPanel.SetContentSize(164, 168);
-            TrophiesPanel.Paddings.SetSize(OxSize.S);
+            TrophiesPanel.Padding.Size = OxSize.S;
             PrepareColors();
         }
 
@@ -116,7 +116,7 @@ namespace PlayStationGames.AccountEngine.View
         {
             Layouter.AlignLabels(BaseLayouts, 8);
             Layouter.MovePlacedControlsToLeft(TrophiesLayouts, 8);
-            TrophiesPanel.Left = ContentContainer.Width - TrophiesPanel.Width - 1;
+            TrophiesPanel.Left = Width - TrophiesPanel.Width - 1;
             AlignTrophiesIcons();
         }
 

@@ -67,13 +67,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             OxButton button = new(text, icon)
             {
-                Parent = this,
+                Parent = MainPanel,
                 Top = GameControl!.Bottom + 4,
                 Left = left,
                 Font = Styles.Font(FontStyle.Bold),
-                ToolTipText = toolTipText
+                ToolTipText = toolTipText,
+                Size = new(140, 20)
             };
-            button.SetContentSize(140, 20);
             button.Click += clickHandler;
             return button;
         }
@@ -96,7 +96,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameControl.Left = GameLabel.Right + 8;
             GameControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GameControl.ReadOnly = true;
-            GameControl.Width = MainPanel.ContentContainer.Width - GameControl.Left - 8;
+            GameControl.Width = MainPanel.Width - GameControl.Left - 8;
             GameControl.Height = 56;
             GameControl.Control.BackColor = MainPanel.BackColor;
             ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;

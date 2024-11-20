@@ -28,7 +28,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             if (fullRow)
             {
                 accessor.Anchor |= AnchorStyles.Right;
-                accessor.Width = MainPanel.ContentContainer.Width - accessor.Left - 8;
+                accessor.Width = MainPanel.Width - accessor.Left - 8;
             }
             else
                 accessor.Width = 120;
@@ -183,7 +183,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
             lastBottom = SetControlTop(countControl, lastBottom);
             lastBottom = SetControlTop(descriptionControl, lastBottom);
-            SetContentSize(ContentWidth, lastBottom + 8);
+            Size = new(ContentWidth, lastBottom + 8);
         }
 
         protected override void FillControls(Accessory item)

@@ -14,8 +14,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         public override Bitmap? FormIcon => OxIcons.Console;
 
-        public OxPanel PanelLeft = new();
-        public OxPanel PanelRight = new();
+        public OxPane PanelLeft = new();
+        public OxPane PanelRight = new();
 
         protected override void PreparePanels()
         {
@@ -66,7 +66,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
             SetFrameMargin(ConsoleFieldGroup.Games, Groups[ConsoleFieldGroup.Games]);
-            MainPanel.SetContentSize(
+            MainPanel.Size = new(
                 PanelLeft.Width 
                     + TypeHelper.Helper<ConsoleFieldGroupHelper>().
                         GroupWidth(ConsoleFieldGroup.Folders),
@@ -82,25 +82,25 @@ namespace PlayStationGames.ConsoleEngine.Editor
         protected override void SetPaddings()
         {
             base.SetPaddings();
-            Groups[ConsoleFieldGroup.Games].Paddings.SetSize(OxSize.S);
-            Groups[ConsoleFieldGroup.Accounts].Paddings.RightOx = OxSize.XS;
-            Groups[ConsoleFieldGroup.Storages].Paddings.RightOx = OxSize.XS;
-            Groups[ConsoleFieldGroup.Folders].Paddings.RightOx = OxSize.XS;
-            Groups[ConsoleFieldGroup.Accessories].Paddings.RightOx = OxSize.XS;
+            Groups[ConsoleFieldGroup.Games].Padding.Size = OxSize.S;
+            Groups[ConsoleFieldGroup.Accounts].Padding.Right = OxSize.XS;
+            Groups[ConsoleFieldGroup.Storages].Padding.Right = OxSize.XS;
+            Groups[ConsoleFieldGroup.Folders].Padding.Right = OxSize.XS;
+            Groups[ConsoleFieldGroup.Accessories].Padding.Right = OxSize.XS;
         }
 
         protected override void SetFrameMargin(ConsoleFieldGroup group, OxFrame frame)
         {
             base.SetFrameMargin(group, frame);
-            frame.Margins.SetSize(OxSize.M);
-            frame.Margins.LeftOx =
+            frame.Margin.Size = OxSize.M;
+            frame.Margin.Left =
                 group is ConsoleFieldGroup.Folders or
                     ConsoleFieldGroup.Games or
                     ConsoleFieldGroup.Accessories
                         ? OxSize.None 
                         : OxSize.M;
 
-            frame.Margins.TopOx = group switch
+            frame.Margin.Top = group switch
             {
                 ConsoleFieldGroup.GenerationAndModel or
                 ConsoleFieldGroup.Firmware or

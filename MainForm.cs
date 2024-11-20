@@ -24,24 +24,24 @@ namespace PlayStationGames
             DataReceivers.Register(this);
             InitializeComponent();
             Size screenSize = Screen.GetWorkingArea(this).Size;
-            SetContentSize(700, 480);
+            Size = new(700, 480);
             Left = (screenSize.Width - 700) / 2;
             Top = (screenSize.Height - 480) / 2;
             
             mainTabControl = new OxTabControl
             {
                 Dock = DockStyle.Fill,
-                Parent = this,
+                Parent = MainPanel,
                 Font = Styles.DefaultFont,
                 BaseColor = MainPanel.BaseColor,
                 TabHeaderSize = new(140, 32),
                 TabPosition = OxDock.Top
             };
-            mainTabControl.Margins.SetSize(OxSize.XS);
+            mainTabControl.Margin.Size = OxSize.XS;
 
-            toolBar = new OxToolBar()
+            toolBar = new OxToolBar<OxButton>()
             {
-                Parent = this,
+                Parent = MainPanel,
                 Dock = DockStyle.Top,
                 BaseColor = MainPanel.BaseColor,
                 Visible = false,
@@ -51,15 +51,15 @@ namespace PlayStationGames
             toolBar.AddButton(OxToolbarAction.Save).Enabled = false;
             toolBar.AddButton(OxToolbarAction.Settings, true, DockStyle.Right);
             toolBar.SendToBack();
-            toolBar.Borders.TopOx = OxSize.None;
-            toolBar.Paddings.TopOx = OxSize.XS;
+            toolBar.Borders.Top = OxSize.None;
+            toolBar.Padding.Top = OxSize.XS;
             loadingPanel = new OxLoadingPanel()
             {
                 Parent = MainPanel,
                 UseParentColor = false
             };
-            loadingPanel.Margins.SetSize(OxSize.None);
-            loadingPanel.Borders.SetSize(OxSize.None);
+            loadingPanel.Margin.Size = OxSize.None;
+            loadingPanel.Borders.Size = OxSize.None;
             loadingPanel.StartLoading();
         }
 
@@ -105,7 +105,7 @@ namespace PlayStationGames
                     face.BaseColor = MainPanel.BaseColor;
 
                 Size screenSize = Screen.GetWorkingArea(this).Size;
-                SetContentSize(
+                Size = new(
                     Math.Min(1600, screenSize.Width),
                     Math.Min(800, screenSize.Height));
 
@@ -209,6 +209,6 @@ namespace PlayStationGames
 
         private readonly OxLoadingPanel loadingPanel;
         private readonly OxTabControl mainTabControl;
-        private readonly OxToolBar toolBar;
+        private readonly OxToolBar<OxButton> toolBar;
     }
 }

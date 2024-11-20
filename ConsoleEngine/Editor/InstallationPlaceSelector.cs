@@ -13,7 +13,7 @@ using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
-    public class InstallationPlaceSelector : OxPanel
+    public class InstallationPlaceSelector : OxPane
     {
         internal readonly OxComboBox storageControl = new();
         internal readonly OxComboBox folderControl = new();
@@ -40,7 +40,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             base.PrepareDialog(dialog);
             Renew();
             dialog.Text = $"Install {Game} into:";
-            dialog.MainPanel.SetContentSize(600,
+            dialog.MainPanel.Size = new(600,
                 (generationHelper.FolderSupport(Generation)
                     ? folderControl.Bottom
                     : storageControl.Bottom

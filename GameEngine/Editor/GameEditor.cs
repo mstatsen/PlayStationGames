@@ -12,10 +12,10 @@ namespace PlayStationGames.GameEngine.Editor
 
         public override Bitmap? FormIcon => OxIcons.Game;
 
-        public OxPanel PanelTop = new();
-        public OxPanel PanelLeft = new();
-        public OxPanel PanelMiddle = new();
-        public OxPanel PanelRight = new();
+        public OxPane PanelTop = new();
+        public OxPane PanelLeft = new();
+        public OxPane PanelMiddle = new();
+        public OxPane PanelRight = new();
 
         protected override void PreparePanels()
         {
@@ -50,24 +50,24 @@ namespace PlayStationGames.GameEngine.Editor
             base.SetFrameMargin(group, frame);
 
             if (GroupParents[PanelRight].Contains(frame))
-                frame.Margins.RightOx = OxSize.M;
+                frame.Margin.Right = OxSize.M;
 
             if (group is GameFieldGroup.ReleaseBase)
             {
-                frame.Margins.RightOx = OxSize.M;
-                frame.Margins.BottomOx = OxSize.M;
+                frame.Margin.Right = OxSize.M;
+                frame.Margin.Bottom = OxSize.M;
             }
         }
 
         protected override void SetPaddings()
         {
-            Groups[GameFieldGroup.ReleaseBase].Paddings.HorizontalOx = OxSize.S;
-            Groups[GameFieldGroup.DLC].Paddings.RightOx = OxSize.XS;
-            Groups[GameFieldGroup.RelatedGames].Paddings.RightOx = OxSize.XS;
-            Groups[GameFieldGroup.Links].Paddings.RightOx = OxSize.XS;
-            Groups[GameFieldGroup.Installations].Paddings.RightOx = OxSize.XS;
-            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.XS;
-            Groups[GameFieldGroup.Trophyset].Paddings.RightOx = OxSize.XS;
+            Groups[GameFieldGroup.ReleaseBase].Padding.Horizontal = OxSize.S;
+            Groups[GameFieldGroup.DLC].Padding.Right = OxSize.XS;
+            Groups[GameFieldGroup.RelatedGames].Padding.Right = OxSize.XS;
+            Groups[GameFieldGroup.Links].Padding.Right = OxSize.XS;
+            Groups[GameFieldGroup.Installations].Padding.Right = OxSize.XS;
+            Groups[GameFieldGroup.Trophyset].Padding.Right = OxSize.XS;
+            Groups[GameFieldGroup.Trophyset].Padding.Right = OxSize.XS;
         }
 
         protected override void RecalcPanels()
@@ -86,7 +86,7 @@ namespace PlayStationGames.GameEngine.Editor
             PanelMiddle.Width = CalcedWidth(PanelMiddle);
             PanelRight.Width = CalcedWidth(PanelRight);
 
-            MainPanel.SetContentSize(
+            MainPanel.Size = new(
                 PanelRight.Right,
                 PanelTop.Height +
                     (Groups[GameFieldGroup.ReleaseBase].Visible

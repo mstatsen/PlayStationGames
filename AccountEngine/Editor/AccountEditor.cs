@@ -18,7 +18,7 @@ namespace PlayStationGames.AccountEngine.Editor
         {
             MinimumSize = Size.Empty;
             MaximumSize = Size.Empty;
-            MainPanel.SetContentSize(
+            MainPanel.Size = new(
                 420,
                 Groups[AccountFieldGroup.Games].Bottom + 15
             );
@@ -27,17 +27,17 @@ namespace PlayStationGames.AccountEngine.Editor
         protected override void SetFrameMargin(AccountFieldGroup group, OxFrame frame)
         {
             base.SetFrameMargin(group, frame);
-            frame.Margins.RightOx = OxSize.M;
+            frame.Margin.Right = OxSize.M;
 
             if (group is AccountFieldGroup.Games) 
-                frame.Margins.BottomOx = OxSize.M;
+                frame.Margin.Bottom = OxSize.M;
         }
 
         protected override void SetPaddings()
         {
             base.SetPaddings();
-            Groups[AccountFieldGroup.Consoles].Paddings.SetSize(OxSize.S);
-            Groups[AccountFieldGroup.Games].Paddings.SetSize(OxSize.S);
+            Groups[AccountFieldGroup.Consoles].Padding.Size = OxSize.S;
+            Groups[AccountFieldGroup.Games].Padding.Size = OxSize.S;
         }
     }
 }

@@ -43,7 +43,7 @@ namespace PlayStationGames.AccountEngine.Editor
             consolesLabel.Left = 8;
             consolesButton.Parent = Editor.Groups[AccountFieldGroup.Consoles];
             consolesButton.Dock = DockStyle.Right;
-            consolesButton.SetContentSize(consolesButton.Parent.Width / 3, 38);
+            consolesButton.Size = new(consolesButton.Parent.Width / 3, 38);
             consolesButton.Click -= ConsoleButtonClickHandler;
             consolesButton.Click += ConsoleButtonClickHandler;
 
@@ -76,13 +76,13 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private void ConsolesSizeChangedHandler(object? sender, EventArgs e)
         {
-            consolesButton.SetContentSize(consolesButton.Parent.Width / 3, 38);
+            consolesButton.Size = new(consolesButton.Parent!.Width / 3, 38);
             consolesLabel.Top = (consolesButton.Parent.Height - consolesLabel.Height) / 2;
         }
 
         private void GamesSizeChangedHandler(object? sender, EventArgs e)
         {
-            gamesButton.SetContentSize(consolesButton.Parent.Width / 3, 38);
+            gamesButton.Size = new(consolesButton.Parent!.Width / 3, 38);
             gamesLabel.Top = (consolesButton.Parent.Height - gamesLabel.Height) / 2;
         }
 

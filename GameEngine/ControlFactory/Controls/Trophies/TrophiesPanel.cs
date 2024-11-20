@@ -112,7 +112,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 Left = left,
                 Top = 6
             };
-            icon.SetContentSize(24, 24);
+            icon.Size = new(24, 24);
             icons.Add(icon);
         }
 
@@ -163,7 +163,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 calcedLeft += 40;
                 controls.Add(type, accessor);
             }
-            SetContentSize(IsDLCPanel ? 200 : 256, 26);
+            Size = new(IsDLCPanel ? 200 : 256, 26);
         }
 
         private void ApplyConstraintsToDependedPanels()

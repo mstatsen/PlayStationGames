@@ -12,7 +12,7 @@ using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 {
-    public class TrophysetAccountEditor : OxPanel
+    public class TrophysetAccountEditor : OxPane
     {
         private readonly TrophysetPanel TrophysetPanel;
         private AccountAccessor<GameField, Game> AccountAccessor = default!;
@@ -21,7 +21,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             TrophysetPanel = trophysetPanel;
             Text = "Select account";
-            Paddings.SetSize(OxSize.M);
+            Padding.Size = OxSize.M;
         }
 
         protected override void PrepareInnerControls()
@@ -35,7 +35,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                         UseNullable = false,
                         OnlyNullable = false
                     });
-            AccountAccessor.Parent = ContentContainer;
+            AccountAccessor.Parent = this;
             AccountAccessor.Dock = DockStyle.Fill;
             AccountAccessor.Context.SetInitializer(accountInitializer);
         }
@@ -55,7 +55,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
             AccountAccessor.RenewControl(true);
             dialog.DialogButtons = OxDialogButton.OK | OxDialogButton.Cancel;
-            dialog.SetContentSize(400, 52);
+            dialog.Size = new(400, 52);
         }
 
         protected override void PrepareColors()

@@ -1,5 +1,4 @@
-﻿using OxLibrary;
-using OxLibrary.Controls;
+﻿using OxLibrary.Controls;
 using OxLibrary.Panels;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Types;
@@ -33,8 +32,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void InitComponents()
         {
             PrepareMainPanel();
-            Size CalcedSize = PrepareCheckBoxes();
-            mainPanel.SetContentSize(CalcedSize);
+            mainPanel.Size = PrepareCheckBoxes();
             MinimumSize = mainPanel.Size;
         }
 
@@ -100,9 +98,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private void PrepareMainPanel()
         {
             mainPanel.Parent = this;
-            mainPanel.Paddings.Horizontal = 12;
-            mainPanel.Paddings.Top = 6;
-            mainPanel.Paddings.Bottom = 5;
+            mainPanel.Padding.HorizontalInt = 12;
+            mainPanel.Padding.TopInt = 6;
+            mainPanel.Padding.BottomInt = 5;
         }
 
         private OxCheckBox CreateCheckBox(PlatformType platformType, int top, int left)

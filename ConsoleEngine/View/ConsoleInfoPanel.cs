@@ -51,10 +51,7 @@ namespace PlayStationGames.ConsoleEngine.View
             }
         }
 
-        private readonly ConsoleGenerationHelper generationHelper = 
-            TypeHelper.Helper<ConsoleGenerationHelper>();
-
-        private ControlLayouts<ConsoleField> CreateFillDockLayouts(ConsoleField field, OxPanel parent)
+        private ControlLayouts<ConsoleField> CreateFillDockLayouts(ConsoleField field, OxPane parent)
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = parent;
@@ -67,7 +64,7 @@ namespace PlayStationGames.ConsoleEngine.View
             };
         }
 
-        private void AddFillDockLayout(OxPanel parentPanel, ConsoleField field) =>
+        private void AddFillDockLayout(OxPane parentPanel, ConsoleField field) =>
             LayoutsLists.Add(parentPanel, CreateFillDockLayouts(field, parentPanel));
 
         protected override void PrepareLayouts()
@@ -93,11 +90,11 @@ namespace PlayStationGames.ConsoleEngine.View
             PreparePanel(ConsolePanel, string.Empty);
         }
 
-        private readonly OxPanel ConsolePanel = new();
-        private readonly OxPanel StoragesPanel = new();
-        private readonly OxPanel FoldersPanel = new();
-        private readonly OxPanel AccountsPanel = new();
-        private readonly OxPanel AccessoriesPanel = new();
+        private readonly OxPane ConsolePanel = new();
+        private readonly OxPane StoragesPanel = new();
+        private readonly OxPane FoldersPanel = new();
+        private readonly OxPane AccountsPanel = new();
+        private readonly OxPane AccessoriesPanel = new();
 
         public ConsoleInfoPanel() : base() { }
     }

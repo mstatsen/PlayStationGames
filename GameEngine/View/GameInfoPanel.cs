@@ -230,12 +230,12 @@ namespace PlayStationGames.GameEngine.View
             }
         }
 
-        private readonly OxPanel BasePanel = new();
-        private readonly OxPanel BasePanel2 = new();
-        private readonly OxPanel StockPanel = new();
-        private readonly OxPanel TrophysetPanel = new();
-        private readonly OxPanel ReleasePanel = new();
-        private readonly OxPanel LinksPanel = new();
+        private readonly OxPane BasePanel = new();
+        private readonly OxPane BasePanel2 = new();
+        private readonly OxPane StockPanel = new();
+        private readonly OxPane TrophysetPanel = new();
+        private readonly OxPane ReleasePanel = new();
+        private readonly OxPane LinksPanel = new();
         private readonly Dictionary<TrophyType, OxPicture> trophiesIcons = new();
         private readonly TrophyTypeHelper trophyHelper = TypeHelper.Helper<TrophyTypeHelper>();
 
