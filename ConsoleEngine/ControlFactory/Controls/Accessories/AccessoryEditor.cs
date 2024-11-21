@@ -192,7 +192,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             Size = new OxSize(
                 ContentWidth, 
                 OxWh.Add(lastBottom, OxWh.W8)
-            ).Size;
+            );
         }
 
         protected override void FillControls(Accessory item)

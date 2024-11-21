@@ -97,7 +97,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             Size = new OxSize(
                 TrophysetGroup.Right,
                 OxWh.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
-            ).Size;
+            );
         }
 
         protected override void PrepareReadonly()

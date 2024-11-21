@@ -46,7 +46,7 @@ namespace PlayStationGames.AccountEngine.Editor
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1225, 636);
+            this.ClientSize = new OxSize(OxWh.W(1225), OxWh.W636);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AccountEditor";

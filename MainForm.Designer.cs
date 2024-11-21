@@ -1,4 +1,5 @@
-﻿using OxLibrary.Dialogs;
+﻿using OxLibrary;
+using OxLibrary.Dialogs;
 
 namespace PlayStationGames
 {
@@ -37,12 +38,11 @@ namespace PlayStationGames
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(747, 554);
+            ClientSize = new OxSize(OxWh.W(747), OxWh.W554);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Location = new Point(0, 0);
-            Margin = new Padding(4, 3, 4, 3);
-            MaximumSize = new Size(2240, 1200);
-            MinimumSize = new Size(700, 462);
+            Location = new OxPoint(0, 0);
+            MaximumSize = new OxSize(OxWh.W(2240), OxWh.W(1200));
+            MinimumSize = new OxSize(OxWh.W700, OxWh.W462);
             Name = "MainForm";
             Text = "Playstation Games";
             Shown += MainFormShow;

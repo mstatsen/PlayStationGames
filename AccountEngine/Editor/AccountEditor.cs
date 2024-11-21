@@ -16,8 +16,8 @@ namespace PlayStationGames.AccountEngine.Editor
 
         protected override void RecalcPanels()
         {
-            MinimumSize = Size.Empty;
-            MaximumSize = Size.Empty;
+            MinimumSize = new();
+            MaximumSize = new();
             MainPanel.Size = new(
                 OxWh.W420,
                 OxWh.Add(Groups[AccountFieldGroup.Games].Bottom, OxWh.W15)

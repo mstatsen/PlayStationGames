@@ -23,10 +23,9 @@ namespace PlayStationGames
         {
             DataReceivers.Register(this);
             InitializeComponent();
-            Size screenSize = Screen.GetWorkingArea(this).Size;
-            Size = new(700, 480);
-            Left = (screenSize.Width - 700) / 2;
-            Top = (screenSize.Height - 480) / 2;
+
+            Size = new(OxWh.W700, OxWh.W480);
+            OxControlHelper.CenterForm(this);
             
             mainTabControl = new OxTabControl
             {
@@ -109,8 +108,8 @@ namespace PlayStationGames
                     Math.Min(1600, screenSize.Width),
                     Math.Min(800, screenSize.Height));
 
-                Left = (screenSize.Width - Width) / 2;
-                Top = (screenSize.Height - Height) / 2;
+                Left = OxWh.Div(OxWh.Sub(screenSize.Width, Width), OxWh.W2);
+                Top = OxWh.Div(OxWh.Sub(screenSize.Height, Height), OxWh.W2);
 
                 PlaceComponents();
                 Update();
@@ -134,7 +133,7 @@ namespace PlayStationGames
             }
         }
 
-        public override Size WantedMinimumSize => new(1240, 720);
+        public override OxSize WantedMinimumSize => new(OxWh.W(1240), OxWh.W(720));
 
         private void PlaceComponents()
         {

@@ -72,8 +72,8 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override void RecalcPanels()
         {
-            MinimumSize = Size.Empty;
-            MaximumSize = Size.Empty;
+            MinimumSize = new();
+            MaximumSize = new();
             PanelTop.Height = 
                 OxWh.Max(
                     OxWh.Max(
