@@ -41,8 +41,8 @@ namespace PlayStationGames
             ClientSize = new OxSize(OxWh.W(747), OxWh.W554);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Location = new OxPoint(0, 0);
-            MaximumSize = new OxSize(OxWh.W(2240), OxWh.W(1200));
-            MinimumSize = new OxSize(OxWh.W700, OxWh.W462);
+            MaximumSize = new OxSize(OxWh.W(1920), OxWh.W(1080));
+            MinimumSize = new OxSize(OxWh.W700, OxWh.W480);
             Name = "MainForm";
             Text = "Playstation Games";
             Shown += MainFormShow;

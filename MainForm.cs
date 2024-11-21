@@ -24,7 +24,7 @@ namespace PlayStationGames
             DataReceivers.Register(this);
             InitializeComponent();
 
-            Size = new(OxWh.W700, OxWh.W480);
+            Size = MinimumSize;
             OxControlHelper.CenterForm(this);
             
             mainTabControl = new OxTabControl
