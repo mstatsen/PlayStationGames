@@ -80,7 +80,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
                 OxWh.W38
             );
-            consolesLabel.Top = (consolesButton.Parent.Height - consolesLabel.Height) / 2;
+            consolesLabel.Top = (OxWh.Int(consolesButton.Parent.Height) - consolesLabel.Height) / 2;
         }
 
         private void GamesSizeChangedHandler(object? sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace PlayStationGames.AccountEngine.Editor
             gamesButton.Size = new(
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
                 OxWh.W38);
-            gamesLabel.Top = (consolesButton.Parent.Height - gamesLabel.Height) / 2;
+            gamesLabel.Top = (OxWh.Int(consolesButton.Parent.Height) - gamesLabel.Height) / 2;
         }
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)

@@ -104,7 +104,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 OxWh.Div(installationsButton.Parent!.Width, OxWh.W3), 
                 OxWh.W38
             );
-            installedGamesLabel.Top = (installationsButton.Parent.Height - installedGamesLabel.Height) / 2;
+            installedGamesLabel.Top = (OxWh.Int(installationsButton.Parent.Height) - installedGamesLabel.Height) / 2;
         }
 
         private void InstallationsClickHandler(object? sender, EventArgs e)
