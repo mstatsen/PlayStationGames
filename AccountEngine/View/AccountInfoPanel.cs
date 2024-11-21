@@ -5,6 +5,7 @@ using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
 using OxDAOEngine.ControlFactory.Controls.Links;
 using PlayStationGames.GameEngine.Data.Fields;
+using OxLibrary;
 
 namespace PlayStationGames.AccountEngine.View
 {
@@ -17,11 +18,11 @@ namespace PlayStationGames.AccountEngine.View
 
             ControlLayout<AccountField> avatarLayout = Layouter.AddFromTemplate(AccountField.Avatar);
             avatarLayout.CaptionVariant = ControlCaptionVariant.None;
-            avatarLayout.Left = 10;
-            avatarLayout.Width = 80;
-            avatarLayout.Height = 80;
+            avatarLayout.Left = OxWh.W10;
+            avatarLayout.Width = OxWh.W80;
+            avatarLayout.Height = OxWh.W80;
 
-            Layouter.Template.Top = 12;
+            Layouter.Template.Top = OxWh.W12;
             ControlLayout<AccountField> typeLayout = Layouter.AddFromTemplate(AccountField.Type);
             typeLayout.CaptionVariant = ControlCaptionVariant.None;
             typeLayout.Left = avatarLayout.Right + 8;
@@ -47,7 +48,7 @@ namespace PlayStationGames.AccountEngine.View
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = PropertyPanel;
-            Layouter.Template.Left = 90;
+            Layouter.Template.Left = OxWh.W90;
 
             ControlLayouts<AccountField> result = new();
 
@@ -75,7 +76,7 @@ namespace PlayStationGames.AccountEngine.View
         private ControlLayouts<AccountField> FillLinksLayout()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Dock = DockStyle.Top;
+            Layouter.Template.Dock = OxDock.Top;
             Layouter.Template.BackColor = BaseColor;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.Parent = LinksPanel;

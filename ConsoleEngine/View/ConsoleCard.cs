@@ -30,8 +30,8 @@ namespace PlayStationGames.ConsoleEngine.View
 
             ControlLayout<ConsoleField> imageLayout = Layouter.AddFromTemplate(ConsoleField.Icon);
             imageLayout.CaptionVariant = ControlCaptionVariant.None;
-            imageLayout.Width = 108;
-            imageLayout.Height = 60;
+            imageLayout.Width = OxWh.W108;
+            imageLayout.Height = OxWh.W60;
         }
 
         private void FillBaseLayouts()
@@ -40,8 +40,8 @@ namespace PlayStationGames.ConsoleEngine.View
             baseLayouts.Clear();
             ControlLayout<ConsoleField> iconLayout = Layouter[ConsoleField.Icon]!;
             ControlLayout<ConsoleField> modelLayout = Layouter.AddFromTemplate(ConsoleField.FullModel);
-            modelLayout.Top = 2;
-            modelLayout.Left = iconLayout.Right + 6;
+            modelLayout.Top = OxWh.W2;
+            modelLayout.Left = iconLayout.Right | OxWh.W6;
             modelLayout.CaptionVariant = ControlCaptionVariant.None;
 
             baseLayouts.Add(modelLayout);

@@ -86,7 +86,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             control.Left = 80;
             control.Top = lastBottom is -1 ? 8 : lastBottom + 4;
             control.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-            control.Width = WidthInt - control.Left - 8;
+            control.Width = OxWh.Int(OxWh.Sub(OxWh.Sub(Width, control.Left), OxWh.W8));
             control.Height = 32;
             return control.Bottom;
         }

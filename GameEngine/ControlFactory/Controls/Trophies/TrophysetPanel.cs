@@ -184,8 +184,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             AvailableTrophiesPanel = CreateTrophiesPanel(null, IsDLCPanel);
             addButton.Parent = this;
-            addButton.Left = AvailableTrophiesPanel.Right - addButton.WidthInt;
-            addButton.Top = AvailableTrophiesPanel.Bottom + 6;
+            addButton.Left = OxWh.Sub(AvailableTrophiesPanel.Right, addButton.Width);
+            addButton.Top = AvailableTrophiesPanel.Bottom | OxWh.W6;
             addButton.Click += AddButtonClickHandler;
 
             foreach (Account account in DataManager.FullItemsList<AccountField, Account>())

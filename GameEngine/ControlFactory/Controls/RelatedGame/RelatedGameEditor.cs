@@ -96,7 +96,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameControl.Left = GameLabel.Right + 8;
             GameControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GameControl.ReadOnly = true;
-            GameControl.Width = MainPanel.WidthInt - GameControl.Left - 8;
+            GameControl.Width =
+                OxWh.Int(
+                    OxWh.Sub(
+                        OxWh.Sub(MainPanel.Width, GameControl.Left),
+                        OxWh.W8)
+                    );
             GameControl.Height = 56;
             GameControl.Control.BackColor = MainPanel.BackColor;
             ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;

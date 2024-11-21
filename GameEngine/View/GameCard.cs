@@ -45,14 +45,14 @@ namespace PlayStationGames.GameEngine.View
             trophysetLayouts.Clear();
             difficultLayouts.Clear();
             ClearLayoutTemplate();
-            Layouter.Template.Left = 67;
-            Layouter.Template.Top = 0;
+            Layouter.Template.Left = OxWh.W67;
+            Layouter.Template.Top = OxWh.W0;
             Layouter.Template.Parent = TrophysetPanel;
             Layouter.Template.AutoSize = true;
             ControlLayout<GameField> trophysetTypeLayout = trophysetLayouts.Add(
                 Layouter.AddFromTemplate(GameField.TrophysetType)
             );
-            trophysetTypeLayout.Left = 8;
+            trophysetTypeLayout.Left = OxWh.W8;
             trophysetTypeLayout.CaptionVariant = ControlCaptionVariant.None;
 
             TrophysetPanel.HeaderVisible = Item!.Trophyset.TrophysetExists;
@@ -67,7 +67,7 @@ namespace PlayStationGames.GameEngine.View
                 Layouter.AddFromTemplate(GameField.AppliesTo, -6)
             );
             appliesToLayout.CaptionVariant = ControlCaptionVariant.None;
-            appliesToLayout.Left = 12;
+            appliesToLayout.Left = OxWh.W12;
             appliesToLayout.FontSize -= 2;
             appliesToLayout.FontStyle = FontStyle.Regular;
 
@@ -81,8 +81,8 @@ namespace PlayStationGames.GameEngine.View
             RenewTrophiesIcons();
             Layouter.Template.Parent = TrophiesPanel;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
-            Layouter.Template.Left = 24;
-            Layouter.Template.Top = 4;
+            Layouter.Template.Left = OxWh.W24;
+            Layouter.Template.Top = OxWh.W4;
             trophiesLayouts.Clear();
             bool firstTrophy = true;
 
@@ -127,7 +127,7 @@ namespace PlayStationGames.GameEngine.View
         private void FillLinksLayout()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Width = 120;
+            Layouter.Template.Width = OxWh.W120;
             Layouter.Template.Anchors = AnchorStyles.Right | AnchorStyles.Bottom;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.BackColor = BaseColor;
@@ -260,8 +260,8 @@ namespace PlayStationGames.GameEngine.View
         private void FillReleaseLayouts()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Left = 74;
-            Layouter.Template.Top = Layouter[GameField.Image]!.Bottom + 8;
+            Layouter.Template.Left = OxWh.W74;
+            Layouter.Template.Top = Layouter[GameField.Image]!.Bottom | OxWh.W8;
             releaseLayouts.Clear();
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Platform));
             releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Source, -8));
@@ -320,12 +320,12 @@ namespace PlayStationGames.GameEngine.View
         private void FillImageLayout()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Top = 2;
-            Layouter.Template.Left = 2;
+            Layouter.Template.Top = OxWh.W2;
+            Layouter.Template.Left = OxWh.W2;
             ControlLayout<GameField> imageLayout = Layouter.AddFromTemplate(GameField.Image);
             imageLayout.CaptionVariant = ControlCaptionVariant.None;
-            imageLayout.Width = 140;
-            imageLayout.Height = 80;
+            imageLayout.Width = OxWh.W140;
+            imageLayout.Height = OxWh.W80;
 
             if (Item is not null
                 && Item.Image is not null

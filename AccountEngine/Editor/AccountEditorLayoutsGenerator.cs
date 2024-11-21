@@ -3,6 +3,7 @@ using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Editor;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
+using OxLibrary;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -34,37 +35,37 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.Country,
             };
 
-        public override int Top(AccountField field) =>
+        public override OxWidth Top(AccountField field) =>
             field switch
             {
                 AccountField.DefaultAccount =>
-                    (Parent(field).HeightInt - Height(field)) / 2,
-                _ => 8
+                    OxWh.Div(OxWh.Sub(Parent(field).Height, Height(field)), OxWh.W2),
+                _ => OxWh.W8
             };
 
-        public override int Left(AccountField field) =>
+        public override OxWidth Left(AccountField field) =>
             field is AccountField.Avatar or 
                 AccountField.DefaultAccount
-                ? 8
+                ? OxWh.W8
                 : field is AccountField.Name or
                     AccountField.Country or
                     AccountField.Type
-                    ? 169
-                    : 74;
+                    ? OxWh.W169
+                    : OxWh.W74;
 
-        public override int Width(AccountField field) =>
+        public override OxWidth Width(AccountField field) =>
             field switch
             {
-                AccountField.Avatar => 
-                    80,
+                AccountField.Avatar =>
+                    OxWh.W80,
                 AccountField.Name or
                 AccountField.Country or
-                AccountField.Type => 
-                    225,
+                AccountField.Type =>
+                    OxWh.W225,
                 AccountField.Login or
-                AccountField.Password => 
-                    320,
-                _ => 210
+                AccountField.Password =>
+                    OxWh.W320,
+                _ => OxWh.W210
             };
 
         public override List<AccountField> FillDockFields() =>
@@ -83,11 +84,11 @@ namespace PlayStationGames.AccountEngine.Editor
                     Color.FromArgb(250, 250, 250),
             };
 
-        public override int Height(AccountField field) =>
+        public override OxWidth Height(AccountField field) =>
             field is AccountField.Avatar
-                ? 80
+                ? OxWh.W80
                 : field is AccountField.DefaultAccount 
-                    ? 20
+                    ? OxWh.W20
                     : base.Height(field);
 
         public override AnchorStyles Anchors(AccountField field)

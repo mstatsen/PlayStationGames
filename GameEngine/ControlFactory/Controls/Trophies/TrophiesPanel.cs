@@ -136,7 +136,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 )
                 {
                     Parent = this,
-                    Left = icons[0].RightInt,
+                    Left = OxWh.Int(icons[0].Right),
                     Top = 6,
                     Width = 16
                 };

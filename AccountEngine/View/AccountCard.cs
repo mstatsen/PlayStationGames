@@ -45,7 +45,7 @@ namespace PlayStationGames.AccountEngine.View
             RenewTrophiesIcons();
             TrophiesLayouts.Clear();
             Layouter.Template.Parent = TrophiesPanel;
-            Layouter.Template.Left = 94;
+            Layouter.Template.Left = OxWh.W94;
             Layouter.Template.WrapLabel = false;
             TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlayedGames));
             TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PSNLevel, -10));
@@ -67,8 +67,8 @@ namespace PlayStationGames.AccountEngine.View
 
             ControlLayout<AccountField> avatarLayout = Layouter.AddFromTemplate(AccountField.Avatar);
             avatarLayout.CaptionVariant = ControlCaptionVariant.None;
-            avatarLayout.Width = 80;
-            avatarLayout.Height = 80;
+            avatarLayout.Width = OxWh.W80;
+            avatarLayout.Height = OxWh.W80;
         }
 
         private void FillBaseLayouts()
@@ -76,8 +76,8 @@ namespace PlayStationGames.AccountEngine.View
             ClearLayoutTemplate();
             BaseLayouts.Clear();
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
-            Layouter.Template.Left = Layouter[AccountField.Avatar]!.Right + 8;
-            Layouter.Template.Top = 12;
+            Layouter.Template.Left = Layouter[AccountField.Avatar]!.Right | OxWh.W8;
+            Layouter.Template.Top = OxWh.W12;
             BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Type));
             Layouter.Template.FontStyle = FontStyle.Regular;
 
@@ -105,7 +105,7 @@ namespace PlayStationGames.AccountEngine.View
         private void FillLinksLayout()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Width = 120;
+            Layouter.Template.Width = OxWh.W120;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.BackColor = BaseColor;
             Layouter.AddFromTemplate(AccountField.Links, 12);
@@ -141,7 +141,7 @@ namespace PlayStationGames.AccountEngine.View
             BaseLayouts.Clear();
 
         protected override void PrepareColors()
-        {
+        { 
             base.PrepareColors();
             TrophiesPanel.BaseColor = Colors.Darker();
         }

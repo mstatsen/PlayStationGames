@@ -20,7 +20,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
         protected override void PreparePanels()
         {
             PrepareParentPanel(PanelRight, MainPanel, OxDock.Fill);
-            PanelRight.WidthInt = 450;
+            PanelRight.Width = OxWh.W450;
             PrepareParentPanel(PanelLeft, MainPanel);
         }
 

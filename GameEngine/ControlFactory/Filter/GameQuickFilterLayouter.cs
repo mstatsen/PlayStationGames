@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory.Filter;
 using OxDAOEngine.Data.Filter;
 using OxDAOEngine.Settings;
+using OxLibrary;
 using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Filter
@@ -8,7 +9,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
     public class GameQuickFilterLayouter : IQuickFilterLayouter<GameField>
     {
         public GameField TextFilterContainer => GameField.Name;
-        public int FieldWidth(GameField field) => 
+        public OxWidth FieldWidth(GameField field) => 
             field switch
             {
                 GameField.Difficult or 
@@ -18,20 +19,20 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                 GameField.SinglePlayer or
                 GameField.Multiplayer or
                 GameField.Installed or
-                GameField.Year => 
-                    56,
-                GameField.Format => 
-                    72,
-                GameField.Genre => 
-                    160,
-                GameField.CompleteTime => 
-                    80,
+                GameField.Year =>
+                    OxWh.W56,
+                GameField.Format =>
+                    OxWh.W72,
+                GameField.Genre =>
+                    OxWh.W160,
+                GameField.CompleteTime =>
+                    OxWh.W80,
                 GameField.Owner =>
-                    138,
-                GameField.TrophysetType => 
-                    118,
-                _ => 
-                    100,
+                    OxWh.W138,
+                GameField.TrophysetType =>
+                    OxWh.W118,
+                _ =>
+                    OxWh.W100,
             };
 
         public bool IsLastLayoutForOneRow(GameField field, GameField lastField) => 

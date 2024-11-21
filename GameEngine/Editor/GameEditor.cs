@@ -90,7 +90,7 @@ namespace PlayStationGames.GameEngine.Editor
                 PanelRight.Right,
                 PanelTop.Height 
                 | (Groups[GameFieldGroup.ReleaseBase].Visible
-                        ? Groups[GameFieldGroup.ReleaseBase].CalcedHeight
+                        ? Groups[GameFieldGroup.ReleaseBase].Height
                         : OxWh.W8
                   ) 
                   | OxWh.W12

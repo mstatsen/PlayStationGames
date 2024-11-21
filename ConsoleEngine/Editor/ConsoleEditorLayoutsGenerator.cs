@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Editor;
+using OxLibrary;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 
@@ -41,27 +42,27 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleField.FirmwareVersion,
             };
 
-        public override int Top(ConsoleField field) => 8;
+        public override OxWidth Top(ConsoleField field) => OxWh.W8;
 
-        public override int Left(ConsoleField field) =>
+        public override OxWidth Left(ConsoleField field) =>
             field switch
             {
                 ConsoleField.Model or
                 ConsoleField.ModelCode or
                 ConsoleField.FirmwareName or
                 ConsoleField.FirmwareVersion =>
-                    154,
-                _ => 94
+                    OxWh.W154,
+                _ => OxWh.W94
             };
 
 
-        public override int Width(ConsoleField field) =>
+        public override OxWidth Width(ConsoleField field) =>
             field switch
             {
                 ConsoleField.Generation or
                 ConsoleField.Firmware =>
-                    240,
-                _ => 180
+                    OxWh.W240,
+                _ => OxWh.W180
             };
 
         public override List<ConsoleField> TitleAccordionFields() => new() 

@@ -16,9 +16,9 @@ namespace PlayStationGames.GameEngine.View
         private ControlLayouts<GameField> FillTrophiesLayouts()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Left = 92;
+            Layouter.Template.Left = OxWh.W92;
             Layouter.Template.Parent = TrophysetPanel;
-            Layouter.Template.MaximumLabelWidth = 200;
+            Layouter.Template.MaximumLabelWidth = OxWh.W200;
 
             ControlLayouts<GameField> result = new();
 
@@ -74,9 +74,9 @@ namespace PlayStationGames.GameEngine.View
         private ControlLayouts<GameField> FillReleaseLayouts()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Left = 95;
+            Layouter.Template.Left = OxWh.W95;
             Layouter.Template.Parent = ReleasePanel;
-            Layouter.Template.MaximumLabelWidth = 200;
+            Layouter.Template.MaximumLabelWidth = OxWh.W200;
 
             return new ControlLayouts<GameField>()
                 {
@@ -90,7 +90,7 @@ namespace PlayStationGames.GameEngine.View
         private ControlLayouts<GameField> FillLinksLayout()
         {
             ClearLayoutTemplate();
-            Layouter.Template.Dock = DockStyle.Top;
+            Layouter.Template.Dock = OxDock.Top;
             Layouter.Template.BackColor = BaseColor;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             Layouter.Template.Parent = LinksPanel;
@@ -126,7 +126,7 @@ namespace PlayStationGames.GameEngine.View
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = StockPanel;
-            Layouter.Template.Left = 92;
+            Layouter.Template.Left = OxWh.W92;
 
             return new ControlLayouts<GameField>()
                 {
@@ -141,9 +141,9 @@ namespace PlayStationGames.GameEngine.View
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = BasePanel;
-            Layouter.Template.Top = 4;
+            Layouter.Template.Top = OxWh.W4;
             ControlLayout<GameField> imageLayout = Layouter[GameField.Image]!;
-            Layouter.Template.Left = imageLayout.Right + 80;
+            Layouter.Template.Left = imageLayout.Right | OxWh.W80;
             return new ControlLayouts<GameField>()
             {
                 imageLayout,
@@ -158,7 +158,7 @@ namespace PlayStationGames.GameEngine.View
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = BasePanel2;
-            Layouter.Template.Left = 92;
+            Layouter.Template.Left = OxWh.W92;
 
             return new ControlLayouts<GameField>() {
                 Layouter.AddFromTemplate(GameField.Region),
@@ -176,17 +176,17 @@ namespace PlayStationGames.GameEngine.View
             ControlLayout<GameField> imageLayout = Layouter.AddFromTemplate(GameField.Image);
             imageLayout.Parent = BasePanel;
             imageLayout.CaptionVariant = ControlCaptionVariant.None;
-            imageLayout.Height = 97;
+            imageLayout.Height = OxWh.W97;
 
             if (Item?.Image is not null 
                 && Item.Image.GetPixel(0, 0).A is 0)
             {
-                imageLayout.Left = 12;
-                imageLayout.Width = 176;
+                imageLayout.Left = OxWh.W12;
+                imageLayout.Width = OxWh.W176;
                 imageLayout.BackColor = Colors.Darker();
             }
             else
-                imageLayout.Width = 200;
+                imageLayout.Width = OxWh.W200;
         }
 
         protected override string GetTitle() =>

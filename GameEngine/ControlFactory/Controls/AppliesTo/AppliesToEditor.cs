@@ -38,7 +38,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             TypeControl.Parent = this;
             TypeControl.Left = 8;
             TypeControl.Top = 8;
-            TypeControl.Width = MainPanel.WidthInt - TypeControl.Left - 8;
+            TypeControl.Width =
+                OxWh.Int(
+                    OxWh.Sub(
+                        OxWh.Sub(MainPanel.Width, TypeControl.Left), 
+                        OxWh.W8
+                    )
+                );
             TypeControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             TypeControl.Height = 24;
             SetKeyUpHandler(TypeControl.Control);
