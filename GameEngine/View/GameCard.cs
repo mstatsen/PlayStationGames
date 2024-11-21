@@ -149,8 +149,8 @@ namespace PlayStationGames.GameEngine.View
             if (linksControl is null)
                 return;
             
-            linksControl.Left = Width - linksControl.Width;
-            linksControl.Top = Height - linksControl.Height;
+            linksControl.Left = OxWh.Sub(Width, linksControl.Width);
+            linksControl.Top = OxWh.Sub(Height, linksControl.Height);
         }
 
         protected override void AlignControls()
@@ -223,7 +223,7 @@ namespace PlayStationGames.GameEngine.View
                     maximumTrophysetLabelRight,
                     Layouter.PlacedControl(field)!.Control.Right);
 
-            TrophiesPanel.Left = maximumTrophysetLabelRight + 4;
+            TrophiesPanel.Left = OxWh.Sub(maximumTrophysetLabelRight, OxWh.W4);
 
             int lastBottom = 0;
 
@@ -243,8 +243,8 @@ namespace PlayStationGames.GameEngine.View
                 OxWh.W(lastBottom)
             );
 
-            TrophysetPanel.Left = Width - TrophysetPanel.Width;
-            TrophysetPanel.Top = 32;
+            TrophysetPanel.Left = OxWh.Sub(Width, TrophysetPanel.Width);
+            TrophysetPanel.Top = OxWh.W32;
         }
 
         protected override void PrepareLayouts()

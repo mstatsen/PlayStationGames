@@ -42,7 +42,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             dialog.Text = $"Install {Game} into:";
             dialog.MainPanel.Size = new(
                 OxWh.W600,
-                OxWh.Sum(
+                OxWh.Add(
                     generationHelper.FolderSupport(Generation)
                         ? folderControl.Bottom
                         : storageControl.Bottom

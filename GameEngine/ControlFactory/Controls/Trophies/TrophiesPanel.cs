@@ -103,14 +103,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                     BaseColor);
         }
 
-        private void CreateIcon(TrophyType type, int left)
+        private void CreateIcon(TrophyType type, OxWidth left)
         {
             OxPicture icon = new()
             {
                 Parent = this,
                 Image = trophyTypeHelper.Icon(type),
                 Left = left,
-                Top = 6,
+                Top = OxWh.W6,
                 Size = new(OxWh.W24, OxWh.W24)
             };
             icons.Add(icon);
@@ -125,7 +125,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
 
             if (!IsDLCPanel)
-                CreateIcon(TrophyType.Platinum, 8);
+                CreateIcon(TrophyType.Platinum, OxWh.W8);
 
             string forDLCPrefix = IsDLCPanel ? "DLC:" : string.Empty;
 
@@ -136,7 +136,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 )
                 {
                     Parent = this,
-                    Left = icons[0].Right,
+                    Left = icons[0].RightInt,
                     Top = 6,
                     Width = 16
                 };
@@ -148,7 +148,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
             {
-                CreateIcon(type, calcedLeft);
+                CreateIcon(type, OxWh.W(calcedLeft));
                 calcedLeft += 24;
                 NumericAccessor<GameField, Game> accessor = new(builder.Context($"{forDLCPrefix}{Text}_{type}", FieldType.Integer, null))
                 {

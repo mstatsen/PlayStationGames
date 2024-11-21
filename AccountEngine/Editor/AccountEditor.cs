@@ -20,7 +20,7 @@ namespace PlayStationGames.AccountEngine.Editor
             MaximumSize = Size.Empty;
             MainPanel.Size = new(
                 OxWh.W420,
-                OxWh.Sum(Groups[AccountFieldGroup.Games].Bottom, OxWh.W15)
+                OxWh.Add(Groups[AccountFieldGroup.Games].Bottom, OxWh.W15)
             );
         }
 

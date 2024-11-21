@@ -49,7 +49,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void CreateControls() =>
             CreateNameControl();
 
-        protected override int ContentHeight => NameControl.Bottom + 8;
+        protected override OxWidth ContentHeight => OxWh.Add(NameControl.Bottom, OxWh.W8);
 
         protected override void FillControls(Series item)
         {

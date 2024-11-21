@@ -14,7 +14,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         public override Bitmap? FormIcon => OxIcons.Folder;
 
-        protected override int ContentHeight => 60;
+        protected override OxWidth ContentHeight => OxWh.W60;
 
         protected override void GrabControls(Folder item) => 
             item.Name = folderControl!.StringValue;

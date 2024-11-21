@@ -22,7 +22,7 @@ namespace PlayStationGames.AccountEngine.View
                 Parent = this,
                 Text = "PSN Level",
                 HeaderHeight = OxWh.W18,
-                Top = 1,
+                Top = OxWh.W1,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Size = new(OxWh.W164, OxWh.W168)
             };
@@ -115,7 +115,11 @@ namespace PlayStationGames.AccountEngine.View
         {
             Layouter.AlignLabels(BaseLayouts, 8);
             Layouter.MovePlacedControlsToLeft(TrophiesLayouts, 8);
-            TrophiesPanel.Left = Width - TrophiesPanel.Width - 1;
+            TrophiesPanel.Left = 
+                OxWh.Sub(
+                    OxWh.Sub(Width, TrophiesPanel.Width), 
+                    OxWh.W1
+                );
             AlignTrophiesIcons();
         }
 
@@ -129,7 +133,7 @@ namespace PlayStationGames.AccountEngine.View
                     trophyControl.Control,
                     icon.Value
                     );
-                icon.Value.Left = trophyControl.Control.Left - 32;
+                icon.Value.Left = OxWh.Sub(trophyControl.Control.Left, OxWh.W32);
             }
         }
 

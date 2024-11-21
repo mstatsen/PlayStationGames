@@ -86,14 +86,14 @@ namespace PlayStationGames.GameEngine.Editor
             PanelLeft.Width = CalcedWidth(PanelLeft);
             PanelMiddle.Width = CalcedWidth(PanelMiddle);
             PanelRight.Width = CalcedWidth(PanelRight);
-
             MainPanel.Size = new(
-                OxWh.W(PanelRight.Right),
+                PanelRight.Right,
                 PanelTop.Height 
                 | (Groups[GameFieldGroup.ReleaseBase].Visible
                         ? Groups[GameFieldGroup.ReleaseBase].CalcedHeight
-                        : OxWh.W8) 
-                        | OxWh.W12
+                        : OxWh.W8
+                  ) 
+                  | OxWh.W12
             );
         }
     }

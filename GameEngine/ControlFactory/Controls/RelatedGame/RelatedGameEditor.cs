@@ -48,27 +48,27 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameSelectButton = CreateButton(
                 "Select...", 
                 OxIcons.Select, 
-                "Select game for relate", 
-                GameControl!.Left, 
+                "Select game for relate",
+                OxWh.W(GameControl!.Left),
                 SelectGameHandler);
             SynchronizeButton = CreateButton(
                 "Synchronize", 
                 OxIcons.Synchronize, 
                 "Synchronize data between games",
-                GameSelectButton.Right + 4, 
+                GameSelectButton.Right | OxWh.W4, 
                 SynchronizeHandler);
             GameSelectButton.SizeChanged += SelecButtonSizeChangedHandler;
         }
 
         private void SelecButtonSizeChangedHandler(object? sender, EventArgs e) => 
-            SynchronizeButton!.Left = GameSelectButton!.Right + 4;
+            SynchronizeButton!.Left = GameSelectButton!.Right | OxWh.W4;
 
-        private OxButton CreateButton(string text, Bitmap icon, string toolTipText, int left, EventHandler clickHandler)
+        private OxButton CreateButton(string text, Bitmap icon, string toolTipText, OxWidth left, EventHandler clickHandler)
         {
             OxButton button = new(text, icon)
             {
                 Parent = MainPanel,
-                Top = GameControl!.Bottom + 4,
+                Top = OxWh.Add(GameControl!.Bottom, OxWh.W4),
                 Left = left,
                 Font = Styles.Font(FontStyle.Bold),
                 ToolTipText = toolTipText,
@@ -128,8 +128,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 : string.Empty;
         }
 
-        protected override int ContentWidth => 400;
-        protected override int ContentHeight => SynchronizeButton!.Bottom + 2;
+        protected override OxWidth ContentWidth => OxWh.W400;
+        protected override OxWidth ContentHeight => SynchronizeButton!.Bottom | OxWh.W2;
 
         protected override RelatedGame CreateNewItem() => new();
 

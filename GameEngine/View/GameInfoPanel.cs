@@ -226,7 +226,7 @@ namespace PlayStationGames.GameEngine.View
                     continue;
 
                 OxControlHelper.AlignByBaseLine(trophyControl.Control, icon.Value);
-                icon.Value.Left = trophyControl.Control.Left - 32;
+                icon.Value.Left = OxWh.Sub(trophyControl.Control.Left, OxWh.W32);
             }
         }
 

@@ -17,10 +17,10 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         public override Bitmap? FormIcon => OxIcons.Account;
 
-        protected override int ContentHeight => 
+        protected override OxWidth ContentHeight => 
             accountControl is null 
-                ? 36 
-                : accountControl.Bottom + 12;
+                ? OxWh.W36
+                : OxWh.Add(accountControl.Bottom, OxWh.W12);
 
         protected override void GrabControls(ConsoleAccount item) => 
             item.Id = accountControl!.GuidValue;

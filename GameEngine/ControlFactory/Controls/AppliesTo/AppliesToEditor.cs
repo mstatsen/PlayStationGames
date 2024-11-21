@@ -48,7 +48,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void CreateControls() =>
             CreateTypeControl();
 
-        protected override int ContentHeight => TypeControl.Bottom + 8;
+        protected override OxWidth ContentHeight => OxWh.Add(TypeControl.Bottom, OxWh.W8);
 
         protected override void FillControls(Platform item) => 
             TypeControl.Value = item.Type;

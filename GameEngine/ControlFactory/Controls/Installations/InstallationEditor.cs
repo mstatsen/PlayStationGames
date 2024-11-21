@@ -183,7 +183,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     ? "Storage"
                     : base.EmptyMandatoryField();
 
-        protected override int ContentHeight => sizeControl.Bottom + 8;
+        protected override OxWidth ContentHeight => OxWh.Add(sizeControl.Bottom, OxWh.W8);
 
         public override void RenewData()
         {

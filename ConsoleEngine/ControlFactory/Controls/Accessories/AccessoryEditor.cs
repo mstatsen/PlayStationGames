@@ -183,7 +183,10 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
             lastBottom = SetControlTop(countControl, lastBottom);
             lastBottom = SetControlTop(descriptionControl, lastBottom);
-            Size = new(ContentWidth, lastBottom + 8);
+            Size = new OxSize(
+                ContentWidth, 
+                OxWh.Add(lastBottom, OxWh.W8)
+            ).Size;
         }
 
         protected override void FillControls(Accessory item)
@@ -224,7 +227,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                     ? "Joystick Type"
                     : base.EmptyMandatoryField();
 
-        protected override int ContentHeight => descriptionControl.Bottom + 8;
+        protected override OxWidth ContentHeight => OxWh.Add(descriptionControl.Bottom, OxWh.W8);
 
         private IControlAccessor typeControl = default!;
         private IControlAccessor joystickTypeControl = default!;

@@ -70,14 +70,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 PanelLeft.Width 
                     | TypeHelper.Helper<ConsoleFieldGroupHelper>().
                             GroupWidth(ConsoleFieldGroup.Folders),
-                OxWh.W(
                     (generationHelper.StorageSupport(generation)
                         ? Groups[ConsoleFieldGroup.Storages].Bottom
                         : generationHelper.MaxAccountsCount(generation, firmware) > 0 
                             && !generationHelper.FolderSupport(generation)
                                 ? Groups[ConsoleFieldGroup.Accounts].Bottom
-                                : Groups[ConsoleFieldGroup.Firmware].Bottom + 140) + 13
-                    )
+                                : Groups[ConsoleFieldGroup.Firmware].Bottom | OxWh.W140) 
+                        | OxWh.W13
             );
         }
 

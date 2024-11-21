@@ -147,16 +147,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 
         private void SetMinimumSize()
         {
-            int height = 
-                Type is TrophysetType.NoSet 
-                    ? typeControl.Bottom 
-                    : VisiblePanels.Count > 0 
-                        ? VisiblePanels.Last().Bottom 
-                        : addButton.Bottom;
-
             MinimumSize = new(
-                trophiesPanels.Last().Right + 8,
-                height
+                trophiesPanels.Last().Right | OxWh.W8,
+                Type is TrophysetType.NoSet
+                    ? OxWh.W(typeControl.Bottom)
+                    : VisiblePanels.Count > 0
+                        ? VisiblePanels.Last().Bottom
+                        : addButton.Bottom
             );
             MaximumSize = MinimumSize;
         }
@@ -218,7 +215,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                     Type is not TrophysetType.NoSet
                     && VisiblePanels.Contains(trophiesPanel);
 
-            int lastTop = addButton.Bottom - 2;
+            OxWidth lastTop = OxWh.Sub(addButton.Bottom, OxWh.W2);
 
             foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
             {
@@ -237,13 +234,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             TrophiesPanel result = new(account, forDLC)
             {
                 Parent = this,
-                Left = 8,
+                Left = OxWh.W8,
                 Top = 
                     (trophiesPanels.Count is 0 
-                        ? completeTimeControl.Bottom + 16
+                        ? OxWh.Add(completeTimeControl.Bottom, OxWh.W16)
                         : trophiesPanels.Count is 1 
-                            ? addButton.Bottom - 2
-                            : trophiesPanels.Last().Bottom + 4
+                            ? OxWh.Sub(addButton.Bottom, OxWh.W2)
+                            : trophiesPanels.Last().Bottom | OxWh.W4
                     )
                     + 8
         };

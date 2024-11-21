@@ -86,18 +86,18 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             BaseGroup.Size = new
             (
                 OxWh.W282,
-                OxWh.Sum(AcquiredControl.Bottom, OxWh.W24)
+                OxWh.Add(AcquiredControl.Bottom, OxWh.W24)
             );
             TrophysetGroup.Left = BaseGroup.Right;
             TrophysetGroup.Size = new
             (
                 OxWh.W(TrophysetControl.Width),
-                OxWh.Sum(TrophysetControl.Height, OxWh.W12)
+                OxWh.Add(TrophysetControl.Height, OxWh.W12)
             );
-            Size = new(
+            Size = new OxSize(
                 TrophysetGroup.Right,
-                Math.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
-            );
+                OxWh.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
+            ).Size;
         }
 
         protected override void PrepareReadonly()

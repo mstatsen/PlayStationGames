@@ -84,7 +84,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 : placementControl!.IsEmpty ? "Placement"
                 : base.EmptyMandatoryField();
 
-        protected override int ContentHeight => freeSizeControl!.Bottom + 8;
+        protected override OxWidth ContentHeight => OxWh.Add(freeSizeControl!.Bottom, OxWh.W8);
 
         private EnumAccessor<ConsoleField, PSConsole, StoragePlacement>? placementControl;
         private IControlAccessor? nameControl;
