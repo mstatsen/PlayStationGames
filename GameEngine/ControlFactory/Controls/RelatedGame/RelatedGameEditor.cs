@@ -86,14 +86,14 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameLabel = new OxLabel()
             {
                 Parent = this,
-                Left = 8,
+                Left = OxWh.W8,
                 Text = "Game"
             };
 
             GameControl = Context.Accessor("RelatedGame:Name", FieldType.Memo, true);
             GameControl.Parent = this;
             GameControl.Top = 8;
-            GameControl.Left = GameLabel.Right + 8;
+            GameControl.Left = OxWh.Int(GameLabel.Right) + 8;
             GameControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GameControl.ReadOnly = true;
             GameControl.Width =

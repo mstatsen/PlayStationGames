@@ -64,7 +64,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 {
                     Parent = this,
                     AutoSize = true,
-                    Left = 8,
+                    Left = OxWh.W8,
                     Text = caption,
                     Font = Styles.DefaultFont
                 }

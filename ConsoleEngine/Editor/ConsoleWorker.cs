@@ -80,7 +80,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             Editor.Groups[ConsoleFieldGroup.Games].SizeChanged += GamesGroupSizeChangedHandler;
             Control firmwareVersionControl = Builder.Control<OxTextBox>(ConsoleField.FirmwareVersion);
             installedGamesLabel.Parent = Editor.Groups[ConsoleFieldGroup.Games];
-            installedGamesLabel.Left = 8;
+            installedGamesLabel.Left = OxWh.W8;
             installationsButton.Parent = Editor.Groups[ConsoleFieldGroup.Games];
             installationsButton.Size = new(
                 OxWh.Div(installationsButton.Parent.Width, OxWh.W3), 
@@ -104,7 +104,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 OxWh.Div(installationsButton.Parent!.Width, OxWh.W3), 
                 OxWh.W38
             );
-            installedGamesLabel.Top = (OxWh.Int(installationsButton.Parent.Height) - installedGamesLabel.Height) / 2;
+            installedGamesLabel.Top = OxWh.Div(OxWh.Sub(installationsButton.Parent.Height, installedGamesLabel.Height), 2);
         }
 
         private void InstallationsClickHandler(object? sender, EventArgs e)

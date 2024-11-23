@@ -65,9 +65,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             sizeLabel = CreateLabel("Size", sizeControl);
             sizeLabel2 = CreateLabel("Mb", sizeControl, true);
 
-            storageLabel.Left = 38;
-            folderLabel.Left = 38;
-            sizeLabel.Left = 38;
+            storageLabel.Left = OxWh.W38;
+            folderLabel.Left = OxWh.W38;
+            sizeLabel.Left = OxWh.W38;
         }
 
         private void SetConsoleValueInControl()

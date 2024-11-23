@@ -46,7 +46,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 new OxLabel()
                 {
                     Parent = BaseGroup,
-                    Left = 8,
+                    Left = OxWh.W8,
                     Text = "Name",
                     Font = new(Styles.DefaultFont, FontStyle.Bold)
                 });

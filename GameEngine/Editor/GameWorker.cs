@@ -16,6 +16,7 @@ using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Filter.Types;
+using OxLibrary;
 
 namespace PlayStationGames.GameEngine.Editor
 {
@@ -242,7 +243,7 @@ namespace PlayStationGames.GameEngine.Editor
                 label.Visible = false;
                 onlineMultiplayer.Top = 
                     SupportCoathMultiplayer 
-                    ? label.Top - 2
+                    ? OxWh.Int(OxWh.Sub(label.Top, OxWh.W2))
                     : coachMultiplayer.Top;
             }
 

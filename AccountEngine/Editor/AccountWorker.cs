@@ -40,7 +40,7 @@ namespace PlayStationGames.AccountEngine.Editor
             Editor.Groups[AccountFieldGroup.Games].SizeChanged += GamesSizeChangedHandler;
 
             consolesLabel.Parent = Editor.Groups[AccountFieldGroup.Consoles];
-            consolesLabel.Left = 8;
+            consolesLabel.Left = OxWh.W8;
             consolesButton.Parent = Editor.Groups[AccountFieldGroup.Consoles];
             consolesButton.Dock = OxDock.Right;
             consolesButton.Size = new(OxWh.Div(consolesButton.Parent.Width, OxWh.W3), OxWh.W38);
@@ -48,7 +48,7 @@ namespace PlayStationGames.AccountEngine.Editor
             consolesButton.Click += ConsoleButtonClickHandler;
 
             gamesLabel.Parent = Editor.Groups[AccountFieldGroup.Games];
-            gamesLabel.Left = 8;
+            gamesLabel.Left = OxWh.W8;
             gamesButton.Parent = Editor.Groups[AccountFieldGroup.Games];
             gamesButton.Dock = OxDock.Fill;
             gamesButton.Dock = OxDock.Right;
@@ -80,7 +80,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
                 OxWh.W38
             );
-            consolesLabel.Top = (OxWh.Int(consolesButton.Parent.Height) - consolesLabel.Height) / 2;
+            consolesLabel.Top = OxWh.Div(OxWh.Sub(consolesButton.Parent.Height, consolesLabel.Height), 2);
         }
 
         private void GamesSizeChangedHandler(object? sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace PlayStationGames.AccountEngine.Editor
             gamesButton.Size = new(
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
                 OxWh.W38);
-            gamesLabel.Top = (OxWh.Int(consolesButton.Parent.Height) - gamesLabel.Height) / 2;
+            gamesLabel.Top = OxWh.Div(OxWh.Sub(consolesButton.Parent.Height, gamesLabel.Height), 2);
         }
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)

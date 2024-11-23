@@ -28,22 +28,22 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         };
         private readonly OxLabel trophysetTypeLabel = new()
         { 
-            Left = 8,
+            Left = OxWh.W8,
             Text = "Type"
         };
         private readonly OxLabel appliesToLabel = new()
         {
-            Left = 8,
+            Left = OxWh.W8,
             Text = "Applies to"
         };
         private readonly OxLabel difficultLabel = new()
         {
-            Left = 8,
+            Left = OxWh.W8,
             Text = "Difficult"
         };
         private readonly OxLabel completeTimeLabel = new()
         { 
-            Left = 8, 
+            Left = OxWh.W8, 
             Text = "Time" 
         };
 
