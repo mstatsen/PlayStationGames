@@ -24,9 +24,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             Padding.Size = OxWh.W8;
         }
 
-        protected override void PrepareInnerControls()
+        protected override void PrepareInnerComponents()
         {
-            base.PrepareInnerControls();
+            base.PrepareInnerComponents();
             AccountAccessor = (AccountAccessor<GameField,Game>)DataManager
                 .Builder<GameField, Game>(ControlScope.Editor)
                 .Accessor("Trophyset:Account", FieldType.Enum,

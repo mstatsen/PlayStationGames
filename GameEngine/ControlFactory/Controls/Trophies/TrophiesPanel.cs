@@ -43,9 +43,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 removeButton.Visible = false;
         }
 
-        protected override void PrepareInnerControls()
+        protected override void PrepareInnerComponents()
         {
-            base.PrepareInnerControls();
+            base.PrepareInnerComponents();
             removeButton.Click += RemoveButtonClickHandler;
             Header.AddToolButton(removeButton);
         }
