@@ -25,7 +25,7 @@ namespace PlayStationGames
             InitializeComponent();
 
             Size = MinimumSize;
-            OxControlHelper.CenterForm(this);
+            MoveToScreenCenter();
             
             mainTabControl = new OxTabControl
             {
