@@ -58,7 +58,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             dialog.Size = new(400, 52);
         }
 
-        protected override void PrepareColors()
+        public override void PrepareColors()
         {
             base.PrepareColors();
 

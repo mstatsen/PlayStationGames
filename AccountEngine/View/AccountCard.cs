@@ -140,7 +140,7 @@ namespace PlayStationGames.AccountEngine.View
         protected override void ClearLayouts() =>
             BaseLayouts.Clear();
 
-        protected override void PrepareColors()
+        public override void PrepareColors()
         { 
             base.PrepareColors();
             TrophiesPanel.BaseColor = Colors.Darker();

@@ -88,7 +88,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 accessor.ReadOnly = readOnly;
         }
 
-        protected override void PrepareColors()
+        public override void PrepareColors()
         {
             base.PrepareColors();
 
