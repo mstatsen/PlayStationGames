@@ -108,9 +108,9 @@ namespace PlayStationGames.AccountEngine.View
             ((LinkButtonList)Layouter.PlacedControl(AccountField.Links)!.Control!).
                 RecalcButtonsSizeAndPositions();
 
-        private readonly OxPane AccountPanel = new();
-        private readonly OxPane LinksPanel = new();
-        private readonly OxPane PropertyPanel = new();
+        private readonly OxPanel AccountPanel = new();
+        private readonly OxPanel LinksPanel = new();
+        private readonly OxPanel PropertyPanel = new();
 
         public AccountInfoPanel() : base() { }
     }

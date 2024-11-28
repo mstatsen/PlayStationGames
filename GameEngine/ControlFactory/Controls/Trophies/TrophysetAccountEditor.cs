@@ -1,9 +1,9 @@
 ﻿using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Fields;
-using OxLibrary;
-using OxLibrary.Dialogs;
+using OxLibrary.Forms;
 using OxLibrary.Panels;
+using OxLibrary;
 using PlayStationGames.AccountEngine.ControlFactory.Accessors;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.GameEngine.ControlFactory.Initializers;
@@ -12,7 +12,7 @@ using PlayStationGames.GameEngine.Data.Fields;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 {
-    public class TrophysetAccountEditor : OxPane
+    public class TrophysetAccountEditor : OxPanel
     {
         private readonly TrophysetPanel TrophysetPanel;
         private AccountAccessor<GameField, Game> AccountAccessor = default!;

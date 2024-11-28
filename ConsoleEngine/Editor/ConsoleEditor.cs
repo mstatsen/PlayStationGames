@@ -14,8 +14,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         public override Bitmap? FormIcon => OxIcons.Console;
 
-        public OxPane PanelLeft = new();
-        public OxPane PanelRight = new();
+        public OxPanel PanelLeft = new();
+        public OxPanel PanelRight = new();
 
         protected override void PreparePanels()
         {
@@ -24,7 +24,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             PrepareParentPanel(PanelLeft, MainPanel);
         }
 
-        protected override OxPane? GroupParent(ConsoleFieldGroup group) => 
+        protected override OxPanel? GroupParent(ConsoleFieldGroup group) => 
             group switch
             {
                 ConsoleFieldGroup.Base or

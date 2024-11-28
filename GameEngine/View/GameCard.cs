@@ -144,7 +144,7 @@ namespace PlayStationGames.GameEngine.View
 
         private void CalcLinksPanelLayout()
         {
-            OxPane? linksControl = (OxPane?)Layouter.PlacedControl(GameField.Links)?.Control;
+            OxPanel? linksControl = (OxPanel?)Layouter.PlacedControl(GameField.Links)?.Control;
 
             if (linksControl is null)
                 return;

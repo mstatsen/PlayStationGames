@@ -1,6 +1,6 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
-using OxLibrary.Dialogs;
+using OxLibrary.Forms;
 using OxLibrary.Panels;
 using OxDAOEngine.Data;
 using OxDAOEngine.Settings;
@@ -100,7 +100,7 @@ namespace PlayStationGames
                 InitializeDataManager();
                 DataManager.Load();
 
-                foreach (OxPane face in DataManager.Faces)
+                foreach (OxPanel face in DataManager.Faces)
                     face.BaseColor = MainPanel.BaseColor;
 
                 OxSize screenSize = OxControlHelper.ScreenSize(this);
@@ -137,7 +137,7 @@ namespace PlayStationGames
 
         private void PlaceComponents()
         {
-            foreach (OxPane face in DataManager.Faces)
+            foreach (OxPanel face in DataManager.Faces)
                 mainTabControl.AddPage(face);
 
             mainTabControl.ActivateFirstPage();

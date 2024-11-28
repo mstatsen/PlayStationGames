@@ -1,8 +1,7 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
-using OxLibrary.Dialogs;
+using OxLibrary.Forms;
 using OxLibrary.Panels;
-using OxDAOEngine;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Types;
@@ -13,7 +12,7 @@ using PlayStationGames.GameEngine.Data;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
-    public class InstallationPlaceSelector : OxPane
+    public class InstallationPlaceSelector : OxPanel
     {
         internal readonly OxComboBox storageControl = new();
         internal readonly OxComboBox folderControl = new();

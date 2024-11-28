@@ -1,5 +1,5 @@
 ﻿using OxLibrary;
-using OxLibrary.Dialogs;
+using OxLibrary.Forms;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Filter;
@@ -10,7 +10,6 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxDAOEngine.Data.Filter.Types;
-using Microsoft.VisualBasic.FileIO;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {

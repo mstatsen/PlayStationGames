@@ -13,7 +13,7 @@ using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
 {
-    public class TrophysetPanel : OxPane
+    public class TrophysetPanel : OxPanel
     {
         private readonly ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
         private readonly IControlAccessor typeControl;

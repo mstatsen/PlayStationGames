@@ -39,8 +39,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private OxSize PrepareCheckBoxes()
         {
-            int top = 0;
-            int left = -1;
+            OxWidth top = 0;
+            OxWidth left = OxWh.W0;
             OxWidth calcedHeight = 0;
             OxWidth calcedWidth = 0;
             OxCheckBox? longestFamilyCheckBox = null;
@@ -52,11 +52,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
                 if (!oldFamily.Equals(family))
                 {
-                    top = 0;
+                    top = OxWh.W0;
                     left = 
                         longestFamilyCheckBox is null 
-                            ? 0 : 
-                            longestFamilyCheckBox.Right + 30;
+                            ? OxWh.W0 
+                            : OxWh.Add(longestFamilyCheckBox.Right, OxWh.W30);
                     longestFamilyCheckBox = null;
                 }
 
@@ -104,7 +104,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             mainPanel.Padding.BottomInt = 5;
         }
 
-        private OxCheckBox CreateCheckBox(PlatformType platformType, int top, int left)
+        private OxCheckBox CreateCheckBox(PlatformType platformType, OxWidth top, OxWidth left)
         {
             OxCheckBox checkBox = new()
             {

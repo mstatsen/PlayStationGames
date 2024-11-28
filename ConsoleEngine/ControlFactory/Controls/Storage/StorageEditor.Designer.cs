@@ -1,5 +1,4 @@
-﻿
-using OxLibrary;
+﻿using OxLibrary;
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 {

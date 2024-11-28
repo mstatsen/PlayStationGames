@@ -2,7 +2,7 @@
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
 using OxLibrary;
-using OxLibrary.Dialogs;
+using OxLibrary.Forms;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;

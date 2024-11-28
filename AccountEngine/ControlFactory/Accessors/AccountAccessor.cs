@@ -3,9 +3,9 @@ using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Context;
 using OxDAOEngine.ControlFactory.ValueAccessors;
 using OxDAOEngine.Data;
-using OxLibrary;
 using OxLibrary.Controls;
 using OxLibrary.Panels;
+using OxLibrary;
 using PlayStationGames.AccountEngine.ControlFactory.ValueAccessors;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
@@ -86,7 +86,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
         protected override Control? CreateReadOnlyControl()
         {
-            OxPane readOnlyControl = new()
+            OxPanel readOnlyControl = new()
             {
                 Height = ReadOnlyPictureSize
             };
