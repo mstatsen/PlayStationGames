@@ -60,7 +60,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameSelectButton.SizeChanged += SelecButtonSizeChangedHandler;
         }
 
-        private void SelecButtonSizeChangedHandler(object? sender, EventArgs e) => 
+        private void SelecButtonSizeChangedHandler(OxSize newSize, OxSize oldSize) => 
             SynchronizeButton!.Left = GameSelectButton!.Right | OxWh.W4;
 
         private OxButton CreateButton(string text, Bitmap icon, string toolTipText, OxWidth left, EventHandler clickHandler)

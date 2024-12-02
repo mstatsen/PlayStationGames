@@ -74,7 +74,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 ? $"Owns {gamesWorker.GamesCount} game{(gamesWorker.GamesCount > 1 ? "s" : string.Empty)}"
                 : "Not own any games";
 
-        private void ConsolesSizeChangedHandler(object? sender, EventArgs e)
+        private void ConsolesSizeChangedHandler(OxSize newSize, OxSize oldSize)
         {
             consolesButton.Size = new(
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
@@ -83,7 +83,7 @@ namespace PlayStationGames.AccountEngine.Editor
             consolesLabel.Top = OxWh.Div(OxWh.Sub(consolesButton.Parent.Height, consolesLabel.Height), 2);
         }
 
-        private void GamesSizeChangedHandler(object? sender, EventArgs e)
+        private void GamesSizeChangedHandler(OxSize newSize, OxSize oldSize)
         {
             gamesButton.Size = new(
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 

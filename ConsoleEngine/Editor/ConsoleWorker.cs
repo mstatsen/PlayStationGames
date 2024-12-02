@@ -98,7 +98,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                     ? $"{installationsWorker.InstalledGamesCount} installed game{(installationsWorker.InstalledGamesCount > 1 ? "s" : string.Empty)}"
                     : "No installed games";
 
-        private void GamesGroupSizeChangedHandler(object? sender, EventArgs e)
+        private void GamesGroupSizeChangedHandler(OxSize newSize, OxSize oldSize)
         {
             installationsButton.Size = new(
                 OxWh.Div(installationsButton.Parent!.Width, OxWh.W3), 
