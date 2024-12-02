@@ -8,6 +8,7 @@ using OxDAOEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxDAOEngine.Grid;
+using OxLibrary.Controls.Handlers;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -60,7 +61,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             GameSelectButton.SizeChanged += SelecButtonSizeChangedHandler;
         }
 
-        private void SelecButtonSizeChangedHandler(OxSize newSize, OxSize oldSize) => 
+        private void SelecButtonSizeChangedHandler(object sender, OxSizeChangedEventArgs args) => 
             SynchronizeButton!.Left = GameSelectButton!.Right | OxWh.W4;
 
         private OxButton CreateButton(string text, Bitmap icon, string toolTipText, OxWidth left, EventHandler clickHandler)

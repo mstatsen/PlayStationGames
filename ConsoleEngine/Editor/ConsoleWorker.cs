@@ -1,5 +1,6 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
+using OxLibrary.Controls.Handlers;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
@@ -98,7 +99,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                     ? $"{installationsWorker.InstalledGamesCount} installed game{(installationsWorker.InstalledGamesCount > 1 ? "s" : string.Empty)}"
                     : "No installed games";
 
-        private void GamesGroupSizeChangedHandler(OxSize newSize, OxSize oldSize)
+        private void GamesGroupSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
             installationsButton.Size = new(
                 OxWh.Div(installationsButton.Parent!.Width, OxWh.W3), 

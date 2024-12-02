@@ -7,6 +7,7 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data.Types;
 using OxDAOEngine.Data;
+using OxLibrary.Controls.Handlers;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -74,7 +75,7 @@ namespace PlayStationGames.AccountEngine.Editor
                 ? $"Owns {gamesWorker.GamesCount} game{(gamesWorker.GamesCount > 1 ? "s" : string.Empty)}"
                 : "Not own any games";
 
-        private void ConsolesSizeChangedHandler(OxSize newSize, OxSize oldSize)
+        private void ConsolesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
             consolesButton.Size = new(
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
@@ -83,7 +84,7 @@ namespace PlayStationGames.AccountEngine.Editor
             consolesLabel.Top = OxWh.Div(OxWh.Sub(consolesButton.Parent.Height, consolesLabel.Height), 2);
         }
 
-        private void GamesSizeChangedHandler(OxSize newSize, OxSize oldSize)
+        private void GamesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
             gamesButton.Size = new(
                 OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
