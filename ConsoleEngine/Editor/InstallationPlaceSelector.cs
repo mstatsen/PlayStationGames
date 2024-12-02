@@ -1,6 +1,5 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
-using OxLibrary.Forms;
 using OxLibrary.Panels;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
@@ -9,6 +8,7 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
+using OxLibrary.Forms;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {

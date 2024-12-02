@@ -1,6 +1,7 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
 using OxLibrary.Forms;
+using OxLibrary.Handlers;
 using OxLibrary.Panels;
 using OxDAOEngine.Data;
 using OxDAOEngine.Settings;
@@ -8,7 +9,6 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.AccountEngine.Data;
 using OxDAOEngine.Settings.Part;
-using OxLibrary.Handlers;
 
 namespace PlayStationGames
 {

@@ -3,13 +3,13 @@ using OxLibrary.Forms;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Filter;
+using OxDAOEngine.Data.Filter.Types;
 using OxDAOEngine.Grid;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
-using OxDAOEngine.Data.Filter.Types;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
