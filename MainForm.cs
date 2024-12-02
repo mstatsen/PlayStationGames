@@ -8,6 +8,7 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.AccountEngine.Data;
 using OxDAOEngine.Settings.Part;
+using OxLibrary.Handlers;
 
 namespace PlayStationGames
 {
@@ -31,7 +32,7 @@ namespace PlayStationGames
             {
                 Dock = OxDock.Fill,
                 Parent = MainPanel,
-                Font = Styles.DefaultFont,
+                Font = OxStyles.DefaultFont,
                 BaseColor = MainPanel.BaseColor,
                 TabHeaderSize = new(OxWh.W140, OxWh.W32),
                 TabPosition = OxDock.Top

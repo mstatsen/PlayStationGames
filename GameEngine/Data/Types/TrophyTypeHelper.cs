@@ -41,7 +41,7 @@ namespace PlayStationGames.GameEngine.Data.Types
                 ? bitmap
                 : null;
 
-        public override Color GetBaseColor(TrophyType value) => Styles.CardColor;
+        public override Color GetBaseColor(TrophyType value) => OxStyles.CardColor;
 
         public override Color GetFontColor(TrophyType value) =>
             value switch

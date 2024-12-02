@@ -8,7 +8,7 @@ using OxDAOEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxDAOEngine.Grid;
-using OxLibrary.Controls.Handlers;
+using OxLibrary.Handlers;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls
 {
@@ -71,7 +71,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                 Parent = MainPanel,
                 Top = OxWh.Add(GameControl!.Bottom, OxWh.W4),
                 Left = left,
-                Font = Styles.Font(FontStyle.Bold),
+                Font = OxStyles.Font(FontStyle.Bold),
                 ToolTipText = toolTipText,
                 Size = new(OxWh.W140, OxWh.W20)
             };

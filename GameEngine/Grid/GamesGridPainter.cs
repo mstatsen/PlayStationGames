@@ -20,7 +20,7 @@ namespace PlayStationGames.GameEngine.Grid
             };
 
             FontStyle fontStyle = FontStyle.Regular;
-            float fontSize = Styles.DefaultFontSize;
+            float fontSize = OxStyles.DefaultFontSize;
             style.ForeColor = TypeHelper.FontColor(item?.SourceType);
 
             switch (field)
@@ -46,7 +46,7 @@ namespace PlayStationGames.GameEngine.Grid
             if (selected)
                 fontStyle |= FontStyle.Bold;
 
-            style.Font = Styles.Font(fontSize, fontStyle);
+            style.Font = OxStyles.Font(fontSize, fontStyle);
             style.SelectionForeColor = style.ForeColor;
             return style;
         }

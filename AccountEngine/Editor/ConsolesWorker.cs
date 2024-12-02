@@ -14,7 +14,7 @@ namespace PlayStationGames.AccountEngine.Editor
 {
     public class ConsolesWorker
     {
-        public Color BaseColor { get; set; } = Styles.CardColor;
+        public Color BaseColor { get; set; } = OxStyles.CardColor;
 
         private Account? account;
 

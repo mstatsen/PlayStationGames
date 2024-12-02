@@ -15,7 +15,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 {
     public class InstallationsWorker
     {
-        public Color BaseColor { get; set; } = Styles.CardColor;
+        public Color BaseColor { get; set; } = OxStyles.CardColor;
 
         private static ControlBuilder<ConsoleField, PSConsole> Builder =>
             DataManager.Builder<ConsoleField, PSConsole>(ControlScope.Editor);

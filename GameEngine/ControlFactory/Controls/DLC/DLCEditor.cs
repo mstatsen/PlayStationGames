@@ -48,7 +48,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
                     Parent = BaseGroup,
                     Left = OxWh.W8,
                     Text = "Name",
-                    Font = new(Styles.DefaultFont, FontStyle.Bold)
+                    Font = new(OxStyles.DefaultFont, FontStyle.Bold)
                 });
             FirstFocusControl = NameControl.Control;
 

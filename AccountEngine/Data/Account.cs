@@ -62,7 +62,7 @@ namespace PlayStationGames.AccountEngine.Data
             set => ModifyValue(AccountField.Password, password, value, n => password = StringValue(n));
         }
 
-        public Country? Country
+        public OxCountry? Country
         {
             get => country;
             set => ModifyValue(AccountField.Country, country, value, n => country = n);
@@ -93,7 +93,7 @@ namespace PlayStationGames.AccountEngine.Data
                 id = Guid.NewGuid();
 
             defaultAccount = XmlHelper.ValueBool(element, XmlConsts.Default);
-            country = CountryList.GetCountry(CountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
+            country = OxCountryList.GetCountry(OxCountryField.Alpha3, XmlHelper.Value(element, XmlConsts.Country));
             login = XmlHelper.Value(element, XmlConsts.Login);
             password = XmlHelper.Value(element, XmlConsts.Password);
             type = XmlHelper.Value<AccountType>(element, XmlConsts.Type);
@@ -114,7 +114,7 @@ namespace PlayStationGames.AccountEngine.Data
         }
 
         private Guid id = Guid.Empty;
-        private Country? country = null;
+        private OxCountry? country = null;
         private string login = string.Empty;
         private string password = string.Empty;
         private bool defaultAccount = false;
@@ -208,7 +208,7 @@ namespace PlayStationGames.AccountEngine.Data
                     Password = StringValue(value);
                     break;
                 case AccountField.Country:
-                    Country = (Country?)value;
+                    Country = (OxCountry?)value;
                     break;
                 case AccountField.Links:
                     Links.CopyFrom((DAO?)value);

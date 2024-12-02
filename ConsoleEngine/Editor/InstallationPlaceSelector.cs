@@ -65,7 +65,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
                     AutoSize = true,
                     Left = OxWh.W8,
                     Text = caption,
-                    Font = Styles.DefaultFont
+                    Font = OxStyles.DefaultFont
                 }
             )!;
 

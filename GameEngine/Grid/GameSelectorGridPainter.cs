@@ -23,12 +23,12 @@ namespace PlayStationGames.GameEngine.Grid
             };
 
             FontStyle fontStyle = FontStyle.Regular;
-            float fontSize = Styles.DefaultFontSize;
+            float fontSize = OxStyles.DefaultFontSize;
 
             if (selected)
                 fontStyle |= FontStyle.Bold;
 
-            style.Font = Styles.Font(fontSize, fontStyle);
+            style.Font = OxStyles.Font(fontSize, fontStyle);
             style.BackColor = TypeHelper.BackColor(item?.SourceType);
             style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
             style.SelectionForeColor = TypeHelper.FontColor(item?.SourceType);

@@ -7,7 +7,7 @@ using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data.Types;
 using OxDAOEngine.Data;
-using OxLibrary.Controls.Handlers;
+using OxLibrary.Handlers;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -151,25 +151,25 @@ namespace PlayStationGames.AccountEngine.Editor
         private readonly OxButton consolesButton = new("Consoles", OxIcons.Share)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-            Font = Styles.DefaultFont
+            Font = OxStyles.DefaultFont
         };
 
         private readonly OxButton gamesButton = new("Games", OxIcons.LinkedItems)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-            Font = Styles.DefaultFont
+            Font = OxStyles.DefaultFont
         };
 
         private readonly OxLabel consolesLabel = new()
         {
             Text = "Consoles count",
-            Font = Styles.DefaultFont
+            Font = OxStyles.DefaultFont
         };
 
         private readonly OxLabel gamesLabel = new()
         {
             Text = "Games count",
-            Font = Styles.DefaultFont
+            Font = OxStyles.DefaultFont
         };
 
         protected override FieldGroupFrames<AccountField, AccountFieldGroup> GetFieldGroupFrames() =>

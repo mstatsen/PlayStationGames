@@ -1,6 +1,5 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
-using OxLibrary.Controls.Handlers;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
@@ -8,6 +7,7 @@ using OxDAOEngine.Editor;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
+using OxLibrary.Handlers;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
@@ -64,13 +64,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
         private readonly OxButton installationsButton = new("Install / uninstall", OxIcons.Install)
         {
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-            Font = Styles.DefaultFont
+            Font = OxStyles.DefaultFont
         };
 
         private readonly OxLabel installedGamesLabel = new()
         {
             Text = "Installed games count",
-            Font = Styles.DefaultFont
+            Font = OxStyles.DefaultFont
         };
 
         protected override void AfterLayoutControls()
