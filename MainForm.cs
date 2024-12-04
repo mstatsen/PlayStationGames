@@ -5,10 +5,10 @@ using OxLibrary.Handlers;
 using OxLibrary.Panels;
 using OxDAOEngine.Data;
 using OxDAOEngine.Settings;
+using OxDAOEngine.Settings.Part;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.AccountEngine.Data;
-using OxDAOEngine.Settings.Part;
 
 namespace PlayStationGames
 {
