@@ -1,12 +1,12 @@
-﻿using OxLibrary;
+﻿using OxLibrary.BitmapWorker;
 using OxDAOEngine;
 using OxDAOEngine.Data;
+using OxDAOEngine.Data.Decorator;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
-using OxDAOEngine.Data.Decorator;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
@@ -73,7 +73,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                 : string.Empty;
 
         private object Image =>
-            OxImageBoxer.BoxingImage(Dao.Image, new(70, 40));
+            OxBitmapWorker.BoxingImage(Dao.Image, new(70, 40));
 
         private object? Pegi =>
             Dao.Pegi.Equals(TypeHelper.EmptyValue<Pegi>())

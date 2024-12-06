@@ -1,8 +1,8 @@
-﻿using OxLibrary;
-using OxDAOEngine.Data.Types;
+﻿using OxDAOEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using OxDAOEngine.Data.Decorator;
+using OxLibrary.BitmapWorker;
 
 namespace PlayStationGames.ConsoleEngine.Data.Decorator
 {
@@ -15,7 +15,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
                 : field switch
                     {
                         ConsoleField.Icon => 
-                            OxImageBoxer.BoxingImage(Dao.Icon, new(70, 40)),
+                            OxBitmapWorker.BoxingImage(Dao.Icon, new(70, 40)),
                         ConsoleField.Storages => 
                             StoragesCount(),
                         ConsoleField.Folders => 

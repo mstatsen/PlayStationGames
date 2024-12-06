@@ -1,5 +1,6 @@
 ﻿using OxDAOEngine.Data.Types;
 using OxLibrary;
+using OxLibrary.BitmapWorker;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Fields;
 
@@ -30,10 +31,10 @@ namespace PlayStationGames.GameEngine.Data.Types
 
         private readonly Dictionary<TrophyType, Bitmap> iconsDictionary = new()
         {
-            [TrophyType.Platinum] = OxImageBoxer.BoxingImage(OxIcons.PlatinumTrophy, iconSize),
-            [TrophyType.Gold] = OxImageBoxer.BoxingImage(OxIcons.GoldTrophy, iconSize),
-            [TrophyType.Silver] = OxImageBoxer.BoxingImage(OxIcons.SilverTrophy, iconSize),
-            [TrophyType.Bronze] = OxImageBoxer.BoxingImage(OxIcons.BronzeTrophy, iconSize)
+            [TrophyType.Platinum] = OxBitmapWorker.BoxingImage(OxIcons.PlatinumTrophy, iconSize),
+            [TrophyType.Gold] = OxBitmapWorker.BoxingImage(OxIcons.GoldTrophy, iconSize),
+            [TrophyType.Silver] = OxBitmapWorker.BoxingImage(OxIcons.SilverTrophy, iconSize),
+            [TrophyType.Bronze] = OxBitmapWorker.BoxingImage(OxIcons.BronzeTrophy, iconSize)
         };
 
         public Bitmap? Icon(TrophyType type) =>

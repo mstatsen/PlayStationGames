@@ -1,6 +1,6 @@
-﻿using OxLibrary;
-using OxDAOEngine.Data.Types;
+﻿using OxDAOEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data.Fields;
+using OxLibrary.BitmapWorker;
 
 
 namespace PlayStationGames.ConsoleEngine.Data.Decorator
@@ -29,7 +29,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Decorator
                 : field switch
                     {
                         ConsoleField.Icon =>
-                            OxImageBoxer.BoxingImage(Dao.Icon, new(80, 33)),
+                            OxBitmapWorker.BoxingImage(Dao.Icon, new(80, 33)),
                         ConsoleField.Storages =>
                             NormalizeIfEmpty(Dao.Storages.ShortString),
                         ConsoleField.Accessories =>

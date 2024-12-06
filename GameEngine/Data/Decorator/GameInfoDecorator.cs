@@ -1,4 +1,4 @@
-﻿using OxLibrary;
+﻿using OxLibrary.BitmapWorker;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.GameEngine.Data.Fields;
 
@@ -12,7 +12,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
             field switch
             {
                 GameField.Image =>
-                    OxImageBoxer.BoxingImage(Dao.Image, new(200, 97)),
+                    OxBitmapWorker.BoxingImage(Dao.Image, new(200, 97)),
                 GameField.Format =>
                     TypeHelper.ShortName(Dao.Format),
                 GameField.Installations => 

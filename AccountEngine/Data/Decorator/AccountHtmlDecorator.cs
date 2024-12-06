@@ -1,6 +1,6 @@
-﻿using OxLibrary;
-using OxDAOEngine.Data.Decorator;
+﻿using OxDAOEngine.Data.Decorator;
 using PlayStationGames.AccountEngine.Data.Fields;
+using OxLibrary.BitmapWorker;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
 {

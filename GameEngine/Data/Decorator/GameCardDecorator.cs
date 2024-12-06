@@ -1,11 +1,11 @@
-﻿using OxLibrary;
+﻿using OxLibrary.BitmapWorker;
 using OxDAOEngine.Data.Types;
-using PlayStationGames.GameEngine.Data.Fields;
-using PlayStationGames.GameEngine.Data.Types;
 using OxDAOEngine;
 using OxDAOEngine.Data;
-using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
+using PlayStationGames.AccountEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Fields;
+using PlayStationGames.GameEngine.Data.Types;
 
 namespace PlayStationGames.GameEngine.Data.Decorator
 {
@@ -56,7 +56,7 @@ namespace PlayStationGames.GameEngine.Data.Decorator
                     : $" / {TypeHelper.ShortName(Dao.Format)}");
 
         private object? Image() =>
-            OxImageBoxer.BoxingImage(Dao.Image, new(140, 80));
+            OxBitmapWorker.BoxingImage(Dao.Image, new(140, 80));
 
         private object FullGenre
         {

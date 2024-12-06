@@ -1,6 +1,7 @@
 ﻿using OxDAOEngine.Data.Decorator;
 using OxDAOEngine.Data.Types;
 using OxLibrary;
+using OxLibrary.BitmapWorker;
 using PlayStationGames.AccountEngine.Data.Fields;
 
 namespace PlayStationGames.AccountEngine.Data.Decorator
@@ -16,7 +17,7 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
             return field switch
             {
                 AccountField.Avatar => 
-                    OxImageBoxer.BoxingImage(Dao.Image, new(OxWh.W70, OxWh.W40)),
+                    OxBitmapWorker.BoxingImage(Dao.Image, new(OxWh.W70, OxWh.W40)),
                 AccountField.Consoles =>
                     Dao.ConsolesCount,
                 AccountField.Games => 
