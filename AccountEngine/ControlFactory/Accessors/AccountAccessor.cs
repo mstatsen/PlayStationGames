@@ -93,7 +93,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
             ReadOnlyLabel = (OxTextBox)base.CreateReadOnlyControl()!;
             ReadOnlyLabel.Parent = readOnlyControl;
             ReadOnlyLabel.AutoSize = true;
-            ReadOnlyLabel.Left = OxWh.Int(ReadOnlyPictureSize);
+            ReadOnlyLabel.Left = ReadOnlyPictureSize;
             ReadOnlyPicture.Parent = readOnlyControl;
             ReadOnlyPicture.Height = ReadOnlyPictureSize;
             ReadOnlyPicture.Width = ReadOnlyPictureSize;
@@ -111,9 +111,9 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
             if (ReadOnlyControl is not null)
             {
-                ReadOnlyControl.Width = OxWh.Int(ReadOnlyPictureSize) + ReadOnlyLabel.Width;
+                ReadOnlyControl.Width = OxWh.IAdd(ReadOnlyPictureSize, ReadOnlyLabel.Width);
                 ReadOnlyControl.Height = OxWh.Int(ReadOnlyPictureSize);
-                ReadOnlyLabel.Top = (ReadOnlyControl.Height - ReadOnlyLabel.Height) / 2;
+                ReadOnlyLabel.Top = OxWh.Div(OxWh.Sub(ReadOnlyControl.Height, ReadOnlyLabel.Height), OxWh.W2);
             }
         }
 
