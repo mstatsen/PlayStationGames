@@ -35,10 +35,9 @@ namespace PlayStationGames.GameEngine.Editor
         {
             this.SuspendLayout();
             // 
-            // MainPanel
+            // FormPanel
             // 
-            this.MainPanel.Size = new OxSize(OxWh.W(1225), OxWh.W(636));
-            this.MainPanel.Text = "Game";
+            this.FormPanel.Size = new OxSize(OxWh.W(1225), OxWh.W(636));
             // 
             // GameEditor
             // 

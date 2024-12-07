@@ -169,7 +169,7 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
             accessor.Width =
                 OxWh.Int(
                     OxWh.Sub(
-                        OxWh.Sub(MainPanel.Width, accessor.Left), 
+                        OxWh.Sub(FormPanel.Width, accessor.Left), 
                         OxWh.W8
                     )
                 );

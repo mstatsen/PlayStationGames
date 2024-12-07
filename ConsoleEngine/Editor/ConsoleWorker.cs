@@ -18,8 +18,8 @@ namespace PlayStationGames.ConsoleEngine.Editor
         protected override void PrepareStyles()
         {
             base.PrepareStyles();
-            ControlPainter.ColorizeControl(installationsButton, Editor.MainPanel.BaseColor);
-            installationsWorker.BaseColor = Editor.MainPanel.BaseColor;
+            ControlPainter.ColorizeControl(installationsButton, Editor.BaseColor);
+            installationsWorker.BaseColor = Editor.BaseColor;
         }
 
         protected override bool SyncFieldValue(ConsoleField field, bool byUser)

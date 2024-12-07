@@ -36,10 +36,9 @@ namespace PlayStationGames.AccountEngine.Editor
         {
             this.SuspendLayout();
             // 
-            // MainPanel
+            // FormPanel
             // 
-            this.MainPanel.Size = new OxSize(OxWh.W(1225), OxWh.W636);
-            this.MainPanel.Text = "Account";
+            this.FormPanel.Size = new OxSize(OxWh.W(1225), OxWh.W636);
             // 
             // AccountEditor
             // 

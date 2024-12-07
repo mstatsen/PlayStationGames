@@ -27,7 +27,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 accessor.Width = 
                     OxWh.Int(
                         OxWh.Sub(
-                            OxWh.Sub(MainPanel.Width, accessor.Left), 
+                            OxWh.Sub(FormPanel.Width, accessor.Left), 
                             OxWh.W8
                         )
                     );

@@ -32,12 +32,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             this.SuspendLayout();
             // 
-            // MainPanel
+            // FormPanel
             // 
-            this.MainPanel.Size = new OxSize(OxWh.W390, OxWh.W230);
-            this.MainPanel.Text = "Device";
+            this.FormPanel.Size = new OxSize(OxWh.W390, OxWh.W230);
             // 
-            // LinkEditor
+            // DeviceEditor
             // 
             this.ClientSize = new OxSize(OxWh.W390, OxWh.W230);
             this.MaximumSize = new OxSize(OxWh.W390, OxWh.W230);

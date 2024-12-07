@@ -33,7 +33,7 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
 
     protected override void CreateControls()
     {
-        BaseGroup.Parent = MainPanel;
+        BaseGroup.Parent = FormPanel;
         BaseGroup.Margin.Size = OxWh.W8;
         NameControl = Context.Accessor("DLC:Name", FieldType.ShortMemo, true);
         NameControl.Top = 8;
@@ -72,7 +72,7 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         TrophysetControl = (TrophysetAccessor)Context.Accessor("DLC:Trophyset", FieldType.Custom);
         TrophysetControl.Parent = TrophysetGroup;
         TrophysetControl.ValueChangeHandler += TrophysetValueChange;
-        TrophysetGroup.Parent = MainPanel;
+        TrophysetGroup.Parent = FormPanel;
         TrophysetGroup.Margin.Size = OxWh.W8;
         TrophysetGroup.Margin.Left = OxWh.W0;
         RecalcSize();

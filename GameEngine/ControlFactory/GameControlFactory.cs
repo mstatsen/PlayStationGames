@@ -99,8 +99,10 @@ namespace PlayStationGames.GameEngine.ControlFactory
                     _ => base.CreateOtherAccessor(context)
                 };
 
+#pragma warning disable CA1822 // Mark members as static
         private IControlAccessor CreateYearAccessor(IBuilderContext<GameField, Game> context) =>
             new YearAccessor<GameField, Game>(context);
+#pragma warning restore CA1822 // Mark members as static
 
         private IControlAccessor CreateAppliesToAccessor(IBuilderContext<GameField, Game> context) => 
             CreateButtonEditAccessor<Platform, Platforms, AppliesToListControl>(context);

@@ -39,7 +39,6 @@ namespace PlayStationGames
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new OxSize(OxWh.W(747), OxWh.W554);
-            Icon = (Icon)resources.GetObject("$this.Icon");
             Location = new OxPoint(0, 0);
             MaximumSize = new OxSize(OxWh.W(1920), OxWh.W(1080));
             MinimumSize = new OxSize(OxWh.W700, OxWh.W480);

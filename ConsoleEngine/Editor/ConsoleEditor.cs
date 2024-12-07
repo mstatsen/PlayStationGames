@@ -19,9 +19,9 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
         protected override void PreparePanels()
         {
-            PrepareParentPanel(PanelRight, MainPanel, OxDock.Fill);
+            PrepareParentPanel(PanelRight, FormPanel, OxDock.Fill);
             PanelRight.Width = OxWh.W450;
-            PrepareParentPanel(PanelLeft, MainPanel);
+            PrepareParentPanel(PanelLeft, FormPanel);
         }
 
         protected override OxPanel? GroupParent(ConsoleFieldGroup group) => 
@@ -66,7 +66,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
 
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
             SetFrameMargin(ConsoleFieldGroup.Games, Groups[ConsoleFieldGroup.Games]);
-            MainPanel.Size = new(
+            FormPanel.Size = new(
                 PanelLeft.Width 
                     | TypeHelper.Helper<ConsoleFieldGroupHelper>().
                             GroupWidth(ConsoleFieldGroup.Folders),

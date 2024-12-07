@@ -19,7 +19,7 @@ namespace PlayStationGames.GameEngine.Editor
 
         protected override void PreparePanels()
         {
-            PrepareParentPanel(PanelTop, MainPanel, OxDock.Top, false);
+            PrepareParentPanel(PanelTop, FormPanel, OxDock.Top, false);
             PrepareParentPanel(PanelRight, PanelTop);
             PrepareParentPanel(PanelMiddle, PanelTop);
             PrepareParentPanel(PanelLeft, PanelTop);
@@ -41,7 +41,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameFieldGroup.Trophyset =>
                     PanelRight,
                 GameFieldGroup.ReleaseBase => 
-                    MainPanel,
+                    FormPanel,
                 _ => null,
             };
 
@@ -86,7 +86,7 @@ namespace PlayStationGames.GameEngine.Editor
             PanelLeft.Width = CalcedWidth(PanelLeft);
             PanelMiddle.Width = CalcedWidth(PanelMiddle);
             PanelRight.Width = CalcedWidth(PanelRight);
-            MainPanel.Size = new(
+            FormPanel.Size = new(
                 PanelRight.Right,
                 PanelTop.Height 
                 | (Groups[GameFieldGroup.ReleaseBase].Visible

@@ -31,9 +31,9 @@ namespace PlayStationGames
             mainTabControl = new OxTabControl
             {
                 Dock = OxDock.Fill,
-                Parent = MainPanel,
+                Parent = FormPanel,
                 Font = OxStyles.DefaultFont,
-                BaseColor = MainPanel.BaseColor,
+                BaseColor = BaseColor,
                 TabHeaderSize = new(OxWh.W140, OxWh.W32),
                 TabPosition = OxDock.Top
             };
@@ -41,9 +41,9 @@ namespace PlayStationGames
 
             toolBar = new OxToolBar<OxButton>()
             {
-                Parent = MainPanel,
+                Parent = FormPanel,
                 Dock = OxDock.Top,
-                BaseColor = MainPanel.BaseColor,
+                BaseColor = BaseColor,
                 Visible = false,
                 ToolbarActionClick = MainToolBarActoinClickHandler
             };
@@ -55,7 +55,7 @@ namespace PlayStationGames
             toolBar.Padding.Top = OxWh.W2;
             loadingPanel = new OxLoadingPanel()
             {
-                Parent = MainPanel,
+                Parent = FormPanel,
                 UseParentColor = false
             };
             loadingPanel.Margin.Size = OxWh.W0;
@@ -102,7 +102,7 @@ namespace PlayStationGames
                 DataManager.Load();
 
                 foreach (OxPanel face in DataManager.Faces)
-                    face.BaseColor = MainPanel.BaseColor;
+                    face.BaseColor = BaseColor;
 
                 OxSize screenSize = OxControlHelper.ScreenSize(this);
                 Size = new(

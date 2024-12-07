@@ -39,7 +39,7 @@ public class InstallationPlaceSelector : OxPanel
         base.PrepareDialog(dialog);
         Renew();
         dialog.Text = $"Install {Game} into:";
-        dialog.MainPanel.Size = new(
+        dialog.FormPanel.Size = new(
             OxWh.W600,
             OxWh.Add(
                 generationHelper.FolderSupport(Generation)

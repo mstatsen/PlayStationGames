@@ -18,10 +18,10 @@ namespace PlayStationGames.AccountEngine.Editor
         protected override void PrepareStyles()
         {
             base.PrepareStyles();
-            ControlPainter.ColorizeControl(consolesButton, Editor.MainPanel.BaseColor);
-            ControlPainter.ColorizeControl(gamesButton, Editor.MainPanel.BaseColor);
-            consolesWorker.BaseColor = Editor.MainPanel.BaseColor;
-            gamesWorker.BaseColor = Editor.MainPanel.BaseColor;
+            ControlPainter.ColorizeControl(consolesButton, Editor.BaseColor);
+            ControlPainter.ColorizeControl(gamesButton, Editor.BaseColor);
+            consolesWorker.BaseColor = Editor.BaseColor;
+            gamesWorker.BaseColor = Editor.BaseColor;
         }
 
         protected override bool SyncFieldValue(AccountField field, bool byUser) => 
@@ -176,7 +176,7 @@ namespace PlayStationGames.AccountEngine.Editor
             new()
                 {
                     Editor.Groups,
-                    { AccountFieldGroup.System, Editor.MainPanel.Footer }
+                    { AccountFieldGroup.System, Editor.Footer }
                 };
 
         protected override bool SetGroupsAvailability(bool afterSyncValues = false)

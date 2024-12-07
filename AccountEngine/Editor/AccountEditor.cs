@@ -13,13 +13,13 @@ namespace PlayStationGames.AccountEngine.Editor
 
         public override Bitmap? FormIcon => OxIcons.Account;
 
-        protected override OxPanel? GroupParent(AccountFieldGroup group) => MainPanel;
+        protected override OxPanel? GroupParent(AccountFieldGroup group) => FormPanel;
 
         protected override void RecalcPanels()
         {
             MinimumSize = new();
             MaximumSize = new();
-            MainPanel.Size = new(
+            FormPanel.Size = new(
                 OxWh.W420,
                 OxWh.Add(Groups[AccountFieldGroup.Games].Bottom, OxWh.W15)
             );

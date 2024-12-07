@@ -27,8 +27,8 @@ namespace PlayStationGames.GameEngine.Editor
         protected override void AfterColorizeControls()
         {
             base.AfterColorizeControls();
-            Builder.Control<OxPictureContainer>(GameField.Image).BaseColor = Editor.MainPanel.Colors.Lighter();
-            Builder.Control<TrophysetPanel>(GameField.Trophyset).BaseColor = Editor.MainPanel.Colors.Lighter();
+            Builder.Control<OxPictureContainer>(GameField.Image).BaseColor = Editor.Colors.Lighter();
+            Builder.Control<TrophysetPanel>(GameField.Trophyset).BaseColor = Editor.Colors.Lighter();
         }
 
         protected override void AfterFillControlsAndSetHandlers()
@@ -55,7 +55,7 @@ namespace PlayStationGames.GameEngine.Editor
             new()
             {
                 Editor.Groups,
-                { GameFieldGroup.System, Editor.MainPanel.Footer }
+                { GameFieldGroup.System, Editor.Footer }
             };
 
         protected override void AfterAlignLabels()

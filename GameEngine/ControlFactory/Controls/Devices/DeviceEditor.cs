@@ -41,7 +41,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             TypeControl.Width =
                 OxWh.Int(
                     OxWh.Sub(
-                        OxWh.Sub(MainPanel.Width, TypeControl.Left), 
+                        OxWh.Sub(FormPanel.Width, TypeControl.Left), 
                         OxWh.W8
                     )
                 );

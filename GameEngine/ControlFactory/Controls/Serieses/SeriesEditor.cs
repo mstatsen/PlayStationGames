@@ -40,7 +40,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             NameControl.Width = 
                 OxWh.Int(
                     OxWh.Sub(
-                        OxWh.Sub(MainPanel.Width, NameControl.Left), 
+                        OxWh.Sub(FormPanel.Width, NameControl.Left), 
                         OxWh.W8
                     )
                 );

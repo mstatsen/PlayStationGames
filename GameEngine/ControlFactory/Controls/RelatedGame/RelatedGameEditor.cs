@@ -68,7 +68,7 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
     {
         OxButton button = new(text, icon)
         {
-            Parent = MainPanel,
+            Parent = FormPanel,
             Top = OxWh.Add(GameControl!.Bottom, OxWh.W4),
             Left = left,
             Font = OxStyles.Font(FontStyle.Bold),
@@ -80,7 +80,7 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
     }
 
     private void SynchronizeHandler(object? sender, EventArgs e) => 
-        ItemsSynchronizer<GameField, Game>.SynchronizeItems(OwnerDAO!, SelectedGame!, MainPanel);
+        ItemsSynchronizer<GameField, Game>.SynchronizeItems(OwnerDAO!, SelectedGame!, FormPanel);
 
     private void CreateGameControl()
     {
@@ -100,11 +100,11 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
         GameControl.Width =
             OxWh.Int(
                 OxWh.Sub(
-                    OxWh.Sub(MainPanel.Width, GameControl.Left),
+                    OxWh.Sub(FormPanel.Width, GameControl.Left),
                     OxWh.W8)
                 );
         GameControl.Height = 56;
-        GameControl.Control.BackColor = MainPanel.BackColor;
+        GameControl.Control.BackColor = BackColor;
         ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;
         OxControlHelper.AlignByBaseLine(GameControl.Control, GameLabel);
         SetKeyUpHandler(GameControl.Control);
@@ -123,7 +123,7 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
             Name = OwnerDAO.OriginalName
         };
 
-        if (DataManager.SelectItem(out Game? newSelected, MainPanel, initialGame, Filter))
+        if (DataManager.SelectItem(out Game? newSelected, FormPanel, initialGame, Filter))
             SelectedGame = newSelected;
     }
 

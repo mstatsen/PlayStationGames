@@ -32,9 +32,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             this.SuspendLayout();
             // 
-            // MainPanel
+            // FormPanel
             // 
-            this.MainPanel.Size = new OxSize(OxWh.W220, OxWh.W257);
+            this.FormPanel.Size = new OxSize(OxWh.W220, OxWh.W257);
             // 
             // DLCEditor
             // 

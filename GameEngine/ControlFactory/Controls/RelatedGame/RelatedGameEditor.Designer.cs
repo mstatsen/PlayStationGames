@@ -32,10 +32,9 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         {
             this.SuspendLayout();
             // 
-            // MainPanel
+            // FormPanel
             // 
-            this.MainPanel.Size = new OxSize(OxWh.W408, OxWh.W213);
-            this.MainPanel.Text = "Related Game";
+            this.FormPanel.Size = new OxSize(OxWh.W408, OxWh.W213);
             // 
             // RelatedGameEditor
             // 
