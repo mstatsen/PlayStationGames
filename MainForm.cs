@@ -119,17 +119,9 @@ namespace PlayStationGames
             }
             finally
             {
-                SuspendLayout();
-
-                try
-                {
-                    toolBar.Visible = true;
-                }
-                finally
-                {
-                    ResumeLayout();
-                }
-
+                DoWithSuspendedLayout(
+                    () => toolBar.Visible = true
+                );
                 loadingPanel.EndLoading();
             }
         }
