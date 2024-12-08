@@ -223,33 +223,6 @@ namespace PlayStationGames.GameEngine.Editor
                 Builder[GameField.CoachMultiplayer].Value = false;
         }
 
-        private void ShowMaximumPlayersControl()
-        {
-            OxLabel label = Layouter.PlacedControl(GameField.MaximumPlayers)!.Label!;
-            IControlAccessor coachMultiplayer = Builder[GameField.CoachMultiplayer];
-            IControlAccessor onlineMultiplayer = Builder[GameField.OnlineMultiplayer];
-            IControlAccessor maximumPlayers = Builder[GameField.MaximumPlayers];
-            IControlAccessor devices = Builder[GameField.Devices];
-
-            if (coachMultiplayer.BoolValue)
-            {
-                maximumPlayers.Visible = true;
-                label.Visible = true;
-                onlineMultiplayer.Top = maximumPlayers.Bottom + 4;
-            }
-            else
-            {
-                maximumPlayers.Visible = false;
-                label.Visible = false;
-                onlineMultiplayer.Top = 
-                    SupportCoathMultiplayer 
-                    ? OxWh.Int(OxWh.Sub(label.Top, OxWh.W2))
-                    : coachMultiplayer.Top;
-            }
-
-            devices.Top = onlineMultiplayer.Bottom + 4;
-        }
-
         private readonly SourceHelper sourceHelper = TypeHelper.Helper<SourceHelper>();
         private readonly GameFieldGroupHelper groupHelper = TypeHelper.Helper<GameFieldGroupHelper>();
         private readonly GameFormatHelper formatHelper = TypeHelper.Helper<GameFormatHelper>();
