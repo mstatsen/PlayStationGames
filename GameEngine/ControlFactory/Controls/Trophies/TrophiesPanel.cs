@@ -47,7 +47,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             base.PrepareInnerComponents();
             removeButton.Click += RemoveButtonClickHandler;
-            Header.AddToolButton(removeButton);
+            Header.AddButton(removeButton);
         }
 
         public EventHandler? OnRemove;
