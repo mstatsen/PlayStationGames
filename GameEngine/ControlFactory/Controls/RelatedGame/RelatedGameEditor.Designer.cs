@@ -38,7 +38,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             // 
             // RelatedGameEditor
             // 
-            this.ClientSize = new OxSize(OxWh.W408, OxWh.W213);
+            this.ClientSize = new(408, 213);
             this.MaximumSize = new OxSize(OxWh.W408, OxWh.W213);
             this.MinimumSize = new OxSize(OxWh.W408, OxWh.W213);
             this.Name = "RelatedGameEditor";

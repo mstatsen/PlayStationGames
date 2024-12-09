@@ -34,7 +34,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             // 
             // AccessoryEditor
             // 
-            this.ClientSize = new OxSize(OxWh.W404, OxWh.W327);
+            this.ClientSize = new Size(404, 327);
             this.MaximumSize = new OxSize(OxWh.W404, OxWh.W327);
             this.MinimumSize = new OxSize(OxWh.W404, OxWh.W327);
             this.Name = "StorageEditor";

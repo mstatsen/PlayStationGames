@@ -38,7 +38,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             // 
             // DLCEditor
             // 
-            this.ClientSize = new OxSize(OxWh.W220, OxWh.W257);
+            this.ClientSize = new(220, 257);
             this.MaximumSize = new OxSize(OxWh.W220, OxWh.W257);
             this.MinimumSize = new OxSize(OxWh.W220, OxWh.W257);
             this.Name = "DLCEditor";
