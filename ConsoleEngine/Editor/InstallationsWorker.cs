@@ -62,10 +62,10 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 placeSelector.Game = currentItem;
                 DialogResult result = placeSelector.ShowAsDialog(chooser);
 
-                if (result.Equals(OxDialogButtonsHelper.Result(OxDialogButton.Cancel)))
+                if (result.Equals(OxDialogButtonHelper.Result(OxDialogButton.Cancel)))
                     return CanSelectResult.Return;
 
-                ApplyPlacementForAll = result.Equals(OxDialogButtonsHelper.Result(OxDialogButton.ApplyForAll));
+                ApplyPlacementForAll = result.Equals(OxDialogButtonHelper.Result(OxDialogButton.ApplyForAll));
             }
 
             currentItem.Installations.Add(
