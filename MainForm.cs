@@ -34,10 +34,10 @@ namespace PlayStationGames
                 Parent = FormPanel,
                 Font = OxStyles.DefaultFont,
                 BaseColor = BaseColor,
-                TabHeaderSize = new(OxWh.W140, OxWh.W32),
+                TabHeaderSize = new(140, 32),
                 TabPosition = OxDock.Top
             };
-            mainTabControl.Margin.Size = OxWh.W2;
+            mainTabControl.Margin.Size = 2;
 
             toolBar = new OxToolBar<OxButton>()
             {
@@ -51,15 +51,15 @@ namespace PlayStationGames
             toolBar.AddButton(OxToolbarAction.Save).Enabled = false;
             toolBar.AddButton(OxToolbarAction.Settings, true, OxDock.Right);
             toolBar.SendToBack();
-            toolBar.Borders.Top = OxWh.W0;
-            toolBar.Padding.Top = OxWh.W2;
+            toolBar.Borders.Top = 0;
+            toolBar.Padding.Top = 2;
             loadingPanel = new OxLoadingPanel()
             {
                 Parent = FormPanel,
                 UseParentColor = false
             };
-            loadingPanel.Margin.Size = OxWh.W0;
-            loadingPanel.Borders.Size = OxWh.W0;
+            loadingPanel.Margin.Size = 0;
+            loadingPanel.Borders.Size = 0;
             loadingPanel.StartLoading();
         }
 
@@ -106,11 +106,11 @@ namespace PlayStationGames
 
                 OxSize screenSize = OxControlHelper.ScreenSize(this);
                 Size = new(
-                    OxWh.Min(1600, screenSize.Width),
-                    OxWh.Min(OxWh.W800, screenSize.Height));
+                    Math.Min((short)1600, screenSize.Width),
+                    Math.Min((short)800, screenSize.Height));
 
-                Left = OxWh.Div(OxWh.Sub(screenSize.Width, Width), OxWh.W2);
-                Top = OxWh.Div(OxWh.Sub(screenSize.Height, Height), OxWh.W2);
+                Left = (short)((screenSize.Width - Width) / 2);
+                Top = (short)((screenSize.Height - Height) / 2);
 
                 PlaceComponents();
                 Update();
@@ -126,7 +126,7 @@ namespace PlayStationGames
             }
         }
 
-        public override OxSize WantedMinimumSize => new(OxWh.W(1240), OxWh.W(720));
+        public override OxSize WantedMinimumSize => new((1240), (720));
 
         private void PlaceComponents()
         {

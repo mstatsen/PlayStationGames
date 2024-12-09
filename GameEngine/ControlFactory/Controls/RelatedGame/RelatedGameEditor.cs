@@ -50,30 +50,30 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
             "Select...", 
             OxIcons.Select, 
             "Select game for relate",
-            OxWh.W(GameControl!.Left),
+            (short)GameControl!.Left,
             SelectGameHandler);
         SynchronizeButton = CreateButton(
             "Synchronize", 
             OxIcons.Synchronize, 
             "Synchronize data between games",
-            GameSelectButton.Right | OxWh.W4, 
+            (short)(GameSelectButton.Right + 4),
             SynchronizeHandler);
         GameSelectButton.SizeChanged += SelecButtonSizeChangedHandler;
     }
 
     private void SelecButtonSizeChangedHandler(object sender, OxSizeChangedEventArgs args) => 
-        SynchronizeButton!.Left = GameSelectButton!.Right | OxWh.W4;
+        SynchronizeButton!.Left = (short)(GameSelectButton!.Right + 4);
 
-    private OxButton CreateButton(string text, Bitmap icon, string toolTipText, OxWidth left, EventHandler clickHandler)
+    private OxButton CreateButton(string text, Bitmap icon, string toolTipText, short left, EventHandler clickHandler)
     {
         OxButton button = new(text, icon)
         {
             Parent = FormPanel,
-            Top = OxWh.Add(GameControl!.Bottom, OxWh.W4),
+            Top = (short)(GameControl!.Bottom + 4),
             Left = left,
             Font = OxStyles.Font(FontStyle.Bold),
             ToolTipText = toolTipText,
-            Size = new(OxWh.W140, OxWh.W20)
+            Size = new(140, 20)
         };
         button.Click += clickHandler;
         return button;
@@ -87,22 +87,17 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
         GameLabel = new OxLabel()
         {
             Parent = this,
-            Left = OxWh.W8,
+            Left = 8,
             Text = "Game"
         };
 
         GameControl = Context.Accessor("RelatedGame:Name", FieldType.Memo, true);
         GameControl.Parent = this;
         GameControl.Top = 8;
-        GameControl.Left = OxWh.Int(GameLabel.Right) + 8;
+        GameControl.Left = GameLabel.Right + 8;
         GameControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         GameControl.ReadOnly = true;
-        GameControl.Width =
-            OxWh.Int(
-                OxWh.Sub(
-                    OxWh.Sub(FormPanel.Width, GameControl.Left),
-                    OxWh.W8)
-                );
+        GameControl.Width = FormPanel.Width - GameControl.Left - 8;
         GameControl.Height = 56;
         GameControl.Control.BackColor = BackColor;
         ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;
@@ -134,8 +129,8 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
             : string.Empty;
     }
 
-    protected override OxWidth ContentWidth => OxWh.W400;
-    protected override OxWidth ContentHeight => SynchronizeButton!.Bottom | OxWh.W2;
+    protected override short ContentWidth => 400;
+    protected override short ContentHeight => (short)(SynchronizeButton!.Bottom + 2);
 
     protected override RelatedGame CreateNewItem() => new();
 

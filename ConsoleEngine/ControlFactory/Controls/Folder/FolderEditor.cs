@@ -14,7 +14,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         public override Bitmap? FormIcon => OxIcons.Folder;
 
-        protected override OxWidth ContentHeight => OxWh.W60;
+        protected override short ContentHeight => 60;
 
         protected override void GrabControls(Folder item) => 
             item.Name = folderControl!.StringValue;
@@ -27,7 +27,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         }
 
         protected override void SetPaddings() => 
-            Padding.Size = OxWh.W4;
+            Padding.Size = 4;
 
         protected override string EmptyMandatoryField() =>
             folderControl!.IsEmpty 

@@ -17,7 +17,7 @@ namespace PlayStationGames.AccountEngine.Data.Decorator
             return field switch
             {
                 AccountField.Avatar => 
-                    OxBitmapWorker.BoxingImage(Dao.Image, new(OxWh.W70, OxWh.W40)),
+                    OxBitmapWorker.BoxingImage(Dao.Image, new(70, 40)),
                 AccountField.Consoles =>
                     Dao.ConsolesCount,
                 AccountField.Games => 

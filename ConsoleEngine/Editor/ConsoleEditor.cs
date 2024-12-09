@@ -20,7 +20,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
         protected override void PreparePanels()
         {
             PrepareParentPanel(PanelRight, FormPanel, OxDock.Fill);
-            PanelRight.Width = OxWh.W450;
+            PanelRight.Width = 450;
             PrepareParentPanel(PanelLeft, FormPanel);
         }
 
@@ -67,39 +67,42 @@ namespace PlayStationGames.ConsoleEngine.Editor
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
             SetFrameMargin(ConsoleFieldGroup.Games, Groups[ConsoleFieldGroup.Games]);
             FormPanel.Size = new(
-                PanelLeft.Width 
-                    | TypeHelper.Helper<ConsoleFieldGroupHelper>().
-                            GroupWidth(ConsoleFieldGroup.Folders),
-                    (generationHelper.StorageSupport(generation)
+                (short)(PanelLeft.Width
+                    + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders)),
+                    (short)(
+                        (generationHelper.StorageSupport(generation)
                         ? Groups[ConsoleFieldGroup.Storages].Bottom
                         : generationHelper.MaxAccountsCount(generation, firmware) > 0 
                             && !generationHelper.FolderSupport(generation)
                                 ? Groups[ConsoleFieldGroup.Accounts].Bottom
-                                : Groups[ConsoleFieldGroup.Firmware].Bottom | OxWh.W140) 
-                        | OxWh.W13
+                                : Groups[ConsoleFieldGroup.Firmware].Bottom + 140) 
+                        + 13
+                    )
             );
         }
 
         protected override void SetPaddings()
         {
             base.SetPaddings();
-            Groups[ConsoleFieldGroup.Games].Padding.Size = OxWh.W4;
-            Groups[ConsoleFieldGroup.Accounts].Padding.Right = OxWh.W2;
-            Groups[ConsoleFieldGroup.Storages].Padding.Right = OxWh.W2;
-            Groups[ConsoleFieldGroup.Folders].Padding.Right = OxWh.W2;
-            Groups[ConsoleFieldGroup.Accessories].Padding.Right = OxWh.W2;
+            Groups[ConsoleFieldGroup.Games].Padding.Size = 4;
+            Groups[ConsoleFieldGroup.Accounts].Padding.Right = 2;
+            Groups[ConsoleFieldGroup.Storages].Padding.Right = 2;
+            Groups[ConsoleFieldGroup.Folders].Padding.Right = 2;
+            Groups[ConsoleFieldGroup.Accessories].Padding.Right = 2;
         }
 
         protected override void SetFrameMargin(ConsoleFieldGroup group, OxFrame frame)
         {
             base.SetFrameMargin(group, frame);
-            frame.Margin.Size = OxWh.W8;
+            frame.Margin.Size = 8;
             frame.Margin.Left =
-                group is ConsoleFieldGroup.Folders or
-                    ConsoleFieldGroup.Games or
-                    ConsoleFieldGroup.Accessories
-                        ? OxWh.W0
-                        : OxWh.W8;
+                (short)
+                    (group is ConsoleFieldGroup.Folders or
+                              ConsoleFieldGroup.Games or
+                              ConsoleFieldGroup.Accessories
+                        ? 0
+                        : 8
+                    );
 
             frame.Margin.Top = group switch
             {
@@ -107,13 +110,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleFieldGroup.Firmware or
                 ConsoleFieldGroup.Accounts or
                 ConsoleFieldGroup.Storages =>
-                    OxWh.W0,
+                    0,
                 ConsoleFieldGroup.Games when Groups[ConsoleFieldGroup.Games].Dock is OxDock.Bottom =>
-                    OxWh.W0,
+                    0,
                 ConsoleFieldGroup.Accessories when Groups[ConsoleFieldGroup.Games].Dock is OxDock.Bottom
                     || generationHelper.StorageSupport(((ConsoleWorker)Worker).Generation) =>
-                    OxWh.W0,
-                _ => OxWh.W8
+                    0,
+                _ => 8
             };
         }
     }

@@ -20,17 +20,17 @@ namespace PlayStationGames.ConsoleEngine.View
 
             ControlLayout<ConsoleField> imageLayout = Layouter.AddFromTemplate(ConsoleField.Icon);
             imageLayout.CaptionVariant = ControlCaptionVariant.None;
-            imageLayout.Left = OxWh.W10;
-            imageLayout.Width = OxWh.W96;
-            imageLayout.Height = OxWh.W60;
+            imageLayout.Left = 10;
+            imageLayout.Width = 96;
+            imageLayout.Height = 60;
             
             ControlLayout<ConsoleField> modelLayout = Layouter.AddFromTemplate(ConsoleField.FullModel);
-            modelLayout.Top = OxWh.W20;
-            modelLayout.Left = imageLayout.Right + 2;
+            modelLayout.Top = 20;
+            modelLayout.Left = (short)(imageLayout.Right + 2);
             modelLayout.CaptionVariant = ControlCaptionVariant.None;
 
             ControlLayout<ConsoleField> firmwareLayout = Layouter.AddFromTemplate(ConsoleField.FullFirmware, 2);
-            firmwareLayout.Left = imageLayout.Right + 72;
+            firmwareLayout.Left = (short)(imageLayout.Right + 72);
 
             return new ControlLayouts<ConsoleField>()
             {
@@ -56,8 +56,8 @@ namespace PlayStationGames.ConsoleEngine.View
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = parent;
-            Layouter.Template.Top = OxWh.W12;
-            Layouter.Template.Left = OxWh.W12;
+            Layouter.Template.Top = 12;
+            Layouter.Template.Left = 12;
             Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
             return new ControlLayouts<ConsoleField>()
             {

@@ -89,25 +89,25 @@ namespace PlayStationGames.GameEngine.Data.Fields
                 ? GameFieldGroup.ReleaseBase
                 : base.EditedGroup(field);
 
-        public override OxWidth GroupWidth(GameFieldGroup group) => 
+        public override short GroupWidth(GameFieldGroup group) => 
             group switch
             {
                 GameFieldGroup.Base or 
                 GameFieldGroup.DLC or 
                 GameFieldGroup.RelatedGames or
                 GameFieldGroup.Emulator =>
-                    OxWh.W460,
+                    460,
                 GameFieldGroup.Links or
                 GameFieldGroup.Trophyset =>
-                    OxWh.W292,
+                    292,
                 GameFieldGroup.Genre or
                 GameFieldGroup.Installations or 
                 GameFieldGroup.Tags => 
-                    OxWh.W294,
+                    294,
                 GameFieldGroup.ReleaseBase =>
-                    OxWh.W200,
+                    200,
                 _ =>
-                    OxWh.W0,
+                    0,
             };
 
         public override OxDock GroupDock(GameFieldGroup group) =>
@@ -125,15 +125,15 @@ namespace PlayStationGames.GameEngine.Data.Fields
             }.Contains(group);
 
 
-        public override OxWidth DefaultGroupHeight(GameFieldGroup group) => 
+        public override short DefaultGroupHeight(GameFieldGroup group) => 
             group switch
             {
                 GameFieldGroup.Emulator =>
-                    OxWh.W200,
+                    200,
                 GameFieldGroup.Tags =>
-                    OxWh.W69,
+                    69,
                 _ =>
-                    OxWh.W84,
+                    84,
             };
 
         public List<GameFieldGroup> VerifiedGroups =

@@ -17,7 +17,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
     {
         private readonly Dictionary<TrophyType, ControlAccessor<GameField, Game>> controls = new();
         private readonly List<OxPicture> icons = new();
-        private readonly OxIconButton removeButton = new(OxIcons.Minus, OxWh.W20);
+        private readonly OxIconButton removeButton = new(OxIcons.Minus, 20);
 
         public readonly Account? Account;
 
@@ -29,7 +29,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             IsDLCPanel = forDLC;
             SetRemoveButtonVisible();
             CreateControls();
-            HeaderHeight = OxWh.W20;
+            HeaderHeight = 20;
         }
 
         private void SetRemoveButtonVisible()
@@ -103,15 +103,15 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                     BaseColor);
         }
 
-        private void CreateIcon(TrophyType type, OxWidth left)
+        private void CreateIcon(TrophyType type, short left)
         {
             OxPicture icon = new()
             {
                 Parent = this,
                 Image = trophyTypeHelper.Icon(type),
                 Left = left,
-                Top = OxWh.W6,
-                Size = new(OxWh.W24, OxWh.W24)
+                Top = 6,
+                Size = new(24, 24)
             };
             icons.Add(icon);
         }
@@ -125,7 +125,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
             ControlBuilder<GameField, Game> builder = DataManager.Builder<GameField, Game>(ControlScope.Editor);
 
             if (!IsDLCPanel)
-                CreateIcon(TrophyType.Platinum, OxWh.W8);
+                CreateIcon(TrophyType.Platinum, 8);
 
             string forDLCPrefix = IsDLCPanel ? "DLC:" : string.Empty;
 
@@ -136,7 +136,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 )
                 {
                     Parent = this,
-                    Left = OxWh.Int(icons[0].Right),
+                    Left = icons[0].Right,
                     Top = 6,
                     Width = 16
                 };
@@ -144,11 +144,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 controls.Add(TrophyType.Platinum, platinumControl);
             }
 
-            int calcedLeft = IsDLCPanel ? 8 : 64;
+            short calcedLeft = (short)(IsDLCPanel ? 8 : 64);
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
             {
-                CreateIcon(type, OxWh.W(calcedLeft));
+                CreateIcon(type, (calcedLeft));
                 calcedLeft += 24;
                 NumericAccessor<GameField, Game> accessor = new(builder.Context($"{forDLCPrefix}{Text}_{type}", FieldType.Integer, null))
                 {
@@ -164,8 +164,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 controls.Add(type, accessor);
             }
             Size = new(
-                IsDLCPanel ? OxWh.W200 : OxWh.W256, 
-                OxWh.W26
+                (short)(IsDLCPanel ? 200 : 256),
+                26
             );
         }
 

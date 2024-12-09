@@ -17,10 +17,10 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         public override Bitmap? FormIcon => OxIcons.Account;
 
-        protected override OxWidth ContentHeight => 
-            accountControl is null 
-                ? OxWh.W36
-                : OxWh.Add(accountControl.Bottom, OxWh.W12);
+        protected override short ContentHeight =>
+            (short)((accountControl is null
+                ? 24
+                : accountControl.Bottom) + 12);
 
         protected override void GrabControls(ConsoleAccount item) => 
             item.Id = accountControl!.GuidValue;
@@ -51,7 +51,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         private readonly AccountInitializer accountInitializer = new();
 
         protected override void SetPaddings() =>
-            Padding.Size = OxWh.W8;
+            Padding.Size = 8;
 
         public override void RenewData()
         {

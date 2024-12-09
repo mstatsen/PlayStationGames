@@ -46,7 +46,7 @@ namespace PlayStationGames.ConsoleEngine.Data.Types
         public bool StorageSupport(ConsoleGeneration generation) => 
             generation is not ConsoleGeneration.PS1;
 
-        public int MaxAccountsCount(ConsoleGeneration generation, FirmwareType firmwareType) =>
+        public short MaxAccountsCount(ConsoleGeneration generation, FirmwareType firmwareType) =>
             generation switch
             {
                 ConsoleGeneration.PS1 or

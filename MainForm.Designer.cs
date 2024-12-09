@@ -40,8 +40,8 @@ namespace PlayStationGames
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new(747, 554);
             Location = new OxPoint(0, 0);
-            MaximumSize = new OxSize(OxWh.W(1920), OxWh.W(1080));
-            MinimumSize = new OxSize(OxWh.W700, OxWh.W480);
+            MaximumSize = new OxSize(1920, 1080);
+            MinimumSize = new OxSize(700, 480);
             Name = "MainForm";
             Text = "Playstation Games";
             Shown += MainFormShow;

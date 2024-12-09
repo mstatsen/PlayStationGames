@@ -44,7 +44,7 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                     AccountFieldGroup.Base,
             };
 
-        public override OxWidth GroupWidth(AccountFieldGroup group) => OxWh.W400;
+        public override short GroupWidth(AccountFieldGroup group) => 400;
 
         public override bool IsCalcedHeightGroup(AccountFieldGroup group) =>
             new List<AccountFieldGroup>
@@ -53,16 +53,16 @@ namespace PlayStationGames.AccountEngine.Data.Fields
                 AccountFieldGroup.Auth
             }.Contains(group);
 
-        public override OxWidth DefaultGroupHeight(AccountFieldGroup group) => 
+        public override short DefaultGroupHeight(AccountFieldGroup group) => 
             group switch
             {
                 AccountFieldGroup.Consoles or
                 AccountFieldGroup.Games =>
-                    OxWh.W38,
+                    38,
                 AccountFieldGroup.Links =>
-                    OxWh.W84,
+                    84,
                 _=>
-                    OxWh.W60
+                    60
             };
     }
 }

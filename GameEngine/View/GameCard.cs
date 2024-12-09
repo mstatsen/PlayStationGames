@@ -12,8 +12,8 @@ namespace PlayStationGames.GameEngine.View;
 
 public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
 {
-    protected override OxWidth CardWidth => OxWh.W(440);
-    protected override OxWidth CardHeight => OxWh.W(300);
+    protected override short CardWidth => 440;
+    protected override short CardHeight => 300;
 
     public GameCard(ItemViewMode viewMode) : base(viewMode)
     {
@@ -21,9 +21,9 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
         {
             Parent = this,
             Text = "Trophyset",
-            HeaderHeight = OxWh.W18
+            HeaderHeight = 18
         };
-        TrophysetPanel.Padding.Size = OxWh.W4;
+        TrophysetPanel.Padding.Size = 4;
         TrophiesPanel = new()
         {
             Parent = TrophysetPanel,
@@ -45,14 +45,14 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
         trophysetLayouts.Clear();
         difficultLayouts.Clear();
         ClearLayoutTemplate();
-        Layouter.Template.Left = OxWh.W67;
-        Layouter.Template.Top = OxWh.W0;
+        Layouter.Template.Left = 67;
+        Layouter.Template.Top = 0;
         Layouter.Template.Parent = TrophysetPanel;
         Layouter.Template.AutoSize = true;
         ControlLayout<GameField> trophysetTypeLayout = trophysetLayouts.Add(
             Layouter.AddFromTemplate(GameField.TrophysetType)
         );
-        trophysetTypeLayout.Left = OxWh.W8;
+        trophysetTypeLayout.Left = 8;
         trophysetTypeLayout.CaptionVariant = ControlCaptionVariant.None;
 
         TrophysetPanel.HeaderVisible = Item!.Trophyset.TrophysetExists;
@@ -67,7 +67,7 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
             Layouter.AddFromTemplate(GameField.AppliesTo, -6)
         );
         appliesToLayout.CaptionVariant = ControlCaptionVariant.None;
-        appliesToLayout.Left = OxWh.W12;
+        appliesToLayout.Left = 12;
         appliesToLayout.FontSize -= 2;
         appliesToLayout.FontStyle = FontStyle.Regular;
 
@@ -81,8 +81,8 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
         RenewTrophiesIcons();
         Layouter.Template.Parent = TrophiesPanel;
         Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
-        Layouter.Template.Left = OxWh.W24;
-        Layouter.Template.Top = OxWh.W4;
+        Layouter.Template.Left = 24;
+        Layouter.Template.Top = 4;
         trophiesLayouts.Clear();
         bool firstTrophy = true;
 
@@ -127,7 +127,7 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
     private void FillLinksLayout()
     {
         ClearLayoutTemplate();
-        Layouter.Template.Width = OxWh.W120;
+        Layouter.Template.Width = 120;
         Layouter.Template.Anchors = AnchorStyles.Right | AnchorStyles.Bottom;
         Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
         Layouter.Template.BackColor = BaseColor;
@@ -149,8 +149,8 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
         if (linksControl is null)
             return;
         
-        linksControl.Left = OxWh.Sub(Width, linksControl.Width);
-        linksControl.Top = OxWh.Sub(Height, linksControl.Height);
+        linksControl.Left = (short)(Width - linksControl.Width);
+        linksControl.Top = (short)(Height - linksControl.Height);
     }
 
     protected override void AlignControls()
@@ -190,9 +190,8 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
     {
         TrophiesPanel.Visible = Item!.Trophyset.Available.Count > 0;
         TrophiesPanel.Size = new(
-            OxWh.W50, 
-            OxWh.Mul(OxWh.W8, OxWh.W2) 
-                | OxWh.Mul(trophiesLayouts.Count, OxWh.W18)
+            50, 
+            (short)(16 + trophiesLayouts.Count * 18)
         );
     }
 
@@ -223,28 +222,28 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
                 maximumTrophysetLabelRight,
                 Layouter.PlacedControl(field)!.Control.Right);
 
-        TrophiesPanel.Left = OxWh.Sub(maximumTrophysetLabelRight, OxWh.W4);
+        TrophiesPanel.Left = (short)(maximumTrophysetLabelRight - 4);
 
-        int lastBottom = 0;
+        short lastBottom = 0;
 
         if (difficultLayouts.Last is not null)
-            lastBottom = Layouter.PlacedControl(difficultLayouts.Last.Field)!.Control.Bottom;
+            lastBottom = (short)Layouter.PlacedControl(difficultLayouts.Last.Field)!.Control.Bottom;
 
         if (trophysetLayouts.Last is not null)
             lastBottom = Math.Max(
-                Layouter.PlacedControl(trophysetLayouts.Last.Field)!.Control.Bottom,
+                (short)Layouter.PlacedControl(trophysetLayouts.Last.Field)!.Control.Bottom,
                 lastBottom
             );
 
         TrophysetPanel.Size = new(
-            OxWh.W(maximumTrophysetLabelRight)
-                | (Item!.Trophyset.Available.Count > 0 ? TrophiesPanel.Width : OxWh.W0)
-                | TrophysetPanel.Padding.Right,
-            OxWh.W(lastBottom)
+            (short)((maximumTrophysetLabelRight)
+                + (Item!.Trophyset.Available.Count > 0 ? TrophiesPanel.Width : 0)
+                + TrophysetPanel.Padding.Right),
+            lastBottom
         );
 
-        TrophysetPanel.Left = OxWh.Sub(Width, TrophysetPanel.Width);
-        TrophysetPanel.Top = OxWh.W32;
+        TrophysetPanel.Left = (short)(Width - TrophysetPanel.Width);
+        TrophysetPanel.Top = 32;
     }
 
     protected override void PrepareLayouts()
@@ -260,8 +259,8 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
     private void FillReleaseLayouts()
     {
         ClearLayoutTemplate();
-        Layouter.Template.Left = OxWh.W74;
-        Layouter.Template.Top = Layouter[GameField.Image]!.Bottom | OxWh.W8;
+        Layouter.Template.Left = 74;
+        Layouter.Template.Top = (short)(Layouter[GameField.Image]!.Bottom + 8);
         releaseLayouts.Clear();
         releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Platform));
         releaseLayouts.Add(Layouter.AddFromTemplate(GameField.Source, -8));
@@ -295,7 +294,7 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
         baseLayouts.Clear();
         ControlLayout<GameField> imageLayout = Layouter[GameField.Image]!;
         Layouter.Template.Top = imageLayout.Top;
-        Layouter.Template.Left = imageLayout.Right + 86;
+        Layouter.Template.Left = (short)(imageLayout.Right + 86);
 
         if (Item!.Licensed)
         {
@@ -303,7 +302,7 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
                 Layouter.AddFromTemplate(GameField.Licensed)
             );
             licensedLayout.CaptionVariant = ControlCaptionVariant.None;
-            licensedLayout.Left = Layouter[GameField.Image]!.Right + 12;
+            licensedLayout.Left = (short)(Layouter[GameField.Image]!.Right + 12);
         }
         else
         if (!Item!.Owner.Equals(Guid.Empty))
@@ -313,19 +312,19 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
         {
             ControlLayout<GameField> installedLayout = baseLayouts.Add(Layouter.AddFromTemplate(GameField.Installed, -8));
             installedLayout.CaptionVariant = ControlCaptionVariant.None;
-            installedLayout.Left = Layouter[GameField.Image]!.Right + 12;
+            installedLayout.Left = (short)(Layouter[GameField.Image]!.Right + 12);
         }
     }
 
     private void FillImageLayout()
     {
         ClearLayoutTemplate();
-        Layouter.Template.Top = OxWh.W2;
-        Layouter.Template.Left = OxWh.W2;
+        Layouter.Template.Top = 2;
+        Layouter.Template.Left = 2;
         ControlLayout<GameField> imageLayout = Layouter.AddFromTemplate(GameField.Image);
         imageLayout.CaptionVariant = ControlCaptionVariant.None;
-        imageLayout.Width = OxWh.W140;
-        imageLayout.Height = OxWh.W80;
+        imageLayout.Width = 140;
+        imageLayout.Height = 80;
 
         if (Item is not null
             && Item.Image is not null

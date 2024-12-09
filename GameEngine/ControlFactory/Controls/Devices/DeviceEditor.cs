@@ -38,13 +38,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             TypeControl.Parent = this;
             TypeControl.Left = 8;
             TypeControl.Top = 8;
-            TypeControl.Width =
-                OxWh.Int(
-                    OxWh.Sub(
-                        OxWh.Sub(FormPanel.Width, TypeControl.Left), 
-                        OxWh.W8
-                    )
-                );
+            TypeControl.Width = FormPanel.Width - TypeControl.Left - 8;
             TypeControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             TypeControl.Height = 24;
             SetKeyUpHandler(TypeControl.Control);
@@ -54,7 +48,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void CreateControls() =>
             CreateTypeControl();
 
-        protected override OxWidth ContentHeight => OxWh.Add(TypeControl.Bottom, OxWh.W8);
+        protected override short ContentHeight => (short)(TypeControl.Bottom + 8);
 
         protected override void FillControls(Device item) => 
             TypeControl.Value = item.Type;

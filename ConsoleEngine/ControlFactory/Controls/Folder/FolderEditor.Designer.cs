@@ -35,8 +35,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             // FolderEditor
             // 
             this.ClientSize = new(404, 327);
-            this.MaximumSize = new OxSize(OxWh.W404, OxWh.W327);
-            this.MinimumSize = new OxSize(OxWh.W404, OxWh.W327);
+            this.MaximumSize = new(404, 327);
+            this.MinimumSize = new(404, 327);
             this.Name = "FolderEditor";
             this.ResumeLayout(false);
 

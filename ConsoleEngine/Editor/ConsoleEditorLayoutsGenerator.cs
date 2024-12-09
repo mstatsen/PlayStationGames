@@ -42,27 +42,27 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 ConsoleField.FirmwareVersion,
             };
 
-        public override OxWidth Top(ConsoleField field) => OxWh.W8;
+        public override short Top(ConsoleField field) => 8;
 
-        public override OxWidth Left(ConsoleField field) =>
+        public override short Left(ConsoleField field) =>
             field switch
             {
                 ConsoleField.Model or
                 ConsoleField.ModelCode or
                 ConsoleField.FirmwareName or
                 ConsoleField.FirmwareVersion =>
-                    OxWh.W154,
-                _ => OxWh.W94
+                    154,
+                _ => 94
             };
 
 
-        public override OxWidth Width(ConsoleField field) =>
+        public override short Width(ConsoleField field) =>
             field switch
             {
                 ConsoleField.Generation or
                 ConsoleField.Firmware =>
-                    OxWh.W240,
-                _ => OxWh.W180
+                    240,
+                _ => 180
             };
 
         public override List<ConsoleField> TitleAccordionFields() => new() 

@@ -34,13 +34,13 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             // 
             // FormPanel
             // 
-            this.FormPanel.Size = new OxSize(OxWh.W390, OxWh.W230);
+            this.FormPanel.Size = new OxSize(390, 230);
             // 
             // DeviceEditor
             // 
             this.ClientSize = new(390, 230);
-            this.MaximumSize = new OxSize(OxWh.W390, OxWh.W230);
-            this.MinimumSize = new OxSize(OxWh.W390, OxWh.W230);
+            this.MaximumSize = new OxSize(390, 230);
+            this.MinimumSize = new OxSize(390, 230);
             this.Name = "DeviceEditor";
             this.Text = "Device";
             this.ResumeLayout(false);

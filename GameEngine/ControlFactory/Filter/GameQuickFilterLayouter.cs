@@ -9,7 +9,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
     public class GameQuickFilterLayouter : IQuickFilterLayouter<GameField>
     {
         public GameField TextFilterContainer => GameField.Name;
-        public OxWidth FieldWidth(GameField field) => 
+        public short FieldWidth(GameField field) => 
             field switch
             {
                 GameField.Difficult or 
@@ -20,19 +20,19 @@ namespace PlayStationGames.GameEngine.ControlFactory.Filter
                 GameField.Multiplayer or
                 GameField.Installed or
                 GameField.Year =>
-                    OxWh.W56,
+                    56,
                 GameField.Format =>
-                    OxWh.W72,
+                    72,
                 GameField.Genre =>
-                    OxWh.W160,
+                    160,
                 GameField.CompleteTime =>
-                    OxWh.W80,
+                    80,
                 GameField.Owner =>
-                    OxWh.W138,
+                    138,
                 GameField.TrophysetType =>
-                    OxWh.W118,
+                    118,
                 _ =>
-                    OxWh.W100,
+                    100,
             };
 
         public bool IsLastLayoutForOneRow(GameField field, GameField lastField) => 

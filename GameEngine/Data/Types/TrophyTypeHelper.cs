@@ -27,7 +27,7 @@ namespace PlayStationGames.GameEngine.Data.Types
             TrophyType.Bronze,
         };
 
-        private static readonly OxSize iconSize = new(OxWh.W24, OxWh.W24);
+        private static readonly OxSize iconSize = new(24, 24);
 
         private readonly Dictionary<TrophyType, Bitmap> iconsDictionary = new()
         {

@@ -20,25 +20,25 @@ namespace PlayStationGames.AccountEngine.Editor
             MinimumSize = new();
             MaximumSize = new();
             FormPanel.Size = new(
-                OxWh.W420,
-                OxWh.Add(Groups[AccountFieldGroup.Games].Bottom, OxWh.W15)
+                420,
+                (short)(Groups[AccountFieldGroup.Games].Bottom + 15)
             );
         }
 
         protected override void SetFrameMargin(AccountFieldGroup group, OxFrame frame)
         {
             base.SetFrameMargin(group, frame);
-            frame.Margin.Right = OxWh.W8;
+            frame.Margin.Right = 8;
 
             if (group is AccountFieldGroup.Games) 
-                frame.Margin.Bottom = OxWh.W8;
+                frame.Margin.Bottom = 8;
         }
 
         protected override void SetPaddings()
         {
             base.SetPaddings();
-            Groups[AccountFieldGroup.Consoles].Padding.Size = OxWh.W4;
-            Groups[AccountFieldGroup.Games].Padding.Size = OxWh.W4;
+            Groups[AccountFieldGroup.Consoles].Padding.Size = 4;
+            Groups[AccountFieldGroup.Games].Padding.Size = 4;
         }
     }
 }

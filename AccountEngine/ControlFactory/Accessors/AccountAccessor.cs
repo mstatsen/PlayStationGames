@@ -82,7 +82,7 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
         private OxTextBox ReadOnlyLabel = default!;
         private readonly OxPicture ReadOnlyPicture = new();
 
-        private readonly OxWidth ReadOnlyPictureSize = OxWh.W24;
+        private readonly short ReadOnlyPictureSize = 24;
 
         protected override Control? CreateReadOnlyControl()
         {
@@ -111,9 +111,9 @@ namespace PlayStationGames.AccountEngine.ControlFactory.Accessors
 
             if (ReadOnlyControl is not null)
             {
-                ReadOnlyControl.Width = OxWh.IAdd(ReadOnlyPictureSize, ReadOnlyLabel.Width);
-                ReadOnlyControl.Height = OxWh.Int(ReadOnlyPictureSize);
-                ReadOnlyLabel.Top = OxWh.Div(OxWh.Sub(ReadOnlyControl.Height, ReadOnlyLabel.Height), OxWh.W2);
+                ReadOnlyControl.Width = ReadOnlyPictureSize + ReadOnlyLabel.Width;
+                ReadOnlyControl.Height = ReadOnlyPictureSize;
+                ReadOnlyLabel.Top = (short)((ReadOnlyControl.Height - ReadOnlyLabel.Height) / 2);
             }
         }
 

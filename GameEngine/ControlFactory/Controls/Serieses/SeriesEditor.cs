@@ -37,13 +37,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
             NameControl.Parent = this;
             NameControl.Left = 8;
             NameControl.Top = 8;
-            NameControl.Width = 
-                OxWh.Int(
-                    OxWh.Sub(
-                        OxWh.Sub(FormPanel.Width, NameControl.Left), 
-                        OxWh.W8
-                    )
-                );
+            NameControl.Width = FormPanel.Width - NameControl.Left - 8;
             NameControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
             NameControl.Height = 24;
             NameControl.RenewControl();
@@ -55,7 +49,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         protected override void CreateControls() =>
             CreateNameControl();
 
-        protected override OxWidth ContentHeight => OxWh.Add(NameControl.Bottom, OxWh.W8);
+        protected override short ContentHeight => (short)(NameControl.Bottom + 8);
 
         protected override void FillControls(Series item)
         {

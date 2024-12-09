@@ -65,9 +65,9 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
         sizeLabel = CreateLabel("Size", sizeControl);
         sizeLabel2 = CreateLabel("Mb", sizeControl, true);
 
-        storageLabel.Left = OxWh.W38;
-        folderLabel.Left = OxWh.W38;
-        sizeLabel.Left = OxWh.W38;
+        storageLabel.Left = 38;
+        folderLabel.Left = 38;
+        sizeLabel.Left = 38;
     }
 
     private void SetConsoleValueInControl()
@@ -166,13 +166,7 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
         if (fullRow)
         {
             accessor.Anchor |= AnchorStyles.Right;
-            accessor.Width =
-                OxWh.Int(
-                    OxWh.Sub(
-                        OxWh.Sub(FormPanel.Width, accessor.Left), 
-                        OxWh.W8
-                    )
-                );
+            accessor.Width = FormPanel.Width - accessor.Left - 8;
         }
         else accessor.Width = 120;
 
@@ -189,7 +183,7 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
                 ? "Storage"
                 : base.EmptyMandatoryField();
 
-    protected override OxWidth ContentHeight => OxWh.Add(sizeControl.Bottom, OxWh.W8);
+    protected override short ContentHeight => (short)(sizeControl.Bottom + 8);
 
     public override void RenewData()
     {

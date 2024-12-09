@@ -50,24 +50,24 @@ namespace PlayStationGames.GameEngine.Editor
             base.SetFrameMargin(group, frame);
 
             if (GroupParents[PanelRight].Contains(frame))
-                frame.Margin.Right = OxWh.W8;
+                frame.Margin.Right = 8;
 
             if (group is GameFieldGroup.ReleaseBase)
             {
-                frame.Margin.Right = OxWh.W8;
-                frame.Margin.Bottom = OxWh.W8;
+                frame.Margin.Right = 8;
+                frame.Margin.Bottom = 8;
             }
         }
 
         protected override void SetPaddings()
         {
-            Groups[GameFieldGroup.ReleaseBase].Padding.Horizontal = OxWh.W4;
-            Groups[GameFieldGroup.DLC].Padding.Right = OxWh.W2;
-            Groups[GameFieldGroup.RelatedGames].Padding.Right = OxWh.W2;
-            Groups[GameFieldGroup.Links].Padding.Right = OxWh.W2;
-            Groups[GameFieldGroup.Installations].Padding.Right = OxWh.W2;
-            Groups[GameFieldGroup.Trophyset].Padding.Right = OxWh.W2;
-            Groups[GameFieldGroup.Trophyset].Padding.Right = OxWh.W2;
+            Groups[GameFieldGroup.ReleaseBase].Padding.Horizontal = 4;
+            Groups[GameFieldGroup.DLC].Padding.Right = 2;
+            Groups[GameFieldGroup.RelatedGames].Padding.Right = 2;
+            Groups[GameFieldGroup.Links].Padding.Right = 2;
+            Groups[GameFieldGroup.Installations].Padding.Right = 2;
+            Groups[GameFieldGroup.Trophyset].Padding.Right = 2;
+            Groups[GameFieldGroup.Trophyset].Padding.Right = 2;
         }
 
         protected override void RecalcPanels()
@@ -75,8 +75,8 @@ namespace PlayStationGames.GameEngine.Editor
             MinimumSize = new();
             MaximumSize = new();
             PanelTop.Height = 
-                OxWh.Max(
-                    OxWh.Max(
+                Math.Max(
+                    Math.Max(
                         CalcedHeight(PanelLeft),
                         CalcedHeight(PanelMiddle)
                     ),
@@ -88,12 +88,14 @@ namespace PlayStationGames.GameEngine.Editor
             PanelRight.Width = CalcedWidth(PanelRight);
             FormPanel.Size = new(
                 PanelRight.Right,
-                PanelTop.Height 
-                | (Groups[GameFieldGroup.ReleaseBase].Visible
-                        ? Groups[GameFieldGroup.ReleaseBase].Height
-                        : OxWh.W8
-                  ) 
-                  | OxWh.W12
+                (short)
+                    (PanelTop.Height
+                        + (Groups[GameFieldGroup.ReleaseBase].Visible
+                            ? Groups[GameFieldGroup.ReleaseBase].Height
+                            : 8
+                        ) 
+                      + 12
+                    )
             );
         }
     }

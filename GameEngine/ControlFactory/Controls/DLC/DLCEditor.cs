@@ -34,7 +34,7 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
     protected override void CreateControls()
     {
         BaseGroup.Parent = FormPanel;
-        BaseGroup.Margin.Size = OxWh.W8;
+        BaseGroup.Margin.Size = 8;
         NameControl = Context.Accessor("DLC:Name", FieldType.ShortMemo, true);
         NameControl.Top = 8;
         NameControl.Left = 66;
@@ -46,7 +46,7 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
             new OxLabel()
             {
                 Parent = BaseGroup,
-                Left = OxWh.W8,
+                Left = 8,
                 Text = "Name",
                 Font = new(OxStyles.DefaultFont, FontStyle.Bold)
             });
@@ -73,8 +73,8 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         TrophysetControl.Parent = TrophysetGroup;
         TrophysetControl.ValueChangeHandler += TrophysetValueChange;
         TrophysetGroup.Parent = FormPanel;
-        TrophysetGroup.Margin.Size = OxWh.W8;
-        TrophysetGroup.Margin.Left = OxWh.W0;
+        TrophysetGroup.Margin.Size = 8;
+        TrophysetGroup.Margin.Left = 0;
         RecalcSize();
     }
 
@@ -85,18 +85,18 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
     {
         BaseGroup.Size = new
         (
-            OxWh.W282,
-            OxWh.Add(AcquiredControl.Bottom, OxWh.W24)
+            282,
+            (short)(AcquiredControl.Bottom + 24)
         );
         TrophysetGroup.Left = BaseGroup.Right;
         TrophysetGroup.Size = new
         (
-            OxWh.W(TrophysetControl.Width),
-            OxWh.Add(TrophysetControl.Height, OxWh.W12)
+            (short)TrophysetControl.Width,
+            (short)(TrophysetControl.Height + 12)
         );
         Size = new OxSize(
             TrophysetGroup.Right,
-            OxWh.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
+            Math.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
         );
     }
 

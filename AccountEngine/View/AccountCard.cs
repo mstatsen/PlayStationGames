@@ -12,8 +12,8 @@ namespace PlayStationGames.AccountEngine.View;
 
 public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
 {
-    protected override OxWidth CardWidth => OxWh.W424;
-    protected override OxWidth CardHeight => OxWh.W200;
+    protected override short CardWidth => 424;
+    protected override short CardHeight => 200;
 
     public AccountCard(ItemViewMode viewMode) : base(viewMode) 
     {
@@ -21,12 +21,12 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
         {
             Parent = this,
             Text = "PSN Level",
-            HeaderHeight = OxWh.W18,
-            Top = OxWh.W1,
+            HeaderHeight = 18,
+            Top = 1,
             Anchor = AnchorStyles.Top | AnchorStyles.Right,
-            Size = new(OxWh.W164, OxWh.W168)
+            Size = new(164, 168)
         };
-        TrophiesPanel.Padding.Size = OxWh.W4;
+        TrophiesPanel.Padding.Size = 4;
         PrepareColors();
     }
 
@@ -45,7 +45,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
         RenewTrophiesIcons();
         TrophiesLayouts.Clear();
         Layouter.Template.Parent = TrophiesPanel;
-        Layouter.Template.Left = OxWh.W94;
+        Layouter.Template.Left = 94;
         Layouter.Template.WrapLabel = false;
         TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PlayedGames));
         TrophiesLayouts.Add(Layouter.AddFromTemplate(AccountField.PSNLevel, -10));
@@ -67,8 +67,8 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
 
         ControlLayout<AccountField> avatarLayout = Layouter.AddFromTemplate(AccountField.Avatar);
         avatarLayout.CaptionVariant = ControlCaptionVariant.None;
-        avatarLayout.Width = OxWh.W80;
-        avatarLayout.Height = OxWh.W80;
+        avatarLayout.Width = 80;
+        avatarLayout.Height = 80;
     }
 
     private void FillBaseLayouts()
@@ -76,8 +76,8 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
         ClearLayoutTemplate();
         BaseLayouts.Clear();
         Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
-        Layouter.Template.Left = Layouter[AccountField.Avatar]!.Right | OxWh.W8;
-        Layouter.Template.Top = OxWh.W12;
+        Layouter.Template.Left = (short)(Layouter[AccountField.Avatar]!.Right + 8);
+        Layouter.Template.Top = 12;
         BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Type));
         Layouter.Template.FontStyle = FontStyle.Regular;
 
@@ -96,7 +96,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
 
         ClearLayoutTemplate();
         Layouter.Template.Left = Layouter[AccountField.Avatar]!.Left;
-        Layouter.Template.Top = Layouter[AccountField.Avatar]!.Bottom-2;
+        Layouter.Template.Top = (short)(Layouter[AccountField.Avatar]!.Bottom - 2);
         Layouter.Template.FontStyle = FontStyle.Italic;
         Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
         Layouter.AddFromTemplate(AccountField.UsesAndOwns);
@@ -105,7 +105,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
     private void FillLinksLayout()
     {
         ClearLayoutTemplate();
-        Layouter.Template.Width = OxWh.W120;
+        Layouter.Template.Width = 120;
         Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
         Layouter.Template.BackColor = BaseColor;
         Layouter.AddFromTemplate(AccountField.Links, 12);
@@ -115,11 +115,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
     {
         Layouter.AlignLabels(BaseLayouts, 8);
         Layouter.MovePlacedControlsToLeft(TrophiesLayouts, 8);
-        TrophiesPanel.Left = 
-            OxWh.Sub(
-                OxWh.Sub(Width, TrophiesPanel.Width), 
-                OxWh.W1
-            );
+        TrophiesPanel.Left = (short)(Width - TrophiesPanel.Width - 1);
         AlignTrophiesIcons();
     }
 
@@ -133,7 +129,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
                 trophyControl.Control,
                 icon.Value
                 );
-            icon.Value.Left = OxWh.Sub(trophyControl.Control.Left, OxWh.W32);
+            icon.Value.Left = (short)(trophyControl.Control.Left - 32);
         }
     }
 

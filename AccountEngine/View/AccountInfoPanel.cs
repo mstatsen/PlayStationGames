@@ -18,15 +18,15 @@ namespace PlayStationGames.AccountEngine.View
 
             ControlLayout<AccountField> avatarLayout = Layouter.AddFromTemplate(AccountField.Avatar);
             avatarLayout.CaptionVariant = ControlCaptionVariant.None;
-            avatarLayout.Left = OxWh.W10;
-            avatarLayout.Width = OxWh.W80;
-            avatarLayout.Height = OxWh.W80;
+            avatarLayout.Left = 10;
+            avatarLayout.Width = 80;
+            avatarLayout.Height = 80;
 
-            Layouter.Template.Top = OxWh.W12;
+            Layouter.Template.Top = 12;
             ControlLayout<AccountField> typeLayout = Layouter.AddFromTemplate(AccountField.Type);
             typeLayout.CaptionVariant = ControlCaptionVariant.None;
-            typeLayout.Left = avatarLayout.Right + 8;
-            Layouter.Template.Left = avatarLayout.Right + 70;
+            typeLayout.Left = (short)(avatarLayout.Right + 8);
+            Layouter.Template.Left = (short)(avatarLayout.Right + 70);
 
             return new ControlLayouts<AccountField>()
             {
@@ -48,7 +48,7 @@ namespace PlayStationGames.AccountEngine.View
         {
             ClearLayoutTemplate();
             Layouter.Template.Parent = PropertyPanel;
-            Layouter.Template.Left = OxWh.W90;
+            Layouter.Template.Left = 90;
 
             ControlLayouts<AccountField> result = new();
 

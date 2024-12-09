@@ -29,13 +29,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             if (fullRow)
             {
                 accessor.Anchor |= AnchorStyles.Right;
-                accessor.Width =
-                    OxWh.Int(
-                        OxWh.Sub(
-                            OxWh.Sub(FormPanel.Width, accessor.Left),
-                            OxWh.W8
-                        )
-                    );
+                accessor.Width = FormPanel.Width - accessor.Left - 8;
             }
             else
                 accessor.Width = 120;
@@ -191,8 +185,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             lastBottom = SetControlTop(countControl, lastBottom);
             lastBottom = SetControlTop(descriptionControl, lastBottom);
             Size = new OxSize(
-                ContentWidth, 
-                OxWh.Add(lastBottom, OxWh.W8)
+                (short)ContentWidth,
+                (short)(lastBottom + 8)
             );
         }
 
@@ -234,7 +228,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                     ? "Joystick Type"
                     : base.EmptyMandatoryField();
 
-        protected override OxWidth ContentHeight => OxWh.Add(descriptionControl.Bottom, OxWh.W8);
+        protected override short ContentHeight => (short)(descriptionControl.Bottom + 8);
 
         private IControlAccessor typeControl = default!;
         private IControlAccessor joystickTypeControl = default!;

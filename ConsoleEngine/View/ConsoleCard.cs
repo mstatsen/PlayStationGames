@@ -11,8 +11,8 @@ namespace PlayStationGames.ConsoleEngine.View
 {
     public class ConsoleCard : ItemCard<ConsoleField, PSConsole, ConsoleFieldGroup>
     {
-        protected override OxWidth CardWidth => OxWh.W400;
-        protected override OxWidth CardHeight => OxWh.W320;
+        protected override short CardWidth => 400;
+        protected override short CardHeight => 320;
 
         public ConsoleCard(ItemViewMode viewMode) : base(viewMode) { }
 
@@ -30,8 +30,8 @@ namespace PlayStationGames.ConsoleEngine.View
 
             ControlLayout<ConsoleField> imageLayout = Layouter.AddFromTemplate(ConsoleField.Icon);
             imageLayout.CaptionVariant = ControlCaptionVariant.None;
-            imageLayout.Width = OxWh.W108;
-            imageLayout.Height = OxWh.W60;
+            imageLayout.Width = 108;
+            imageLayout.Height = 60;
         }
 
         private void FillBaseLayouts()
@@ -40,13 +40,13 @@ namespace PlayStationGames.ConsoleEngine.View
             baseLayouts.Clear();
             ControlLayout<ConsoleField> iconLayout = Layouter[ConsoleField.Icon]!;
             ControlLayout<ConsoleField> modelLayout = Layouter.AddFromTemplate(ConsoleField.FullModel);
-            modelLayout.Top = OxWh.W2;
-            modelLayout.Left = iconLayout.Right | OxWh.W6;
+            modelLayout.Top = 2;
+            modelLayout.Left = (short)(iconLayout.Right + 6);
             modelLayout.CaptionVariant = ControlCaptionVariant.None;
 
             baseLayouts.Add(modelLayout);
 
-            Layouter.Template.Left = iconLayout.Right + 68;
+            Layouter.Template.Left = (short)(iconLayout.Right + 68);
             baseLayouts.Add(Layouter.AddFromTemplate(ConsoleField.FullFirmware, -8));
 
             if (Item!.Accounts.Count > 0)
@@ -63,8 +63,8 @@ namespace PlayStationGames.ConsoleEngine.View
             if (Item is null)
                 return;
 
-            Layouter.Template.Left = Layouter[ConsoleField.Icon]!.Left + 84;
-            Layouter.Template.Top = Layouter[ConsoleField.Icon]!.Bottom + 6;
+            Layouter.Template.Left = (short)(Layouter[ConsoleField.Icon]!.Left + 84);
+            Layouter.Template.Top = (short)(Layouter[ConsoleField.Icon]!.Bottom + 6);
 
             bool needOffsetAccessories = false;
 

@@ -108,139 +108,133 @@ namespace PlayStationGames.GameEngine.Editor
                     Color.FromArgb(250, 250, 250),
             };
 
-        public override OxWidth Top(GameField field) => 
+        public override short Top(GameField field) => 
             field switch
             {
                 GameField.Licensed =>
                     Layouter[GameField.Name]!.Top,
                 GameField.Trophyset =>
-                    OxWh.W0,
+                    0,
                 GameField.Owner =>
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
-                    OxWh.Div(
-                        OxWh.Sub(
-                            Parent(field).Height, 
-                            Height(field)
-                        ),
-                        OxWh.W2
-                    ),
+                        (short)((Parent(field).Height - Height(field)) / 2),
                 GameField.EmulatorType => 
                     Layouter[GameField.Region]!.Top,
                 GameField.Language or
                 GameField.Code =>
                     Layouter[GameField.Region]!.Top,
                 _ =>
-                    OxWh.W8
+                    8
             };
 
-        public override OxWidth Left(GameField field) => 
+        public override short Left(GameField field) => 
             field switch
             {
                 GameField.Image or 
                 GameField.Verified =>
-                    OxWh.W8,
+                    8,
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer =>
-                    OxWh.W6,
+                    6,
                 GameField.MaximumPlayers =>
-                    OxWh.W164,
+                    164,
                 GameField.Licensed =>
-                    OxWh.W390,
+                    390,
                 GameField.Owner or
                 GameField.Source or 
                 GameField.Platform or 
                 GameField.Format =>
-                    OxWh.W302,
+                    302,
                 GameField.Name or 
                 GameField.Edition or 
                 GameField.Serieses or
                 GameField.Region or
                 GameField.EmulatorType =>
-                    OxWh.W68,
+                    68,
                 GameField.ScreenView or
                 GameField.Genre or
                 GameField.Devices =>
-                    OxWh.W66,
+                    66,
                 GameField.Language =>
-                    OxWh.W206,
+                    206,
                 GameField.Code =>
-                    OxWh.W348,
+                    348,
                 GameField.Developer or 
                 GameField.Publisher or 
                 GameField.Year or 
                 GameField.Pegi or 
                 GameField.CriticScore =>
-                    OxWh.W84,
+                    84,
                 GameField.ReleasePlatforms =>
-                    OxWh.W455,
+                    455,
                 _ =>
-                    OxWh.W0,
+                    0,
             };
 
-        public override OxWidth Height(GameField field) =>
+        public override short Height(GameField field) =>
             field switch
             {
                 GameField.Image =>
-                    OxWh.W110,
+                    110,
                 GameField.Name or
                 GameField.Devices =>
-                    OxWh.W42,
+                    42,
                 GameField.Verified or
                 GameField.SinglePlayer or
                 GameField.CoachMultiplayer or
                 GameField.OnlineMultiplayer or
                 GameField.Licensed =>
-                    OxWh.W20,
+                    20,
                 GameField.Serieses or
                 GameField.CriticScore or
                 GameField.MaximumPlayers or
                 GameField.Code =>
-                    OxWh.W26,
+                    26,
                 _ =>
                     base.Height(field)
             };
 
-        public override OxWidth Width(GameField field) => 
+        public override short Width(GameField field) => 
             field switch
             {
                 GameField.Image =>
-                    OxWh.W200,
+                    200,
                 GameField.Owner or
                 GameField.Source or 
                 GameField.Platform or 
                 GameField.Format =>
-                    OxWh.W140,
+                    140,
                 GameField.ScreenView =>
-                    OxWh.W95,
+                    95,
                 GameField.Name =>
-                    OxWh.W272,
+                    272,
                 GameField.Edition or 
                 GameField.Serieses or 
                 GameField.EmulatorType =>
-                    OxWh.W374,
+                    374,
                 GameField.Developer or 
                 GameField.Publisher =>
-                    OxWh.W362,
+                    362,
                 GameField.MaximumPlayers or
                 GameField.Year or
                 GameField.Pegi or
                 GameField.CriticScore =>
-                    OxWh.W64,
+                    64,
                 GameField.Region =>
-                    OxWh.W52,
+                    52,
                 GameField.Language
-                    => OxWh.W80,
+                    => 80,
                 GameField.Code =>
-                    OxWh.W94,
+                    94,
                 GameField.Genre or
                 GameField.Devices =>
-                    OxWh.W210,
+                    210,
                 GameField.ReleasePlatforms =>
-                    OxWh.W600,
+                    600,
                 _ =>
-                    OxWh.W0,
+                    0,
             };
 
         public override int Offset(GameField field) => 

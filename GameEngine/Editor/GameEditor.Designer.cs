@@ -37,7 +37,7 @@ namespace PlayStationGames.GameEngine.Editor
             // 
             // FormPanel
             // 
-            this.FormPanel.Size = new OxSize(OxWh.W(1225), OxWh.W(636));
+            this.FormPanel.Size = new OxSize(1225, 636);
             // 
             // GameEditor
             // 

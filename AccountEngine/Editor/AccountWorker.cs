@@ -41,15 +41,15 @@ namespace PlayStationGames.AccountEngine.Editor
             Editor.Groups[AccountFieldGroup.Games].SizeChanged += GamesSizeChangedHandler;
 
             consolesLabel.Parent = Editor.Groups[AccountFieldGroup.Consoles];
-            consolesLabel.Left = OxWh.W8;
+            consolesLabel.Left = 8;
             consolesButton.Parent = Editor.Groups[AccountFieldGroup.Consoles];
             consolesButton.Dock = OxDock.Right;
-            consolesButton.Size = new(OxWh.Div(consolesButton.Parent.Width, OxWh.W3), OxWh.W38);
+            consolesButton.Size = new((short)(consolesButton.Parent.Width / 3), 38);
             consolesButton.Click -= ConsoleButtonClickHandler;
             consolesButton.Click += ConsoleButtonClickHandler;
 
             gamesLabel.Parent = Editor.Groups[AccountFieldGroup.Games];
-            gamesLabel.Left = OxWh.W8;
+            gamesLabel.Left = 8;
             gamesButton.Parent = Editor.Groups[AccountFieldGroup.Games];
             gamesButton.Dock = OxDock.Fill;
             gamesButton.Dock = OxDock.Right;
@@ -78,18 +78,18 @@ namespace PlayStationGames.AccountEngine.Editor
         private void ConsolesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
             consolesButton.Size = new(
-                OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
-                OxWh.W38
+                (short)(consolesButton.Parent!.Width / 3),
+                38
             );
-            consolesLabel.Top = OxWh.Div(OxWh.Sub(consolesButton.Parent.Height, consolesLabel.Height), 2);
+            consolesLabel.Top = (short)((consolesButton.Parent.Height - consolesLabel.Height) / 2);
         }
 
         private void GamesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
             gamesButton.Size = new(
-                OxWh.Div(consolesButton.Parent!.Width, OxWh.W3), 
-                OxWh.W38);
-            gamesLabel.Top = OxWh.Div(OxWh.Sub(consolesButton.Parent.Height, gamesLabel.Height), 2);
+                (short)(consolesButton.Parent!.Width / 3),
+                38);
+            gamesLabel.Top = (short)((consolesButton.Parent.Height - gamesLabel.Height) / 2);
         }
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)

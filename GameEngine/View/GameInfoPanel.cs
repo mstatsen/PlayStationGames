@@ -16,9 +16,9 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
     private ControlLayouts<GameField> FillTrophiesLayouts()
     {
         ClearLayoutTemplate();
-        Layouter.Template.Left = OxWh.W92;
+        Layouter.Template.Left = 92;
         Layouter.Template.Parent = TrophysetPanel;
-        Layouter.Template.MaximumLabelWidth = OxWh.W200;
+        Layouter.Template.MaximumLabelWidth = 200;
 
         ControlLayouts<GameField> result = new();
 
@@ -74,9 +74,9 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
     private ControlLayouts<GameField> FillReleaseLayouts()
     {
         ClearLayoutTemplate();
-        Layouter.Template.Left = OxWh.W95;
+        Layouter.Template.Left = 95;
         Layouter.Template.Parent = ReleasePanel;
-        Layouter.Template.MaximumLabelWidth = OxWh.W200;
+        Layouter.Template.MaximumLabelWidth = 200;
 
         return new ControlLayouts<GameField>()
             {
@@ -126,7 +126,7 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
     {
         ClearLayoutTemplate();
         Layouter.Template.Parent = StockPanel;
-        Layouter.Template.Left = OxWh.W92;
+        Layouter.Template.Left = 92;
 
         return new ControlLayouts<GameField>()
             {
@@ -141,9 +141,9 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
     {
         ClearLayoutTemplate();
         Layouter.Template.Parent = BasePanel;
-        Layouter.Template.Top = OxWh.W4;
+        Layouter.Template.Top = 4;
         ControlLayout<GameField> imageLayout = Layouter[GameField.Image]!;
-        Layouter.Template.Left = imageLayout.Right | OxWh.W80;
+        Layouter.Template.Left = (short)(imageLayout.Right + 80);
         return new ControlLayouts<GameField>()
         {
             imageLayout,
@@ -158,7 +158,7 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
     {
         ClearLayoutTemplate();
         Layouter.Template.Parent = BasePanel2;
-        Layouter.Template.Left = OxWh.W92;
+        Layouter.Template.Left = 92;
 
         return new ControlLayouts<GameField>() {
             Layouter.AddFromTemplate(GameField.Region),
@@ -176,17 +176,17 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
         ControlLayout<GameField> imageLayout = Layouter.AddFromTemplate(GameField.Image);
         imageLayout.Parent = BasePanel;
         imageLayout.CaptionVariant = ControlCaptionVariant.None;
-        imageLayout.Height = OxWh.W97;
+        imageLayout.Height = 97;
 
         if (Item?.Image is not null 
             && Item.Image.GetPixel(0, 0).A is 0)
         {
-            imageLayout.Left = OxWh.W12;
-            imageLayout.Width = OxWh.W176;
+            imageLayout.Left = 12;
+            imageLayout.Width = 176;
             imageLayout.BackColor = Colors.Darker();
         }
         else
-            imageLayout.Width = OxWh.W200;
+            imageLayout.Width = 200;
     }
 
     protected override string GetTitle() =>
@@ -226,7 +226,7 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
                 continue;
 
             OxControlHelper.AlignByBaseLine(trophyControl.Control, icon.Value);
-            icon.Value.Left = OxWh.Sub(trophyControl.Control.Left, OxWh.W32);
+            icon.Value.Left = (short)(trophyControl.Control.Left - 32);
         }
     }
 

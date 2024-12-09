@@ -35,37 +35,37 @@ namespace PlayStationGames.AccountEngine.Editor
                 AccountField.Country,
             };
 
-        public override OxWidth Top(AccountField field) =>
+        public override short Top(AccountField field) =>
             field switch
             {
                 AccountField.DefaultAccount =>
-                    OxWh.Div(OxWh.Sub(Parent(field).Height, Height(field)), OxWh.W2),
-                _ => OxWh.W8
+                    (short)((Parent(field).Height - Height(field)) / 2),
+                _ => 8
             };
 
-        public override OxWidth Left(AccountField field) =>
-            field is AccountField.Avatar or 
+        public override short Left(AccountField field) =>
+            (short)(field is AccountField.Avatar or
                 AccountField.DefaultAccount
-                ? OxWh.W8
+                ? 8
                 : field is AccountField.Name or
                     AccountField.Country or
                     AccountField.Type
-                    ? OxWh.W169
-                    : OxWh.W74;
+                    ? 169
+                    : 74);
 
-        public override OxWidth Width(AccountField field) =>
+        public override short Width(AccountField field) =>
             field switch
             {
                 AccountField.Avatar =>
-                    OxWh.W80,
+                    80,
                 AccountField.Name or
                 AccountField.Country or
                 AccountField.Type =>
-                    OxWh.W225,
+                    225,
                 AccountField.Login or
                 AccountField.Password =>
-                    OxWh.W320,
-                _ => OxWh.W210
+                    320,
+                _ => 210
             };
 
         public override List<AccountField> FillDockFields() =>
@@ -84,12 +84,12 @@ namespace PlayStationGames.AccountEngine.Editor
                     Color.FromArgb(250, 250, 250),
             };
 
-        public override OxWidth Height(AccountField field) =>
-            field is AccountField.Avatar
-                ? OxWh.W80
+        public override short Height(AccountField field) =>
+            (short)(field is AccountField.Avatar
+                ? 80
                 : field is AccountField.DefaultAccount 
-                    ? OxWh.W20
-                    : base.Height(field);
+                    ? 20
+                    : base.Height(field));
 
         public override AnchorStyles Anchors(AccountField field)
         {

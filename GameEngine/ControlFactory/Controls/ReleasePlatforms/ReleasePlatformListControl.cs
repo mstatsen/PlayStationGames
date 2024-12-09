@@ -39,10 +39,10 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         private OxSize PrepareCheckBoxes()
         {
-            OxWidth top = 0;
-            OxWidth left = OxWh.W0;
-            OxWidth calcedHeight = 0;
-            OxWidth calcedWidth = 0;
+            short top = 0;
+            short left = 0;
+            short calcedHeight = 0;
+            short calcedWidth = 0;
             OxCheckBox? longestFamilyCheckBox = null;
             PlatformFamily oldFamily = TypeHelper.EmptyValue<PlatformFamily>();
 
@@ -52,11 +52,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
                 if (!oldFamily.Equals(family))
                 {
-                    top = OxWh.W0;
-                    left = 
-                        longestFamilyCheckBox is null 
-                            ? OxWh.W0 
-                            : OxWh.Add(longestFamilyCheckBox.Right, OxWh.W30);
+                    top = 0;
+                    left =
+                        (short)(longestFamilyCheckBox is null
+                            ? 0 
+                            : (longestFamilyCheckBox.Right + 30));
                     longestFamilyCheckBox = null;
                 }
 
@@ -68,8 +68,8 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
                 top = checkBox.Bottom;
                 oldFamily = family;
-                calcedWidth = OxWh.Max(calcedWidth, checkBox.Right);
-                calcedHeight = OxWh.Max(calcedHeight, checkBox.Bottom);
+                calcedWidth = Math.Max(calcedWidth, checkBox.Right);
+                calcedHeight = Math.Max(calcedHeight, checkBox.Bottom);
             }
 
             return new(calcedWidth, calcedHeight);
@@ -99,12 +99,12 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
         private void PrepareMainPanel()
         {
             mainPanel.Parent = this;
-            mainPanel.Padding.HorizontalInt = 12;
-            mainPanel.Padding.TopInt = 6;
-            mainPanel.Padding.BottomInt = 5;
+            mainPanel.Padding.Horizontal = 12;
+            mainPanel.Padding.Top = 6;
+            mainPanel.Padding.Bottom = 5;
         }
 
-        private OxCheckBox CreateCheckBox(PlatformType platformType, OxWidth top, OxWidth left)
+        private OxCheckBox CreateCheckBox(PlatformType platformType, short top, short left)
         {
             OxCheckBox checkBox = new()
             {

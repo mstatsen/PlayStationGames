@@ -40,14 +40,13 @@ public class InstallationPlaceSelector : OxPanel
         Renew();
         dialog.Text = $"Install {Game} into:";
         dialog.FormPanel.Size = new(
-            OxWh.W600,
-            OxWh.Add(
-                generationHelper.FolderSupport(Generation)
-                    ? folderControl.Bottom
-                    : storageControl.Bottom
-                ,
-                OxWh.W22
-            )
+            600,
+                (short)(
+                    (generationHelper.FolderSupport(Generation)
+                        ? folderControl.Bottom
+                        : storageControl.Bottom)
+                    + 22
+                )
         );
         dialog.DialogButtons = OxDialogButton.Apply | OxDialogButton.Cancel;
 
@@ -63,7 +62,7 @@ public class InstallationPlaceSelector : OxPanel
             {
                 Parent = this,
                 AutoSize = true,
-                Left = OxWh.W8,
+                Left = 8,
                 Text = caption,
                 Font = OxStyles.DefaultFont
             }
@@ -85,7 +84,7 @@ public class InstallationPlaceSelector : OxPanel
         control.Left = 80;
         control.Top = lastBottom is -1 ? 8 : lastBottom + 4;
         control.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-        control.Width = OxWh.Int(OxWh.Sub(OxWh.Sub(Width, control.Left), OxWh.W8));
+        control.Width = Width - control.Left - 8;
         control.Height = 32;
         return control.Bottom;
     }

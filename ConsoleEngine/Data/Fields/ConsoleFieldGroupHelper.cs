@@ -58,29 +58,29 @@ namespace PlayStationGames.ConsoleEngine.Data.Fields
                     ConsoleFieldGroup.Base,
             };
 
-        public override OxWidth GroupWidth(ConsoleFieldGroup group) =>
+        public override short GroupWidth(ConsoleFieldGroup group) =>
             group switch
             { 
                 ConsoleFieldGroup.Folders or
                 ConsoleFieldGroup.Accessories =>
-                    OxWh.W450,
-                _=> OxWh.W360
+                    450,
+                _=> 360
             };
 
-        public override OxWidth DefaultGroupHeight(ConsoleFieldGroup group) => 
+        public override short DefaultGroupHeight(ConsoleFieldGroup group) => 
             group switch
             {
                 ConsoleFieldGroup.Base => 
-                    OxWh.W42,
+                    42,
                 ConsoleFieldGroup.Games => 
-                    OxWh.W36,
+                    36,
                 ConsoleFieldGroup.Accessories => 
-                    OxWh.W198,
+                    198,
                 ConsoleFieldGroup.Accounts or
                 ConsoleFieldGroup.Storages => 
-                    OxWh.W84,
+                    84,
                 _ => 
-                OxWh.W140,
+                140,
             };
 
         public override bool IsCalcedHeightGroup(ConsoleFieldGroup group) => 
