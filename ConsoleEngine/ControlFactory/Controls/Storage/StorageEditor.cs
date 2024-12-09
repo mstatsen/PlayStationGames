@@ -3,6 +3,7 @@ using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
 using OxLibrary;
+using OxLibrary.Geometry;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
@@ -18,13 +19,13 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             accessor.Parent = this;
             accessor.Left = 80;
-            accessor.Top = lastBottom is -1 ? 8 : lastBottom + 4;
+            accessor.Top = OxSH.IfElse(lastBottom is -1, 8, lastBottom + 4);
             accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
             if (fullRow)
             {
                 accessor.Anchor |= AnchorStyles.Right;
-                accessor.Width = FormPanel.Width - accessor.Left - 8;
+                accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left + 8);
             }
             else
                 accessor.Width = 64;

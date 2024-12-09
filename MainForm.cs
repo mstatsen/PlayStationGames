@@ -9,6 +9,7 @@ using OxDAOEngine.Settings.Part;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.AccountEngine.Data;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames
 {
@@ -106,12 +107,10 @@ namespace PlayStationGames
 
                 OxSize screenSize = OxControlHelper.ScreenSize(this);
                 Size = new(
-                    Math.Min((short)1600, screenSize.Width),
-                    Math.Min((short)800, screenSize.Height));
+                    OxSH.Min(1600, screenSize.Width),
+                    OxSH.Min(800, screenSize.Height));
 
-                Left = (short)((screenSize.Width - Width) / 2);
-                Top = (short)((screenSize.Height - Height) / 2);
-
+                MoveToScreenCenter();
                 PlaceComponents();
                 Update();
                 DataManager.SetModifiedHandler(DataModifiedHandler);

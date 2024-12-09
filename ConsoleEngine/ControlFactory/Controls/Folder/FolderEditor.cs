@@ -23,7 +23,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             folderControl = Builder.Accessor("Folder:Name", FieldType.String);
             folderControl.Parent = this;
-            folderControl.Dock = DockStyle.Fill;
+            folderControl.Dock = OxDock.Fill;
         }
 
         protected override void SetPaddings() => 

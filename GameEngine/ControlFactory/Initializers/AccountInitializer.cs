@@ -1,29 +1,29 @@
 ﻿using OxLibrary.Controls;
+using OxLibrary.Interfaces;
 using OxDAOEngine.ControlFactory.Initializers;
 using OxDAOEngine.Data;
 using PlayStationGames.AccountEngine.Data;
 
-namespace PlayStationGames.GameEngine.ControlFactory.Initializers
+namespace PlayStationGames.GameEngine.ControlFactory.Initializers;
+
+public class AccountInitializer : ComboBoxInitializer
 {
-    public class AccountInitializer : ComboBoxInitializer
+    public ListDAO<Account>? ExistingAccounts;
+
+    public override void InitControl(IOxControl control)
     {
-        public ListDAO<Account>? ExistingAccounts;
+        OxPicturedComboBox<Account> ComboBox = (OxPicturedComboBox<Account>)control;
 
-        public override void InitControl(Control control)
-        {
-            OxPicturedComboBox<Account> ComboBox = (OxPicturedComboBox<Account>)control;
+        if (ComboBox.Items.Count > 0)
+            ComboBox.SelectedIndex = 0;
+    }
 
-            if (ComboBox.Items.Count > 0)
-                ComboBox.SelectedIndex = 0;
-        }
+    public override bool AvailableValue(object value)
+    {
+        if (ExistingAccounts is not null
+            && value is Account account)
+            return !ExistingAccounts.Contains(a => a.Id.Equals(account.Id));
 
-        public override bool AvailableValue(object value)
-        {
-            if (ExistingAccounts is not null
-                && value is Account account)
-                return !ExistingAccounts.Contains(a => a.Id.Equals(account.Id));
-
-            return false;
-        }
+        return false;
     }
 }

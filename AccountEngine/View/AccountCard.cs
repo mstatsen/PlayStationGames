@@ -3,6 +3,7 @@ using OxDAOEngine.Data.Types;
 using OxDAOEngine.View;
 using OxLibrary;
 using OxLibrary.Controls;
+using OxLibrary.Geometry;
 using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
@@ -129,7 +130,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
                 trophyControl.Control,
                 icon.Value
                 );
-            icon.Value.Left = (short)(trophyControl.Control.Left - 32);
+            icon.Value.Left = OxSH.Sub(trophyControl.Control.Left, 32);
         }
     }
 

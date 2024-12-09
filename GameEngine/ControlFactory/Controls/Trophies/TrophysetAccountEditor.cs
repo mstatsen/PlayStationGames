@@ -36,7 +36,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                         OnlyNullable = false
                     });
             AccountAccessor.Parent = this;
-            AccountAccessor.Dock = DockStyle.Fill;
+            AccountAccessor.Dock = OxDock.Fill;
             AccountAccessor.Context.SetInitializer(accountInitializer);
         }
 

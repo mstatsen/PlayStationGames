@@ -38,7 +38,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                     );
 
             accountControl.Parent = this;
-            accountControl.Dock = DockStyle.Fill;
+            accountControl.Dock = OxDock.Fill;
             accountControl.Context.SetInitializer(accountInitializer);
         }
 

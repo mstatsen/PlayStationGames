@@ -9,6 +9,7 @@ using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
+using OxLibrary.Interfaces;
 
 namespace PlayStationGames.ConsoleEngine.Editor;
 
@@ -56,7 +57,7 @@ public class InstallationPlaceSelector : OxPanel
         dialog.GetEmptyMandatoryFieldName = GetEmptyMandatoryFieldHandler;
     }
 
-    private OxLabel CreateLabel(string caption, Control control) => 
+    private OxLabel CreateLabel(string caption, IOxControl control) => 
         OxControlHelper.AlignByBaseLine(control,
             new OxLabel()
             {

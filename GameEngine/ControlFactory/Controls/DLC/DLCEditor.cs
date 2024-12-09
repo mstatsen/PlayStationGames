@@ -9,6 +9,7 @@ using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.ControlFactory.Accessors;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls;
 
@@ -53,7 +54,7 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         FirstFocusControl = NameControl.Control;
 
         ImageControl = Context.Accessor("DLC:Image", FieldType.Image);
-        ImageControl.Top = NameControl.Bottom + 8;
+        ImageControl.Top = OxSH.Add(NameControl.Bottom, 8);
         ImageControl.Left = 66;
         ImageControl.Width = 208;
         ImageControl.Height = 112;
@@ -62,7 +63,7 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         SetKeyUpHandler(ImageControl.Control);
 
         AcquiredControl = Context.Accessor("DLC:Acquired", FieldType.Boolean);
-        AcquiredControl.Top = ImageControl.Bottom + 8;
+        AcquiredControl.Top = OxSH.Add(ImageControl.Bottom, 8);
         AcquiredControl.Left = 8;
         ((OxCheckBox)AcquiredControl.Control).AutoSize = true;
         AcquiredControl.Parent = BaseGroup;

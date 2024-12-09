@@ -1,4 +1,5 @@
 ﻿using OxLibrary.Controls;
+using OxLibrary.Interfaces;
 using OxDAOEngine.ControlFactory.Initializers;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data;
@@ -12,7 +13,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Initializers
         public JoystickTypeInitializer(PSConsole console) : base() => 
             Console = console;
 
-        public override void InitControl(Control control) => 
+        public override void InitControl(IOxControl control) => 
             ((OxComboBox)control).SelectedItem =
                 Console is null
                     ? joystickTypeHelper.DefaultValue()

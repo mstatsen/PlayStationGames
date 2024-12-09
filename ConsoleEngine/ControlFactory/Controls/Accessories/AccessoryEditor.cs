@@ -9,6 +9,7 @@ using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
+using OxLibrary.Geometry;
 
 
 namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
@@ -22,14 +23,14 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             bool withoutLabel = caption.Equals(string.Empty);
             accessor.Parent = this;
-            accessor.Left = withoutLabel ? 12 : 100;
-            accessor.Top = lastBottom is -1 ? 8 : lastBottom + 4;
+            accessor.Left = OxSH.IfElse(withoutLabel, 12, 100);
+            accessor.Top = OxSH.IfElse(lastBottom is -1, 8, lastBottom + 4);
             accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
             if (fullRow)
             {
                 accessor.Anchor |= AnchorStyles.Right;
-                accessor.Width = FormPanel.Width - accessor.Left - 8;
+                accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left + 8);
             }
             else
                 accessor.Width = 120;
@@ -70,7 +71,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             lastBottom = PrepareControl(withCoverControl, lastBottom: lastBottom);
             lastBottom = PrepareControl(coverColorControl, "Cover color", lastBottom);
             coverColorControl.Left += 24;
-            ((OxLabel)coverColorControl.Control.Tag).Left += 24;
+            ((OxLabel)coverColorControl.Control.Tag!).Left += 24;
             lastBottom = PrepareControl(withStickCoversControl, lastBottom: lastBottom, fullRow: true);
             lastBottom = PrepareControl(countControl, "Count", lastBottom);
             countControl.Width = 64;
@@ -117,8 +118,8 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             if (accessor is null)
                 return lastBottom;
 
-            accessor.Top = lastBottom + 4;
-            OxControlHelper.AlignByBaseLine(accessor.Control, (OxLabel)accessor.Control.Tag);
+            accessor.Top = OxSH.Add(lastBottom, 4);
+            OxControlHelper.AlignByBaseLine(accessor.Control, (OxLabel)accessor.Control.Tag!);
             return accessor.Bottom;
         }
 
@@ -142,18 +143,18 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
             bool isJoystick = IsJoystick();
             joystickTypeControl.Visible = isJoystick;
-            ((OxLabel)joystickTypeControl.Control.Tag).Visible = joystickTypeControl.Visible;
+            ((OxLabel)joystickTypeControl.Control.Tag!).Visible = joystickTypeControl.Visible;
             bool namedControVisible = typeHelper.Named(AccessoryType, JoystickType);
             nameControl.Visible = namedControVisible;
-            ((OxLabel)nameControl.Control.Tag).Visible = namedControVisible;
+            ((OxLabel)nameControl.Control.Tag!).Visible = namedControVisible;
             bool modelCodeControVisible = typeHelper.SupportModelCode(AccessoryType, JoystickType);
             modelCodeControl.Visible = modelCodeControVisible;
-            ((OxLabel)modelCodeControl.Control.Tag).Visible = modelCodeControVisible;
+            ((OxLabel)modelCodeControl.Control.Tag!).Visible = modelCodeControVisible;
             colorControl.Visible = IsColored();
-            ((OxLabel)colorControl.Control.Tag).Visible = colorControl.Visible;
+            ((OxLabel)colorControl.Control.Tag!).Visible = colorControl.Visible;
             withCoverControl.Visible = isJoystick;
             coverColorControl.Visible = isJoystick && withCoverControl.BoolValue;
-            ((OxLabel)coverColorControl.Control.Tag).Visible = isJoystick && withCoverControl.BoolValue;
+            ((OxLabel)coverColorControl.Control.Tag!).Visible = isJoystick && withCoverControl.BoolValue;
             withStickCoversControl.Visible = isJoystick
                 && joystickTypeHelper.WithSticks(JoystickType);
 

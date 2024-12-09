@@ -1,43 +1,43 @@
 ﻿using OxLibrary.Controls;
+using OxLibrary.Interfaces;
 using OxDAOEngine.ControlFactory.Initializers;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Extract;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 
-namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers
+namespace PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
+
+public class TagNameInitializer : EmptyControlInitializer
 {
-    public class TagNameInitializer : EmptyControlInitializer
+    public readonly ListDAO<Tag> ExistingTags = new();
+
+    private void AddTagNameToComboBox(string? tagName)
     {
-        public readonly ListDAO<Tag> ExistingTags = new();
-
-        private void AddTagNameToComboBox(string? tagName)
-        {
-            if (ComboBox!.Items.IndexOf(tagName) < 0
-                && (ExistingTags.Count is 0 
-                    || !ExistingTags.Contains(l => l.Name.Equals(tagName)))
-                )
-                ComboBox!.Items.Add(tagName);
-        }
-
-        private OxComboBox? ComboBox;
-
-        public override void InitControl(Control control)
-        {
-            ComboBox = (OxComboBox)control;
-            ComboBox.DropDownStyle = ComboBoxStyle.DropDown;
-            ComboBox.Items.Clear();
-
-            List<object> tagNames = new FieldExtractor<GameField, Game>(
-                DataManager.FullItemsList<GameField, Game>()).Extract(GameField.Tags, true);
-
-            foreach (object tagName in tagNames)
-                AddTagNameToComboBox(tagName.ToString());
-
-            if (ComboBox.Items.Count > 0)
-                ComboBox.SelectedIndex = 0;
-        }
-
-        public TagNameInitializer() { }
+        if (ComboBox!.Items.IndexOf(tagName) < 0
+            && (ExistingTags.Count is 0 
+                || !ExistingTags.Contains(l => l.Name.Equals(tagName)))
+            )
+            ComboBox!.Items.Add(tagName);
     }
+
+    private OxComboBox? ComboBox;
+
+    public override void InitControl(IOxControl control)
+    {
+        ComboBox = (OxComboBox)control;
+        ComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+        ComboBox.Items.Clear();
+
+        List<object> tagNames = new FieldExtractor<GameField, Game>(
+            DataManager.FullItemsList<GameField, Game>()).Extract(GameField.Tags, true);
+
+        foreach (object tagName in tagNames)
+            AddTagNameToComboBox(tagName.ToString());
+
+        if (ComboBox.Items.Count > 0)
+            ComboBox.SelectedIndex = 0;
+    }
+
+    public TagNameInitializer() { }
 }

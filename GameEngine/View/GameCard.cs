@@ -7,6 +7,7 @@ using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.GameEngine.View;
 
@@ -170,10 +171,10 @@ public class GameCard : ItemCard<GameField, Game, GameFieldGroup>
 
         yearControl.Control.Left = yearControl.LabelRight;
 
-        pegiControl.LabelLeft = yearControl.Control.Right + 16;
+        pegiControl.LabelLeft = OxSH.Add(yearControl.Control.Right, 16);
         pegiControl.Control.Left = pegiControl.LabelRight;
 
-        criticControl.LabelLeft = pegiControl.Control.Right + 16;
+        criticControl.LabelLeft = OxSH.Add(pegiControl.Control.Right, 16);
         criticControl.Control.Left = criticControl.LabelRight;
     }
 

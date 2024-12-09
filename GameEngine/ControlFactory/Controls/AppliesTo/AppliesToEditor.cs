@@ -1,64 +1,64 @@
-﻿using OxDAOEngine.ControlFactory.Accessors;
+﻿using OxLibrary;
+using OxLibrary.Geometry;
+using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data.Fields;
-using OxLibrary;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Initializers;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 
-namespace PlayStationGames.GameEngine.ControlFactory.Controls
+namespace PlayStationGames.GameEngine.ControlFactory.Controls;
+
+public partial class AppliesToEditor : CustomItemEditor<Platform, GameField, Game>
 {
-    public partial class AppliesToEditor : CustomItemEditor<Platform, GameField, Game>
+    private EnumAccessor<GameField, Game, PlatformType> TypeControl = default!;
+
+    public override Bitmap FormIcon => OxIcons.Console;
+
+    public override void RenewData()
     {
-        private EnumAccessor<GameField, Game, PlatformType> TypeControl = default!;
+        base.RenewData();
 
-        public override Bitmap FormIcon => OxIcons.Console;
-
-        public override void RenewData()
+        if (TypeControl.Context.Initializer is PlaystationPlatformTypeInitializer playstationPlatformTypeInitializer)
         {
-            base.RenewData();
+            playstationPlatformTypeInitializer.ExistingTypes.Clear();
+            playstationPlatformTypeInitializer.Game = OwnerDAO;
 
-            if (TypeControl.Context.Initializer is PlaystationPlatformTypeInitializer playstationPlatformTypeInitializer)
-            {
-                playstationPlatformTypeInitializer.ExistingTypes.Clear();
-                playstationPlatformTypeInitializer.Game = OwnerDAO;
+            if (ExistingItems is not null)
+                playstationPlatformTypeInitializer.ExistingTypes.AddRange(ExistingItems.Cast<Platform>());
 
-                if (ExistingItems is not null)
-                    playstationPlatformTypeInitializer.ExistingTypes.AddRange(ExistingItems.Cast<Platform>());
-
-                TypeControl.RenewControl(true);
-            }
+            TypeControl.RenewControl(true);
         }
-
-        private void CreateTypeControl()
-        {
-            TypeControl = (EnumAccessor<GameField, Game, PlatformType>)Context.Builder
-                .Accessor("AppliesTo:Type", FieldType.Enum);
-            TypeControl.Parent = this;
-            TypeControl.Left = 8;
-            TypeControl.Top = 8;
-            TypeControl.Width = FormPanel.Width - TypeControl.Left - 8;
-            TypeControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-            TypeControl.Height = 24;
-            SetKeyUpHandler(TypeControl.Control);
-            FirstFocusControl = TypeControl.Control;
-        }
-
-        protected override void CreateControls() =>
-            CreateTypeControl();
-
-        protected override short ContentHeight => (short)(TypeControl.Bottom + 8);
-
-        protected override void FillControls(Platform item) => 
-            TypeControl.Value = item.Type;
-
-        protected override void GrabControls(Platform item) =>
-            item.Type = TypeControl.EnumValue;
-
-        protected override string EmptyMandatoryField() =>
-            TypeControl.IsEmpty
-                ? "Type"
-                : base.EmptyMandatoryField();
     }
+
+    private void CreateTypeControl()
+    {
+        TypeControl = (EnumAccessor<GameField, Game, PlatformType>)Context.Builder
+            .Accessor("AppliesTo:Type", FieldType.Enum);
+        TypeControl.Parent = this;
+        TypeControl.Left = 8;
+        TypeControl.Top = 8;
+        TypeControl.Width = OxSH.Sub(FormPanel.Width, TypeControl.Left + 8);
+        TypeControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+        TypeControl.Height = 24;
+        SetKeyUpHandler(TypeControl.Control);
+        FirstFocusControl = TypeControl.Control;
+    }
+
+    protected override void CreateControls() =>
+        CreateTypeControl();
+
+    protected override short ContentHeight => (short)(TypeControl.Bottom + 8);
+
+    protected override void FillControls(Platform item) => 
+        TypeControl.Value = item.Type;
+
+    protected override void GrabControls(Platform item) =>
+        item.Type = TypeControl.EnumValue;
+
+    protected override string EmptyMandatoryField() =>
+        TypeControl.IsEmpty
+            ? "Type"
+            : base.EmptyMandatoryField();
 }

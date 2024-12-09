@@ -1,10 +1,11 @@
-﻿using OxDAOEngine.ControlFactory;
+﻿using OxLibrary;
+using OxLibrary.Controls;
+using OxLibrary.Geometry;
+using OxLibrary.Panels;
+using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Fields;
-using OxLibrary;
-using OxLibrary.Controls;
-using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
@@ -47,11 +48,11 @@ public class TrophysetPanel : OxPanel
         Text = "Time" 
     };
 
-    private void PrepareAccessor(IControlAccessor accessor, OxLabel label, int top, int width, EventHandler OnChangeHandler)
+    private void PrepareAccessor(IControlAccessor accessor, OxLabel label, short top, short width, EventHandler OnChangeHandler)
     {
         accessor.Parent = this;
         accessor.Left = 88;
-        accessor.Top = top + 4;
+        accessor.Top = OxSH.Add(top, 4);
         accessor.Width = width;
         accessor.ValueChangeHandler += OnChangeHandler;
         label.Parent = this;
@@ -78,7 +79,7 @@ public class TrophysetPanel : OxPanel
         completeTimeControl = IsDLCPanel
             ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) 
             : builder[GameField.CompleteTime];
-        PrepareAccessor(typeControl, trophysetTypeLabel, 4, IsDLCPanel ? 122 : 178, TypeChangeHandler);
+        PrepareAccessor(typeControl, trophysetTypeLabel, 4, OxSH.IfElse(IsDLCPanel, 122, 178), TypeChangeHandler);
 
         if (appliesToControl is not null)
             PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 178, AppliesToChandeHandler);

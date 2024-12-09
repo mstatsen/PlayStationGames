@@ -15,6 +15,7 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls;
 
@@ -156,17 +157,17 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
         item.Size = sizeControl.IntValue;
     }
 
-    private int PrepareControl(IControlAccessor accessor, int lastBottom = -1, int left = 80, bool fullRow = true)
+    private int PrepareControl(IControlAccessor accessor, int lastBottom = -1, short left = 80, bool fullRow = true)
     {
         accessor.Parent = this;
         accessor.Left = left;
-        accessor.Top = lastBottom is -1 ? 8 : lastBottom + 4;
+        accessor.Top = OxSH.IfElse(lastBottom is -1, 8, lastBottom + 4);
         accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
         if (fullRow)
         {
             accessor.Anchor |= AnchorStyles.Right;
-            accessor.Width = FormPanel.Width - accessor.Left - 8;
+            accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left + 8);
         }
         else accessor.Width = 120;
 
