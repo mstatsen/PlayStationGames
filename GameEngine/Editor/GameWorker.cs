@@ -327,11 +327,9 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
         );
         Builder[GameField.Serieses].Top = 
             OxSH.Add(
-                OxSH.IfElse(
-                    editionVisible,
-                    Builder[GameField.Edition].Bottom,
-                    Builder[GameField.Edition].Top
-                ),
+                editionVisible
+                    ? Builder[GameField.Edition].Bottom
+                    : Builder[GameField.Edition].Top,
                 Generator!.Offset(GameField.Serieses)
             );
     }

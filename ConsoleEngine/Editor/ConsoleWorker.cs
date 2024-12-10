@@ -29,12 +29,12 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
         {
             Builder.SetVisible(ConsoleField.FirmwareName, Firmware is FirmwareType.Official);
             Builder[ConsoleField.FirmwareVersion].Top =
-                OxSH.IfElse(
-                    Firmware is FirmwareType.Official,
-                    Builder[ConsoleField.FirmwareName].Top,
-                    Builder[ConsoleField.FirmwareName].Bottom
-                    + Generator.Offset(ConsoleField.FirmwareVersion)
-                    + 2
+                OxSH.Short(
+                    Firmware is FirmwareType.Official
+                        ? Builder[ConsoleField.FirmwareName].Top
+                        : Builder[ConsoleField.FirmwareName].Bottom
+                            + Generator.Offset(ConsoleField.FirmwareVersion)
+                            + 2
                 );
         }
 

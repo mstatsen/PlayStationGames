@@ -91,11 +91,9 @@ namespace PlayStationGames.GameEngine.Editor
                 PanelRight.Right,
                 OxSH.Add(
                     PanelTop.Height,
-                    OxSH.IfElse(
-                        Groups[GameFieldGroup.ReleaseBase].Visible,
-                        Groups[GameFieldGroup.ReleaseBase].Height,
-                        8
-                    ),
+                    Groups[GameFieldGroup.ReleaseBase].Visible
+                        ? Groups[GameFieldGroup.ReleaseBase].Height
+                        : 8,
                     12
                 )
             );

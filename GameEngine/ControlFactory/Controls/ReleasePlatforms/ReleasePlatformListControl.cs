@@ -55,10 +55,11 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
             if (!oldFamily.Equals(family))
             {
                 top = 0;
-                left = 
-                    OxSH.IfElseZero(
-                        longestFamilyCheckBox is not null,
-                        OxSH.Add(longestFamilyCheckBox!.Right, 30)
+                left =
+                    OxSH.Short(
+                        longestFamilyCheckBox is not null
+                            ? OxSH.Add(longestFamilyCheckBox!.Right, 30)
+                            : 0
                     );
                 longestFamilyCheckBox = null;
             }

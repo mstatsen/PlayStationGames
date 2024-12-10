@@ -23,8 +23,8 @@ public partial class AccessoryEditor : CustomItemEditor<Accessory, ConsoleField,
     {
         bool withoutLabel = caption.Equals(string.Empty);
         accessor.Parent = this;
-        accessor.Left = OxSH.IfElse(withoutLabel, 12, 100);
-        accessor.Top = OxSH.IfElse(lastBottom is -1, 8, lastBottom + 4);
+        accessor.Left = OxSH.Short(withoutLabel ? 12 : 100);
+        accessor.Top = OxSH.Short(lastBottom is -1 ? 8 : lastBottom + 4);
         accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
         if (fullRow)

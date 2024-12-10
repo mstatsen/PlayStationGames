@@ -44,10 +44,9 @@ public class InstallationPlaceSelector : OxPanel
         dialog.FormPanel.Size = new(
             600,
             OxSH.Add(
-                OxSH.IfElse(
-                    generationHelper.FolderSupport(Generation),
-                    folderControl.Bottom,
-                    storageControl.Bottom),
+                generationHelper.FolderSupport(Generation)
+                    ? folderControl.Bottom
+                    : storageControl.Bottom,
                 22
             )
         );

@@ -145,7 +145,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 controls.Add(TrophyType.Platinum, platinumControl);
             }
 
-            short calcedLeft = OxSH.IfElse(IsDLCPanel, 8, 64);
+            short calcedLeft = OxSH.Short(IsDLCPanel ? 8 : 64);
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
             {
@@ -165,7 +165,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 controls.Add(type, accessor);
             }
             Size = new(
-                OxSH.IfElse(IsDLCPanel, 200, 256),
+                IsDLCPanel ? 200 : 256,
                 26
             );
         }

@@ -71,16 +71,12 @@ namespace PlayStationGames.ConsoleEngine.Editor
                 PanelLeft.Width
                 + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders),
                 OxSH.Add(
-                    OxSH.IfElse(
-                        generationHelper.StorageSupport(generation),
-                            Groups[ConsoleFieldGroup.Storages].Bottom,
-                            OxSH.IfElse(
-                                generationHelper.MaxAccountsCount(generation, firmware) > 0
-                                    && !generationHelper.FolderSupport(generation),
-                                Groups[ConsoleFieldGroup.Accounts].Bottom,
-                                Groups[ConsoleFieldGroup.Firmware].Bottom + 140
-                            )
-                    ),
+                    generationHelper.StorageSupport(generation)
+                        ? Groups[ConsoleFieldGroup.Storages].Bottom
+                        : generationHelper.MaxAccountsCount(generation, firmware) > 0
+                            && !generationHelper.FolderSupport(generation)
+                                ? Groups[ConsoleFieldGroup.Accounts].Bottom
+                                : Groups[ConsoleFieldGroup.Firmware].Bottom + 140,
                     13
                 )
             );
@@ -101,13 +97,13 @@ namespace PlayStationGames.ConsoleEngine.Editor
             base.SetFrameMargin(group, frame);
             frame.Margin.Size = 8;
             frame.Margin.Left =
-                OxSH.IfElseZero(
-                    group is not ConsoleFieldGroup.Folders
-                         and not ConsoleFieldGroup.Games
-                         and not ConsoleFieldGroup.Accessories,
-                        8
+                OxSH.Short(
+                    group is ConsoleFieldGroup.Folders
+                          or ConsoleFieldGroup.Games
+                          or ConsoleFieldGroup.Accessories
+                        ? 0
+                        : 8
                 );
-
             frame.Margin.Top = group switch
             {
                 ConsoleFieldGroup.GenerationAndModel or

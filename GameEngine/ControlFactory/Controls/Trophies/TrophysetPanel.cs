@@ -11,6 +11,7 @@ using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxLibrary.Interfaces;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 
@@ -79,7 +80,7 @@ public class TrophysetPanel : OxPanel
         completeTimeControl = IsDLCPanel
             ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) 
             : builder[GameField.CompleteTime];
-        PrepareAccessor(typeControl, trophysetTypeLabel, 4, OxSH.IfElse(IsDLCPanel, 122, 178), TypeChangeHandler);
+        PrepareAccessor(typeControl, trophysetTypeLabel, 4, OxSH.Short(IsDLCPanel ? 122 : 178), TypeChangeHandler);
 
         if (appliesToControl is not null)
             PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 178, AppliesToChandeHandler);
@@ -150,15 +151,11 @@ public class TrophysetPanel : OxPanel
     {
         MinimumSize = new(
             OxSH.Add(trophiesPanels.Last().Right, 8),
-            OxSH.IfElse(
-                Type is TrophysetType.NoSet,
-                typeControl.Bottom,
-                OxSH.IfElse(
-                    VisiblePanels.Count > 0,
-                    VisiblePanels.Last().Bottom,
-                    addButton.Bottom
-                )
-            )
+            Type is TrophysetType.NoSet
+                ? typeControl.Bottom
+                : VisiblePanels.Count > 0
+                    ? VisiblePanels.Last().Bottom
+                    : addButton.Bottom
         );
         MaximumSize = MinimumSize;
     }
@@ -240,19 +237,14 @@ public class TrophysetPanel : OxPanel
         {
             Parent = this,
             Left = 8,
-            Top =
-                OxSH.Add(
-                    OxSH.IfElse(
-                        trophiesPanels.Count is 0,
-                        OxSH.Add(completeTimeControl.Bottom, 16),
-                        OxSH.IfElse(
-                            trophiesPanels.Count is 1,
-                            OxSH.Sub(addButton.Bottom, 2),
-                            OxSH.Add(trophiesPanels.Last().Bottom, 4)
-                        )
-                    ),
-                    8
-                )
+            Top = OxSH.Add(
+                trophiesPanels.Count is 1
+                    ? OxSH.Sub(addButton.Bottom, 2)
+                    : trophiesPanels.Count is 0
+                        ? OxSH.Add(completeTimeControl.Bottom, 16)
+                        : OxSH.Add(trophiesPanels.Last().Bottom, 4),
+                8
+            )
         };
         result.OnRemove += OnRemovePanelHandler;
 

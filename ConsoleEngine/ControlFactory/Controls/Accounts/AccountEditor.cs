@@ -20,11 +20,9 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
 
         protected override short ContentHeight =>
             OxSH.Add(
-                OxSH.IfElse(
-                    accountControl is null,
-                    24,
-                    accountControl!.Bottom
-                ),
+                accountControl is null
+                    ? 24
+                    : accountControl!.Bottom,
                 12
             );
 
