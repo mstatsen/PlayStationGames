@@ -234,7 +234,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
 
         SetAsEmulatorVisible();
 
-        bool verified = Builder.Value<bool>(GameField.Verified);
+        bool verified = IsVerified;
         List<GameField> unverifiedFields = GameFieldHelper.UnverifiedFields();
 
         if (!verified)
@@ -262,18 +262,15 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
         return true;
     }
 
-    private void SetCodeVisible()
-    {
-        bool isEmulator = GameFormat.Emulator.Equals(Builder.Value(GameField.Format));
-        bool verified = Builder.Value<bool>(GameField.Verified);
+    private void SetCodeVisible() => 
         Builder.SetVisible(GameField.Code,
-            !isEmulator
-            && (!verified || !Builder[GameField.Code].IsEmpty));
-    }
+            !IsEmulator
+            && (!IsVerified || !Builder[GameField.Code].IsEmpty)
+        );
 
     private void SetGenreControlsVisible()
     {
-        bool verified = Builder.Value<bool>(GameField.Verified);
+        bool verified = IsVerified;
         bool singlePlayerVisible = !verified
             || Builder[GameField.SinglePlayer].BoolValue;
         bool coachMultiplayerVisible = !verified
@@ -313,16 +310,21 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
         Builder[GameField.Devices].Top = OxSH.Add(lastBottom, 4);
     }
 
+    private bool IsVerified =>
+        Builder.Value<bool>(GameField.Verified);
+
+    private bool IsEmulator =>
+        GameFormat.Emulator.Equals(Builder.Value(GameField.Format));
+
     private void SetEditionAndSeriesesVisible()
     {
-        bool isEmulator = GameFormat.Emulator.Equals(Builder.Value(GameField.Format));
-        bool verified = Builder.Value<bool>(GameField.Verified);
+        bool verified = IsVerified;
         bool editionVisible =
-            !isEmulator
+            !IsEmulator
             && (!verified || !Builder[GameField.Edition].IsEmpty);
         Builder.SetVisible(GameField.Edition, editionVisible);
         Builder.SetVisible(GameField.Serieses,
-            !isEmulator
+            !IsEmulator
             && (!verified || !Builder[GameField.Serieses].IsEmpty)
         );
         Builder[GameField.Serieses].Top = 
@@ -336,7 +338,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
 
     private void SetAsEmulatorVisible()
     {
-        bool isEmulator = GameFormat.Emulator.Equals(Builder.Value(GameField.Format));
+        bool isEmulator = IsEmulator;
         Editor.Groups[GameFieldGroup.Emulator].Visible = isEmulator;
         Editor.Groups[GameFieldGroup.Genre].Visible = !isEmulator;
         Editor.Groups[GameFieldGroup.RelatedGames].Visible = !isEmulator;
