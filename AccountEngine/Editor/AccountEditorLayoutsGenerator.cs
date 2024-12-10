@@ -4,6 +4,7 @@ using OxDAOEngine.Editor;
 using OxLibrary;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -39,19 +40,23 @@ namespace PlayStationGames.AccountEngine.Editor
             field switch
             {
                 AccountField.DefaultAccount =>
-                    (short)((Parent(field).Height - Height(field)) / 2),
+                    OxSH.CenterOffset(Parent(field).Height, Height(field)),
                 _ => 8
             };
 
         public override short Left(AccountField field) =>
-            (short)(field is AccountField.Avatar or
-                AccountField.DefaultAccount
-                ? 8
-                : field is AccountField.Name or
-                    AccountField.Country or
-                    AccountField.Type
-                    ? 169
-                    : 74);
+            OxSH.IfElse(
+                field is AccountField.Avatar or
+                         AccountField.DefaultAccount,
+                8,
+                OxSH.IfElse(
+                    field is AccountField.Name or
+                             AccountField.Country or
+                             AccountField.Type,
+                    169,
+                    74
+                )
+            );
 
         public override short Width(AccountField field) =>
             field switch
@@ -85,11 +90,15 @@ namespace PlayStationGames.AccountEngine.Editor
             };
 
         public override short Height(AccountField field) =>
-            (short)(field is AccountField.Avatar
-                ? 80
-                : field is AccountField.DefaultAccount 
-                    ? 20
-                    : base.Height(field));
+            OxSH.IfElse(
+                field is AccountField.Avatar,
+                80,
+                OxSH.IfElse(
+                    field is AccountField.DefaultAccount,
+                    20,
+                    base.Height(field)
+                )
+            );
 
         public override AnchorStyles Anchors(AccountField field)
         {

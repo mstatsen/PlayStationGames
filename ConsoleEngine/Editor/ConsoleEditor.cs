@@ -5,6 +5,7 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 using OxDAOEngine.Editor;
 using OxDAOEngine.Data.Types;
 using PlayStationGames.ConsoleEngine.Data.Types;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.ConsoleEngine.Editor
 {
@@ -67,17 +68,21 @@ namespace PlayStationGames.ConsoleEngine.Editor
             SetFrameMargin(ConsoleFieldGroup.Accessories, Groups[ConsoleFieldGroup.Accessories]);
             SetFrameMargin(ConsoleFieldGroup.Games, Groups[ConsoleFieldGroup.Games]);
             FormPanel.Size = new(
-                (short)(PanelLeft.Width
-                    + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders)),
-                    (short)(
-                        (generationHelper.StorageSupport(generation)
-                        ? Groups[ConsoleFieldGroup.Storages].Bottom
-                        : generationHelper.MaxAccountsCount(generation, firmware) > 0 
-                            && !generationHelper.FolderSupport(generation)
-                                ? Groups[ConsoleFieldGroup.Accounts].Bottom
-                                : Groups[ConsoleFieldGroup.Firmware].Bottom + 140) 
-                        + 13
-                    )
+                PanelLeft.Width
+                + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders),
+                OxSH.Add(
+                    OxSH.IfElse(
+                        generationHelper.StorageSupport(generation),
+                            Groups[ConsoleFieldGroup.Storages].Bottom,
+                            OxSH.IfElse(
+                                generationHelper.MaxAccountsCount(generation, firmware) > 0
+                                    && !generationHelper.FolderSupport(generation),
+                                Groups[ConsoleFieldGroup.Accounts].Bottom,
+                                Groups[ConsoleFieldGroup.Firmware].Bottom + 140
+                            )
+                    ),
+                    13
+                )
             );
         }
 
@@ -96,13 +101,12 @@ namespace PlayStationGames.ConsoleEngine.Editor
             base.SetFrameMargin(group, frame);
             frame.Margin.Size = 8;
             frame.Margin.Left =
-                (short)
-                    (group is ConsoleFieldGroup.Folders or
-                              ConsoleFieldGroup.Games or
-                              ConsoleFieldGroup.Accessories
-                        ? 0
-                        : 8
-                    );
+                OxSH.IfElseZero(
+                    group is not ConsoleFieldGroup.Folders
+                         and not ConsoleFieldGroup.Games
+                         and not ConsoleFieldGroup.Accessories,
+                        8
+                );
 
             frame.Margin.Top = group switch
             {

@@ -10,6 +10,7 @@ using PlayStationGames.ConsoleEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using OxLibrary.Interfaces;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.ConsoleEngine.Editor;
 
@@ -42,12 +43,13 @@ public class InstallationPlaceSelector : OxPanel
         dialog.Text = $"Install {Game} into:";
         dialog.FormPanel.Size = new(
             600,
-                (short)(
-                    (generationHelper.FolderSupport(Generation)
-                        ? folderControl.Bottom
-                        : storageControl.Bottom)
-                    + 22
-                )
+            OxSH.Add(
+                OxSH.IfElse(
+                    generationHelper.FolderSupport(Generation),
+                    folderControl.Bottom,
+                    storageControl.Bottom),
+                22
+            )
         );
         dialog.DialogButtons = OxDialogButton.Apply | OxDialogButton.Cancel;
 

@@ -1,5 +1,6 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
+using OxLibrary.Geometry;
 using OxLibrary.Interfaces;
 using OxLibrary.Panels;
 using OxDAOEngine.ControlFactory.Controls;
@@ -54,10 +55,11 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
             if (!oldFamily.Equals(family))
             {
                 top = 0;
-                left =
-                    (short)(longestFamilyCheckBox is null
-                        ? 0 
-                        : (longestFamilyCheckBox.Right + 30));
+                left = 
+                    OxSH.IfElseZero(
+                        longestFamilyCheckBox is not null,
+                        OxSH.Add(longestFamilyCheckBox!.Right, 30)
+                    );
                 longestFamilyCheckBox = null;
             }
 

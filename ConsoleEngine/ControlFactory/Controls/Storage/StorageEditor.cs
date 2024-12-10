@@ -25,7 +25,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
             if (fullRow)
             {
                 accessor.Anchor |= AnchorStyles.Right;
-                accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left + 8);
+                accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left, 8);
             }
             else
                 accessor.Width = 64;
@@ -85,7 +85,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 : placementControl!.IsEmpty ? "Placement"
                 : base.EmptyMandatoryField();
 
-        protected override short ContentHeight => (short)(freeSizeControl!.Bottom + 8);
+        protected override short ContentHeight => OxSH.Add(freeSizeControl!.Bottom, 8);
 
         private EnumAccessor<ConsoleField, PSConsole, StoragePlacement>? placementControl;
         private IControlAccessor? nameControl;

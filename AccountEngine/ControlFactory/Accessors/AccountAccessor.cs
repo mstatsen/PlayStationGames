@@ -116,7 +116,7 @@ public class AccountAccessor<TField, TDAO> : ComboBoxAccessor<TField, TDAO, Acco
         {
             ReadOnlyControl.Width = OxSH.Add(ReadOnlyPictureSize, ReadOnlyLabel.Width);
             ReadOnlyControl.Height = ReadOnlyPictureSize;
-            ReadOnlyLabel.Top = OxSH.Half(ReadOnlyControl.Height - ReadOnlyLabel.Height);
+            ReadOnlyLabel.Top = OxSH.CenterOffset(ReadOnlyControl.Height, ReadOnlyLabel.Height);
         }
     }
 

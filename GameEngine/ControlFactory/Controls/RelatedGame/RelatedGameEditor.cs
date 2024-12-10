@@ -51,26 +51,26 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
             "Select...", 
             OxIcons.Select, 
             "Select game for relate",
-            (short)GameControl!.Left,
+            GameControl!.Left,
             SelectGameHandler);
         SynchronizeButton = CreateButton(
             "Synchronize", 
             OxIcons.Synchronize, 
             "Synchronize data between games",
-            (short)(GameSelectButton.Right + 4),
+            OxSH.Add(GameSelectButton.Right, 4),
             SynchronizeHandler);
         GameSelectButton.SizeChanged += SelecButtonSizeChangedHandler;
     }
 
     private void SelecButtonSizeChangedHandler(object sender, OxSizeChangedEventArgs args) => 
-        SynchronizeButton!.Left = (short)(GameSelectButton!.Right + 4);
+        SynchronizeButton!.Left = OxSH.Add(GameSelectButton!.Right, 4);
 
     private OxButton CreateButton(string text, Bitmap icon, string toolTipText, short left, EventHandler clickHandler)
     {
         OxButton button = new(text, icon)
         {
             Parent = FormPanel,
-            Top = (short)(GameControl!.Bottom + 4),
+            Top = OxSH.Add(GameControl!.Bottom, 4),
             Left = left,
             Font = OxStyles.Font(FontStyle.Bold),
             ToolTipText = toolTipText,
@@ -98,7 +98,7 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
         GameControl.Left = OxSH.Add(GameLabel.Right, 8);
         GameControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         GameControl.ReadOnly = true;
-        GameControl.Width = OxSH.Sub(FormPanel.Width, GameControl.Left + 8);
+        GameControl.Width = OxSH.Sub(FormPanel.Width, GameControl.Left, 8);
         GameControl.Height = 56;
         GameControl.Control.BackColor = BackColor;
         ((OxTextBox)GameControl.ReadOnlyControl!).BorderStyle = BorderStyle.FixedSingle;
@@ -107,7 +107,8 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
         FirstFocusControl = GameControl.Control;
     }
 
-    private void SelectGameHandler(object? sender, EventArgs e) => SelectGame();
+    private void SelectGameHandler(object? sender, EventArgs e) =>
+        SelectGame();
 
     private void SelectGame()
     {
@@ -131,7 +132,7 @@ public partial class RelatedGameEditor : CustomItemEditor<RelatedGame, GameField
     }
 
     protected override short ContentWidth => 400;
-    protected override short ContentHeight => (short)(SynchronizeButton!.Bottom + 2);
+    protected override short ContentHeight => OxSH.Add(SynchronizeButton!.Bottom, 2);
 
     protected override RelatedGame CreateNewItem() => new();
 

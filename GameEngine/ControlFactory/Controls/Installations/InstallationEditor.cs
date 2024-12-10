@@ -1,5 +1,6 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
+using OxLibrary.Geometry;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Accessors;
 using OxDAOEngine.ControlFactory.Controls;
@@ -15,7 +16,6 @@ using PlayStationGames.ConsoleEngine.Data.Types;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
-using OxLibrary.Geometry;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls;
 
@@ -167,7 +167,7 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
         if (fullRow)
         {
             accessor.Anchor |= AnchorStyles.Right;
-            accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left + 8);
+            accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left, 8);
         }
         else accessor.Width = 120;
 
@@ -184,7 +184,7 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
                 ? "Storage"
                 : base.EmptyMandatoryField();
 
-    protected override short ContentHeight => (short)(sizeControl.Bottom + 8);
+    protected override short ContentHeight => OxSH.Add(sizeControl.Bottom, 8);
 
     public override void RenewData()
     {

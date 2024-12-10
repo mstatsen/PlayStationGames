@@ -3,6 +3,7 @@ using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data;
 using OxDAOEngine.Data.Fields;
 using OxLibrary;
+using OxLibrary.Geometry;
 using PlayStationGames.AccountEngine.ControlFactory.Accessors;
 using PlayStationGames.ConsoleEngine.ControlFactory.Initializers;
 using PlayStationGames.ConsoleEngine.Data;
@@ -18,9 +19,14 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         public override Bitmap? FormIcon => OxIcons.Account;
 
         protected override short ContentHeight =>
-            (short)((accountControl is null
-                ? 24
-                : accountControl.Bottom) + 12);
+            OxSH.Add(
+                OxSH.IfElse(
+                    accountControl is null,
+                    24,
+                    accountControl!.Bottom
+                ),
+                12
+            );
 
         protected override void GrabControls(ConsoleAccount item) => 
             item.Id = accountControl!.GuidValue;

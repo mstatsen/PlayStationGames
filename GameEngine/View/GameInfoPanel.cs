@@ -8,6 +8,7 @@ using OxDAOEngine.View;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.GameEngine.View;
 
@@ -143,7 +144,7 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
         Layouter.Template.Parent = BasePanel;
         Layouter.Template.Top = 4;
         ControlLayout<GameField> imageLayout = Layouter[GameField.Image]!;
-        Layouter.Template.Left = (short)(imageLayout.Right + 80);
+        Layouter.Template.Left = OxSH.Add(imageLayout.Right, 80);
         return new ControlLayouts<GameField>()
         {
             imageLayout,
@@ -226,7 +227,7 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
                 continue;
 
             OxControlHelper.AlignByBaseLine(trophyControl.Control, icon.Value);
-            icon.Value.Left = (short)(trophyControl.Control.Left - 32);
+            icon.Value.Left = OxSH.Sub(trophyControl.Control.Left, 32);
         }
     }
 

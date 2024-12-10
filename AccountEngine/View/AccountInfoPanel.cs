@@ -6,6 +6,7 @@ using PlayStationGames.AccountEngine.Data;
 using OxDAOEngine.ControlFactory.Controls.Links;
 using PlayStationGames.GameEngine.Data.Fields;
 using OxLibrary;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.AccountEngine.View
 {
@@ -25,8 +26,8 @@ namespace PlayStationGames.AccountEngine.View
             Layouter.Template.Top = 12;
             ControlLayout<AccountField> typeLayout = Layouter.AddFromTemplate(AccountField.Type);
             typeLayout.CaptionVariant = ControlCaptionVariant.None;
-            typeLayout.Left = (short)(avatarLayout.Right + 8);
-            Layouter.Template.Left = (short)(avatarLayout.Right + 70);
+            typeLayout.Left = OxSH.Add(avatarLayout.Right, 8);
+            Layouter.Template.Left = OxSH.Add(avatarLayout.Right, 70);
 
             return new ControlLayouts<AccountField>()
             {

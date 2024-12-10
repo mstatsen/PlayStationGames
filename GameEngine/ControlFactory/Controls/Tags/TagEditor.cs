@@ -38,7 +38,7 @@ public partial class TagEditor : CustomItemEditor<Tag, GameField, Game>
         NameControl.Parent = this;
         NameControl.Left = 8;
         NameControl.Top = 8;
-        NameControl.Width = OxSH.Sub(FormPanel.Width, NameControl.Left + 8);
+        NameControl.Width = OxSH.Sub(FormPanel.Width, NameControl.Left, 8);
         NameControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
         NameControl.Height = 24;
         SetKeyUpHandler(NameControl.Control);
@@ -48,7 +48,7 @@ public partial class TagEditor : CustomItemEditor<Tag, GameField, Game>
     protected override void CreateControls() =>
         CreateNameControl();
 
-    protected override short ContentHeight => (short)(NameControl.Bottom + 8);
+    protected override short ContentHeight => OxSH.Add(NameControl.Bottom, 8);
 
     protected override void FillControls(Tag item)
     {

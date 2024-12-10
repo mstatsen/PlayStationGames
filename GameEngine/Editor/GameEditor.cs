@@ -3,6 +3,7 @@ using OxLibrary.Panels;
 using OxDAOEngine.Editor;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.GameEngine.Editor
 {
@@ -88,14 +89,15 @@ namespace PlayStationGames.GameEngine.Editor
             PanelRight.Width = CalcedWidth(PanelRight);
             FormPanel.Size = new(
                 PanelRight.Right,
-                (short)
-                    (PanelTop.Height
-                        + (Groups[GameFieldGroup.ReleaseBase].Visible
-                            ? Groups[GameFieldGroup.ReleaseBase].Height
-                            : 8
-                        ) 
-                      + 12
-                    )
+                OxSH.Add(
+                    PanelTop.Height,
+                    OxSH.IfElse(
+                        Groups[GameFieldGroup.ReleaseBase].Visible,
+                        Groups[GameFieldGroup.ReleaseBase].Height,
+                        8
+                    ),
+                    12
+                )
             );
         }
     }

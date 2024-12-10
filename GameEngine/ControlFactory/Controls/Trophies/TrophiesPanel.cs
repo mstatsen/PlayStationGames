@@ -5,6 +5,7 @@ using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Data.Types;
 using OxLibrary;
 using OxLibrary.Controls;
+using OxLibrary.Geometry;
 using OxLibrary.Panels;
 using PlayStationGames.AccountEngine.Data;
 using PlayStationGames.GameEngine.Data;
@@ -144,7 +145,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 controls.Add(TrophyType.Platinum, platinumControl);
             }
 
-            short calcedLeft = (short)(IsDLCPanel ? 8 : 64);
+            short calcedLeft = OxSH.IfElse(IsDLCPanel, 8, 64);
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
             {
@@ -164,7 +165,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 controls.Add(type, accessor);
             }
             Size = new(
-                (short)(IsDLCPanel ? 200 : 256),
+                OxSH.IfElse(IsDLCPanel, 200, 256),
                 26
             );
         }

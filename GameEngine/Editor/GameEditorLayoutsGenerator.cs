@@ -2,6 +2,7 @@
 using OxDAOEngine.Data.Fields;
 using OxDAOEngine.Editor;
 using OxLibrary;
+using OxLibrary.Geometry;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 
@@ -118,7 +119,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Owner =>
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
-                        (short)((Parent(field).Height - Height(field)) / 2),
+                        OxSH.CenterOffset(Parent(field).Height, Height(field)),
                 GameField.EmulatorType => 
                     Layouter[GameField.Region]!.Top,
                 GameField.Language or

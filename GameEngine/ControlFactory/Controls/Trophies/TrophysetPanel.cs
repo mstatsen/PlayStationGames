@@ -149,13 +149,15 @@ public class TrophysetPanel : OxPanel
     private void SetMinimumSize()
     {
         MinimumSize = new(
-            (short)(trophiesPanels.Last().Right + 8),
-            (short)(
-                Type is TrophysetType.NoSet
-                    ? (typeControl.Bottom)
-                    : VisiblePanels.Count > 0
-                        ? VisiblePanels.Last().Bottom
-                        : addButton.Bottom
+            OxSH.Add(trophiesPanels.Last().Right, 8),
+            OxSH.IfElse(
+                Type is TrophysetType.NoSet,
+                typeControl.Bottom,
+                OxSH.IfElse(
+                    VisiblePanels.Count > 0,
+                    VisiblePanels.Last().Bottom,
+                    addButton.Bottom
+                )
             )
         );
         MaximumSize = MinimumSize;
@@ -187,8 +189,8 @@ public class TrophysetPanel : OxPanel
     {
         AvailableTrophiesPanel = CreateTrophiesPanel(null, IsDLCPanel);
         addButton.Parent = this;
-        addButton.Left = (short)(AvailableTrophiesPanel.Right - addButton.Width);
-        addButton.Top = (short)(AvailableTrophiesPanel.Bottom + 6);
+        addButton.Left = OxSH.Sub(AvailableTrophiesPanel.Right, addButton.Width);
+        addButton.Top = OxSH.Add(AvailableTrophiesPanel.Bottom, 6);
         addButton.Click += AddButtonClickHandler;
 
         foreach (Account account in DataManager.FullItemsList<AccountField, Account>())
@@ -218,15 +220,15 @@ public class TrophysetPanel : OxPanel
                 Type is not TrophysetType.NoSet
                 && VisiblePanels.Contains(trophiesPanel);
 
-        short lastTop = (short)(addButton.Bottom - 2);
+        short lastTop = OxSH.Sub(addButton.Bottom, 2);
 
         foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
         {
             if (!VisiblePanels.Contains(trophiesPanel))
                 continue;
 
-            trophiesPanel.Top = (short)(lastTop + 8);
-            lastTop = (short)(trophiesPanel.Bottom + 4);
+            trophiesPanel.Top = OxSH.Add(lastTop, 8);
+            lastTop = OxSH.Add(trophiesPanel.Bottom, 4);
         }
 
         SetMinimumSize();
@@ -239,13 +241,18 @@ public class TrophysetPanel : OxPanel
             Parent = this,
             Left = 8,
             Top =
-                (short)((trophiesPanels.Count is 0
-                    ? completeTimeControl.Bottom + 16
-                    : trophiesPanels.Count is 1 
-                        ? addButton.Bottom - 2
-                        : trophiesPanels.Last().Bottom + 4
+                OxSH.Add(
+                    OxSH.IfElse(
+                        trophiesPanels.Count is 0,
+                        OxSH.Add(completeTimeControl.Bottom, 16),
+                        OxSH.IfElse(
+                            trophiesPanels.Count is 1,
+                            OxSH.Sub(addButton.Bottom, 2),
+                            OxSH.Add(trophiesPanels.Last().Bottom, 4)
+                        )
+                    ),
+                    8
                 )
-                + 8)
         };
         result.OnRemove += OnRemovePanelHandler;
 

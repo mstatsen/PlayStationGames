@@ -1,5 +1,6 @@
 ﻿using OxLibrary;
 using OxLibrary.Controls;
+using OxLibrary.Geometry;
 using OxLibrary.Panels;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Controls;
@@ -9,7 +10,6 @@ using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.ControlFactory.Accessors;
 using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
-using OxLibrary.Geometry;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls;
 
@@ -87,17 +87,17 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         BaseGroup.Size = new
         (
             282,
-            (short)(AcquiredControl.Bottom + 24)
+            AcquiredControl.Bottom + 24
         );
         TrophysetGroup.Left = BaseGroup.Right;
         TrophysetGroup.Size = new
         (
-            (short)TrophysetControl.Width,
-            (short)(TrophysetControl.Height + 12)
+            TrophysetControl.Width,
+            TrophysetControl.Height + 12
         );
         Size = new OxSize(
             TrophysetGroup.Right,
-            Math.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
+            OxSH.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
         );
     }
 

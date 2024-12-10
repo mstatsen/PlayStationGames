@@ -21,7 +21,7 @@ namespace PlayStationGames.AccountEngine.Editor
             MaximumSize = new();
             FormPanel.Size = new(
                 420,
-                (short)(Groups[AccountFieldGroup.Games].Bottom + 15)
+                Groups[AccountFieldGroup.Games].Bottom + 15
             );
         }
 

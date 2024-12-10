@@ -27,20 +27,15 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
     {
         if (field is ConsoleField.Firmware)
         {
-            if (Firmware is FirmwareType.Official)
-            {
-                Builder.SetVisible(ConsoleField.FirmwareName, false);
-                Builder[ConsoleField.FirmwareVersion].Top = Builder[ConsoleField.FirmwareName].Top;
-            }
-            else
-            {
-                Builder.SetVisible(ConsoleField.FirmwareName, true);
-                Builder[ConsoleField.FirmwareVersion].Top =
-                    OxSH.Add(
-                        Builder[ConsoleField.FirmwareName].Bottom,
-                        Generator.Offset(ConsoleField.FirmwareVersion) + 2
-                    );
-            }
+            Builder.SetVisible(ConsoleField.FirmwareName, Firmware is FirmwareType.Official);
+            Builder[ConsoleField.FirmwareVersion].Top =
+                OxSH.IfElse(
+                    Firmware is FirmwareType.Official,
+                    Builder[ConsoleField.FirmwareName].Top,
+                    Builder[ConsoleField.FirmwareName].Bottom
+                    + Generator.Offset(ConsoleField.FirmwareVersion)
+                    + 2
+                );
         }
 
         return 
@@ -87,7 +82,7 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
         installedGamesLabel.Left = 8;
         installationsButton.Parent = Editor.Groups[ConsoleFieldGroup.Games];
         installationsButton.Size = new(
-            (short)(installationsButton.Parent.Width / 3),
+            OxSH.Third(installationsButton.Parent.Width),
             38);
         installationsButton.Dock = OxDock.Right;
         installationsButton.Click -= InstallationsClickHandler;
@@ -105,10 +100,10 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
     private void GamesGroupSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
     {
         installationsButton.Size = new(
-            (short)(installationsButton.Parent!.Width / 3), 
+            OxSH.Third(installationsButton.Parent!.Width), 
             38
         );
-        installedGamesLabel.Top = (short)((installationsButton.Parent.Height - installedGamesLabel.Height) / 2);
+        installedGamesLabel.Top = OxSH.CenterOffset(installationsButton.Parent.Height, installedGamesLabel.Height);
     }
 
     private void InstallationsClickHandler(object? sender, EventArgs e)

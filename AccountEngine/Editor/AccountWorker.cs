@@ -8,6 +8,7 @@ using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data.Types;
 using OxDAOEngine.Data;
 using OxLibrary.Handlers;
+using OxLibrary.Geometry;
 
 namespace PlayStationGames.AccountEngine.Editor
 {
@@ -44,7 +45,7 @@ namespace PlayStationGames.AccountEngine.Editor
             consolesLabel.Left = 8;
             consolesButton.Parent = Editor.Groups[AccountFieldGroup.Consoles];
             consolesButton.Dock = OxDock.Right;
-            consolesButton.Size = new((short)(consolesButton.Parent.Width / 3), 38);
+            consolesButton.Size = ButtonSize;
             consolesButton.Click -= ConsoleButtonClickHandler;
             consolesButton.Click += ConsoleButtonClickHandler;
 
@@ -75,21 +76,22 @@ namespace PlayStationGames.AccountEngine.Editor
                 ? $"Owns {gamesWorker.GamesCount} game{(gamesWorker.GamesCount > 1 ? "s" : string.Empty)}"
                 : "Not own any games";
 
-        private void ConsolesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
-        {
-            consolesButton.Size = new(
-                (short)(consolesButton.Parent!.Width / 3),
+        private OxSize ButtonSize =>
+            new(
+                OxSH.Third(consolesButton.Parent!.Width),
                 38
             );
-            consolesLabel.Top = (short)((consolesButton.Parent.Height - consolesLabel.Height) / 2);
+
+        private void ConsolesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
+        {
+            consolesButton.Size = ButtonSize;
+            consolesLabel.Top = OxSH.CenterOffset(consolesButton.Parent!.Height, consolesLabel.Height);
         }
 
         private void GamesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
-            gamesButton.Size = new(
-                (short)(consolesButton.Parent!.Width / 3),
-                38);
-            gamesLabel.Top = (short)((consolesButton.Parent.Height - gamesLabel.Height) / 2);
+            gamesButton.Size = ButtonSize;
+            gamesLabel.Top = OxSH.CenterOffset(consolesButton.Parent!.Height, gamesLabel.Height);
         }
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)
