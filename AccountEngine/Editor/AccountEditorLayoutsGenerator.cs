@@ -11,7 +11,7 @@ namespace PlayStationGames.AccountEngine.Editor
     public class AccountEditorLayoutsGenerator
         : EditorLayoutsGenerator<AccountField, Account, AccountFieldGroup>
     {
-        public AccountEditorLayoutsGenerator(FieldGroupFrames<AccountField, AccountFieldGroup> groupFrames,
+        public AccountEditorLayoutsGenerator(FieldGroupPanels<AccountField, AccountFieldGroup> groupFrames,
             ControlLayouter<AccountField, Account> layouter) : base(groupFrames, layouter) { }
 
         public override List<AccountField> ControlsWithoutLabel() =>

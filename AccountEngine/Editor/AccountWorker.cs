@@ -29,7 +29,7 @@ namespace PlayStationGames.AccountEngine.Editor
             field is AccountField.Type;
 
         protected override EditorLayoutsGenerator<AccountField, Account, AccountFieldGroup> 
-            CreateLayoutsGenerator(FieldGroupFrames<AccountField, AccountFieldGroup> frames, 
+            CreateLayoutsGenerator(FieldGroupPanels<AccountField, AccountFieldGroup> frames, 
                 ControlLayouter<AccountField, Account> layouter) =>
                 new AccountEditorLayoutsGenerator(frames, layouter);
 
@@ -174,7 +174,7 @@ namespace PlayStationGames.AccountEngine.Editor
             Font = OxStyles.DefaultFont
         };
 
-        protected override FieldGroupFrames<AccountField, AccountFieldGroup> GetFieldGroupFrames() =>
+        protected override FieldGroupPanels<AccountField, AccountFieldGroup> GetFieldGroupFrames() =>
             new()
                 {
                     Editor.Groups,

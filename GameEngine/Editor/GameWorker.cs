@@ -50,7 +50,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
                 MaximumPlayersCount(Builder[GameField.Platform].EnumValue<PlatformType>());
     }
 
-    protected override FieldGroupFrames<GameField, GameFieldGroup> GetFieldGroupFrames() =>
+    protected override FieldGroupPanels<GameField, GameFieldGroup> GetFieldGroupFrames() =>
         new()
         {
             Editor.Groups,
@@ -486,7 +486,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
         Item?.ReleasePlatforms.Add(Item.PlatformType);
 
     protected override EditorLayoutsGenerator<GameField, Game, GameFieldGroup> CreateLayoutsGenerator(
-        FieldGroupFrames<GameField, GameFieldGroup> frames, ControlLayouter<GameField, Game> layouter
+        FieldGroupPanels<GameField, GameFieldGroup> frames, ControlLayouter<GameField, Game> layouter
         ) =>
         new GameEditorLayoutsGenerator(frames, layouter);
 }

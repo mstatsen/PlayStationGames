@@ -10,7 +10,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
     public class ConsoleEditorLayoutsGenerator
         : EditorLayoutsGenerator<ConsoleField, PSConsole, ConsoleFieldGroup>
     {
-        public ConsoleEditorLayoutsGenerator(FieldGroupFrames<ConsoleField, ConsoleFieldGroup> groupFrames,
+        public ConsoleEditorLayoutsGenerator(FieldGroupPanels<ConsoleField, ConsoleFieldGroup> groupFrames,
             ControlLayouter<ConsoleField, PSConsole> layouter) : base(groupFrames, layouter) { }
 
         public override List<ConsoleField> ControlsWithoutLabel() =>

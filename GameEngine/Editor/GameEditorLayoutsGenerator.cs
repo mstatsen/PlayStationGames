@@ -10,7 +10,7 @@ namespace PlayStationGames.GameEngine.Editor
 {
     public class GameEditorLayoutsGenerator: EditorLayoutsGenerator<GameField, Game, GameFieldGroup>
     {
-        public GameEditorLayoutsGenerator(FieldGroupFrames<GameField, GameFieldGroup> groupFrames,
+        public GameEditorLayoutsGenerator(FieldGroupPanels<GameField, GameFieldGroup> groupFrames,
             ControlLayouter<GameField, Game> layouter) : base(groupFrames, layouter) { }
 
 

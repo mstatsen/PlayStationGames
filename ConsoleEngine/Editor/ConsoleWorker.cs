@@ -55,7 +55,7 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
     }
 
     protected override EditorLayoutsGenerator<ConsoleField, PSConsole, ConsoleFieldGroup> 
-        CreateLayoutsGenerator(FieldGroupFrames<ConsoleField, ConsoleFieldGroup> frames, 
+        CreateLayoutsGenerator(FieldGroupPanels<ConsoleField, ConsoleFieldGroup> frames, 
             ControlLayouter<ConsoleField, PSConsole> layouter) =>
             new ConsoleEditorLayoutsGenerator(frames, layouter);
 

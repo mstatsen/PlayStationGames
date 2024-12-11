@@ -1,44 +1,43 @@
 ﻿using OxLibrary;
+using OxLibrary.Interfaces;
 using OxLibrary.Panels;
 using OxDAOEngine.Editor;
 using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.AccountEngine.Data;
 
+namespace PlayStationGames.AccountEngine.Editor;
 
-namespace PlayStationGames.AccountEngine.Editor
+public partial class AccountEditor : DAOEditor<AccountField, Account, AccountFieldGroup>
 {
-    public partial class AccountEditor : DAOEditor<AccountField, Account, AccountFieldGroup>
+    public AccountEditor() : base() { }
+
+    public override Bitmap? FormIcon => OxIcons.Account;
+
+    protected override OxPanel? GroupParent(AccountFieldGroup group) => FormPanel;
+
+    protected override void RecalcPanels()
     {
-        public AccountEditor() : base() { }
+        MinimumSize = new();
+        MaximumSize = new();
+        FormPanel.Size = new(
+            420,
+            Groups[AccountFieldGroup.Games].Bottom + 15
+        );
+    }
 
-        public override Bitmap? FormIcon => OxIcons.Account;
+    protected override void SetFrameMargin(AccountFieldGroup group, IOxPanel frame)
+    {
+        base.SetFrameMargin(group, frame);
+        frame.Margin.Right = 8;
 
-        protected override OxPanel? GroupParent(AccountFieldGroup group) => FormPanel;
+        if (group is AccountFieldGroup.Games) 
+            frame.Margin.Bottom = 8;
+    }
 
-        protected override void RecalcPanels()
-        {
-            MinimumSize = new();
-            MaximumSize = new();
-            FormPanel.Size = new(
-                420,
-                Groups[AccountFieldGroup.Games].Bottom + 15
-            );
-        }
-
-        protected override void SetFrameMargin(AccountFieldGroup group, OxFrame frame)
-        {
-            base.SetFrameMargin(group, frame);
-            frame.Margin.Right = 8;
-
-            if (group is AccountFieldGroup.Games) 
-                frame.Margin.Bottom = 8;
-        }
-
-        protected override void SetPaddings()
-        {
-            base.SetPaddings();
-            Groups[AccountFieldGroup.Consoles].Padding.Size = 4;
-            Groups[AccountFieldGroup.Games].Padding.Size = 4;
-        }
+    protected override void SetPaddings()
+    {
+        base.SetPaddings();
+        Groups[AccountFieldGroup.Consoles].Padding.Size = 4;
+        Groups[AccountFieldGroup.Games].Padding.Size = 4;
     }
 }
