@@ -5,50 +5,49 @@ using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
 
-namespace PlayStationGames.GameEngine.Grid
+namespace PlayStationGames.GameEngine.Grid;
+
+public class GamesGridPainter : GridPainter<GameField, Game>
 {
-    public class GamesGridPainter : GridPainter<GameField, Game>
+    public GamesGridPainter(GridFieldColumns<GameField> columnsDictionary) : base(columnsDictionary) { }
+
+    public override DataGridViewCellStyle GetCellStyle(Game? item, GameField field, bool selected = false)
     {
-        public GamesGridPainter(GridFieldColumns<GameField> columnsDictionary) : base(columnsDictionary) { }
-
-        public override DataGridViewCellStyle GetCellStyle(Game? item, GameField field, bool selected = false)
+        DataGridViewCellStyle style = new()
         {
-            DataGridViewCellStyle style = new()
-            {
-                BackColor = TypeHelper.BackColor(item?.SourceType),
-                SelectionBackColor = TypeHelper.FontColor(item?.SourceType)
-            };
+            BackColor = TypeHelper.BackColor(item?.SourceType),
+            SelectionBackColor = TypeHelper.FontColor(item?.SourceType)
+        };
 
-            FontStyle fontStyle = FontStyle.Regular;
-            float fontSize = OxStyles.DefaultFontSize;
-            style.ForeColor = TypeHelper.FontColor(item?.SourceType);
+        FontStyle fontStyle = FontStyle.Regular;
+        float fontSize = OxStyles.DefaultFontSize;
+        style.ForeColor = TypeHelper.FontColor(item?.SourceType);
 
-            switch (field)
-            {
-                case GameField.Pegi:
-                    fontStyle |= FontStyle.Bold;
-                    style.ForeColor = new OxColorHelper(
-                        TypeHelper.FontColor(item?.Pegi)
-                    ).Darker(2);
-                    fontSize -= 1;
-                    break;
-                case GameField.CriticScore:
-                    fontStyle |= FontStyle.Bold;
-                    style.BackColor = TypeHelper.BackColor(item?.CriticRange);
-
-                    if (item?.CriticRange is CriticRange.Best)
-                        style.ForeColor = Color.FromArgb(225,225,225);
-                    break;
-            }
-
-            style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
-
-            if (selected)
+        switch (field)
+        {
+            case GameField.Pegi:
                 fontStyle |= FontStyle.Bold;
+                style.ForeColor = new OxColorHelper(
+                    TypeHelper.FontColor(item?.Pegi)
+                ).Darker(2);
+                fontSize -= 1;
+                break;
+            case GameField.CriticScore:
+                fontStyle |= FontStyle.Bold;
+                style.BackColor = TypeHelper.BackColor(item?.CriticRange);
 
-            style.Font = OxStyles.Font(fontSize, fontStyle);
-            style.SelectionForeColor = style.ForeColor;
-            return style;
+                if (item?.CriticRange is CriticRange.Best)
+                    style.ForeColor = Color.FromArgb(225,225,225);
+                break;
         }
+
+        style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
+
+        if (selected)
+            fontStyle |= FontStyle.Bold;
+
+        style.Font = OxStyles.Font(fontSize, fontStyle);
+        style.SelectionForeColor = style.ForeColor;
+        return style;
     }
 }

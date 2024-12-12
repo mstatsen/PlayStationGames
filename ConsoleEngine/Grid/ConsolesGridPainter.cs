@@ -5,32 +5,31 @@ using OxDAOEngine.Grid;
 using PlayStationGames.ConsoleEngine.Data;
 using PlayStationGames.ConsoleEngine.Data.Fields;
 
-namespace PlayStationGames.ConsoleEngine.Grid
+namespace PlayStationGames.ConsoleEngine.Grid;
+
+public class ConsolesGridPainter : GridPainter<ConsoleField, PSConsole>
 {
-    public class ConsolesGridPainter : GridPainter<ConsoleField, PSConsole>
+    public ConsolesGridPainter(GridFieldColumns<ConsoleField> columnsDictionary) : base(columnsDictionary)
+    { }
+
+    public override DataGridViewCellStyle GetCellStyle(PSConsole? console, ConsoleField field, bool selected = false)
     {
-        public ConsolesGridPainter(GridFieldColumns<ConsoleField> columnsDictionary) : base(columnsDictionary)
-        { }
-
-        public override DataGridViewCellStyle GetCellStyle(PSConsole? console, ConsoleField field, bool selected = false)
+        DataGridViewCellStyle style = new()
         {
-            DataGridViewCellStyle style = new()
-            {
-                BackColor = TypeHelper.BackColor(console?.Firmware),
-                ForeColor = EngineStyles.DefaultGridFontColor
-            };
+            BackColor = TypeHelper.BackColor(console?.Firmware),
+            ForeColor = EngineStyles.DefaultGridFontColor
+        };
 
-            FontStyle fontStyle = FontStyle.Regular;
-            float fontSize = OxStyles.DefaultFontSize;
+        FontStyle fontStyle = FontStyle.Regular;
+        float fontSize = OxStyles.DefaultFontSize;
 
-            style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
+        style.SelectionBackColor = new OxColorHelper(style.BackColor).Darker(2);
 
-            if (selected)
-                fontStyle |= FontStyle.Bold;
+        if (selected)
+            fontStyle |= FontStyle.Bold;
 
-            style.Font = OxStyles.Font(fontSize, fontStyle);
-            style.SelectionForeColor = style.ForeColor;
-            return style;
-        }
+        style.Font = OxStyles.Font(fontSize, fontStyle);
+        style.SelectionForeColor = style.ForeColor;
+        return style;
     }
 }
