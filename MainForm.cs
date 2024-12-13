@@ -118,7 +118,7 @@ namespace PlayStationGames
             }
             finally
             {
-                DoWithSuspendedLayout(
+                WithSuspendedLayout(
                     () => toolBar.Visible = true
                 );
                 loadingPanel.EndLoading();
