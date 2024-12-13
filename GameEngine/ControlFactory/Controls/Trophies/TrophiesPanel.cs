@@ -37,11 +37,11 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
         {
             if (Account is not null)
             {
-                removeButton.Visible = true;
+                removeButton.Visible = OxB.T;
                 removeButton.ToolTipText = $"Remove {Account.Name}'s earned trophies";
             }
             else
-                removeButton.Visible = false;
+                removeButton.Visible = OxB.F;
         }
 
         protected override void PrepareInnerComponents()
@@ -70,24 +70,27 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                         ? 200 
                         : constraints.GetTrophyCount(item.Key);
                 item.Value.MaximumValue = maxValue;
-                item.Value.Enabled = maxValue > 0;
+                item.Value.SetEnabled(maxValue > 0);
             }
         }
 
-        private bool readOnly = false;
-        public bool ReadOnly
+        private OxBool readOnly = OxB.F;
+        public OxBool ReadOnly
         { 
             get => readOnly;
             set => SetReadOnly(value);
         }
 
-        private void SetReadOnly(bool value)
+        private void SetReadOnly(OxBool value)
         {
             readOnly = value;
 
             foreach (IControlAccessor accessor in controls.Values)
                 accessor.ReadOnly = readOnly;
         }
+
+        public bool IsReadOnly => OxB.B(ReadOnly);
+        public void SetReadOnly(bool value) => ReadOnly = OxB.B(value);
 
         public override void PrepareColors()
         {
@@ -145,7 +148,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies
                 controls.Add(TrophyType.Platinum, platinumControl);
             }
 
-            short calcedLeft = OxSH.Short(IsDLCPanel ? 8 : 64);
+            short calcedLeft = OxSh.Short(IsDLCPanel ? 8 : 64);
 
             foreach (TrophyType type in trophyTypeHelper.CountingTrophies)
             {

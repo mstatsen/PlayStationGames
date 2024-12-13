@@ -1,4 +1,5 @@
-﻿using OxLibrary.Controls;
+﻿using OxLibrary;
+using OxLibrary.Controls;
 using OxLibrary.Geometry;
 using OxDAOEngine.ControlFactory;
 using OxDAOEngine.ControlFactory.Controls;
@@ -216,7 +217,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
 
     private void SetCoachMultiplayerVisible()
     {
-        Builder[GameField.CoachMultiplayer].Visible = SupportCoathMultiplayer;
+        Builder[GameField.CoachMultiplayer].SetVisible(SupportCoathMultiplayer);
 
         if (!SupportCoathMultiplayer)
             Builder[GameField.CoachMultiplayer].Value = false;
@@ -228,9 +229,10 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
 
     protected override bool SetGroupsAvailability(bool afterSyncValues = false)
     {
-        Editor.Groups[GameFieldGroup.Trophyset].Visible = AvailableTrophyset;
-        Editor.Groups[GameFieldGroup.Installations].Visible =
-            sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source));
+        Editor.Groups[GameFieldGroup.Trophyset].SetVisible(AvailableTrophyset);
+        Editor.Groups[GameFieldGroup.Installations].SetVisible(
+            sourceHelper.InstallationsSupport(Builder.Value<Source>(GameField.Source))
+        );
 
         SetAsEmulatorVisible();
 
@@ -240,7 +242,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
         if (!verified)
             foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                 foreach (GameField field in groupHelper.Fields(group))
-                    Builder[field].ReadOnly = false;
+                    Builder[field].ReadOnly = OxB.F;
 
         SetEditionAndSeriesesVisible();
         SetGenreControlsVisible();
@@ -249,16 +251,18 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
         if (verified)
             foreach (GameFieldGroup group in groupHelper.VerifiedGroups)
                 foreach (GameField field in groupHelper.Fields(group))
-                    Builder[field].ReadOnly = !unverifiedFields.Contains(field);
+                    Builder[field].SetReadOnly(!unverifiedFields.Contains(field));
 
         if (!verified)
-            Builder[GameField.Owner].Enabled = AccountAvailable();
+            Builder[GameField.Owner].SetEnabled(AccountAvailable());
 
         if (afterSyncValues && ownerReadOnlyChanged)
             Builder[GameField.Owner].SetDefaultValue();
 
-        Editor.Groups[GameFieldGroup.DLC].Visible = Builder.Value<bool>(GameField.Licensed) 
-            && (!verified || !Builder[GameField.Dlcs].IsEmpty);
+        Editor.Groups[GameFieldGroup.DLC].SetVisible(
+            Builder.Value<bool>(GameField.Licensed) 
+            && (!verified || !Builder[GameField.Dlcs].IsEmpty)
+        );
         return true;
     }
 
@@ -286,19 +290,19 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
 
         Builder.SetVisible(GameField.SinglePlayer, singlePlayerVisible);
         Builder.SetVisible(GameField.CoachMultiplayer, coachMultiplayerVisible);
-        Builder[GameField.CoachMultiplayer].Top = OxSH.Add(lastBottom, 4);
+        Builder[GameField.CoachMultiplayer].Top = OxSh.Add(lastBottom, 4);
         Builder.SetVisible(GameField.MaximumPlayers, maxPlayersVisible);
 
         if (coachMultiplayerVisible)
             lastBottom = Builder[GameField.CoachMultiplayer].Bottom;
 
-        Builder[GameField.MaximumPlayers].Top = OxSH.Add(lastBottom, 4);
+        Builder[GameField.MaximumPlayers].Top = OxSh.Add(lastBottom, 4);
 
         if (maxPlayersVisible)
             lastBottom = Builder[GameField.MaximumPlayers].Bottom;
 
         Builder.SetVisible(GameField.OnlineMultiplayer, onlineMultiplayerVisible);
-        Builder[GameField.OnlineMultiplayer].Top = OxSH.Add(lastBottom, 4);
+        Builder[GameField.OnlineMultiplayer].Top = OxSh.Add(lastBottom, 4);
 
         if (onlineMultiplayerVisible)
             lastBottom = Builder[GameField.OnlineMultiplayer].Bottom;
@@ -307,7 +311,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
             TypeHelper.Helper<DeviceTypeHelper>().
                 Available(Builder.Value<PlatformType>(GameField.Platform)).Count > 0
                 && !verified || !Builder[GameField.Devices].IsEmpty);
-        Builder[GameField.Devices].Top = OxSH.Add(lastBottom, 4);
+        Builder[GameField.Devices].Top = OxSh.Add(lastBottom, 4);
     }
 
     private bool IsVerified =>
@@ -328,7 +332,7 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
             && (!verified || !Builder[GameField.Serieses].IsEmpty)
         );
         Builder[GameField.Serieses].Top = 
-            OxSH.Add(
+            OxSh.Add(
                 editionVisible
                     ? Builder[GameField.Edition].Bottom
                     : Builder[GameField.Edition].Top,
@@ -339,10 +343,10 @@ public class GameWorker : DAOWorker<GameField, Game, GameFieldGroup>
     private void SetAsEmulatorVisible()
     {
         bool isEmulator = IsEmulator;
-        Editor.Groups[GameFieldGroup.Emulator].Visible = isEmulator;
-        Editor.Groups[GameFieldGroup.Genre].Visible = !isEmulator;
-        Editor.Groups[GameFieldGroup.RelatedGames].Visible = !isEmulator;
-        Editor.Groups[GameFieldGroup.ReleaseBase].Visible = !isEmulator;
+        Editor.Groups[GameFieldGroup.Emulator].SetVisible(isEmulator);
+        Editor.Groups[GameFieldGroup.Genre].SetVisible(!isEmulator);
+        Editor.Groups[GameFieldGroup.RelatedGames].SetVisible(!isEmulator);
+        Editor.Groups[GameFieldGroup.ReleaseBase].SetVisible(!isEmulator);
 
         Builder.SetVisible(GameField.Region, !isEmulator);
         Builder.SetVisible(GameField.Language, !isEmulator);

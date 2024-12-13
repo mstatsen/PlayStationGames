@@ -71,7 +71,7 @@ public partial class ConsoleEditor : DAOEditor<ConsoleField, PSConsole, ConsoleF
         FormPanel.Size = new(
             PanelLeft.Width
             + TypeHelper.Helper<ConsoleFieldGroupHelper>().GroupWidth(ConsoleFieldGroup.Folders),
-            OxSH.Add(
+            OxSh.Add(
                 generationHelper.StorageSupport(generation)
                     ? Groups[ConsoleFieldGroup.Storages].Bottom
                     : generationHelper.MaxAccountsCount(generation, firmware) > 0
@@ -98,7 +98,7 @@ public partial class ConsoleEditor : DAOEditor<ConsoleField, PSConsole, ConsoleF
         base.SetFrameMargin(group, frame);
         frame.Margin.Size = 8;
         frame.Margin.Left =
-            OxSH.Short(
+            OxSh.Short(
                 group is ConsoleFieldGroup.Folders
                       or ConsoleFieldGroup.Games
                       or ConsoleFieldGroup.Accessories

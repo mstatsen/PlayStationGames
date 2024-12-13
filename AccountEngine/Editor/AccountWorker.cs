@@ -78,20 +78,20 @@ namespace PlayStationGames.AccountEngine.Editor
 
         private OxSize ButtonSize =>
             new(
-                OxSH.Third(consolesButton.Parent!.Width),
+                OxSh.Third(consolesButton.Parent!.Width),
                 38
             );
 
         private void ConsolesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
             consolesButton.Size = ButtonSize;
-            consolesLabel.Top = OxSH.CenterOffset(consolesButton.Parent!.Height, consolesLabel.Height);
+            consolesLabel.Top = OxSh.CenterOffset(consolesButton.Parent!.Height, consolesLabel.Height);
         }
 
         private void GamesSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
         {
             gamesButton.Size = ButtonSize;
-            gamesLabel.Top = OxSH.CenterOffset(consolesButton.Parent!.Height, gamesLabel.Height);
+            gamesLabel.Top = OxSh.CenterOffset(consolesButton.Parent!.Height, gamesLabel.Height);
         }
 
         private void GamesButtonClickHandler(object? sender, EventArgs e)
@@ -185,15 +185,15 @@ namespace PlayStationGames.AccountEngine.Editor
         {
             if (Builder.Value<AccountType>(AccountField.Type) is AccountType.PSN)
             {
-                Editor.Groups[AccountFieldGroup.Auth].Visible = true;
-                Editor.Groups[AccountFieldGroup.Links].Visible = true;
-                Editor.Groups[AccountFieldGroup.Games].Visible = true;
+                Editor.Groups[AccountFieldGroup.Auth].Visible = OxB.T;
+                Editor.Groups[AccountFieldGroup.Links].Visible = OxB.T;
+                Editor.Groups[AccountFieldGroup.Games].Visible = OxB.T;
             }
             else
             {
-                Editor.Groups[AccountFieldGroup.Auth].Visible = false;
-                Editor.Groups[AccountFieldGroup.Links].Visible = false;
-                Editor.Groups[AccountFieldGroup.Games].Visible = false;
+                Editor.Groups[AccountFieldGroup.Auth].Visible = OxB.F;
+                Editor.Groups[AccountFieldGroup.Links].Visible = OxB.F;
+                Editor.Groups[AccountFieldGroup.Games].Visible = OxB.F;
             }
 
             return afterSyncValues;

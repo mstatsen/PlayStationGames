@@ -80,22 +80,22 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
             (consoleControl.Value is not PSConsole console))
         {
             storageControl.Value = null;
-            storageControl.Enabled = false;
-            storageLabel.Enabled = false;
+            storageControl.Enabled = OxB.F;
+            storageLabel.Enabled = OxB.F;
             folderControl.Value = null;
-            folderControl.Enabled = false;
-            folderLabel.Enabled = false;
+            folderControl.Enabled = OxB.F;
+            folderLabel.Enabled = OxB.F;
             sizeControl.Value = null;
-            sizeControl.Enabled = false;
-            sizeLabel.Enabled = false;
+            sizeControl.Enabled = OxB.F;
+            sizeLabel.Enabled = OxB.F;
         }
         else
         {
             Filter<ConsoleField, PSConsole> filter = new(FilterConcat.AND);
             filter.AddFilter(ConsoleField.Id, FilterOperation.Equals, console.Id);
 
-            storageControl.Enabled = true;
-            storageLabel.Enabled = true;
+            storageControl.Enabled = OxB.T;
+            storageLabel.Enabled = OxB.T;
             IFilteredInitializer<ConsoleField, PSConsole>? storageInitializer =
                 (IFilteredInitializer<ConsoleField, PSConsole>?)storageControl.Context.Initializer;
 
@@ -107,16 +107,16 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
 
             IFilteredInitializer<ConsoleField, PSConsole>? folderInitializer =
                 (IFilteredInitializer<ConsoleField, PSConsole>?)folderControl.Context.Initializer;
-            folderControl.Enabled = true;
-            folderLabel.Enabled = true;
+            folderControl.Enabled = OxB.T;
+            folderLabel.Enabled = OxB.T;
 
             if (folderInitializer is not null)
                 folderInitializer.Filter = filter;
 
             folderControl.RenewControl(true);
             folderControl.Control.BackColor = consoleControl.Control.BackColor;
-            sizeControl.Enabled = true;
-            sizeLabel.Enabled = true;
+            sizeControl.Enabled = OxB.T;
+            sizeLabel.Enabled = OxB.T;
         }
     }
 
@@ -161,13 +161,13 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
     {
         accessor.Parent = this;
         accessor.Left = left;
-        accessor.Top = OxSH.Short(lastBottom is -1 ? 8 : lastBottom + 4);
+        accessor.Top = OxSh.Short(lastBottom is -1 ? 8 : lastBottom + 4);
         accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
         if (fullRow)
         {
             accessor.Anchor |= AnchorStyles.Right;
-            accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left, 8);
+            accessor.Width = OxSh.Sub(FormPanel.Width, accessor.Left, 8);
         }
         else accessor.Width = 120;
 
@@ -184,7 +184,7 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
                 ? "Storage"
                 : base.EmptyMandatoryField();
 
-    protected override short ContentHeight => OxSH.Add(sizeControl.Bottom, 8);
+    protected override short ContentHeight => OxSh.Add(sizeControl.Bottom, 8);
 
     public override void RenewData()
     {
@@ -208,15 +208,15 @@ public partial class InstallationEditor : CustomItemEditor<Installation, GameFie
                     folderAvailable |= generationHelper.FolderSupport(psConsole.Generation);
                 }
 
-        storageControl.Visible = storageAvailable;
-        storageLabel.Visible = storageAvailable;
-        folderControl.Visible = folderAvailable;
-        folderLabel.Visible = folderAvailable;
+        storageControl.SetVisible(storageAvailable);
+        storageLabel.SetVisible(storageAvailable);
+        folderControl.SetVisible(folderAvailable);
+        folderLabel.SetVisible(folderAvailable);
 
         int lastBottom = 
-            folderControl.Visible 
+            folderControl.IsVisible 
                 ? folderControl.Bottom
-                : storageControl.Visible
+                : storageControl.IsVisible
                     ? storageControl.Bottom
                     : consoleControl!.Bottom;
 

@@ -24,11 +24,11 @@ public class ConsoleInfoPanel : ItemInfo<ConsoleField, PSConsole, ConsoleFieldGr
         
         ControlLayout<ConsoleField> modelLayout = Layouter.AddFromTemplate(ConsoleField.FullModel);
         modelLayout.Top = 20;
-        modelLayout.Left = OxSH.Add(imageLayout.Right, 2);
+        modelLayout.Left = OxSh.Add(imageLayout.Right, 2);
         modelLayout.CaptionVariant = ControlCaptionVariant.None;
 
         ControlLayout<ConsoleField> firmwareLayout = Layouter.AddFromTemplate(ConsoleField.FullFirmware, 2);
-        firmwareLayout.Left = OxSH.Add(imageLayout.Right, 72);
+        firmwareLayout.Left = OxSh.Add(imageLayout.Right, 72);
 
         return new ControlLayouts<ConsoleField>()
         {

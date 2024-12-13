@@ -119,7 +119,7 @@ namespace PlayStationGames.GameEngine.Editor
                 GameField.Owner =>
                     Layouter[GameField.Image]!.Top,
                 GameField.Verified =>
-                        OxSH.CenterOffset(Parent(field).Height, Height(field)),
+                        OxSh.CenterOffset(Parent(field).Height, Height(field)),
                 GameField.EmulatorType => 
                     Layouter[GameField.Region]!.Top,
                 GameField.Language or

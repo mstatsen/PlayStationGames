@@ -41,12 +41,12 @@ public class ConsoleCard : ItemCard<ConsoleField, PSConsole, ConsoleFieldGroup>
         ControlLayout<ConsoleField> iconLayout = Layouter[ConsoleField.Icon]!;
         ControlLayout<ConsoleField> modelLayout = Layouter.AddFromTemplate(ConsoleField.FullModel);
         modelLayout.Top = 2;
-        modelLayout.Left = OxSH.Add(iconLayout.Right, 6);
+        modelLayout.Left = OxSh.Add(iconLayout.Right, 6);
         modelLayout.CaptionVariant = ControlCaptionVariant.None;
 
         baseLayouts.Add(modelLayout);
 
-        Layouter.Template.Left = OxSH.Add(iconLayout.Right, 68);
+        Layouter.Template.Left = OxSh.Add(iconLayout.Right, 68);
         baseLayouts.Add(Layouter.AddFromTemplate(ConsoleField.FullFirmware, -8));
 
         if (Item!.Accounts.Count > 0)
@@ -63,8 +63,8 @@ public class ConsoleCard : ItemCard<ConsoleField, PSConsole, ConsoleFieldGroup>
         if (Item is null)
             return;
 
-        Layouter.Template.Left = OxSH.Add(Layouter[ConsoleField.Icon]!.Left, 84);
-        Layouter.Template.Top = OxSH.Add(Layouter[ConsoleField.Icon]!.Bottom, 6);
+        Layouter.Template.Left = OxSh.Add(Layouter[ConsoleField.Icon]!.Left, 84);
+        Layouter.Template.Top = OxSh.Add(Layouter[ConsoleField.Icon]!.Bottom, 6);
 
         bool needOffsetAccessories = false;
 

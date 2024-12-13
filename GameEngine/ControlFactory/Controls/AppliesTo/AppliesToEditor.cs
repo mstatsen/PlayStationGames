@@ -39,7 +39,7 @@ public partial class AppliesToEditor : CustomItemEditor<Platform, GameField, Gam
         TypeControl.Parent = this;
         TypeControl.Left = 8;
         TypeControl.Top = 8;
-        TypeControl.Width = OxSH.Sub(FormPanel.Width, TypeControl.Left, 8);
+        TypeControl.Width = OxSh.Sub(FormPanel.Width, TypeControl.Left, 8);
         TypeControl.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
         TypeControl.Height = 24;
         SetKeyUpHandler(TypeControl.Control);
@@ -50,7 +50,7 @@ public partial class AppliesToEditor : CustomItemEditor<Platform, GameField, Gam
         CreateTypeControl();
 
     protected override short ContentHeight =>
-        OxSH.Add(TypeControl.Bottom, 8);
+        OxSh.Add(TypeControl.Bottom, 8);
 
     protected override void FillControls(Platform item) => 
         TypeControl.Value = item.Type;

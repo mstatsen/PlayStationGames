@@ -43,7 +43,7 @@ public class InstallationPlaceSelector : OxPanel
         dialog.Text = $"Install {Game} into:";
         dialog.FormPanel.Size = new(
             600,
-            OxSH.Add(
+            OxSh.Add(
                 generationHelper.FolderSupport(Generation)
                     ? folderControl.Bottom
                     : storageControl.Bottom,
@@ -63,7 +63,7 @@ public class InstallationPlaceSelector : OxPanel
             new OxLabel()
             {
                 Parent = this,
-                AutoSize = true,
+                AutoSize = OxB.T,
                 Left = 8,
                 Text = caption,
                 Font = OxStyles.DefaultFont
@@ -106,12 +106,12 @@ public class InstallationPlaceSelector : OxPanel
     private void SetStorageAndFolderVisible()
     {
         bool storageSupported = generationHelper.StorageSupport(Generation);
-        storageControl.Visible = storageSupported;
-        storageLabel.Visible = storageSupported;
+        storageControl.SetVisible(storageSupported);
+        storageLabel.SetVisible(storageSupported);
 
         bool folderSopported = generationHelper.FolderSupport(Generation);
-        folderControl.Visible = folderSopported;
-        folderLabel.Visible = folderSopported;
+        folderControl.SetVisible(folderSopported);
+        folderLabel.SetVisible(folderSopported);
     }
 
     internal void Renew()

@@ -52,7 +52,7 @@ public class TrophysetPanel : OxPanel
     {
         accessor.Parent = this;
         accessor.Left = 88;
-        accessor.Top = OxSH.Add(top, 4);
+        accessor.Top = OxSh.Add(top, 4);
         accessor.Width = width;
         accessor.ValueChangeHandler += OnChangeHandler;
         label.Parent = this;
@@ -79,7 +79,7 @@ public class TrophysetPanel : OxPanel
         completeTimeControl = IsDLCPanel
             ? builder.Accessor("DLC:CompleteTime", FieldType.Enum) 
             : builder[GameField.CompleteTime];
-        PrepareAccessor(typeControl, trophysetTypeLabel, 4, OxSH.Short(IsDLCPanel ? 122 : 178), TypeChangeHandler);
+        PrepareAccessor(typeControl, trophysetTypeLabel, 4, OxSh.Short(IsDLCPanel ? 122 : 178), TypeChangeHandler);
 
         if (appliesToControl is not null)
             PrepareAccessor(appliesToControl, appliesToLabel, typeControl.Bottom, 178, AppliesToChandeHandler);
@@ -117,16 +117,15 @@ public class TrophysetPanel : OxPanel
 
         bool isTrophysetExists = Type is not TrophysetType.NoSet;
 
-        if (appliesToControl is not null)
-            appliesToControl.Visible = isTrophysetExists;
-
+        appliesToControl?.SetVisible(isTrophysetExists);
         AddCurrentPlatformToAppliesTo();
-        appliesToLabel.Visible = isTrophysetExists;
-        difficultControl.Visible = isTrophysetExists;
-        completeTimeControl.Visible = isTrophysetExists;
-        difficultLabel.Visible = isTrophysetExists;
-        completeTimeLabel.Visible = isTrophysetExists;
-        addButton.Visible = isTrophysetExists;
+        appliesToLabel.SetVisible(isTrophysetExists);
+        difficultControl.SetVisible(isTrophysetExists);
+        completeTimeControl.SetVisible(isTrophysetExists);
+        difficultLabel.SetVisible(isTrophysetExists);
+        completeTimeLabel.SetVisible(isTrophysetExists);
+        addButton.SetVisible(isTrophysetExists);
+        RecalcTrophiesPanels();
         RecalcTrophiesPanels();
         ValueChanged?.Invoke(this, e);
     }
@@ -149,7 +148,7 @@ public class TrophysetPanel : OxPanel
     private void SetMinimumSize()
     {
         MinimumSize = new(
-            OxSH.Add(trophiesPanels.Last().Right, 8),
+            OxSh.Add(trophiesPanels.Last().Right, 8),
             Type is TrophysetType.NoSet
                 ? typeControl.Bottom
                 : VisiblePanels.Count > 0
@@ -185,8 +184,8 @@ public class TrophysetPanel : OxPanel
     {
         AvailableTrophiesPanel = CreateTrophiesPanel(null, IsDLCPanel);
         addButton.Parent = this;
-        addButton.Left = OxSH.Sub(AvailableTrophiesPanel.Right, addButton.Width);
-        addButton.Top = OxSH.Add(AvailableTrophiesPanel.Bottom, 6);
+        addButton.Left = OxSh.Sub(AvailableTrophiesPanel.Right, addButton.Width);
+        addButton.Top = OxSh.Add(AvailableTrophiesPanel.Bottom, 6);
         addButton.Click += AddButtonClickHandler;
 
         foreach (Account account in DataManager.FullItemsList<AccountField, Account>())
@@ -210,22 +209,24 @@ public class TrophysetPanel : OxPanel
 
     private void RecalcTrophiesPanels()
     {
-        AvailableTrophiesPanel.Visible = Type is not TrophysetType.NoSet;
+        AvailableTrophiesPanel.SetVisible(Type is not TrophysetType.NoSet);
 
         foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
-            trophiesPanel.Visible = 
-                Type is not TrophysetType.NoSet
-                && VisiblePanels.Contains(trophiesPanel);
+            trophiesPanel.Visible =
+                OxB.B(
+                    Type is not TrophysetType.NoSet
+                    && VisiblePanels.Contains(trophiesPanel)
+                );
 
-        short lastTop = OxSH.Sub(addButton.Bottom, 2);
+        short lastTop = OxSh.Sub(addButton.Bottom, 2);
 
         foreach (TrophiesPanel trophiesPanel in AvailableTrophiesPanel.DependedPanels)
         {
             if (!VisiblePanels.Contains(trophiesPanel))
                 continue;
 
-            trophiesPanel.Top = OxSH.Add(lastTop, 8);
-            lastTop = OxSH.Add(trophiesPanel.Bottom, 4);
+            trophiesPanel.Top = OxSh.Add(lastTop, 8);
+            lastTop = OxSh.Add(trophiesPanel.Bottom, 4);
         }
 
         SetMinimumSize();
@@ -237,12 +238,12 @@ public class TrophysetPanel : OxPanel
         {
             Parent = this,
             Left = 8,
-            Top = OxSH.Add(
+            Top = OxSh.Add(
                 trophiesPanels.Count is 1
-                    ? OxSH.Sub(addButton.Bottom, 2)
+                    ? OxSh.Sub(addButton.Bottom, 2)
                     : trophiesPanels.Count is 0
-                        ? OxSH.Add(completeTimeControl.Bottom, 16)
-                        : OxSH.Add(trophiesPanels.Last().Bottom, 4),
+                        ? OxSh.Add(completeTimeControl.Bottom, 16)
+                        : OxSh.Add(trophiesPanels.Last().Bottom, 4),
                 8
             )
         };
@@ -329,7 +330,7 @@ public class TrophysetPanel : OxPanel
 
     public readonly List<TrophiesPanel> VisiblePanels = new();
 
-    public bool ReadOnly
+    public OxBool ReadOnly
     {
         get => typeControl.ReadOnly;
         set

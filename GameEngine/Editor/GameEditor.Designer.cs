@@ -43,7 +43,7 @@ namespace PlayStationGames.GameEngine.Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
+            this.SetAutoSize(true);
             this.ClientSize = new(1225, 636);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

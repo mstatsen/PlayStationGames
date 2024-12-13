@@ -16,7 +16,9 @@ namespace PlayStationGames
     public partial class MainForm : OxForm, IDataReceiver
     {
         public void DataModifiedHandler(DAO dao, DAOModifyEventArgs e) =>
-            toolBar.Actions[OxToolbarAction.Save].Enabled |= e.Modified;
+            toolBar.Actions[OxToolbarAction.Save].SetEnabled(
+                toolBar.Actions[OxToolbarAction.Save].IsEnabled || e.Modified
+            );
 
         public override Bitmap? FormIcon =>
             Resources.PS.ToBitmap();
@@ -45,11 +47,11 @@ namespace PlayStationGames
                 Parent = FormPanel,
                 Dock = OxDock.Top,
                 BaseColor = BaseColor,
-                Visible = false,
+                Visible = OxB.F,
                 ToolbarActionClick = MainToolBarActoinClickHandler
             };
 
-            toolBar.AddButton(OxToolbarAction.Save).Enabled = false;
+            toolBar.AddButton(OxToolbarAction.Save).Enabled = OxB.F;
             toolBar.AddButton(OxToolbarAction.Settings, true, OxDock.Right);
             toolBar.SendToBack();
             toolBar.Borders.Top = 0;
@@ -107,8 +109,8 @@ namespace PlayStationGames
 
                 OxSize screenSize = OxControlHelper.ScreenSize(this);
                 Size = new(
-                    OxSH.Min(1600, screenSize.Width),
-                    OxSH.Min(800, screenSize.Height));
+                    OxSh.Min(1600, screenSize.Width),
+                    OxSh.Min(800, screenSize.Height));
 
                 MoveToScreenCenter();
                 PlaceComponents();
@@ -119,7 +121,7 @@ namespace PlayStationGames
             finally
             {
                 WithSuspendedLayout(
-                    () => toolBar.Visible = true
+                    () => toolBar.Visible = OxB.T
                 );
                 loadingPanel.EndLoading();
             }
@@ -169,7 +171,7 @@ namespace PlayStationGames
         private void Save()
         {
             DataManager.Save();
-            toolBar.Actions[OxToolbarAction.Save].Enabled = false;
+            toolBar.Actions[OxToolbarAction.Save].Enabled = OxB.F;
         }
 
         private static void InitializeDataManager()

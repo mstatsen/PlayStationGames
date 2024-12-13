@@ -56,9 +56,9 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
             {
                 top = 0;
                 left =
-                    OxSH.Short(
+                    OxSh.Short(
                         longestFamilyCheckBox is not null
-                            ? OxSH.Add(longestFamilyCheckBox!.Right, 30)
+                            ? OxSh.Add(longestFamilyCheckBox!.Right, 30)
                             : 0
                     );
                 longestFamilyCheckBox = null;
@@ -84,7 +84,7 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
     {
         foreach (OxCheckBox checkBox in CheckBoxes.Values)
         {
-            checkBox.ReadOnly = false;
+            checkBox.ReadOnly = OxB.F;
             checkBox.Font = new(checkBox.Font, FontStyle.Regular);
         }
 
@@ -95,7 +95,7 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
         {
             OxCheckBox checkBox = CheckBoxes[platform.Type];
             checkBox.Checked = true;
-            checkBox.ReadOnly = true;
+            checkBox.ReadOnly = OxB.T;
             checkBox.Font = new(checkBox.Font, FontStyle.Bold);
         }
     }
@@ -116,7 +116,7 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
             Top = top,
             Left = left,
             Text = TypeHelper.ShortName(platformType),
-            AutoSize = true
+            AutoSize = OxB.T
         };
 
         checkBox.CheckedChanged += CheckBoxCheckedChangedHandler;
@@ -145,10 +145,10 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
 
     protected override string GetText() => "Release on platforms";
 
-    protected override bool GetReadOnly() => 
+    protected override OxBool GetReadOnly() => 
         readOnly;
 
-    protected override void SetReadOnly(bool value)
+    protected override void SetReadOnly(OxBool value)
     {
         readOnly = value;
 
@@ -156,7 +156,7 @@ public class ReleasePlatformListControl : CustomItemsControl<GameField, Game, Pl
             checkBox.ReadOnly = readOnly;
     }
 
-    private bool readOnly;
+    private OxBool readOnly;
 
     protected override void SetItemEdited(EventHandler? value)
     {

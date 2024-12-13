@@ -54,7 +54,7 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         FirstFocusControl = NameControl.Control;
 
         ImageControl = Context.Accessor("DLC:Image", FieldType.Image);
-        ImageControl.Top = OxSH.Add(NameControl.Bottom, 8);
+        ImageControl.Top = OxSh.Add(NameControl.Bottom, 8);
         ImageControl.Left = 66;
         ImageControl.Width = 208;
         ImageControl.Height = 112;
@@ -63,9 +63,9 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         SetKeyUpHandler(ImageControl.Control);
 
         AcquiredControl = Context.Accessor("DLC:Acquired", FieldType.Boolean);
-        AcquiredControl.Top = OxSH.Add(ImageControl.Bottom, 8);
+        AcquiredControl.Top = OxSh.Add(ImageControl.Bottom, 8);
         AcquiredControl.Left = 8;
-        ((OxCheckBox)AcquiredControl.Control).AutoSize = true;
+        ((OxCheckBox)AcquiredControl.Control).AutoSize = OxB.T;
         AcquiredControl.Parent = BaseGroup;
         AcquiredControl.RenewControl();
         SetKeyUpHandler(AcquiredControl.Control);
@@ -97,14 +97,14 @@ public partial class DLCEditor : CustomItemEditor<DLC, GameField, Game>
         );
         Size = new OxSize(
             TrophysetGroup.Right,
-            OxSH.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
+            OxSh.Max(BaseGroup.Bottom, TrophysetGroup.Bottom)
         );
     }
 
     protected override void PrepareReadonly()
     {
         NameControl.ReadOnly = ReadOnly;
-        AcquiredControl.ReadOnly = false;
+        AcquiredControl.ReadOnly = OxB.F;
         ImageControl.ReadOnly = ReadOnly;
         TrophysetControl.ReadOnly = ReadOnly;
     }

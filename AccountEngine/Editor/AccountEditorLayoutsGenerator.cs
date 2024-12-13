@@ -40,12 +40,12 @@ namespace PlayStationGames.AccountEngine.Editor
             field switch
             {
                 AccountField.DefaultAccount =>
-                    OxSH.CenterOffset(Parent(field).Height, Height(field)),
+                    OxSh.CenterOffset(Parent(field).Height, Height(field)),
                 _ => 8
             };
 
         public override short Left(AccountField field) =>
-            OxSH.Short(
+            OxSh.Short(
                 field is AccountField.Avatar or
                          AccountField.DefaultAccount
                 ? 8
@@ -88,7 +88,7 @@ namespace PlayStationGames.AccountEngine.Editor
             };
 
         public override short Height(AccountField field) =>
-            OxSH.Short(
+            OxSh.Short(
                 field is AccountField.Avatar
                 ? 80
                 : field is AccountField.DefaultAccount

@@ -144,7 +144,7 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
         Layouter.Template.Parent = BasePanel;
         Layouter.Template.Top = 4;
         ControlLayout<GameField> imageLayout = Layouter[GameField.Image]!;
-        Layouter.Template.Left = OxSH.Add(imageLayout.Right, 80);
+        Layouter.Template.Left = OxSh.Add(imageLayout.Right, 80);
         return new ControlLayouts<GameField>()
         {
             imageLayout,
@@ -227,7 +227,7 @@ public class GameInfoPanel : ItemInfo<GameField, Game, GameFieldGroup>
                 continue;
 
             OxControlHelper.AlignByBaseLine(trophyControl.Control, icon.Value);
-            icon.Value.Left = OxSH.Sub(trophyControl.Control.Left, 32);
+            icon.Value.Left = OxSh.Sub(trophyControl.Control.Left, 32);
         }
     }
 

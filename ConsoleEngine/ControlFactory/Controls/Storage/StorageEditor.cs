@@ -19,13 +19,13 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         {
             accessor.Parent = this;
             accessor.Left = 80;
-            accessor.Top = OxSH.Short(lastBottom is -1 ? 8 : lastBottom + 4);
+            accessor.Top = OxSh.Short(lastBottom is -1 ? 8 : lastBottom + 4);
             accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
             if (fullRow)
             {
                 accessor.Anchor |= AnchorStyles.Right;
-                accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left, 8);
+                accessor.Width = OxSh.Sub(FormPanel.Width, accessor.Left, 8);
             }
             else
                 accessor.Width = 64;
@@ -85,7 +85,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
                 : placementControl!.IsEmpty ? "Placement"
                 : base.EmptyMandatoryField();
 
-        protected override short ContentHeight => OxSH.Add(freeSizeControl!.Bottom, 8);
+        protected override short ContentHeight => OxSh.Add(freeSizeControl!.Bottom, 8);
 
         private EnumAccessor<ConsoleField, PSConsole, StoragePlacement>? placementControl;
         private IControlAccessor? nameControl;

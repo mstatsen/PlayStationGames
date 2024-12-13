@@ -19,7 +19,7 @@ namespace PlayStationGames.ConsoleEngine.ControlFactory.Controls
         public override Bitmap? FormIcon => OxIcons.Account;
 
         protected override short ContentHeight =>
-            OxSH.Add(
+            OxSh.Add(
                 accountControl is null
                     ? 24
                     : accountControl!.Bottom,

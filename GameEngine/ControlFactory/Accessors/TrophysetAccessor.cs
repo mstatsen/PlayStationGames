@@ -6,6 +6,7 @@ using PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 using PlayStationGames.GameEngine.ControlFactory.ValuesAccessors;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
+using OxLibrary;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Accessors;
 
@@ -29,7 +30,7 @@ public class TrophysetAccessor : ControlAccessor<GameField, Game>
     protected override void UnAssignValueChangeHanlderToControl(EventHandler? value) => 
         TrophysetControl.ValueChanged -= value;
 
-    protected override void SetReadOnly(bool value) => 
+    protected override void SetReadOnly(OxBool value) => 
         TrophysetControl.ReadOnly = value;
 
     protected override IOxControl? CreateReadOnlyControl() => null;

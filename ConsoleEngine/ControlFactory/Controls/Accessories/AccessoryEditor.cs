@@ -23,14 +23,14 @@ public partial class AccessoryEditor : CustomItemEditor<Accessory, ConsoleField,
     {
         bool withoutLabel = caption.Equals(string.Empty);
         accessor.Parent = this;
-        accessor.Left = OxSH.Short(withoutLabel ? 12 : 100);
-        accessor.Top = OxSH.Short(lastBottom is -1 ? 8 : lastBottom + 4);
+        accessor.Left = OxSh.Short(withoutLabel ? 12 : 100);
+        accessor.Top = OxSh.Short(lastBottom is -1 ? 8 : lastBottom + 4);
         accessor.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
         if (fullRow)
         {
             accessor.Anchor |= AnchorStyles.Right;
-            accessor.Width = OxSH.Sub(FormPanel.Width, accessor.Left, 8);
+            accessor.Width = OxSh.Sub(FormPanel.Width, accessor.Left, 8);
         }
         else
             accessor.Width = 120;
@@ -118,7 +118,7 @@ public partial class AccessoryEditor : CustomItemEditor<Accessory, ConsoleField,
         if (accessor is null)
             return lastBottom;
 
-        accessor.Top = OxSH.Add(lastBottom, 4);
+        accessor.Top = OxSh.Add(lastBottom, 4);
         OxControlHelper.AlignByBaseLine(accessor.Control, (OxLabel)accessor.Control.Tag!);
         return accessor.Bottom;
     }
@@ -142,21 +142,23 @@ public partial class AccessoryEditor : CustomItemEditor<Accessory, ConsoleField,
             return;
 
         bool isJoystick = IsJoystick();
-        joystickTypeControl.Visible = isJoystick;
+        joystickTypeControl.SetVisible(isJoystick);
         ((OxLabel)joystickTypeControl.Control.Tag!).Visible = joystickTypeControl.Visible;
         bool namedControVisible = typeHelper.Named(AccessoryType, JoystickType);
-        nameControl.Visible = namedControVisible;
-        ((OxLabel)nameControl.Control.Tag!).Visible = namedControVisible;
+        nameControl.SetVisible(namedControVisible);
+        ((OxLabel)nameControl.Control.Tag!).SetVisible(namedControVisible);
         bool modelCodeControVisible = typeHelper.SupportModelCode(AccessoryType, JoystickType);
-        modelCodeControl.Visible = modelCodeControVisible;
-        ((OxLabel)modelCodeControl.Control.Tag!).Visible = modelCodeControVisible;
-        colorControl.Visible = IsColored();
+        modelCodeControl.SetVisible(modelCodeControVisible);
+        ((OxLabel)modelCodeControl.Control.Tag!).SetVisible(modelCodeControVisible);
+        colorControl.SetVisible(IsColored());
         ((OxLabel)colorControl.Control.Tag!).Visible = colorControl.Visible;
-        withCoverControl.Visible = isJoystick;
-        coverColorControl.Visible = isJoystick && withCoverControl.BoolValue;
-        ((OxLabel)coverColorControl.Control.Tag!).Visible = isJoystick && withCoverControl.BoolValue;
-        withStickCoversControl.Visible = isJoystick
-            && joystickTypeHelper.WithSticks(JoystickType);
+        withCoverControl.SetVisible(isJoystick);
+        coverColorControl.SetVisible(isJoystick && withCoverControl.BoolValue);
+        ((OxLabel)coverColorControl.Control.Tag!).SetVisible(isJoystick && withCoverControl.BoolValue);
+        withStickCoversControl.SetVisible(
+            isJoystick
+            && joystickTypeHelper.WithSticks(JoystickType)
+        );
 
         RecalcHeight();
     }
@@ -229,7 +231,7 @@ public partial class AccessoryEditor : CustomItemEditor<Accessory, ConsoleField,
                 ? "Joystick Type"
                 : base.EmptyMandatoryField();
 
-    protected override short ContentHeight => OxSH.Add(descriptionControl.Bottom, 8);
+    protected override short ContentHeight => OxSh.Add(descriptionControl.Bottom, 8);
 
     private IControlAccessor typeControl = default!;
     private IControlAccessor joystickTypeControl = default!;

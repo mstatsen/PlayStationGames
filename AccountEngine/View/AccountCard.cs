@@ -77,7 +77,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
         ClearLayoutTemplate();
         BaseLayouts.Clear();
         Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
-        Layouter.Template.Left = OxSH.Add(Layouter[AccountField.Avatar]!.Right, 8);
+        Layouter.Template.Left = OxSh.Add(Layouter[AccountField.Avatar]!.Right, 8);
         Layouter.Template.Top = 12;
         BaseLayouts.Add(Layouter.AddFromTemplate(AccountField.Type));
         Layouter.Template.FontStyle = FontStyle.Regular;
@@ -97,7 +97,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
 
         ClearLayoutTemplate();
         Layouter.Template.Left = Layouter[AccountField.Avatar]!.Left;
-        Layouter.Template.Top = OxSH.Sub(Layouter[AccountField.Avatar]!.Bottom, 2);
+        Layouter.Template.Top = OxSh.Sub(Layouter[AccountField.Avatar]!.Bottom, 2);
         Layouter.Template.FontStyle = FontStyle.Italic;
         Layouter.Template.CaptionVariant = ControlCaptionVariant.None;
         Layouter.AddFromTemplate(AccountField.UsesAndOwns);
@@ -116,7 +116,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
     {
         Layouter.AlignLabels(BaseLayouts, 8);
         Layouter.MovePlacedControlsToLeft(TrophiesLayouts, 8);
-        TrophiesPanel.Left = OxSH.Sub(Width, TrophiesPanel.Width, 1);
+        TrophiesPanel.Left = OxSh.Sub(Width, TrophiesPanel.Width, 1);
         AlignTrophiesIcons();
     }
 
@@ -130,7 +130,7 @@ public class AccountCard : ItemCard<AccountField, Account, AccountFieldGroup>
                 trophyControl.Control,
                 icon.Value
                 );
-            icon.Value.Left = OxSH.Sub(trophyControl.Control.Left, 32);
+            icon.Value.Left = OxSh.Sub(trophyControl.Control.Left, 32);
         }
     }
 

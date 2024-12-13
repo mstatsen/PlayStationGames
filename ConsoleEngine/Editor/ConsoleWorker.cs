@@ -29,7 +29,7 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
         {
             Builder.SetVisible(ConsoleField.FirmwareName, Firmware is FirmwareType.Official);
             Builder[ConsoleField.FirmwareVersion].Top =
-                OxSH.Short(
+                OxSh.Short(
                     Firmware is FirmwareType.Official
                         ? Builder[ConsoleField.FirmwareName].Top
                         : Builder[ConsoleField.FirmwareName].Bottom
@@ -47,10 +47,10 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
 
     protected override bool SetGroupsAvailability(bool afterSyncValues = false)
     {
-        Editor.Groups[ConsoleFieldGroup.Folders].Visible = generationHelper.FolderSupport(Generation);
-        Editor.Groups[ConsoleFieldGroup.Storages].Visible = generationHelper.StorageSupport(Generation);
-        Editor.Groups[ConsoleFieldGroup.Accounts].Visible = generationHelper.MaxAccountsCount(Generation, Firmware) > 0;
-        Editor.Groups[ConsoleFieldGroup.Games].Visible = generationHelper.StorageSupport(Generation);
+        Editor.Groups[ConsoleFieldGroup.Folders].SetVisible(generationHelper.FolderSupport(Generation));
+        Editor.Groups[ConsoleFieldGroup.Storages].SetVisible(generationHelper.StorageSupport(Generation));
+        Editor.Groups[ConsoleFieldGroup.Accounts].SetVisible(generationHelper.MaxAccountsCount(Generation, Firmware) > 0);
+        Editor.Groups[ConsoleFieldGroup.Games].SetVisible(generationHelper.StorageSupport(Generation));
         return true;
     }
 
@@ -82,7 +82,7 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
         installedGamesLabel.Left = 8;
         installationsButton.Parent = Editor.Groups[ConsoleFieldGroup.Games];
         installationsButton.Size = new(
-            OxSH.Third(installationsButton.Parent.Width),
+            OxSh.Third(installationsButton.Parent.Width),
             38);
         installationsButton.Dock = OxDock.Right;
         installationsButton.Click -= InstallationsClickHandler;
@@ -100,10 +100,10 @@ public class ConsoleWorker : DAOWorker<ConsoleField, PSConsole, ConsoleFieldGrou
     private void GamesGroupSizeChangedHandler(object sender, OxSizeChangedEventArgs args)
     {
         installationsButton.Size = new(
-            OxSH.Third(installationsButton.Parent!.Width), 
+            OxSh.Third(installationsButton.Parent!.Width), 
             38
         );
-        installedGamesLabel.Top = OxSH.CenterOffset(installationsButton.Parent.Height, installedGamesLabel.Height);
+        installedGamesLabel.Top = OxSh.CenterOffset(installationsButton.Parent.Height, installedGamesLabel.Height);
     }
 
     private void InstallationsClickHandler(object? sender, EventArgs e)

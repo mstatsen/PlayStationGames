@@ -95,7 +95,7 @@ public class AccountAccessor<TField, TDAO> : ComboBoxAccessor<TField, TDAO, Acco
         };
         ReadOnlyLabel = (OxTextBox)base.CreateReadOnlyControl()!;
         ReadOnlyLabel.Parent = readOnlyControl;
-        ReadOnlyLabel.AutoSize = true;
+        ReadOnlyLabel.AutoSize = OxB.T;
         ReadOnlyLabel.Left = ReadOnlyPictureSize;
         ReadOnlyPicture.Parent = readOnlyControl;
         ReadOnlyPicture.Height = ReadOnlyPictureSize;
@@ -114,9 +114,9 @@ public class AccountAccessor<TField, TDAO> : ComboBoxAccessor<TField, TDAO, Acco
 
         if (ReadOnlyControl is not null)
         {
-            ReadOnlyControl.Width = OxSH.Add(ReadOnlyPictureSize, ReadOnlyLabel.Width);
+            ReadOnlyControl.Width = OxSh.Add(ReadOnlyPictureSize, ReadOnlyLabel.Width);
             ReadOnlyControl.Height = ReadOnlyPictureSize;
-            ReadOnlyLabel.Top = OxSH.CenterOffset(ReadOnlyControl.Height, ReadOnlyLabel.Height);
+            ReadOnlyLabel.Top = OxSh.CenterOffset(ReadOnlyControl.Height, ReadOnlyLabel.Height);
         }
     }
 

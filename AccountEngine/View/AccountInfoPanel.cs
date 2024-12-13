@@ -26,8 +26,8 @@ namespace PlayStationGames.AccountEngine.View
             Layouter.Template.Top = 12;
             ControlLayout<AccountField> typeLayout = Layouter.AddFromTemplate(AccountField.Type);
             typeLayout.CaptionVariant = ControlCaptionVariant.None;
-            typeLayout.Left = OxSH.Add(avatarLayout.Right, 8);
-            Layouter.Template.Left = OxSH.Add(avatarLayout.Right, 70);
+            typeLayout.Left = OxSh.Add(avatarLayout.Right, 8);
+            Layouter.Template.Left = OxSh.Add(avatarLayout.Right, 70);
 
             return new ControlLayouts<AccountField>()
             {

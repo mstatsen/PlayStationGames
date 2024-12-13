@@ -90,9 +90,9 @@ public partial class GameEditor : DAOEditor<GameField, Game, GameFieldGroup>
         PanelRight.Width = CalcedWidth(PanelRight);
         FormPanel.Size = new(
             PanelRight.Right,
-            OxSH.Add(
+            OxSh.Add(
                 PanelTop.Height,
-                Groups[GameFieldGroup.ReleaseBase].Visible
+                Groups[GameFieldGroup.ReleaseBase].IsVisible
                     ? Groups[GameFieldGroup.ReleaseBase].Height
                     : 8,
                 12

@@ -1,5 +1,6 @@
 ﻿using OxDAOEngine.ControlFactory.Controls;
 using OxDAOEngine.Data;
+using OxLibrary;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 
@@ -14,7 +15,7 @@ namespace PlayStationGames.GameEngine.ControlFactory.Controls
 
         public override ReadonlyMode ReadonlyMode => ReadonlyMode.EditAsReadonly;
 
-        protected override bool IsHighPriorityItem(DLC item) => 
-            item.WithTrophyset;
+        protected override OxBool IsHighPriorityItem(DLC item) => 
+            OxB.B(item.WithTrophyset);
     }
 }
