@@ -196,7 +196,7 @@ public class TrophysetPanel : OxPanel
 
     private void AddButtonClickHandler(object? sender, EventArgs e)
     {
-        if (AccountSelector.ShowAsDialog(this) is DialogResult.OK
+        if (AccountSelector.ShowDialogIsOK(this)
             && !AccountSelector.SelectedAccountId.Equals(Guid.Empty))
         {
             TrophiesPanel newPanel = AvailableTrophiesPanel.DependedPanels.Find(t =>

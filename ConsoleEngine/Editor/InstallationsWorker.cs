@@ -60,7 +60,7 @@ namespace PlayStationGames.ConsoleEngine.Editor
             {
                 placeSelector.GamesCount = selectedList.Count;
                 placeSelector.Game = currentItem;
-                DialogResult result = placeSelector.ShowAsDialog(chooser);
+                DialogResult result = placeSelector.ShowDialog(chooser);
 
                 if (result.Equals(OxDialogButtonHelper.Result(OxDialogButton.Cancel)))
                     return CanSelectResult.Return;
