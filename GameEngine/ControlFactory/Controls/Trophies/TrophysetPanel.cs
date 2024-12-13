@@ -11,7 +11,6 @@ using PlayStationGames.AccountEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data;
 using PlayStationGames.GameEngine.Data.Fields;
 using PlayStationGames.GameEngine.Data.Types;
-using OxLibrary.Interfaces;
 
 namespace PlayStationGames.GameEngine.ControlFactory.Controls.Trophies;
 
@@ -135,16 +134,16 @@ public class TrophysetPanel : OxPanel
     private void AddCurrentPlatformToAppliesTo()
     {
         if (IsDLCPanel 
+            || appliesToControl is null
             || Type is TrophysetType.NoSet)
             return;
 
-        if (appliesToControl is not null)
-            appliesToControl.Value = new Platforms
-            {
-                new Platform(
-                    builder.Value<PlatformType>(GameField.Platform)
-                )
-            };
+        appliesToControl.Value = new Platforms
+        {
+            new Platform(
+                builder.Value<PlatformType>(GameField.Platform)
+            )
+        };
     }
 
     private void SetMinimumSize()
@@ -196,16 +195,17 @@ public class TrophysetPanel : OxPanel
 
     private void AddButtonClickHandler(object? sender, EventArgs e)
     {
-        if (AccountSelector.ShowDialogIsOK(this)
-            && !AccountSelector.SelectedAccountId.Equals(Guid.Empty))
-        {
-            TrophiesPanel newPanel = AvailableTrophiesPanel.DependedPanels.Find(t =>
-                t.Account!.Id.Equals(AccountSelector.SelectedAccountId))!;
-            newPanel.Value = new();
-            VisiblePanels.Add(newPanel);
-            RecalcTrophiesPanels();
-            ValueChanged?.Invoke(this, EventArgs.Empty);
-        }
+        if (!AccountSelector.ShowDialogIsOK(this)
+            || AccountSelector.SelectedAccountId.Equals(Guid.Empty))
+            return;
+
+        TrophiesPanel newPanel = AvailableTrophiesPanel.DependedPanels.Find(t =>
+            t.Account!.Id.Equals(AccountSelector.SelectedAccountId))!;
+        newPanel.Value = new();
+        VisiblePanels.Add(newPanel);
+        RecalcTrophiesPanels();
+        ValueChanged?.Invoke(this, EventArgs.Empty);
+
     }
 
     private void RecalcTrophiesPanels()
@@ -247,7 +247,6 @@ public class TrophysetPanel : OxPanel
             )
         };
         result.OnRemove += OnRemovePanelHandler;
-
         trophiesPanels.Add(result);
 
         if (AvailableTrophiesPanel is not null 
@@ -278,11 +277,9 @@ public class TrophysetPanel : OxPanel
                 CompleteTime = completeTimeControl.EnumValue<CompleteTime>(),
             };
 
-            if (!IsDLCPanel)
-            {
-                if (appliesToControl is not null)
-                    result.AppliesTo.CopyFrom(appliesToControl.DAOValue<ListDAO<Platform>>());
-            }
+            if (!IsDLCPanel
+                && appliesToControl is not null)
+                result.AppliesTo.CopyFrom(appliesToControl.DAOValue<ListDAO<Platform>>());
 
             result.Available.CopyFrom(AvailableTrophiesPanel.Value);
 
