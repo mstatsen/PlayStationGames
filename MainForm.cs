@@ -107,7 +107,7 @@ namespace PlayStationGames
                 foreach (OxPanel face in DataManager.Faces)
                     face.BaseColor = BaseColor;
 
-                OxSize screenSize = OxControlHelper.ScreenSize(this);
+                OxSize screenSize = OxControlHelper.CurrentScreenSize(this);
                 Size = new(
                     OxSh.Min(1600, screenSize.Width),
                     OxSh.Min(800, screenSize.Height));
