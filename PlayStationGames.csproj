@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OxDAOEngine\OxDAOEngine.csproj" />
+    <ProjectReference Include="..\__Libraries\C#\Ox\OxDAOEngine\OxDAOEngine.csproj" />
+    <ProjectReference Include="..\__Libraries\C#\Ox\OxLibrary\OxLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
