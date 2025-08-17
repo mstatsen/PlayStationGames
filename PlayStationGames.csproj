@@ -11,12 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="PS.ico" />
+    <ProjectReference Include="..\OxLibraries\C#\OxLibrary\OxLibrary.csproj" />
+    <ProjectReference Include="..\OxLibraries\C#\OxDAOEngine\OxDAOEngine.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\__Libraries\C#\Ox\OxDAOEngine\OxDAOEngine.csproj" />
-    <ProjectReference Include="..\__Libraries\C#\Ox\OxLibrary\OxLibrary.csproj" />
+    <Content Include="PS.ico" />
   </ItemGroup>
 
   <ItemGroup>
